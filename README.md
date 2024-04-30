@@ -1,30 +1,36 @@
-# React + TypeScript + Vite
+# Climeet FE ✨
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Skill
 
-Currently, two official plugins are available:
+- pnpm
+- React, TS
+- SCSS
+- Tanstack Query, Zustand
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## How to start
 
-## Expanding the ESLint configuration
+```bash
+# install
+pnpm i
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+# start dev
+pnpm run dev
 
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+# build
+pnpm run build
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## How to track issue
+
+1. 깃허브에서 이슈를 생성한다.
+   ![](https://private-user-images.githubusercontent.com/76723666/326839823-e824e444-e8c9-4322-be7f-fbe1f62416b8.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MTQ0ODYyODQsIm5iZiI6MTcxNDQ4NTk4NCwicGF0aCI6Ii83NjcyMzY2Ni8zMjY4Mzk4MjMtZTgyNGU0NDQtZThjOS00MzIyLWJlN2YtZmJlMWY2MjQxNmI4LnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDA0MzAlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQwNDMwVDE0MDYyNFomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPWRkYjFmZjhlMjhhYTgxNTA5MWY5YzMyYzNlMzM1YmFjMGY0MTMyM2MzYWUzZjBkYjE1N2JlMjQ5ZDY3N2JiMTcmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JmFjdG9yX2lkPTAma2V5X2lkPTAmcmVwb19pZD0wIn0.1RaB54s2FT66hpb6NH9qwoyDJyYtEXIerB2LRNXrgkM)
+
+2. 이슈 번호를 딴 브랜치를 생성한다.
+   ex) `feature/1-first-start`
+
+3. 작업 시 커밋에 이슈 번호를 넣는다.
+   ex) `#1 feat: 첫 기능 구현`
+
+4. 추가적인 이슈나 공유해야할 내용이 생기면 이슈에 커멘트를 남긴다.
+
+![](https://private-user-images.githubusercontent.com/76723666/326841703-37b71194-43a0-43d4-96f6-b983778cc652.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MTQ0ODY1MjEsIm5iZiI6MTcxNDQ4NjIyMSwicGF0aCI6Ii83NjcyMzY2Ni8zMjY4NDE3MDMtMzdiNzExOTQtNDNhMC00M2Q0LTk2ZjYtYjk4Mzc3OGNjNjUyLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDA0MzAlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQwNDMwVDE0MTAyMVomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPWVkZmU0ZjBhODg3ZjEyNzczOTlmN2I1MThlMWUwMzFmYjY4ZjM3N2Q5MWJmMDgwYmU3Nzk5ZjAwMmQxMTk1MzImWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JmFjdG9yX2lkPTAma2V5X2lkPTAmcmVwb19pZD0wIn0.zfROliSNH1pmBqi7W6yr0HOd_HKuR3wu0bFsrlYSOgQ)

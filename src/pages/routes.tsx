@@ -2,7 +2,7 @@ import { createRoutesFromElements, createBrowserRouter, Route } from 'react-rout
 import Layout from './Layout/Layout'
 import HomePage from './Home/HomePage'
 import LoginPage from './Login/LoginPage'
-import OauthPage from './Oauth/Oauth'
+import OauthPage from './Oauth/OauthPage'
 
 const router = createBrowserRouter(
   createRoutesFromElements(

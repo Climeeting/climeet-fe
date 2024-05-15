@@ -1,6 +1,6 @@
 import { useAsync, useSearchParam } from 'react-use'
 import { useNavigate } from 'react-router-dom'
-import { get_user_myProfile, post_kakao_oauth_token, post_oauth_login } from './hooks/api'
+import { post_kakao_oauth_token, post_oauth_login } from '../../services/oauth'
 
 export default function OauthPage() {
   const code = useSearchParam('code')
@@ -13,9 +13,6 @@ export default function OauthPage() {
     const accessToken = await post_kakao_oauth_token(code)
     // 2. 로그인 요청
     await post_oauth_login(accessToken)
-    // 3. 유저 정보 요청
-    const data = await get_user_myProfile()
-    console.log({ data })
 
     navigate('/')
   }, [code])

@@ -7,6 +7,12 @@ export default defineConfig({
   plugins: [
     react(),
     VitePWA({
+      strategies: 'injectManifest',
+      srcDir: 'src',
+      filename: 'service-worker.js',
+      injectManifest: {
+        injectionPoint: undefined,
+      },
       registerType: 'autoUpdate',
       injectRegister: 'auto',
       devOptions: {

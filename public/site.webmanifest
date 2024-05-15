@@ -3,7 +3,7 @@
   "short_name": "climeet",
   "theme_color": "#ffffff",
   "background_color": "#ffffff",
-  "display": "standalone",
+  "display": "fullscreen",
   "start_url": "/",
   "prefer_related_applications": true,
   "icons": [

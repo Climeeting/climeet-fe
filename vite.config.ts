@@ -1,12 +1,10 @@
-import { defineConfig, loadEnv } from 'vite'
+import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
 // https://vitejs.dev/config/
-export default ({ mode }: { mode: string }) => {
+export default defineConfig(({ mode }) => {
   const isDevelop = mode === 'development'
-  process.env = { ...process.env, ...loadEnv(mode, process.cwd()) }
-
-  return defineConfig({
+  return {
     plugins: [react()],
     server: isDevelop
       ? {
@@ -20,5 +18,5 @@ export default ({ mode }: { mode: string }) => {
           },
         }
       : undefined,
-  })
-}
+  }
+})

@@ -5,7 +5,7 @@ import { MyProfileQuery } from './user'
 
 export const post_oauth_login = async (accessToken: string) => {
   try {
-    const result = await api.post('/api/v1/oauth/login', { accessToken })
+    const result = await api.post('/v1/oauth/login', { accessToken })
     return result
   } catch (e) {
     console.error(e)
@@ -15,7 +15,7 @@ export const post_oauth_login = async (accessToken: string) => {
 
 export const get_oauth_logout = async () => {
   try {
-    const result = await api.get('/api/v1/oauth/logout')
+    const result = await api.get('/v1/oauth/logout')
     await MyProfileQuery.invalidate()
     return result
   } catch (e) {

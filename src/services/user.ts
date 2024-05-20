@@ -5,7 +5,7 @@ import { isAxiosError } from 'axios'
 import { queryClient } from '../utils/tanstack'
 
 export const get_user_myProfile = async () => {
-  return await api.get<MyProfile>('/api/v1/user/myProfile')
+  return await api.get<MyProfile>('/v1/user/myProfile')
 }
 
 export const USER_KEY = ['user']

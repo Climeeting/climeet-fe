@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@radix-ui/react-select": "^2.0.0",
+    "@radix-ui/react-toggle": "^1.0.3",
     "@stackflow/core": "^1.0.10",
     "@stackflow/plugin-basic-ui": "^1.6.0",
     "@stackflow/plugin-history-sync": "^1.5.0",

@@ -1,0 +1,10 @@
+.container {
+  overflow: hidden;
+}
+
+.main {
+  margin-top: 56px;
+  margin-bottom: 65px;
+  height: calc(100vh - (56px + 65px));
+  overflow-y: auto;
+}

@@ -1,6 +1,6 @@
 .container {
   width: 100%;
-  gap: 6px;
+  gap: rem(6px);
   display: flex;
   overflow-x: scroll;
 }

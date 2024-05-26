@@ -6,20 +6,20 @@
   .icon {
     position: absolute;
     top: 50%;
-    left: 16px;
+    left: rem(16px);
     transform: translateY(-50%);
     color: #a1a1a1;
   }
 
   input {
     width: 100%;
-    padding: 0 44px;
-    font-size: 16px;
+    padding: 0 rem(44px);
+    font-size: rem(16px);
     background-color: #f6f6f6;
-    border-radius: 5px;
-    font-size: 14px;
-    height: 47px;
-    border-radius: calc(47px / 2);
+    border-radius: rem(5px);
+    font-size: rem(14px);
+    height: rem(47px);
+    border-radius: calc(rem(47px) / 2);
     box-sizing: border-box;
   }
 

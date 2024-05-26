@@ -8,6 +8,7 @@ import styles from './HomePage.module.scss'
 import BottomBar from '../../components/NavBar/BottomBar'
 import FilterList from './components/FilterList'
 import Tabs from './components/Tabs'
+import { Search } from '../../components/Search'
 
 export default function HomePage() {
   const stack = useStack()
@@ -24,10 +25,15 @@ export default function HomePage() {
     <div className={styles.container}>
       <TopBar />
       <main className={styles.main}>
-        <Tabs tabs={['암장', '자연']} />
+        <div className={styles.SearchForm}>
+          <Tabs tabs={['암장', '자연']} />
+          <Search placeholder="암장을 검색해 보세요." />
+        </div>
 
-        <h1>오늘의 파티</h1>
-        <FilterList />
+        <div className={styles.Contents}>
+          <h1>오늘의 파티</h1>
+          <FilterList />
+        </div>
 
         <button
           onClick={() => {

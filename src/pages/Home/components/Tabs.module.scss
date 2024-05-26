@@ -8,12 +8,13 @@
 }
 .title {
   font-size: 20px;
-  font-weight: 600;
+  font-weight: 800;
   padding: 8px 0;
   border-bottom: 2px solid transparent;
   box-sizing: border-box;
+  color: #b9b9b9;
 }
 .title.active {
-  font-weight: 800;
+  color: #222222;
   border-bottom: 2px solid #222222;
 }

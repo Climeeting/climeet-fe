@@ -1,0 +1,19 @@
+.container {
+  width: 100%;
+  color: #222222;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 16px;
+}
+.title {
+  font-size: 20px;
+  font-weight: 600;
+  padding: 8px 0;
+  border-bottom: 2px solid transparent;
+  box-sizing: border-box;
+}
+.title.active {
+  font-weight: 800;
+  border-bottom: 2px solid #222222;
+}

@@ -1,0 +1,29 @@
+.container {
+  color: #a1a1a1;
+  position: relative;
+  width: 100%;
+
+  .icon {
+    position: absolute;
+    top: 50%;
+    left: 16px;
+    transform: translateY(-50%);
+    color: #a1a1a1;
+  }
+
+  input {
+    width: 100%;
+    padding: 0 44px;
+    font-size: 16px;
+    background-color: #f6f6f6;
+    border-radius: 5px;
+    font-size: 14px;
+    height: 47px;
+    border-radius: calc(47px / 2);
+    box-sizing: border-box;
+  }
+
+  input::placeholder {
+    color: #a1a1a1;
+  }
+}

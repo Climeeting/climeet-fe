@@ -1,0 +1,6 @@
+export { default as AlarmNew } from './alarm_new.svg?react'
+export { default as HomeFilled } from './home_filled.svg?react'
+export { default as LocationLine } from './location_line.svg?react'
+export { default as Plus } from './plus.svg?react'
+export { default as ChatLine } from './chat_line.svg?react'
+export { default as MyPage } from './my_page.svg?react'

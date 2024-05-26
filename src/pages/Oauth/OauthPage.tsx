@@ -1,10 +1,10 @@
 import { useAsync, useSearchParam } from 'react-use'
-import { useNavigate } from 'react-router-dom'
 import { post_kakao_oauth_token, post_oauth_login } from '../../services/oauth'
+import { useFlow } from '../stackflow'
 
 export default function OauthPage() {
   const code = useSearchParam('code')
-  const navigate = useNavigate()
+  const { replace } = useFlow()
 
   useAsync(async () => {
     if (!code) return
@@ -14,7 +14,7 @@ export default function OauthPage() {
     // 2. 로그인 요청
     await post_oauth_login(accessToken)
 
-    navigate('/')
+    replace('HomePage', {})
   }, [code])
 
   return (

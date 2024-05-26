@@ -11,6 +11,9 @@ dependencies:
   '@stackflow/plugin-basic-ui':
     specifier: ^1.6.0
     version: 1.6.0(@stackflow/core@1.0.10)(@stackflow/react@1.1.9)(@types/react@18.3.2)(react@18.3.1)
+  '@stackflow/plugin-history-sync':
+    specifier: ^1.5.0
+    version: 1.5.0(@stackflow/core@1.0.10)(@stackflow/react@1.1.9)(@types/react@18.3.2)(react@18.3.1)
   '@stackflow/plugin-renderer-basic':
     specifier: ^1.1.8
     version: 1.1.8(@stackflow/core@1.0.10)(@stackflow/react@1.1.9)(@types/react@18.3.2)(react@18.3.1)
@@ -1867,6 +1870,22 @@ packages:
       - babel-plugin-macros
     dev: false
 
+  /@stackflow/plugin-history-sync@1.5.0(@stackflow/core@1.0.10)(@stackflow/react@1.1.9)(@types/react@18.3.2)(react@18.3.1):
+    resolution: {integrity: sha512-unmK3r1TfM2QM5MC7rH3FCid9FxpFjBRShbXlbi+b4SG3BljZ13izrf9VtaqUFKiI4/3fi30OSLLVsL62hcGZQ==}
+    peerDependencies:
+      '@stackflow/core': ^1
+      '@stackflow/react': ^1
+      '@types/react': '>=16.8.0'
+      react: '>=16.8.0'
+    dependencies:
+      '@stackflow/core': 1.0.10
+      '@stackflow/react': 1.1.9(@stackflow/core@1.0.10)(@types/react@18.3.2)(react@18.3.1)
+      '@types/react': 18.3.2
+      history: 5.3.0
+      react: 18.3.1
+      url-pattern: 1.0.3
+    dev: false
+
   /@stackflow/plugin-renderer-basic@1.1.8(@stackflow/core@1.0.10)(@stackflow/react@1.1.9)(@types/react@18.3.2)(react@18.3.1):
     resolution: {integrity: sha512-4ieDjngikWaFbfixGlA/Z8A8orABHHjRHfpUpRU5naKI/5uw6YXtEb6VXRduXsg45r0HFaGL1xGTmPRVGDSzAw==}
     peerDependencies:
@@ -3174,6 +3193,12 @@ packages:
       function-bind: 1.1.2
     dev: true
 
+  /history@5.3.0:
+    resolution: {integrity: sha512-ZqaKwjjrAYUYfLG+htGaIIZ4nioX2L70ZUMIFysS3xvBsSG4x/n1V6TXV3N8ZYNuFGlDirFg32T7B6WOUPDYcQ==}
+    dependencies:
+      '@babel/runtime': 7.24.5
+    dev: false
+
   /hyphenate-style-name@1.0.5:
     resolution: {integrity: sha512-fedL7PRwmeVkgyhu9hLeTBaI6wcGk7JGJswdaRsa5aUbkXI1kr1xZwTPBtaYPpwf56878iDek6VbVnuWMebJmw==}
     dev: false
@@ -4459,6 +4484,11 @@ packages:
     dependencies:
       punycode: 2.3.1
     dev: true
+
+  /url-pattern@1.0.3:
+    resolution: {integrity: sha512-uQcEj/2puA4aq1R3A2+VNVBgaWYR24FdWjl7VNW83rnWftlhyzOZ/tBjezRiC2UkIzuxC8Top3IekN3vUf1WxA==}
+    engines: {node: '>=0.12.0'}
+    dev: false
 
   /use-sync-external-store@1.2.0(react@18.3.1):
     resolution: {integrity: sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA==}

@@ -7,6 +7,7 @@ import TopBar from '../../components/NavBar/TopBar'
 import styles from './HomePage.module.scss'
 import BottomBar from '../../components/NavBar/BottomBar'
 import FilterList from './components/FilterList'
+import Tabs from './components/Tabs'
 
 export default function HomePage() {
   const stack = useStack()
@@ -23,8 +24,11 @@ export default function HomePage() {
     <div className={styles.container}>
       <TopBar />
       <main className={styles.main}>
+        <Tabs tabs={['암장', '자연']} />
+
         <h1>오늘의 파티</h1>
         <FilterList />
+
         <button
           onClick={() => {
             push('LoginPage', {})

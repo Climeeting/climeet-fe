@@ -3,7 +3,7 @@ import Icon from '../Icon/Icon'
 import classNames from 'classnames'
 import { useStack } from '@stackflow/react'
 
-const navgations = [
+const navigations = [
   { icon: 'HomeFilled', title: '홈', page: 'HomePage' },
   { icon: 'LocationLine', title: '탐색', page: null },
   { icon: 'Plus', title: '만들기', page: null },
@@ -18,7 +18,7 @@ export default function BottomBar() {
 
   return (
     <div className={styles.container}>
-      {navgations.map((nav, index) => (
+      {navigations.map((nav, index) => (
         <button
           key={index}
           className={classNames(styles.item, {

@@ -42,8 +42,8 @@ p {
   isolation: isolate;
 }
 button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
+  all: unset;
+}
+input {
+  all: unset;
 }

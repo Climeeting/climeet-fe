@@ -8,6 +8,13 @@ export default defineConfig(({ mode }) => {
   const isDevelop = mode === 'development'
 
   return {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: `@import "./global.scss";`,
+        },
+      },
+    },
     plugins: [
       react(),
       svgr(),

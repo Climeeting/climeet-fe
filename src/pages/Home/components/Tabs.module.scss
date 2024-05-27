@@ -1,0 +1,20 @@
+.container {
+  width: 100%;
+  color: #222222;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: rem(16px);
+}
+.title {
+  font-size: rem(20px);
+  font-weight: 800;
+  padding: rem(8px) 0;
+  border-bottom: rem(2px) solid transparent;
+  box-sizing: border-box;
+  color: #b9b9b9;
+}
+.title.active {
+  color: #222222;
+  border-bottom: rem(2px) solid #222222;
+}

@@ -1,0 +1,10 @@
+.container {
+  width: 100%;
+  gap: rem(6px);
+  display: flex;
+  overflow-x: scroll;
+}
+
+.container::-webkit-scrollbar {
+  display: none;
+}

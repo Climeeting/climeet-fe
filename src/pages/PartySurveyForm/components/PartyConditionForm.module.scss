@@ -48,13 +48,13 @@
     line-height: rem(1.7);
   }
 
-  .list {
+  .RadioGroupRoot {
     display: flex;
     gap: rem(8px);
     width: 100%;
   }
 
-  .item {
+  .RadioGroupItem {
     border: 1px solid #e5e5e5;
     flex: 1;
     height: rem(44px);
@@ -66,6 +66,11 @@
     font-size: rem(14px);
     line-height: rem(1.7);
     margin-bottom: rem(60px);
+  }
+
+  .RadioGroupItem[data-state='checked'] {
+    color: #333333;
+    border-color: #333333;
   }
 
   .active {

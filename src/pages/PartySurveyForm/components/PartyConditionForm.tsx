@@ -1,6 +1,6 @@
 import styles from './PartyConditionForm.module.scss'
 import { useState } from 'react'
-import classNames from 'classnames'
+import * as RadioGroup from '@radix-ui/react-radio-group'
 
 type PartyConditionFormProps = {
   onNext: (partyCondition: any) => void
@@ -11,8 +11,8 @@ type Subject = '볼더링' | '리드' | '지구력' | '상관없음'
 
 export function PartyConditionForm({ onNext }: PartyConditionFormProps) {
   const [currentGender, setCurrentGender] = useState<Gender>('남녀 모두')
-  const genderList: Gender[] = ['남녀 모두', '남자만', '여자만']
   const [currentSubject, setCurrentSubject] = useState<Subject>('볼더링')
+  const genderList: Gender[] = ['남녀 모두', '남자만', '여자만']
   const subjectList: Subject[] = ['볼더링', '리드', '지구력', '상관없음']
 
   return (
@@ -29,16 +29,7 @@ export function PartyConditionForm({ onNext }: PartyConditionFormProps) {
             <div className={styles.triggerText}>{currentGender}</div>
           </div>
           <div className={styles.content}>
-            <div className={styles.list}>
-              {genderList.map((el) => (
-                <div
-                  className={classNames(styles.item, { [styles.active]: el === currentGender })}
-                  onClick={() => setCurrentGender(el)}
-                >
-                  {el}
-                </div>
-              ))}
-            </div>
+            <RadioButtonGroup list={genderList} onChange={(value) => setCurrentGender(value)} />
           </div>
         </div>
         <div>
@@ -47,16 +38,7 @@ export function PartyConditionForm({ onNext }: PartyConditionFormProps) {
             <div className={styles.triggerText}>{currentSubject}</div>
           </div>
           <div className={styles.content}>
-            <div className={styles.list}>
-              {subjectList.map((el) => (
-                <div
-                  className={classNames(styles.item, { [styles.active]: el === currentSubject })}
-                  onClick={() => setCurrentSubject(el)}
-                >
-                  {el}
-                </div>
-              ))}
-            </div>
+            <RadioButtonGroup list={subjectList} onChange={(value) => setCurrentSubject(value)} />
           </div>
         </div>
         <div>
@@ -70,5 +52,23 @@ export function PartyConditionForm({ onNext }: PartyConditionFormProps) {
         </button>
       </div>
     </div>
+  )
+}
+
+function RadioButtonGroup({ list, onChange }: { list: any[]; onChange: (value: any) => void }) {
+  return (
+    <form>
+      <RadioGroup.Root
+        className={styles.RadioGroupRoot}
+        defaultValue={list[0]}
+        onValueChange={onChange}
+      >
+        {list.map((el) => (
+          <RadioGroup.Item className={styles.RadioGroupItem} value={el}>
+            {el}
+          </RadioGroup.Item>
+        ))}
+      </RadioGroup.Root>
+    </form>
   )
 }

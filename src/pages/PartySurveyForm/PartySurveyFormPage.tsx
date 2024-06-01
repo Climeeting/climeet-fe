@@ -5,6 +5,7 @@ import styles from './PartySurveyFormPage.module.scss'
 import { CragForm } from './components/CragForm.tsx'
 import { PartyConditionForm } from './components/PartyConditionForm.tsx'
 import { PartyIntroduceForm } from './components/PartyIntroduceForm.tsx'
+import { AppScreen } from '@stackflow/plugin-basic-ui'
 
 const steps = ['암장', '조건', '소개', '일정'] as const
 type StepName = (typeof steps)[number]
@@ -43,40 +44,42 @@ export function PartySurveyFormPage() {
   }
 
   return (
-    <div className={styles.wrapper}>
-      <Funnel>
-        <Step name="암장">
-          <CragForm
-            onNext={() => {
-              setStep('조건')
-              stepPush({
-                title: 'condition',
-              })
-            }}
-            formData={formData}
-            updateFormData={updateFormData}
-          />
-        </Step>
-        <Step name="조건">
-          <PartyConditionForm
-            onNext={() => {
-              setStep('소개')
-              stepPush({
-                title: 'introduce',
-              })
-            }}
-            formData={formData}
-            updateFormData={updateFormData}
-          />
-        </Step>
-        <Step name="소개">
-          <PartyIntroduceForm
-            onNext={() => setStep('일정')}
-            formData={formData}
-            updateFormData={updateFormData}
-          />
-        </Step>
-      </Funnel>
-    </div>
+    <AppScreen appBar={{ titie: '' }}>
+      <div className={styles.wrapper}>
+        <Funnel>
+          <Step name="암장">
+            <CragForm
+              onNext={() => {
+                setStep('조건')
+                stepPush({
+                  title: 'condition',
+                })
+              }}
+              formData={formData}
+              updateFormData={updateFormData}
+            />
+          </Step>
+          <Step name="조건">
+            <PartyConditionForm
+              onNext={() => {
+                setStep('소개')
+                stepPush({
+                  title: 'introduce',
+                })
+              }}
+              formData={formData}
+              updateFormData={updateFormData}
+            />
+          </Step>
+          <Step name="소개">
+            <PartyIntroduceForm
+              onNext={() => setStep('일정')}
+              formData={formData}
+              updateFormData={updateFormData}
+            />
+          </Step>
+        </Funnel>
+      </div>
+    </AppScreen>
   )
 }

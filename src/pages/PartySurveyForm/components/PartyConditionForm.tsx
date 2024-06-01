@@ -19,12 +19,12 @@ export function PartyConditionForm({ onNext, formData, updateFormData }: PartyCo
     <div className={styles.container}>
       <div>
         <h2 className={styles.title}>파티 조건을 선택해주세요.</h2>
-        <div>
-          <h3>파티 인원 (본인 포함)</h3>
+        <div className={styles.question}>
+          <h3 className={styles.questionTitle}>파티 인원 (본인 포함)</h3>
           <input className={styles.input} placeholder={'0명'} />
         </div>
-        <div>
-          <h3>성별</h3>
+        <div className={styles.question}>
+          <h3 className={styles.questionTitle}>성별</h3>
           <div className={styles.trigger}>
             <div className={styles.triggerText}>{formData.gender}</div>
           </div>
@@ -36,8 +36,8 @@ export function PartyConditionForm({ onNext, formData, updateFormData }: PartyCo
             />
           </div>
         </div>
-        <div>
-          <h3>종목</h3>
+        <div className={styles.question}>
+          <h3 className={styles.questionTitle}>종목</h3>
           <div className={styles.trigger}>
             <div className={styles.triggerText}>{formData.subject}</div>
           </div>
@@ -49,8 +49,8 @@ export function PartyConditionForm({ onNext, formData, updateFormData }: PartyCo
             />
           </div>
         </div>
-        <div>
-          <h3>실력</h3>
+        <div className={styles.question}>
+          <h3 className={styles.questionTitle}>실력</h3>
           <input className={styles.input} placeholder={'상관없음'} />
         </div>
       </div>

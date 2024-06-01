@@ -31,7 +31,11 @@ export function PartyConditionForm({ onNext, formData, updateFormData }: PartyCo
             <div className={styles.triggerText}>{currentGender}</div>
           </div>
           <div className={styles.content}>
-            <RadioButtonGroup list={genderList} onChange={(value) => setCurrentGender(value)} />
+            <RadioButtonGroup
+              list={genderList}
+              onValueChange={(value) => updateFormData('gender', value)}
+              defaultValue={formData.gender}
+            />
           </div>
         </div>
         <div>
@@ -40,7 +44,11 @@ export function PartyConditionForm({ onNext, formData, updateFormData }: PartyCo
             <div className={styles.triggerText}>{currentSubject}</div>
           </div>
           <div className={styles.content}>
-            <RadioButtonGroup list={subjectList} onChange={(value) => setCurrentSubject(value)} />
+            <RadioButtonGroup
+              list={subjectList}
+              onValueChange={(value) => updateFormData('subject', value)}
+              defaultValue={formData.subject}
+            />
           </div>
         </div>
         <div>

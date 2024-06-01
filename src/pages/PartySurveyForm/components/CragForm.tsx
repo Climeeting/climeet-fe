@@ -1,11 +1,11 @@
 import styles from './CragForm.module.scss'
-import { SurveyPartyFormData } from '../PartySurveyFormPage.tsx'
+import { PartySurveyFormData } from '../PartySurveyFormPage.tsx'
 import { useState } from 'react'
 
 type CragFormProps = {
   onNext: () => void
-  formData: SurveyPartyFormData
-  updateFormData: (key: keyof SurveyPartyFormData, value: string) => void
+  formData: PartySurveyFormData
+  updateFormData: (key: keyof PartySurveyFormData, value: string) => void
 }
 
 export function CragForm({ onNext, formData, updateFormData }: CragFormProps) {

@@ -1,12 +1,12 @@
 import styles from './PartyConditionForm.module.scss'
 import * as RadioGroup from '@radix-ui/react-radio-group'
 import { RadioGroupProps } from '@radix-ui/react-radio-group'
-import { SurveyPartyFormData } from '../PartySurveyFormPage.tsx'
+import { PartySurveyFormData } from '../PartySurveyFormPage.tsx'
 
 type PartyConditionFormProps = {
   onNext: () => void
-  formData: SurveyPartyFormData
-  updateFormData: (key: keyof SurveyPartyFormData, value: string) => void
+  formData: PartySurveyFormData
+  updateFormData: (key: keyof PartySurveyFormData, value: string) => void
 }
 
 type Gender = '남녀 모두' | '남자만' | '여자만'

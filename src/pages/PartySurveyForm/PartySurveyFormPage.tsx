@@ -9,7 +9,7 @@ import { PartyIntroduceForm } from './components/PartyIntroduceForm.tsx'
 const steps = ['암장', '조건', '소개', '일정'] as const
 type StepName = (typeof steps)[number]
 
-export type SurveyPartyFormData = {
+export type PartySurveyFormData = {
   cragName: string
   members: number
   gender: string
@@ -22,8 +22,8 @@ export type SurveyPartyFormData = {
   partyTime: string
 }
 
-export function SurveyPartyFormPage() {
-  const [formData, setFormData] = useState<SurveyPartyFormData>({
+export function PartySurveyFormPage() {
+  const [formData, setFormData] = useState<PartySurveyFormData>({
     cragName: '',
     members: 0,
     gender: '남녀 모두',
@@ -38,7 +38,7 @@ export function SurveyPartyFormPage() {
   const { Funnel, Step, setStep } = useFunnel<StepName>('암장')
   const { stepPush } = useStepFlow('HomePage')
 
-  const updateFormData = (key: keyof SurveyPartyFormData, value: string) => {
+  const updateFormData = (key: keyof PartySurveyFormData, value: string) => {
     setFormData((prev) => ({ ...prev, [key]: value }))
   }
 

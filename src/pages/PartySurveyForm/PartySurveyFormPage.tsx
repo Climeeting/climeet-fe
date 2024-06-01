@@ -1,11 +1,12 @@
 import { useFunnel } from '../../utils/useFunnel.tsx'
 import { useState } from 'react'
-import { useStepFlow } from '../stackflow.ts'
+import { useFlow, useStepFlow } from '../stackflow.ts'
 import styles from './PartySurveyFormPage.module.scss'
 import { CragForm } from './components/CragForm.tsx'
 import { PartyConditionForm } from './components/PartyConditionForm.tsx'
 import { PartyIntroduceForm } from './components/PartyIntroduceForm.tsx'
 import { AppScreen } from '@stackflow/plugin-basic-ui'
+import { PartyScheduleForm } from './components/PartyScheduleForm.tsx'
 
 const steps = ['암장', '조건', '소개', '일정'] as const
 type StepName = (typeof steps)[number]
@@ -38,6 +39,7 @@ export function PartySurveyFormPage() {
   })
   const { Funnel, Step, setStep, step } = useFunnel<StepName>('암장')
   const { stepPush } = useStepFlow('HomePage')
+  const { pop } = useFlow()
 
   const updateFormData = (key: keyof PartySurveyFormData, value: string) => {
     setFormData((prev) => ({ ...prev, [key]: value }))
@@ -83,7 +85,21 @@ export function PartySurveyFormPage() {
           </Step>
           <Step name="소개">
             <PartyIntroduceForm
-              onNext={() => setStep('일정')}
+              onNext={() => {
+                setStep('일정')
+                stepPush({
+                  title: 'date',
+                })
+              }}
+              formData={formData}
+              updateFormData={updateFormData}
+            />
+          </Step>
+          <Step name="일정">
+            <PartyScheduleForm
+              onNext={() => {
+                pop()
+              }}
               formData={formData}
               updateFormData={updateFormData}
             />

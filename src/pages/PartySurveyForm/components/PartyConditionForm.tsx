@@ -1,6 +1,7 @@
 import styles from './PartyConditionForm.module.scss'
 import { useState } from 'react'
 import * as RadioGroup from '@radix-ui/react-radio-group'
+import { RadioGroupProps } from '@radix-ui/react-radio-group'
 
 type PartyConditionFormProps = {
   onNext: (partyCondition: any) => void
@@ -55,14 +56,14 @@ export function PartyConditionForm({ onNext }: PartyConditionFormProps) {
   )
 }
 
-function RadioButtonGroup({ list, onChange }: { list: any[]; onChange: (value: any) => void }) {
+type RadioButtonGroupProps = {
+  list: any[]
+} & RadioGroupProps
+
+function RadioButtonGroup({ list, ...rest }: RadioButtonGroupProps) {
   return (
     <form>
-      <RadioGroup.Root
-        className={styles.RadioGroupRoot}
-        defaultValue={list[0]}
-        onValueChange={onChange}
-      >
+      <RadioGroup.Root {...rest} className={styles.RadioGroupRoot}>
         {list.map((el) => (
           <RadioGroup.Item className={styles.RadioGroupItem} value={el}>
             {el}

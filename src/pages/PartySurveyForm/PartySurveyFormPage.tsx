@@ -36,16 +36,26 @@ export function PartySurveyFormPage() {
     partyDate: '',
     partyTime: '',
   })
-  const { Funnel, Step, setStep } = useFunnel<StepName>('암장')
+  const { Funnel, Step, setStep, step } = useFunnel<StepName>('암장')
   const { stepPush } = useStepFlow('HomePage')
 
   const updateFormData = (key: keyof PartySurveyFormData, value: string) => {
     setFormData((prev) => ({ ...prev, [key]: value }))
   }
 
+  const handlePrevStepClick = () => {
+    const currentStepIndex = steps.findIndex((el) => el === step)
+    if (currentStepIndex === 0) {
+      return
+    }
+
+    setStep(steps[currentStepIndex - 1])
+  }
+
   return (
     <AppScreen appBar={{ titie: '' }}>
       <div className={styles.wrapper}>
+        <div onClick={handlePrevStepClick}>이전으로</div>
         <Funnel>
           <Step name="암장">
             <CragForm

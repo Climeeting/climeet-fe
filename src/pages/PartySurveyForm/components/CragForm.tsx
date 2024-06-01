@@ -17,7 +17,7 @@ export function CragForm({ onNext, formData, updateFormData }: CragFormProps) {
 
   return (
     <div className={styles.container}>
-      <div className={styles.content}>
+      <div>
         <h2 className={styles.title}>
           파티를 진행하실
           <br />

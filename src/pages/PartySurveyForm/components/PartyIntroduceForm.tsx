@@ -28,7 +28,7 @@ export function PartyIntroduceForm({ onNext, formData, updateFormData }: PartyIn
 
   return (
     <div className={styles.container}>
-      <div className={styles.content}>
+      <div>
         <h2 className={styles.title}>파티를 소개해주세요.</h2>
         <div className={styles.question}>
           <h3 className={styles.questionTitle}>사진 등록</h3>

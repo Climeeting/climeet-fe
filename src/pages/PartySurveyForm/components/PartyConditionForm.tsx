@@ -18,7 +18,7 @@ export function PartyConditionForm({ onNext, formData, updateFormData }: PartyCo
 
   return (
     <div className={styles.container}>
-      <div className={styles.content}>
+      <div>
         <h2 className={styles.title}>파티 조건을 선택해주세요.</h2>
         <div>
           <h3>파티 인원 (본인 포함)</h3>

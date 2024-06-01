@@ -1,5 +1,4 @@
 import styles from './PartyConditionForm.module.scss'
-import { useState } from 'react'
 import * as RadioGroup from '@radix-ui/react-radio-group'
 import { RadioGroupProps } from '@radix-ui/react-radio-group'
 import { SurveyPartyFormData } from '../PartySurveyFormPage.tsx'
@@ -28,7 +27,7 @@ export function PartyConditionForm({ onNext, formData, updateFormData }: PartyCo
         <div>
           <h3>성별</h3>
           <div className={styles.trigger}>
-            <div className={styles.triggerText}>{currentGender}</div>
+            <div className={styles.triggerText}>{formData.gender}</div>
           </div>
           <div className={styles.content}>
             <RadioButtonGroup
@@ -41,7 +40,7 @@ export function PartyConditionForm({ onNext, formData, updateFormData }: PartyCo
         <div>
           <h3>종목</h3>
           <div className={styles.trigger}>
-            <div className={styles.triggerText}>{currentSubject}</div>
+            <div className={styles.triggerText}>{formData.subject}</div>
           </div>
           <div className={styles.content}>
             <RadioButtonGroup
@@ -57,7 +56,7 @@ export function PartyConditionForm({ onNext, formData, updateFormData }: PartyCo
         </div>
       </div>
       <div className={styles.footer}>
-        <button className={styles.nextBtn} onClick={() => onNext({})}>
+        <button className={styles.nextBtn} onClick={onNext}>
           다음
         </button>
       </div>

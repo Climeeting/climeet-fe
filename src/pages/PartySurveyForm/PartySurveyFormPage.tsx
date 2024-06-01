@@ -2,7 +2,7 @@ import { useFunnel } from '../../utils/useFunnel.tsx'
 import { useState } from 'react'
 import { useFlow, useStepFlow } from '../stackflow.ts'
 import styles from './PartySurveyFormPage.module.scss'
-import { CragForm } from './components/CragForm.tsx'
+import { PartyPlaceForm } from './components/PartyPlaceForm.tsx'
 import { PartyConditionForm } from './components/PartyConditionForm.tsx'
 import { PartyIntroduceForm } from './components/PartyIntroduceForm.tsx'
 import { AppScreen } from '@stackflow/plugin-basic-ui'
@@ -60,7 +60,7 @@ export function PartySurveyFormPage() {
         <div onClick={handlePrevStepClick}>이전으로</div>
         <Funnel>
           <Step name="암장">
-            <CragForm
+            <PartyPlaceForm
               onNext={() => {
                 setStep('조건')
                 stepPush({

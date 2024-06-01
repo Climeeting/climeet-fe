@@ -1,14 +1,14 @@
-import styles from './CragForm.module.scss'
+import styles from './PartyPlaceForm.module.scss'
 import { PartySurveyFormData } from '../PartySurveyFormPage.tsx'
 import { useState } from 'react'
 
-type CragFormProps = {
+type PartyPlaceFormProps = {
   onNext: () => void
   formData: PartySurveyFormData
   updateFormData: (key: keyof PartySurveyFormData, value: string) => void
 }
 
-export function CragForm({ onNext, formData, updateFormData }: CragFormProps) {
+export function PartyPlaceForm({ onNext, formData, updateFormData }: PartyPlaceFormProps) {
   const [value, setValue] = useState(formData.cragName)
 
   const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -20,6 +20,12 @@ export function PartyIntroduceForm({ onNext, formData, updateFormData }: PartyIn
     setPartyIntroduce(e.target.value)
   }
 
+  const handleNextBtnClick = () => {
+    updateFormData('partyName', partyName)
+    updateFormData('partyIntroduce', partyIntroduce)
+    onNext()
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.content}>
@@ -58,7 +64,7 @@ export function PartyIntroduceForm({ onNext, formData, updateFormData }: PartyIn
         </div>
       </div>
       <div className={styles.footer}>
-        <button className={styles.nextBtn} onClick={onNext}>
+        <button className={styles.nextBtn} onClick={handleNextBtnClick}>
           다음
         </button>
       </div>

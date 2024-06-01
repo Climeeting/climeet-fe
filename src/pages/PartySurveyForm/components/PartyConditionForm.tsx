@@ -2,17 +2,18 @@ import styles from './PartyConditionForm.module.scss'
 import { useState } from 'react'
 import * as RadioGroup from '@radix-ui/react-radio-group'
 import { RadioGroupProps } from '@radix-ui/react-radio-group'
+import { SurveyPartyFormData } from '../PartySurveyFormPage.tsx'
 
 type PartyConditionFormProps = {
-  onNext: (partyCondition: any) => void
+  onNext: () => void
+  formData: SurveyPartyFormData
+  updateFormData: (key: keyof SurveyPartyFormData, value: string) => void
 }
 
 type Gender = '남녀 모두' | '남자만' | '여자만'
 type Subject = '볼더링' | '리드' | '지구력' | '상관없음'
 
-export function PartyConditionForm({ onNext }: PartyConditionFormProps) {
-  const [currentGender, setCurrentGender] = useState<Gender>('남녀 모두')
-  const [currentSubject, setCurrentSubject] = useState<Subject>('볼더링')
+export function PartyConditionForm({ onNext, formData, updateFormData }: PartyConditionFormProps) {
   const genderList: Gender[] = ['남녀 모두', '남자만', '여자만']
   const subjectList: Subject[] = ['볼더링', '리드', '지구력', '상관없음']
 

@@ -6,14 +6,14 @@ type props = {
   count?: number
   active?: boolean
   onClick?: () => void
-  onClickIcon?: () => void
+  remove?: () => void
 } & React.RefAttributes<HTMLButtonElement>
 
 export default function FilterButton({
   children,
   active,
   onClick,
-  onClickIcon,
+  remove,
   ...rest
 }: PropsWithChildren<props>) {
   return (
@@ -24,9 +24,20 @@ export default function FilterButton({
       {...rest}
     >
       {children}
-      <div onClick={onClickIcon}>
-        {active ? <Icon icon="Delete" size="12" /> : <Icon icon="ArrowDown" size="12" />}
-      </div>
+
+      {active && (
+        <div
+          className={styles.NoFlexShrink}
+          onClick={(e) => {
+            e.stopPropagation()
+            remove?.()
+          }}
+        >
+          <Icon icon="Delete" size="12" />
+        </div>
+      )}
+
+      {!active && <Icon icon="ArrowDown" size="12" />}
     </button>
   )
 }

@@ -57,7 +57,9 @@ export default function FilterBottomSheetMain() {
         </div>
 
         <div className={styles.Controls}>
-          <BottomSheet.Close className={styles.ResetButton}>초기화</BottomSheet.Close>
+          <button onClick={actions.reset} className={styles.ResetButton}>
+            초기화
+          </button>
           <BottomSheet.Close className={styles.ApplyButton}>적용</BottomSheet.Close>
         </div>
       </div>

@@ -1,18 +1,32 @@
-import Select from '../../../components/Select'
-import ToggleButton from '../../../components/ToggleButton'
+import BottomSheet from '../../../components/BottomSheet'
+import { FilterProvider } from '../hooks/useFilterContext'
+import FilterBottomSheet from './FilterBottomSheet'
+import FilterButton from './FilterButton'
 import styles from './FilterList.module.scss'
 
 export default function FilterList() {
   return (
-    <div className={styles.container}>
-      <ToggleButton>홈짐</ToggleButton>
-      <ToggleButton>마감제거</ToggleButton>
-      <ToggleButton>필터링1</ToggleButton>
-      <ToggleButton>필터링2</ToggleButton>
-      <ToggleButton>필터링3</ToggleButton>
-      <Select placeholder="모든 지역" items={['강남', '판교', '마포']} />
-      <Select placeholder="성별" items={['남자', '여자']} />
-      <Select placeholder="종목" items={['종목1', '종목2']} />
-    </div>
+    <FilterProvider>
+      <BottomSheet>
+        <div className={styles.container}>
+          <BottomSheet.Trigger>
+            <FilterButton>지역</FilterButton>
+          </BottomSheet.Trigger>
+
+          <BottomSheet.Trigger>
+            <FilterButton>성별</FilterButton>
+          </BottomSheet.Trigger>
+
+          <BottomSheet.Trigger>
+            <FilterButton>신청 현황</FilterButton>
+          </BottomSheet.Trigger>
+
+          <BottomSheet.Trigger>
+            <FilterButton>종목</FilterButton>
+          </BottomSheet.Trigger>
+        </div>
+        <FilterBottomSheet />
+      </BottomSheet>
+    </FilterProvider>
   )
 }

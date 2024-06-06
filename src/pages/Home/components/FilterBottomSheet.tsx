@@ -7,6 +7,7 @@ import {
   addressOptions,
   clibingOptions,
   constrainsOptions,
+  defaultFilter,
   statusOptions,
   useFilterActions,
   useFilterContext,
@@ -33,7 +34,7 @@ export default function FilterBottomSheetMain() {
             </div>
             <OptionList
               name={'addressList'}
-              onClick={actions.toggleAddressList}
+              onClick={actions.addressList.toggle}
               options={addressOptions}
             />
           </section>
@@ -41,18 +42,22 @@ export default function FilterBottomSheetMain() {
             <h3>성별</h3>
             <OptionList
               name={'constrains'}
-              onClick={actions.toggleConstrains}
+              onClick={actions.constrains.toggle}
               options={constrainsOptions}
             />
           </section>
           <section className={styles.Section}>
             <h3>신청 현황</h3>
-            <OptionList name={'status'} onClick={actions.toggleStatus} options={statusOptions} />
+            <OptionList name={'status'} onClick={actions.status.toggle} options={statusOptions} />
           </section>
 
           <section className={styles.Section}>
             <h3>종목</h3>
-            <OptionList name={'clibing'} onClick={actions.toggleClibing} options={clibingOptions} />
+            <OptionList
+              name={'clibing'}
+              onClick={actions.clibing.toggle}
+              options={clibingOptions}
+            />
           </section>
         </div>
 
@@ -76,8 +81,12 @@ type OptionListProps<T> = {
 function OptionList<T extends string>({ options, onClick, name }: OptionListProps<T>) {
   const filterContext = useFilterContext()
   const selectedOptions = filterContext[name]
+  const defaultOption = defaultFilter[name]
 
   const pressed = (option: T) => {
+    if (!selectedOptions) return option === defaultOption
+    if (selectedOptions.length === 0) return option === defaultOption[0]
+
     if (typeof selectedOptions === 'string') return option === selectedOptions
     return (selectedOptions as string[]).includes(option)
   }

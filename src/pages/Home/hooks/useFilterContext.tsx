@@ -1,56 +1,77 @@
 import { PropsWithChildren, createContext, useContext, useState } from 'react'
 
 export type FilterContextType = {
-  addressList: AddressOption[]
-  clibing: ClibingOption
-  constrains: ConstrainsOption
-  status: StatusOption
+  addressList: (AddressOption | '')[]
+  clibing: ClibingOption | ''
+  constrains: ConstrainsOption | ''
+  status: StatusOption | ''
 }
 
-const defaultFilter: FilterContextType = {
+export const defaultFilter: FilterContextType = {
   addressList: ['모든 지역'],
   clibing: '볼더링',
   constrains: '남녀 모두',
   status: '전체',
 }
 
-const FilterContext = createContext<{
-  addressList: AddressOption[]
-  clibing: ClibingOption
-  constrains: ConstrainsOption
-  status: StatusOption
-}>(defaultFilter)
+const FilterContext = createContext<FilterContextType>({
+  addressList: [],
+  clibing: '',
+  constrains: '',
+  status: '',
+})
 
 const ActionsContext = createContext<{
-  toggleAddressList: (addressList: AddressOption) => void
-  toggleClibing: (clibing: ClibingOption) => void
-  toggleConstrains: (constrains: ConstrainsOption) => void
-  toggleStatus: (status: StatusOption) => void
+  addressList: {
+    toggle: (option: AddressOption) => void
+    reset: () => void
+  }
+  clibing: {
+    toggle: (option: ClibingOption) => void
+    reset: () => void
+  }
+  constrains: {
+    toggle: (option: ConstrainsOption) => void
+    reset: () => void
+  }
+  status: {
+    toggle: (option: StatusOption) => void
+    reset: () => void
+  }
   reset: () => void
 }>({
-  toggleAddressList: () => {},
-  toggleClibing: () => {},
-  toggleConstrains: () => {},
-  toggleStatus: () => {},
+  addressList: {
+    toggle: () => {},
+    reset: () => {},
+  },
+  clibing: {
+    toggle: () => {},
+    reset: () => {},
+  },
+  constrains: {
+    toggle: () => {},
+    reset: () => {},
+  },
+  status: {
+    toggle: () => {},
+    reset: () => {},
+  },
   reset: () => {},
 })
 
 export function FilterProvider({ children }: PropsWithChildren) {
-  const [addressList, setAddressList] = useState<AddressOption[]>(defaultFilter['addressList'])
-  const [clibing, setClibing] = useState<ClibingOption>(defaultFilter['clibing'])
-  const [constrains, setConstrains] = useState<ConstrainsOption>(defaultFilter['constrains'])
-  const [status, setStatus] = useState<StatusOption>(defaultFilter['status'])
+  const [addressList, setAddressList] = useState<FilterContextType['addressList']>([])
+  const [clibing, setClibing] = useState<FilterContextType['clibing']>('')
+  const [constrains, setConstrains] = useState<FilterContextType['constrains']>('')
+  const [status, setStatus] = useState<FilterContextType['status']>('')
 
   const toggleAddressList = (addressList: AddressOption) => {
-    console.log('toggle')
-    setAddressList((prev) => toggleDuplicates(prev, addressList))
-  }
-
-  const reset = () => {
-    setAddressList(defaultFilter['addressList'])
-    setClibing(defaultFilter['clibing'])
-    setConstrains(defaultFilter['constrains'])
-    setStatus(defaultFilter['status'])
+    setAddressList((prev) => {
+      const newAddressList = toggleDuplicates(prev, addressList)
+      if (addressList === '모든 지역' || newAddressList.length >= addressOptions.length - 1)
+        return ['모든 지역']
+      return newAddressList.filter((item) => item !== '모든 지역')
+    })
   }
 
   return (
@@ -64,11 +85,28 @@ export function FilterProvider({ children }: PropsWithChildren) {
     >
       <ActionsContext.Provider
         value={{
-          toggleAddressList,
-          toggleClibing: setClibing,
-          toggleConstrains: setConstrains,
-          toggleStatus: setStatus,
-          reset,
+          addressList: {
+            toggle: toggleAddressList,
+            reset: () => setAddressList([]),
+          },
+          clibing: {
+            toggle: setClibing,
+            reset: () => setClibing(''),
+          },
+          constrains: {
+            toggle: setConstrains,
+            reset: () => setConstrains(''),
+          },
+          status: {
+            toggle: setStatus,
+            reset: () => setStatus(''),
+          },
+          reset: () => {
+            setAddressList([])
+            setClibing('')
+            setConstrains('')
+            setStatus('')
+          },
         }}
       >
         {children}

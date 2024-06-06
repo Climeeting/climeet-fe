@@ -55,7 +55,7 @@ export function PartySurveyFormPage() {
   }
 
   return (
-    <AppScreen appBar={{ titie: '' }}>
+    <AppScreen appBar={{ title: '' }}>
       <div className={styles.wrapper}>
         <div onClick={handlePrevStepClick}>이전으로</div>
         <Funnel>

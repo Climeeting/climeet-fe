@@ -1,5 +1,5 @@
 .container {
-  color: #a1a1a1;
+  color: $gray-500;
   position: relative;
   width: 100%;
 
@@ -8,14 +8,14 @@
     top: 50%;
     left: rem(16px);
     transform: translateY(-50%);
-    color: #a1a1a1;
+    color: $gray-500;
   }
 
   input {
     width: 100%;
     padding: 0 rem(44px);
     font-size: rem(16px);
-    background-color: #f6f6f6;
+    background-color: $gray-100;
     border-radius: rem(5px);
     font-size: rem(14px);
     height: rem(47px);
@@ -24,6 +24,6 @@
   }
 
   input::placeholder {
-    color: #a1a1a1;
+    color: $gray-500;
   }
 }

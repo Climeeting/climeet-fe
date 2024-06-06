@@ -45,17 +45,26 @@ export function PartySurveyFormPage() {
     setFormData((prev) => ({ ...prev, [key]: value }))
   }
 
+  const getCurrentStepIndex = (steps: readonly StepName[], step: StepName) => {
+    return steps.findIndex((el) => el === step)
+  }
+
+  const getPreviousStep = (steps: readonly StepName[], currentStepIndex: number) => {
+    if (currentStepIndex <= 0) {
+      return steps[0]
+    }
+
+    return steps[currentStepIndex - 1]
+  }
+
   return (
     <AppScreen appBar={{ title: '' }}>
       <div className={styles.wrapper}>
         <div
           onClick={() => {
-            const currentStepIndex = steps.findIndex((el) => el === step)
-            if (currentStepIndex === 0) {
-              return
-            }
-
-            setStep(steps[currentStepIndex - 1])
+            const currentStepIndex = getCurrentStepIndex(steps, step)
+            const previousStep = getPreviousStep(steps, currentStepIndex)
+            setStep(previousStep)
           }}
         >
           이전으로

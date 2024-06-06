@@ -1,0 +1,65 @@
+.container {
+  position: relative;
+  width: 100%;
+  padding-bottom: rem(148px);
+
+  .title {
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 1.65;
+    margin-bottom: rem(32px);
+  }
+
+  .question {
+    margin-bottom: rem(40px);
+  }
+
+  .questionTitle {
+    font-size: rem(14px);
+    font-weight: 500;
+    line-height: 1.7;
+    color: #777777;
+    margin-bottom: rem(8px);
+  }
+
+  .input {
+    width: 100%;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #cccccc;
+    font-size: rem(16px);
+    line-height: 1.7;
+  }
+
+  .nextBtn {
+    $wrapper-padding: 16px;
+    $height: 52px;
+    position: fixed;
+    bottom: $wrapper-padding;
+    left: $wrapper-padding;
+    width: calc(100% - $wrapper-padding * 2);
+    height: rem($height);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background: #7835f7;
+    border-radius: rem(calc($height / 2));
+  }
+
+  .trigger {
+    border-bottom: 1px solid #e5e5e5;
+    padding-top: 16px;
+    padding-bottom: 8px;
+    margin-bottom: 24px;
+  }
+
+  .triggerText {
+    font-size: rem(16px);
+    line-height: rem(1.7);
+  }
+
+  .active {
+    color: #333333;
+    border-color: #333333;
+  }
+}

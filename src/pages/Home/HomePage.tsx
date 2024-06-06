@@ -1,14 +1,14 @@
-import { get_oauth_logout } from '../../services/oauth'
+import { get_oauth_logout } from '@/services/oauth'
 import Profile from './Profile'
 import { useStack } from '@stackflow/react'
 import { useFlow } from '../stackflow'
 import { useEffect } from 'react'
-import TopBar from '../../components/NavBar/TopBar'
+import TopBar from '@/components/NavBar/TopBar'
 import styles from './HomePage.module.scss'
-import BottomBar from '../../components/NavBar/BottomBar'
+import BottomBar from '@/components/NavBar/BottomBar'
 import FilterList from './components/FilterList'
 import Tabs from './components/Tabs'
-import { Search } from '../../components/Search'
+import { Search } from '@/components/Search'
 
 export default function HomePage() {
   const stack = useStack()

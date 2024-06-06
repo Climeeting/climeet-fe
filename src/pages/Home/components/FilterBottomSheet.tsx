@@ -1,7 +1,6 @@
-import ToggleButton from '../../../components/ToggleButton'
 import styles from './FilterBottomSheet.module.scss'
-import Icon from '../../../components/Icon/Icon'
-import BottomSheet from '../../../components/BottomSheet'
+import Icon from '@/components/Icon/Icon'
+import BottomSheet from '@/components/BottomSheet'
 import {
   FilterContextType,
   addressOptions,
@@ -11,6 +10,7 @@ import {
   useFilterActions,
   useFilterContext,
 } from '../hooks/useFilterContext'
+import ToggleButton from '@/components/ToggleButton'
 
 export default function FilterBottomSheetMain() {
   const actions = useFilterActions()

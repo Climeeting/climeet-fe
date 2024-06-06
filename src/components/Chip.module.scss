@@ -1,6 +1,6 @@
 .Chip {
-  color: #9a9a9a;
-  background-color: #f6f6f6;
+  color: $gray-600;
+  background-color: $gray-100;
   padding: 0 rem(12px);
   font-size: rem(14px);
   display: flex;
@@ -11,7 +11,7 @@
   border-radius: rem(16px);
 }
 .Chip[data-variable='primary'] {
-  background-color: #7835f7;
+  background-color: $primary-500;
   color: #ffffff;
 }
 .Chip[data-variable='secondary'] {
@@ -20,5 +20,5 @@
 }
 .Chip[data-variable='default'] {
   background-color: #f6f6f6;
-  color: #9a9a9a;
+  color: $gray-600;
 }

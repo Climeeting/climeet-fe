@@ -3,7 +3,7 @@ import * as RadioGroup from '@radix-ui/react-radio-group'
 import styles from './RadioButtonGroup.module.scss'
 
 type RadioButtonGroupProps = {
-  list: any[]
+  list: string[]
 } & RadioGroupProps
 
 export function RadioButtonGroup({ list, ...rest }: RadioButtonGroupProps) {

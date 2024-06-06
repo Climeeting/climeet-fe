@@ -1,5 +1,5 @@
-import Chip from '../../../components/Chip'
-import Icon from '../../../components/Icon/Icon'
+import Chip from '@/components/Chip'
+import Icon from '@/components/Icon/Icon'
 import styles from './PartyCard.module.scss'
 
 type Props = {

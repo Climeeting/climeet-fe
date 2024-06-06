@@ -1,4 +1,4 @@
-import { useMyProfile } from '../../services/user'
+import { useMyProfile } from '@/services/user'
 
 export default function Profile() {
   const { data, isError } = useMyProfile()

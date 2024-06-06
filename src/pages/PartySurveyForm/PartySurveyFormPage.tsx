@@ -45,19 +45,21 @@ export function PartySurveyFormPage() {
     setFormData((prev) => ({ ...prev, [key]: value }))
   }
 
-  const handlePrevStepClick = () => {
-    const currentStepIndex = steps.findIndex((el) => el === step)
-    if (currentStepIndex === 0) {
-      return
-    }
-
-    setStep(steps[currentStepIndex - 1])
-  }
-
   return (
     <AppScreen appBar={{ title: '' }}>
       <div className={styles.wrapper}>
-        <div onClick={handlePrevStepClick}>이전으로</div>
+        <div
+          onClick={() => {
+            const currentStepIndex = steps.findIndex((el) => el === step)
+            if (currentStepIndex === 0) {
+              return
+            }
+
+            setStep(steps[currentStepIndex - 1])
+          }}
+        >
+          이전으로
+        </div>
         <Funnel>
           <Step name="암장">
             <PartyPlaceForm

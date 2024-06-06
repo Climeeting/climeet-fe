@@ -1,6 +1,6 @@
 import styles from './PartyIntroduceForm.module.scss'
 import { PartySurveyFormData } from '../PartySurveyFormPage.tsx'
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 type PartyIntroduceFormProps = {
   onNext: () => void
@@ -11,20 +11,6 @@ type PartyIntroduceFormProps = {
 export function PartyIntroduceForm({ onNext, formData, updateFormData }: PartyIntroduceFormProps) {
   const [partyName, setPartyName] = useState(formData.partyName)
   const [partyIntroduce, setPartyIntroduce] = useState(formData.partyIntroduce)
-
-  const handlePartyNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPartyName(e.target.value)
-  }
-
-  const handlePartyIntroduceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPartyIntroduce(e.target.value)
-  }
-
-  const handleNextBtnClick = () => {
-    updateFormData('partyName', partyName)
-    updateFormData('partyIntroduce', partyIntroduce)
-    onNext()
-  }
 
   return (
     <div className={styles.container}>
@@ -47,7 +33,9 @@ export function PartyIntroduceForm({ onNext, formData, updateFormData }: PartyIn
               className={styles.input}
               placeholder={'파티 제목을 입력해주세요.'}
               value={partyName}
-              onChange={handlePartyNameChange}
+              onChange={(e) => {
+                setPartyName(e.target.value)
+              }}
             />
           </div>
         </div>
@@ -58,13 +46,22 @@ export function PartyIntroduceForm({ onNext, formData, updateFormData }: PartyIn
               className={styles.input}
               placeholder={'내용을 입력해주세요.'}
               value={partyIntroduce}
-              onChange={handlePartyIntroduceChange}
+              onChange={(e) => {
+                setPartyIntroduce(e.target.value)
+              }}
             />
           </div>
         </div>
       </div>
       <div className={styles.footer}>
-        <button className={styles.nextBtn} onClick={handleNextBtnClick}>
+        <button
+          className={styles.nextBtn}
+          onClick={() => {
+            updateFormData('partyName', partyName)
+            updateFormData('partyIntroduce', partyIntroduce)
+            onNext()
+          }}
+        >
           다음
         </button>
       </div>

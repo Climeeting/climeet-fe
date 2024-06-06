@@ -11,10 +11,6 @@ type PartyPlaceFormProps = {
 export function PartyPlaceForm({ onNext, formData, updateFormData }: PartyPlaceFormProps) {
   const [value, setValue] = useState(formData.cragName)
 
-  const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value)
-  }
-
   return (
     <div className={styles.container}>
       <div>
@@ -25,7 +21,9 @@ export function PartyPlaceForm({ onNext, formData, updateFormData }: PartyPlaceF
         </h2>
         <input
           value={value}
-          onChange={handleValueChange}
+          onChange={(e) => {
+            setValue(e.target.value)
+          }}
           className={styles.input}
           placeholder={'암장 이름을 입력해주세요.'}
         />

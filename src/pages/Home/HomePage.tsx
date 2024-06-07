@@ -38,7 +38,12 @@ export default function HomePage() {
 
         <ul className={styles.PartyUl}>
           {mockParty.map((party, index) => (
-            <li key={index}>
+            <li
+              onClick={() => {
+                push('PartyDetailPage', { id: String(index) })
+              }}
+              key={index}
+            >
               <PartyCard {...party} />
             </li>
           ))}

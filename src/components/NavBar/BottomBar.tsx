@@ -18,7 +18,12 @@ export default function BottomBar() {
     <div className={styles.container}>
       <NavButton icon="HomeFilled" title="홈" page="HomePage" onClick={() => goTo('HomePage')} />
       <NavButton icon="LocationLine" title="탐색" />
-      <NavButton icon="Plus" title="만들기" />
+      <NavButton
+        icon="Plus"
+        title="만들기"
+        page="PartySurveyFormPage"
+        onClick={() => goTo('PartySurveyFormPage')}
+      />
       <NavButton icon="ChatLine" title="채팅" />
       <NavButton icon="MyPage" title="마이페이지" page="MyPage" onClick={() => goTo('MyPage')} />
     </div>

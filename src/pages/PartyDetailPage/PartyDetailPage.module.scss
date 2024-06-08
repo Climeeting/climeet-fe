@@ -1,0 +1,32 @@
+.Container {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  height: calc(100vh - (rem(44px) + rem(86px)));
+  overflow-y: scroll;
+  gap: rem(12px);
+  background-color: $gray-100;
+
+  section {
+    background-color: white;
+    padding: rem(28px) rem(16px);
+  }
+}
+
+.Bottom {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: white;
+  padding: rem(16px);
+  border-top: 1px solid $gray-100;
+
+  .Button {
+    width: 100%;
+    box-sizing: border-box;
+    height: rem(52px);
+    border-radius: rem(26px);
+    font-size: rem(16px);
+    font-weight: 700;
+  }
+}

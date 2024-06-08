@@ -16,12 +16,13 @@ export type PartySurveyFormData = {
   members: number
   gender: string
   subject: string // @desc 종목
-  level: string
   image: string
   partyName: string
   partyIntroduce: string
   partyDate: string
   partyTime: string
+  minSkillLevel: number
+  maxSkillLevel: number
 }
 
 export function PartySurveyFormPage() {
@@ -30,12 +31,13 @@ export function PartySurveyFormPage() {
     members: 0,
     gender: '남녀 모두',
     subject: '볼더링',
-    level: '상관없음',
     image: '',
     partyName: '',
     partyIntroduce: '',
     partyDate: '',
     partyTime: '',
+    minSkillLevel: 0,
+    maxSkillLevel: 0,
   })
   const { Funnel, Step, setStep, step } = useFunnel<StepName>('암장')
   const { stepPush } = useStepFlow('HomePage')

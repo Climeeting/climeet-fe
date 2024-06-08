@@ -24,7 +24,20 @@ export function PartyConditionForm({ onNext, formData, updateFormData }: PartyCo
         <Accordion.Root className="AccordionRoot" type="multiple" defaultValue={['item-1']}>
           <div className={styles.question}>
             <h3 className={styles.questionTitle}>파티 인원 (본인 포함)</h3>
-            <input className={styles.input} placeholder={'0명'} />
+            <Accordion.Item className="AccordionItem" value={`members`}>
+              <AccordionTrigger>{formData.members}</AccordionTrigger>
+              <AccordionContent>
+                <input
+                  type="number"
+                  min={2}
+                  max={12}
+                  value={formData.members}
+                  onChange={(e) => {
+                    updateFormData('members', e.target.value)
+                  }}
+                />
+              </AccordionContent>
+            </Accordion.Item>
           </div>
           <div className={styles.question}>
             <h3 className={styles.questionTitle}>성별</h3>
@@ -54,7 +67,33 @@ export function PartyConditionForm({ onNext, formData, updateFormData }: PartyCo
           </div>
           <div className={styles.question}>
             <h3 className={styles.questionTitle}>실력</h3>
-            <input className={styles.input} placeholder={'상관없음'} />
+            <Accordion.Item className="AccordionItem" value={`level`}>
+              <AccordionTrigger>
+                {formData.minSkillLevel}부터{formData.maxSkillLevel}
+              </AccordionTrigger>
+              <AccordionContent>
+                <input
+                  type="range"
+                  step={1}
+                  min={0}
+                  max={5}
+                  value={formData.minSkillLevel}
+                  onChange={(e) => {
+                    updateFormData('minSkillLevel', e.target.value)
+                  }}
+                />
+                <input
+                  type="range"
+                  step={1}
+                  min={0}
+                  max={5}
+                  value={formData.maxSkillLevel}
+                  onChange={(e) => {
+                    updateFormData('maxSkillLevel', e.target.value)
+                  }}
+                />
+              </AccordionContent>
+            </Accordion.Item>
           </div>
         </Accordion.Root>
       </div>

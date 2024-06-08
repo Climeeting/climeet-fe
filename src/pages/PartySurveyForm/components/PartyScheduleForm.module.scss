@@ -32,6 +32,13 @@
     line-height: 1.7;
   }
 
+  .notice {
+    font-size: 14px;
+    line-height: 1.7;
+    letter-spacing: -0.02;
+    color: #9a9a9a;
+  }
+
   .footer {
     @include footer;
   }

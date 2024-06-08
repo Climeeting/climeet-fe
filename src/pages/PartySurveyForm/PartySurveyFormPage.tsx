@@ -62,6 +62,9 @@ export function PartySurveyFormPage() {
   return (
     <AppScreen appBar={{ title: '' }}>
       <div className={styles.wrapper}>
+        <div className={styles.progressBar}>
+          <div className={styles.indicator}></div>
+        </div>
         <div
           onClick={() => {
             const currentStepIndex = getCurrentStepIndex(steps, step)

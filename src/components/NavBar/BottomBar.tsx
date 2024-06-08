@@ -1,34 +1,53 @@
 import styles from './BottomBar.module.scss'
-import Icon from '../Icon/Icon'
+import Icon, { IconType } from '../Icon/Icon'
 import classNames from 'classnames'
 import { useStack } from '@stackflow/react'
-
-const navigations = [
-  { icon: 'HomeFilled', title: '홈', page: 'HomePage' },
-  { icon: 'LocationLine', title: '탐색', page: null },
-  { icon: 'Plus', title: '만들기', page: null },
-  { icon: 'ChatLine', title: '채팅', page: null },
-  { icon: 'MyPage', title: '마이페이지', page: 'MyPage' },
-] as const
+import { ActivityKey, useFlow } from '@/pages/stackflow'
 
 export default function BottomBar() {
+  const { push } = useFlow()
   const { activities } = useStack()
 
-  const topActivity = activities.find((activity) => activity.isTop)
+  const goTo = (activity: ActivityKey, options = {}) => {
+    const top = activities[activities.length - 1]
+    if (top.name === activity) return
+    push(activity, options)
+  }
 
   return (
     <div className={styles.container}>
-      {navigations.map((nav, index) => (
-        <button
-          key={index}
-          className={classNames(styles.item, {
-            [styles.active]: nav.page === topActivity?.name,
-          })}
-        >
-          <Icon icon={nav.icon} size={24} />
-          <span>{nav.title}</span>
-        </button>
-      ))}
+      <NavButton icon="HomeFilled" title="홈" page="HomePage" onClick={() => goTo('HomePage')} />
+      <NavButton icon="LocationLine" title="탐색" />
+      <NavButton icon="Plus" title="만들기" />
+      <NavButton icon="ChatLine" title="채팅" />
+      <NavButton icon="MyPage" title="마이페이지" page="MyPage" onClick={() => goTo('MyPage')} />
     </div>
+  )
+}
+
+function NavButton({
+  icon,
+  title,
+  page,
+  onClick,
+}: {
+  icon: string
+  title: string
+  page?: string
+  onClick?: () => void
+}) {
+  const { activities } = useStack()
+  const topActivity = activities.find((activity) => activity.isTop)
+
+  return (
+    <button
+      className={classNames(styles.item, {
+        [styles.active]: page === topActivity?.name,
+      })}
+      onClick={onClick}
+    >
+      <Icon icon={icon as IconType} size={24} />
+      <span>{title}</span>
+    </button>
   )
 }

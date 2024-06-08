@@ -6,6 +6,7 @@ import HomePage from './Home/HomePage'
 import { historySyncPlugin } from '@stackflow/plugin-history-sync'
 import OauthPage from './Oauth/OauthPage'
 import NotFoundPage from './NotFoundPage'
+import MyPage from './MyPage/MyPage'
 import { PartySurveyFormPage } from './PartySurveyForm/PartySurveyFormPage.tsx'
 
 export const { Stack, useFlow, useStepFlow } = stackflow({
@@ -24,6 +25,7 @@ export const { Stack, useFlow, useStepFlow } = stackflow({
         LoginPage: '/login',
         NotFoundPage: '/404',
         OauthPage: '/oauth',
+        MyPage: '/mypage',
         PartySurveyFormPage: '/party-survey',
       },
       /**
@@ -41,7 +43,19 @@ export const { Stack, useFlow, useStepFlow } = stackflow({
     LoginPage,
     OauthPage,
     NotFoundPage,
+    MyPage,
     PartySurveyFormPage,
   },
   initialActivity: () => 'HomePage',
 })
+
+const activities = {
+  HomePage,
+  LoginPage,
+  OauthPage,
+  NotFoundPage,
+  MyPage,
+  PartySurveyFormPage,
+}
+
+export type ActivityKey = keyof typeof activities

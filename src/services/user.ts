@@ -32,6 +32,11 @@ export const useMyProfile = () => {
   })
 }
 
+export const useIsLogin = () => {
+  const { data, isError } = useMyProfile()
+  return !!data && !isError
+}
+
 export const MyProfileQuery = {
   invalidate: async () =>
     await queryClient.invalidateQueries({

@@ -7,6 +7,7 @@ import { historySyncPlugin } from '@stackflow/plugin-history-sync'
 import OauthPage from './Oauth/OauthPage'
 import NotFoundPage from './NotFoundPage'
 import MyPage from './MyPage/MyPage'
+import { PartySurveyFormPage } from './PartySurveyForm/PartySurveyFormPage.tsx'
 
 export const { Stack, useFlow, useStepFlow } = stackflow({
   transitionDuration: 350,
@@ -25,6 +26,7 @@ export const { Stack, useFlow, useStepFlow } = stackflow({
         NotFoundPage: '/404',
         OauthPage: '/oauth',
         MyPage: '/mypage',
+        PartySurveyFormPage: '/party-survey',
       },
       /**
        * If a URL that does not correspond to the URL template is given, it moves to the `fallbackActivity`.
@@ -42,6 +44,7 @@ export const { Stack, useFlow, useStepFlow } = stackflow({
     OauthPage,
     NotFoundPage,
     MyPage,
+    PartySurveyFormPage,
   },
   initialActivity: () => 'HomePage',
 })

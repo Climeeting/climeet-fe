@@ -1,5 +1,7 @@
 import { PartySurveyFormData } from '../PartySurveyFormPage.tsx'
 import styles from './PartyScheduleForm.module.scss'
+import * as Accordion from '@radix-ui/react-accordion'
+import { AccordionContent, AccordionTrigger } from '../../../components/Accordion.tsx'
 
 type PartyScheduleFormProps = {
   onNext: () => void
@@ -17,24 +19,36 @@ export function PartyScheduleForm({ onNext, formData, updateFormData }: PartySch
           파티 일정을 입력해주세요.
         </h2>
         <div>
-          <div className={styles.question}>
-            <h3 className={styles.questionTitle}>파티 날짜</h3>
-            <div className={styles.trigger}>
-              <div className={styles.triggerText}>{formData.partyDate}</div>
+          <Accordion.Root className="AccordionRoot" type="multiple" defaultValue={['item-1']}>
+            <div className={styles.question}>
+              <h3 className={styles.questionTitle}>파티 날짜</h3>
+              <Accordion.Item className="AccordionItem" value={`partyDate`}>
+                <AccordionTrigger>{formData.partyDate}</AccordionTrigger>
+                <AccordionContent>
+                  <input
+                    type="date"
+                    onChange={(e) => {
+                      updateFormData('partyDate', e.target.value)
+                    }}
+                  />
+                </AccordionContent>
+              </Accordion.Item>
             </div>
-            <div className={styles.content}>
-              <input className={styles.input} placeholder={'5월 22일'} />
+            <div className={styles.question}>
+              <h3 className={styles.questionTitle}>파티 시간</h3>
+              <Accordion.Item className="AccordionItem" value={`partyTime`}>
+                <AccordionTrigger>{formData.partyTime}</AccordionTrigger>
+                <AccordionContent>
+                  <input
+                    type="time"
+                    onChange={(e) => {
+                      updateFormData('partyTime', e.target.value)
+                    }}
+                  />
+                </AccordionContent>
+              </Accordion.Item>
             </div>
-          </div>
-          <div className={styles.question}>
-            <h3 className={styles.questionTitle}>파티 시간</h3>
-            <div className={styles.trigger}>
-              <div className={styles.triggerText}>{formData.partyDate}</div>
-            </div>
-            <div className={styles.content}>
-              <input className={styles.input} placeholder={'오후 06:00'} />
-            </div>
-          </div>
+          </Accordion.Root>
         </div>
         <div className={styles.notice}>
           <span>

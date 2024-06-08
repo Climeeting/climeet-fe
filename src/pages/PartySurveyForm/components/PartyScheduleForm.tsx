@@ -7,7 +7,7 @@ type PartyScheduleFormProps = {
   updateFormData: (key: keyof PartySurveyFormData, value: string) => void
 }
 
-export function PartyScheduleForm({ onNext, formData, updateFormData }: PartyScheduleFormProps) {
+export function PartyScheduleForm({ onNext, formData }: PartyScheduleFormProps) {
   return (
     <div className={styles.container}>
       <div>

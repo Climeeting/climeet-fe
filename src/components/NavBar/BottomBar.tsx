@@ -8,10 +8,10 @@ export default function BottomBar() {
   const { push } = useFlow()
   const { activities } = useStack()
 
-  const goTo = (activity: ActivityKey, options = {}) => {
+  const goTo = (activity: Exclude<ActivityKey, 'PartyDetailPage'>) => {
     const top = activities[activities.length - 1]
     if (top.name === activity) return
-    push(activity, options)
+    push(activity, {})
   }
 
   return (

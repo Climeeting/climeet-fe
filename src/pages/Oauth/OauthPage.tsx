@@ -1,5 +1,5 @@
 import { useAsync, useSearchParam } from 'react-use'
-import { post_kakao_oauth_token, post_oauth_login } from '../../services/oauth'
+import { post_kakao_oauth_token, post_oauth_login } from '@/services/oauth'
 import { useFlow } from '../stackflow'
 
 export default function OauthPage() {

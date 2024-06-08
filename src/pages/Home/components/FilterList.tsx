@@ -1,4 +1,4 @@
-import BottomSheet from '../../../components/BottomSheet'
+import BottomSheet from '@/components/BottomSheet'
 import { FilterProvider, useFilterActions, useFilterContext } from '../hooks/useFilterContext'
 import FilterBottomSheet from './FilterBottomSheet'
 import FilterButton from './FilterButton'

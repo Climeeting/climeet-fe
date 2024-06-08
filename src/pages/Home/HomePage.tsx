@@ -57,6 +57,13 @@ export default function HomePage() {
           로그인 하러 가기
         </button>
         <button onClick={get_oauth_logout}>로그아웃</button>
+        <div
+          onClick={() => {
+            push('PartySurveyFormPage', {})
+          }}
+        >
+          파티 만들기
+        </div>
         <Profile />
       </main>
       <BottomBar />

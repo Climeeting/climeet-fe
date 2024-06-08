@@ -9,8 +9,8 @@ export default function BottomBar() {
   const { activities } = useStack()
 
   const goTo = (activity: Exclude<ActivityKey, 'PartyDetailPage'>) => {
-    const top = activities[activities.length - 1]
-    if (top.name === activity) return
+    const topActivity = activities.find((activity) => activity.isTop)
+    if (topActivity?.name === activity) return
     push(activity, {})
   }
 

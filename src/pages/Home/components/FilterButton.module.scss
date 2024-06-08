@@ -1,4 +1,4 @@
-.Toggle {
+.Button {
   flex-shrink: 0;
   color: #9a9a9a;
   background-color: white;
@@ -12,8 +12,13 @@
   height: rem(32px);
   border-radius: rem(16px);
   flex-shrink: 0;
+  white-space: nowrap;
 }
-.Toggle[data-state='on'] {
-  background-color: #222222;
-  color: #ffffff;
+.Button[data-state='active'] {
+  color: #333333;
+  border: rem(1px) solid #333333;
+}
+
+.NoFlexShrink {
+  flex-shrink: 0;
 }

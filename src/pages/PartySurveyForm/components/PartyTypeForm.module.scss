@@ -1,0 +1,68 @@
+@import './PartyPlaceForm.module.scss';
+
+.container {
+  position: relative;
+  width: 100%;
+  padding-bottom: rem(148px);
+
+  .title {
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 1.65;
+    margin-bottom: rem(32px);
+  }
+
+  .radioItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: rem(79px);
+    border: rem(1px) solid #e5e5e5;
+    border-radius: rem(8px);
+    padding: 0 16px;
+    margin-bottom: 14px;
+
+    .partyType {
+      font-size: rem(16px);
+      font-weight: 700;
+      line-height: 1.7;
+      letter-spacing: -0.02;
+      color: #a1a1a1;
+    }
+
+    .desc {
+      font-size: rem(14px);
+      line-height: 1.7;
+      letter-spacing: -0.02;
+      font-weight: 500;
+      color: #a1a1a1;
+    }
+  }
+
+  .radioItem.selected {
+    border-color: #a072f7;
+    background-color: #fbf9ff;
+
+    .partyType {
+      color: #222222;
+    }
+
+    .desc {
+      color: #222222;
+    }
+  }
+
+  .radioItemLeft {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .footer {
+    @include footer;
+  }
+
+  .nextBtn {
+    @include nextBtn;
+  }
+}

@@ -48,3 +48,14 @@ export const { Stack, useFlow, useStepFlow } = stackflow({
   },
   initialActivity: () => 'HomePage',
 })
+
+const activities = {
+  HomePage,
+  LoginPage,
+  OauthPage,
+  NotFoundPage,
+  MyPage,
+  PartySurveyFormPage,
+}
+
+export type ActivityKey = keyof typeof activities

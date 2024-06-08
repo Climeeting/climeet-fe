@@ -2,28 +2,25 @@ import styles from './BottomBar.module.scss'
 import Icon, { IconType } from '../Icon/Icon'
 import classNames from 'classnames'
 import { useStack } from '@stackflow/react'
-import { useFlow } from '@/pages/stackflow'
+import { ActivityKey, useFlow } from '@/pages/stackflow'
 
 export default function BottomBar() {
   const { push } = useFlow()
+  const { activities } = useStack()
+
+  const goTo = (activity: ActivityKey, options = {}) => {
+    const top = activities[activities.length - 1]
+    if (top.name === activity) return
+    push(activity, options)
+  }
 
   return (
     <div className={styles.container}>
-      <NavButton
-        icon="HomeFilled"
-        title="홈"
-        page="HomePage"
-        onClick={() => push('HomePage', {})}
-      />
+      <NavButton icon="HomeFilled" title="홈" page="HomePage" onClick={() => goTo('HomePage')} />
       <NavButton icon="LocationLine" title="탐색" />
       <NavButton icon="Plus" title="만들기" />
       <NavButton icon="ChatLine" title="채팅" />
-      <NavButton
-        icon="MyPage"
-        title="마이페이지"
-        page="MyPage"
-        onClick={() => push('MyPage', {})}
-      />
+      <NavButton icon="MyPage" title="마이페이지" page="MyPage" onClick={() => goTo('MyPage')} />
     </div>
   )
 }

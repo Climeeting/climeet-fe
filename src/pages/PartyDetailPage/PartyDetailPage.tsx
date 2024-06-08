@@ -14,7 +14,7 @@ export function PartyDetailPage({ params }: Props) {
   const { id } = params
 
   return (
-    <AppScreen appBar={{ title: `파티 상세 ${id}` }}>
+    <AppScreen preventSwipeBack appBar={{ title: `파티 상세 ${id}` }}>
       <div className={styles.Container}>
         <section>
           <PartyMainInfo />

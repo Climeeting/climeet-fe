@@ -16,7 +16,7 @@ export default function MyPage() {
   )
 
   return (
-    <AppScreen appBar={{ title: '마이페이지' }}>
+    <AppScreen preventSwipeBack appBar={{ title: '마이페이지' }}>
       <Profile />
       {isLogin ? '로그인 되어 있습니다.' : '로그인 되어 있지 않습니다.'}
     </AppScreen>

@@ -5,7 +5,7 @@ import Logo from '@/assets/logo_text.png'
 
 export default function LoginPage() {
   return (
-    <AppScreen appBar={{ title: '' }}>
+    <AppScreen preventSwipeBack appBar={{ title: '' }}>
       <div className={styles.Container}>
         <img src={Logo} width={114} alt="logo" />
         <div className={styles.Bottom}>

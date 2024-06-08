@@ -58,7 +58,7 @@ export function PartySurveyFormPage() {
   }
 
   return (
-    <AppScreen appBar={{ title: '' }}>
+    <AppScreen preventSwipeBack appBar={{ title: '' }}>
       <div className={styles.wrapper}>
         <div
           onClick={() => {

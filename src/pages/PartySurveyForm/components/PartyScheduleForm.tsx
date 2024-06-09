@@ -1,4 +1,4 @@
-import { PartySurveyFormData } from '../PartySurveyFormPage.tsx'
+import { PartySurveyFormData, UpdateFormData } from '../PartySurveyFormPage.tsx'
 import styles from './PartyScheduleForm.module.scss'
 import * as Accordion from '@radix-ui/react-accordion'
 import { AccordionContent, AccordionTrigger } from '../../../components/Accordion.tsx'
@@ -6,7 +6,7 @@ import { AccordionContent, AccordionTrigger } from '../../../components/Accordio
 type PartyScheduleFormProps = {
   onNext: () => void
   formData: PartySurveyFormData
-  updateFormData: (key: keyof PartySurveyFormData, value: string) => void
+  updateFormData: UpdateFormData
 }
 
 export function PartyScheduleForm({ onNext, formData, updateFormData }: PartyScheduleFormProps) {

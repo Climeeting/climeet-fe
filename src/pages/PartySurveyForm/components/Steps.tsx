@@ -4,7 +4,7 @@ import { PartyPlaceForm } from './PartyPlaceForm.tsx'
 import { PartyConditionForm } from './PartyConditionForm.tsx'
 import { PartyIntroduceForm } from './PartyIntroduceForm.tsx'
 import { PartyScheduleForm } from './PartyScheduleForm.tsx'
-import { PartySurveyFormData } from '../PartySurveyFormPage.tsx'
+import { PartySurveyFormData, UpdateFormData } from '../PartySurveyFormPage.tsx'
 
 const steps = ['암장', '조건', '소개', '일정'] as const
 type StepName = (typeof steps)[number]
@@ -14,7 +14,7 @@ type OutdoorStepName = (typeof OutdoorSteps)[number]
 
 type StepProps = {
   formData: PartySurveyFormData
-  updateFormData: (key: keyof PartySurveyFormData, value: string) => void
+  updateFormData: UpdateFormData
 }
 
 export function IndoorStep({ formData, updateFormData }: StepProps) {

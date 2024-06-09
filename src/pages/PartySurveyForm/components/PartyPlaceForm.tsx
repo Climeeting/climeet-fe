@@ -1,11 +1,11 @@
 import styles from './PartyPlaceForm.module.scss'
-import { PartySurveyFormData } from '../PartySurveyFormPage.tsx'
+import { PartySurveyFormData, UpdateFormData } from '../PartySurveyFormPage.tsx'
 import { useState } from 'react'
 
 type PartyPlaceFormProps = {
   onNext: () => void
   formData: PartySurveyFormData
-  updateFormData: (key: keyof PartySurveyFormData, value: string) => void
+  updateFormData: UpdateFormData
 }
 
 export function PartyPlaceForm({ onNext, formData, updateFormData }: PartyPlaceFormProps) {

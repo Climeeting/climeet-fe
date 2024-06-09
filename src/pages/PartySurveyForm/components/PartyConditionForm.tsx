@@ -1,5 +1,5 @@
 import styles from './PartyConditionForm.module.scss'
-import { PartySurveyFormData } from '../PartySurveyFormPage.tsx'
+import { PartySurveyFormData, UpdateFormData } from '../PartySurveyFormPage.tsx'
 import { RadioButtonGroup } from '../../../components/RadioButtonGroup.tsx'
 import { AccordionContent, AccordionTrigger } from '../../../components/Accordion.tsx'
 import * as Accordion from '@radix-ui/react-accordion'
@@ -7,7 +7,7 @@ import * as Accordion from '@radix-ui/react-accordion'
 type PartyConditionFormProps = {
   onNext: () => void
   formData: PartySurveyFormData
-  updateFormData: (key: keyof PartySurveyFormData, value: string) => void
+  updateFormData: UpdateFormData
 }
 
 type Gender = '남녀 모두' | '남자만' | '여자만'

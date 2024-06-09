@@ -21,14 +21,8 @@ export const AccordionTrigger = React.forwardRef<any, any>(
   )
 )
 
-export const AccordionContent = React.forwardRef<any, any>(
-  ({ children, className, ...props }, forwardedRef) => (
-    <Accordion.Content
-      className={classNames(styles.AccordionContent, className)}
-      {...props}
-      ref={forwardedRef}
-    >
-      <div className="AccordionContentText">{children}</div>
-    </Accordion.Content>
-  )
-)
+export const AccordionContent = React.forwardRef<any, any>(({ children, className }) => (
+  <div className={classNames(styles.AccordionContent, className)}>
+    <div className="AccordionContentText">{children}</div>
+  </div>
+))

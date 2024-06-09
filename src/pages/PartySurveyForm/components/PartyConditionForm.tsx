@@ -1,8 +1,9 @@
 import styles from './PartyConditionForm.module.scss'
-import { PartySurveyFormData, UpdateFormData } from '../PartySurveyFormPage.tsx'
+import { Condition, PartySurveyFormData, UpdateFormData } from '../PartySurveyFormPage.tsx'
 import { RadioButtonGroup } from '../../../components/RadioButtonGroup.tsx'
 import { AccordionContent, AccordionTrigger } from '../../../components/Accordion.tsx'
 import * as Accordion from '@radix-ui/react-accordion'
+import { useState } from 'react'
 
 type PartyConditionFormProps = {
   onNext: () => void
@@ -16,6 +17,17 @@ type Subject = '볼더링' | '리드' | '지구력' | '상관없음'
 export function PartyConditionForm({ onNext, formData, updateFormData }: PartyConditionFormProps) {
   const genderList: Gender[] = ['남녀 모두', '남자만', '여자만']
   const subjectList: Subject[] = ['볼더링', '리드', '지구력', '상관없음']
+  const [condition, setCondition] = useState<Condition>({
+    members: formData.members,
+    gender: formData.gender,
+    subject: formData.subject,
+    minSkillLevel: formData.minSkillLevel,
+    maxSkillLevel: formData.maxSkillLevel,
+  })
+
+  const updateConditionData = (key: keyof Condition, value: Condition[keyof Condition]) => {
+    setCondition((prev) => ({ ...prev, [key]: value }))
+  }
 
   return (
     <div className={styles.container}>
@@ -25,15 +37,15 @@ export function PartyConditionForm({ onNext, formData, updateFormData }: PartyCo
           <div className={styles.question}>
             <h3 className={styles.questionTitle}>파티 인원 (본인 포함)</h3>
             <Accordion.Item className="AccordionItem" value={`members`}>
-              <AccordionTrigger>{formData.members}</AccordionTrigger>
+              <AccordionTrigger>{condition.members}</AccordionTrigger>
               <AccordionContent>
                 <input
                   type="number"
                   min={2}
                   max={12}
-                  value={formData.members}
+                  value={condition.members}
                   onChange={(e) => {
-                    updateFormData('members', e.target.value)
+                    updateConditionData('members', e.target.value)
                   }}
                 />
               </AccordionContent>
@@ -42,12 +54,12 @@ export function PartyConditionForm({ onNext, formData, updateFormData }: PartyCo
           <div className={styles.question}>
             <h3 className={styles.questionTitle}>성별</h3>
             <Accordion.Item className="AccordionItem" value={`gender`}>
-              <AccordionTrigger>{formData.gender}</AccordionTrigger>
+              <AccordionTrigger>{condition.gender}</AccordionTrigger>
               <AccordionContent>
                 <RadioButtonGroup
                   list={genderList}
-                  onValueChange={(value) => updateFormData('gender', value)}
-                  defaultValue={formData.gender}
+                  onValueChange={(value) => updateConditionData('gender', value)}
+                  defaultValue={condition.gender}
                 />
               </AccordionContent>
             </Accordion.Item>
@@ -55,12 +67,12 @@ export function PartyConditionForm({ onNext, formData, updateFormData }: PartyCo
           <div className={styles.question}>
             <h3 className={styles.questionTitle}>종목</h3>
             <Accordion.Item className="AccordionItem" value={`subject`}>
-              <AccordionTrigger>{formData.subject}</AccordionTrigger>
+              <AccordionTrigger>{condition.subject}</AccordionTrigger>
               <AccordionContent>
                 <RadioButtonGroup
                   list={subjectList}
-                  onValueChange={(value) => updateFormData('subject', value)}
-                  defaultValue={formData.subject}
+                  onValueChange={(value) => updateConditionData('subject', value)}
+                  defaultValue={condition.subject}
                 />
               </AccordionContent>
             </Accordion.Item>
@@ -69,7 +81,7 @@ export function PartyConditionForm({ onNext, formData, updateFormData }: PartyCo
             <h3 className={styles.questionTitle}>실력</h3>
             <Accordion.Item className="AccordionItem" value={`level`}>
               <AccordionTrigger>
-                {formData.minSkillLevel}부터{formData.maxSkillLevel}
+                {condition.minSkillLevel}부터{condition.maxSkillLevel}
               </AccordionTrigger>
               <AccordionContent>
                 <input
@@ -77,9 +89,9 @@ export function PartyConditionForm({ onNext, formData, updateFormData }: PartyCo
                   step={1}
                   min={0}
                   max={5}
-                  value={formData.minSkillLevel}
+                  value={condition.minSkillLevel}
                   onChange={(e) => {
-                    updateFormData('minSkillLevel', e.target.value)
+                    updateConditionData('minSkillLevel', e.target.value)
                   }}
                 />
                 <input
@@ -87,9 +99,9 @@ export function PartyConditionForm({ onNext, formData, updateFormData }: PartyCo
                   step={1}
                   min={0}
                   max={5}
-                  value={formData.maxSkillLevel}
+                  value={condition.maxSkillLevel}
                   onChange={(e) => {
-                    updateFormData('maxSkillLevel', e.target.value)
+                    updateConditionData('maxSkillLevel', e.target.value)
                   }}
                 />
               </AccordionContent>
@@ -98,7 +110,17 @@ export function PartyConditionForm({ onNext, formData, updateFormData }: PartyCo
         </Accordion.Root>
       </div>
       <div className={styles.footer}>
-        <button className={styles.nextBtn} onClick={onNext}>
+        <button
+          className={styles.nextBtn}
+          onClick={() => {
+            updateFormData('members', condition.members)
+            updateFormData('gender', condition.gender)
+            updateFormData('subject', condition.subject)
+            updateFormData('minSkillLevel', condition.minSkillLevel)
+            updateFormData('maxSkillLevel', condition.maxSkillLevel)
+            onNext()
+          }}
+        >
           다음
         </button>
       </div>

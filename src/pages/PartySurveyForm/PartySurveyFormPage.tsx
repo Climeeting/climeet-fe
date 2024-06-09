@@ -14,7 +14,6 @@ export type PartySurveyFormData = {
   members: number
   gender: string
   subject: string // @desc 종목
-  image: string
   partyName: string
   partyIntroduce: string
   partyDate: string
@@ -23,14 +22,17 @@ export type PartySurveyFormData = {
   maxSkillLevel: number
   isNatural: boolean
 }
+export type Condition = Pick<
+  PartySurveyFormData,
+  'members' | 'gender' | 'subject' | 'minSkillLevel' | 'maxSkillLevel'
+>
 
 export function PartySurveyFormPage() {
   const [formData, setFormData] = useState<PartySurveyFormData>({
     cragName: '',
-    members: 0,
+    members: 2,
     gender: '남녀 모두',
     subject: '볼더링',
-    image: '',
     partyName: '',
     partyIntroduce: '',
     partyDate: '',

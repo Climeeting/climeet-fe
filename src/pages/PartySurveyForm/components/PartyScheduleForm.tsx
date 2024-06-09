@@ -1,7 +1,8 @@
-import { PartySurveyFormData, UpdateFormData } from '../PartySurveyFormPage.tsx'
+import { PartySurveyFormData, Schedule, UpdateFormData } from '../PartySurveyFormPage.tsx'
 import styles from './PartyScheduleForm.module.scss'
 import * as Accordion from '@radix-ui/react-accordion'
 import { AccordionContent, AccordionTrigger } from '../../../components/Accordion.tsx'
+import { useState } from 'react'
 
 type PartyScheduleFormProps = {
   onNext: () => void
@@ -10,6 +11,15 @@ type PartyScheduleFormProps = {
 }
 
 export function PartyScheduleForm({ onNext, formData, updateFormData }: PartyScheduleFormProps) {
+  const [schedule, setSchedule] = useState<Schedule>({
+    partyDate: formData.partyDate,
+    partyTime: formData.partyTime,
+  })
+
+  const updateScheduleData = (key: keyof Schedule, value: Schedule[keyof Schedule]) => {
+    setSchedule((prev) => ({ ...prev, [key]: value }))
+  }
+
   return (
     <div className={styles.container}>
       <div>
@@ -23,12 +33,13 @@ export function PartyScheduleForm({ onNext, formData, updateFormData }: PartySch
             <div className={styles.question}>
               <h3 className={styles.questionTitle}>파티 날짜</h3>
               <Accordion.Item className="AccordionItem" value={`partyDate`}>
-                <AccordionTrigger>{formData.partyDate}</AccordionTrigger>
+                <AccordionTrigger>{schedule.partyDate}</AccordionTrigger>
                 <AccordionContent>
                   <input
                     type="date"
+                    value={schedule.partyDate}
                     onChange={(e) => {
-                      updateFormData('partyDate', e.target.value)
+                      updateScheduleData('partyDate', e.target.value)
                     }}
                   />
                 </AccordionContent>
@@ -37,12 +48,13 @@ export function PartyScheduleForm({ onNext, formData, updateFormData }: PartySch
             <div className={styles.question}>
               <h3 className={styles.questionTitle}>파티 시간</h3>
               <Accordion.Item className="AccordionItem" value={`partyTime`}>
-                <AccordionTrigger>{formData.partyTime}</AccordionTrigger>
+                <AccordionTrigger>{schedule.partyTime}</AccordionTrigger>
                 <AccordionContent>
                   <input
                     type="time"
+                    value={schedule.partyTime}
                     onChange={(e) => {
-                      updateFormData('partyTime', e.target.value)
+                      updateScheduleData('partyTime', e.target.value)
                     }}
                   />
                 </AccordionContent>
@@ -58,7 +70,14 @@ export function PartyScheduleForm({ onNext, formData, updateFormData }: PartySch
         </div>
       </div>
       <div className={styles.footer}>
-        <button className={styles.nextBtn} onClick={onNext}>
+        <button
+          className={styles.nextBtn}
+          onClick={() => {
+            updateFormData('partyDate', schedule.partyDate)
+            updateFormData('partyTime', schedule.partyTime)
+            onNext()
+          }}
+        >
           다음
         </button>
       </div>

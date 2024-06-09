@@ -26,6 +26,7 @@ export type Condition = Pick<
   PartySurveyFormData,
   'members' | 'gender' | 'subject' | 'minSkillLevel' | 'maxSkillLevel'
 >
+export type Schedule = Pick<PartySurveyFormData, 'partyDate' | 'partyTime'>
 
 export function PartySurveyFormPage() {
   const [formData, setFormData] = useState<PartySurveyFormData>({

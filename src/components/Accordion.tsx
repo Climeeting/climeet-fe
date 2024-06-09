@@ -14,7 +14,7 @@ export const AccordionTrigger = React.forwardRef<any, any>(
       >
         {children}
         <div className={styles.AccordionChevron}>
-          <Icon icon={'ArrowDown'} size={'24'} />
+          <Icon icon={'ArrowDown'} size={'12'} />
         </div>
       </Accordion.Trigger>
     </Accordion.Header>

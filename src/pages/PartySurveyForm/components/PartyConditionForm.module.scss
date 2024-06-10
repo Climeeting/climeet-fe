@@ -56,4 +56,14 @@
     color: #333333;
     border-color: #333333;
   }
+
+  .xAxis {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 4px;
+    color: #a1a1a1;
+    font-size: 14px;
+    line-height: 1.7;
+    letter-spacing: -0.02;
+  }
 }

@@ -1,0 +1,24 @@
+.Chip {
+  color: $gray-600;
+  background-color: $gray-100;
+  padding: 0 rem(12px);
+  font-size: rem(14px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: rem(6px);
+  height: rem(32px);
+  border-radius: rem(16px);
+}
+.Chip[data-variable='primary'] {
+  background-color: $primary-500;
+  color: #ffffff;
+}
+.Chip[data-variable='secondary'] {
+  background-color: #ff3dac;
+  color: #ffffff;
+}
+.Chip[data-variable='default'] {
+  background-color: #f6f6f6;
+  color: $gray-600;
+}

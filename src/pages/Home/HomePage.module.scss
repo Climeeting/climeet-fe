@@ -1,6 +1,6 @@
 .container {
   overflow: hidden;
-  background-color: #f6f6f6;
+  background-color: $gray-100;
 }
 
 .main {
@@ -12,8 +12,23 @@
   h1 {
     font-size: rem(20px);
     font-weight: 800;
-    color: #222222;
+    color: $gray-900;
     line-height: 1.7;
+    margin-bottom: rem(16px);
+  }
+}
+
+.PartyUl {
+  display: flex;
+  flex-wrap: wrap;
+  gap: rem(16px);
+  padding: 0 rem(16px);
+
+  li {
+    width: 100%;
+  }
+
+  li:last-child {
     margin-bottom: rem(16px);
   }
 }
@@ -30,4 +45,5 @@
 
 .Contents {
   padding: rem(32px) rem(16px);
+  padding-bottom: rem(24px);
 }

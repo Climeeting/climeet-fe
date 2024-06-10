@@ -1,6 +1,6 @@
 .container {
   width: 100%;
-  color: #222222;
+  color: $gray-900;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -15,6 +15,6 @@
   color: #b9b9b9;
 }
 .title.active {
-  color: #222222;
-  border-bottom: rem(2px) solid #222222;
+  color: $gray-900;
+  border-bottom: rem(2px) solid $gray-900;
 }

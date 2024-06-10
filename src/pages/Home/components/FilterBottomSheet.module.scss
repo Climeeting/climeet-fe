@@ -1,0 +1,93 @@
+.Container {
+  position: relative;
+  height: 80vh;
+}
+
+.Close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: rem(16px);
+}
+
+.Header {
+  height: rem(58px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: rem(1px) solid $gray-200;
+
+  h2 {
+    font-size: rem(20px);
+    font-weight: 700;
+  }
+}
+
+.SectionList {
+  height: 70vh;
+  overflow-y: scroll;
+  padding-bottom: rem(84px);
+}
+
+.Section {
+  margin: 0 rem(16px);
+  padding: rem(28px) 0;
+  border-bottom: 1px solid $gray-100;
+
+  h3 {
+    font-size: rem(16px);
+    font-weight: 700;
+  }
+  span {
+    font-size: rem(12px);
+  }
+}
+.Flex {
+  display: flex;
+  align-items: center;
+  gap: rem(3.5px);
+}
+
+.Section:last-child {
+  border-bottom: none;
+}
+
+.OptionList {
+  padding-top: rem(12px);
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: rem(6px);
+}
+
+.Controls {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: rem(84px);
+  display: flex;
+  justify-content: space-between;
+  padding: rem(16px);
+  gap: 9px;
+  background-color: #ffffff;
+  border-top: rem(1px) solid $gray-200;
+
+  button {
+    color: $gray-600;
+    font-size: rem(16px);
+    font-weight: 600;
+    border: 1px solid $gray-200;
+    height: rem(52px);
+    width: 100%;
+    border-radius: rem(26px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .ApplyButton {
+    background-color: $primary-500;
+    color: #ffffff;
+    border: none;
+  }
+}

@@ -1,0 +1,51 @@
+.Container {
+  width: 100%;
+  background-color: white;
+  border-radius: rem(8px);
+  padding: rem(20px) 0;
+}
+
+.Top {
+  padding: 0 rem(20px);
+
+  h3 {
+    width: 100%;
+    font-size: rem(16px);
+    color: #222222;
+    line-height: 1.7;
+    font-weight: 700;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* 2줄 넘어가면 말줄임 */
+    -webkit-box-orient: vertical;
+  }
+
+  .Time {
+    font-size: rem(14px);
+    color: #777777;
+    line-height: 1.7;
+  }
+}
+
+.Section {
+  padding: 0 rem(20px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .Info {
+    color: #a1a1a1;
+    font-size: rem(14px);
+    line-height: 1.7;
+    display: flex;
+    align-items: center;
+    gap: rem(5px);
+  }
+}
+
+.Divider {
+  width: 100%;
+  margin: rem(14px) 0;
+  border-bottom: 1px solid #f6f6f6;
+}

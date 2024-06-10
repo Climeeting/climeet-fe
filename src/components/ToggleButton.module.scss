@@ -1,6 +1,6 @@
 .Toggle {
   flex-shrink: 0;
-  color: #9a9a9a;
+  color: $gray-600;
   background-color: white;
   border: rem(1px) solid #e9e9e9;
   padding: 0 rem(12px);
@@ -13,8 +13,7 @@
   border-radius: rem(16px);
   flex-shrink: 0;
 }
-.Toggle:hover {
-}
 .Toggle[data-state='on'] {
-  background-color: #e9e9e9;
+  background-color: $gray-900;
+  color: #ffffff;
 }

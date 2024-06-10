@@ -1,0 +1,21 @@
+.Container {
+  width: 100%;
+  position: relative;
+  height: calc(100vh - rem(44px));
+
+  img {
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+.Bottom {
+  position: absolute;
+  bottom: rem(26px);
+  width: 100%;
+  box-sizing: border-box;
+  height: 50px;
+  padding: 0 rem(16px);
+}

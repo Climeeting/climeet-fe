@@ -22,6 +22,10 @@
   color: white;
   background: #7835f7;
   border-radius: calc($height / 2);
+
+  &.disabled {
+    opacity: 0.3;
+  }
 }
 
 .container {

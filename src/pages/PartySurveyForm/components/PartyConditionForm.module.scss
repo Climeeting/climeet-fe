@@ -6,7 +6,7 @@
   padding-bottom: rem(148px);
 
   .title {
-    font-size: 24px;
+    font-size: rem(24px);
     font-weight: bold;
     line-height: 1.65;
     margin-bottom: rem(32px);
@@ -26,8 +26,8 @@
 
   .input {
     width: 100%;
-    padding-bottom: 8px;
-    border-bottom: 1px solid #cccccc;
+    padding-bottom: rem(8px);
+    border-bottom: rem(1px) solid #cccccc;
     font-size: rem(16px);
     line-height: 1.7;
   }
@@ -41,15 +41,15 @@
   }
 
   .trigger {
-    border-bottom: 1px solid #e5e5e5;
-    padding-top: 16px;
-    padding-bottom: 8px;
-    margin-bottom: 24px;
+    border-bottom: rem(1px) solid #e5e5e5;
+    padding-top: rem(16px);
+    padding-bottom: rem(8px);
+    margin-bottom: rem(24px);
   }
 
   .trigger-text {
     font-size: rem(16px);
-    line-height: rem(1.7);
+    line-height: 1.7;
   }
 
   .active {
@@ -60,10 +60,34 @@
   .xAxis {
     display: flex;
     justify-content: space-between;
-    margin-top: 4px;
+    margin-top: rem(4px);
     color: #a1a1a1;
-    font-size: 14px;
+    font-size: rem(14px);
     line-height: 1.7;
     letter-spacing: -0.02;
+  }
+
+  .checkboxWrapper {
+    display: inline-flex;
+    align-items: center;
+    margin-top: rem(16px);
+  }
+
+  .checkbox {
+    width: (16px);
+    height: rem(16px);
+    border: rem(1px) solid blue;
+
+    &.checked {
+      background-color: blue;
+    }
+  }
+
+  .checkboxLabel {
+    margin-left: rem(6px);
+    font-size: rem(14px);
+    line-height: 1.7;
+    letter-spacing: -0.02;
+    color: #333333;
   }
 }

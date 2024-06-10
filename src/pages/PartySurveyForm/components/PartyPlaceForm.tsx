@@ -12,7 +12,9 @@ type PartyPlaceFormProps = {
 export function PartyPlaceForm({ onNext, formData, updateFormData }: PartyPlaceFormProps) {
   const [value, setValue] = useState(formData.cragName)
 
-  const isEmpty = value === ''
+  const isFormValid = () => {
+    return value !== ''
+  }
 
   return (
     <div className={styles.container}>
@@ -34,10 +36,10 @@ export function PartyPlaceForm({ onNext, formData, updateFormData }: PartyPlaceF
       <div className={styles.footer}>
         <button
           className={classNames(styles.nextBtn, {
-            [styles.disabled]: isEmpty,
+            [styles.disabled]: !isFormValid(),
           })}
           onClick={() => {
-            if (isEmpty) {
+            if (!isFormValid()) {
               return
             }
             updateFormData('cragName', value)

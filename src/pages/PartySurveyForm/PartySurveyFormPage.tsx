@@ -31,7 +31,7 @@ export type Schedule = Pick<PartySurveyFormData, 'partyDate' | 'partyTime'>
 export function PartySurveyFormPage() {
   const [formData, setFormData] = useState<PartySurveyFormData>({
     cragName: '',
-    members: 2,
+    members: 3,
     gender: '남녀 모두',
     subject: '볼더링',
     partyName: '',
@@ -39,7 +39,7 @@ export function PartySurveyFormPage() {
     partyDate: new Date().toISOString().substring(0, 10),
     partyTime: '18:00',
     minSkillLevel: 0,
-    maxSkillLevel: 0,
+    maxSkillLevel: 5,
     isNatural: false,
   })
   const [isFirstStep, setIsFirstStep] = useState(true)

@@ -1,6 +1,8 @@
 import { useAsync, useSearchParam } from 'react-use'
-import { post_kakao_oauth_token, post_oauth_login } from '../../services/oauth'
+import { post_kakao_oauth_token, post_oauth_login } from '@/services/oauth'
 import { useFlow } from '../stackflow'
+import Spinner from '@/components/Spinner'
+import styles from './OauthPage.module.scss'
 
 export default function OauthPage() {
   const code = useSearchParam('code')
@@ -18,8 +20,8 @@ export default function OauthPage() {
   }, [code])
 
   return (
-    <>
-      <h2>토큰 발급 중...</h2>
-    </>
+    <div className={styles.Container}>
+      <Spinner />
+    </div>
   )
 }

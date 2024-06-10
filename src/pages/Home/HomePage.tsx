@@ -1,14 +1,15 @@
-import { get_oauth_logout } from '../../services/oauth'
+import { get_oauth_logout } from '@/services/oauth'
 import Profile from './Profile'
 import { useStack } from '@stackflow/react'
 import { useFlow } from '../stackflow'
 import { useEffect } from 'react'
-import TopBar from '../../components/NavBar/TopBar'
+import TopBar from '@/components/NavBar/TopBar'
 import styles from './HomePage.module.scss'
-import BottomBar from '../../components/NavBar/BottomBar'
+import BottomBar from '@/components/NavBar/BottomBar'
 import FilterList from './components/FilterList'
 import Tabs from './components/Tabs'
-import { Search } from '../../components/Search'
+import { Search } from '@/components/Search'
+import PartyCard from './components/PartyCard'
 
 export default function HomePage() {
   const stack = useStack()
@@ -35,6 +36,19 @@ export default function HomePage() {
           <FilterList />
         </div>
 
+        <ul className={styles.PartyUl}>
+          {mockParty.map((party, index) => (
+            <li
+              onClick={() => {
+                push('PartyDetailPage', { id: String(index) })
+              }}
+              key={index}
+            >
+              <PartyCard {...party} />
+            </li>
+          ))}
+        </ul>
+
         <button
           onClick={() => {
             push('LoginPage', {})
@@ -56,3 +70,42 @@ export default function HomePage() {
     </div>
   )
 }
+
+const mockParty = [
+  {
+    time: '오전 10:00',
+    title:
+      'V8 스승님 구합니다.. 타이틀 길어질 경우 2줄까지 표시 타이틀 길어질 경우 2줄까지 표시 타이틀 길어질 경우 2줄까지 표시',
+    location: '서울숲 클라이밍 영등포점',
+    constrains: '남자',
+    status: '신청하기',
+  },
+  {
+    time: '오후 2:00',
+    title: 'V8 스승님 구합니다',
+    location: '서울숲 클라이밍 영등포점',
+    constrains: '남자',
+    status: '신청하기',
+  },
+  {
+    time: '오후 5:00',
+    title: 'V8 스승님 구합니다',
+    location: '서울숲 클라이밍 영등포점',
+    constrains: '남자',
+    status: '신청하기',
+  },
+  {
+    time: '오후 7:00',
+    title: 'V8 스승님 구합니다',
+    location: '서울숲 클라이밍 영등포점',
+    constrains: '남자',
+    status: '신청하기',
+  },
+  {
+    time: '오후 10:00',
+    title: 'V8 스승님 구합니다',
+    location: '서울숲 클라이밍 영등포점',
+    constrains: '남자',
+    status: '신청하기',
+  },
+]

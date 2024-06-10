@@ -1,0 +1,38 @@
+.Title {
+  font-size: rem(18px);
+  font-weight: 700;
+  color: $gray-900;
+  line-height: 1.7;
+}
+
+.UserInfo {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: rem(2px);
+  margin-top: rem(20px);
+}
+
+.Profile {
+  display: flex;
+  align-items: center;
+  gap: rem(3px);
+
+  span {
+    color: $gray-800;
+    font-weight: 700;
+  }
+}
+
+.Divider {
+  width: 100%;
+  height: 1px;
+  background-color: $gray-100;
+  margin: rem(16px) 0;
+}
+
+.Description {
+  font-size: rem(16px);
+  color: $gray-800;
+  line-height: 1.7;
+}

@@ -1,11 +1,17 @@
 import KakaoLogin from './components/KakaoLogin'
 import { AppScreen } from '@stackflow/plugin-basic-ui'
+import styles from './LoginPage.module.scss'
+import Logo from '@/assets/logo_text.png'
 
 export default function LoginPage() {
   return (
-    <AppScreen appBar={{ title: '' }}>
-      <h2>카카오톡 로그인 페이지</h2>
-      <KakaoLogin />
+    <AppScreen preventSwipeBack appBar={{ title: '' }}>
+      <div className={styles.Container}>
+        <img src={Logo} width={114} alt="logo" />
+        <div className={styles.Bottom}>
+          <KakaoLogin />
+        </div>
+      </div>
     </AppScreen>
   )
 }

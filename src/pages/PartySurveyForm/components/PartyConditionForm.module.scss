@@ -1,3 +1,5 @@
+@import './PartyPlaceForm.module.scss';
+
 .container {
   position: relative;
   width: 100%;
@@ -6,7 +8,6 @@
   .title {
     font-size: 24px;
     font-weight: bold;
-    // @todo line-height가 165%로 되어 있어서 16.5로 했는데 이게 맞는지 확인 필요
     line-height: 1.65;
     margin-bottom: rem(32px);
   }
@@ -31,21 +32,12 @@
     line-height: 1.7;
   }
 
-  // @todo 뒤에 배경 가려야 하는 것에 대한 디자인 요청 필요
+  .footer {
+    @include footer;
+  }
+
   .nextBtn {
-    $wrapper-padding: 16px;
-    $height: 52px;
-    position: fixed;
-    bottom: $wrapper-padding;
-    left: $wrapper-padding;
-    width: calc(100% - $wrapper-padding * 2);
-    height: rem($height);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    background: #7835f7;
-    border-radius: rem(calc($height / 2));
+    @include nextBtn;
   }
 
   .trigger {

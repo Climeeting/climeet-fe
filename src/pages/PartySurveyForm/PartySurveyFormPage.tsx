@@ -1,121 +1,72 @@
-import { useFunnel } from '../../utils/useFunnel.tsx'
 import { useState } from 'react'
-import { useFlow, useStepFlow } from '../stackflow.ts'
 import styles from './PartySurveyFormPage.module.scss'
-import { PartyPlaceForm } from './components/PartyPlaceForm.tsx'
-import { PartyConditionForm } from './components/PartyConditionForm.tsx'
-import { PartyIntroduceForm } from './components/PartyIntroduceForm.tsx'
 import { AppScreen } from '@stackflow/plugin-basic-ui'
-import { PartyScheduleForm } from './components/PartyScheduleForm.tsx'
+import { PartyTypeForm } from './components/PartyTypeForm.tsx'
+import { IndoorStep, OutdoorStep } from './components/Steps.tsx'
 
-const steps = ['암장', '조건', '소개', '일정'] as const
-type StepName = (typeof steps)[number]
+export type UpdateFormData = (
+  key: keyof PartySurveyFormData,
+  value: PartySurveyFormData[keyof PartySurveyFormData]
+) => void
 
 export type PartySurveyFormData = {
   cragName: string
   members: number
   gender: string
   subject: string // @desc 종목
-  level: string
-  image: string
   partyName: string
   partyIntroduce: string
   partyDate: string
   partyTime: string
+  minSkillLevel: number
+  maxSkillLevel: number
+  isNatural: boolean
 }
+export type Condition = Pick<
+  PartySurveyFormData,
+  'members' | 'gender' | 'subject' | 'minSkillLevel' | 'maxSkillLevel'
+>
+export type Schedule = Pick<PartySurveyFormData, 'partyDate' | 'partyTime'>
 
 export function PartySurveyFormPage() {
   const [formData, setFormData] = useState<PartySurveyFormData>({
     cragName: '',
-    members: 0,
+    members: 2,
     gender: '남녀 모두',
     subject: '볼더링',
-    level: '상관없음',
-    image: '',
     partyName: '',
     partyIntroduce: '',
     partyDate: '',
     partyTime: '',
+    minSkillLevel: 0,
+    maxSkillLevel: 0,
+    isNatural: false,
   })
-  const { Funnel, Step, setStep, step } = useFunnel<StepName>('암장')
-  const { stepPush } = useStepFlow('HomePage')
-  const { pop } = useFlow()
+  const [isFirstStep, setIsFirstStep] = useState(true)
 
-  const updateFormData = (key: keyof PartySurveyFormData, value: string) => {
+  const updateFormData: UpdateFormData = (key, value) => {
     setFormData((prev) => ({ ...prev, [key]: value }))
-  }
-
-  const getCurrentStepIndex = (steps: readonly StepName[], step: StepName) => {
-    return steps.findIndex((el) => el === step)
-  }
-
-  const getPreviousStep = (steps: readonly StepName[], currentStepIndex: number) => {
-    if (currentStepIndex <= 0) {
-      return steps[0]
-    }
-
-    return steps[currentStepIndex - 1]
   }
 
   return (
     <AppScreen preventSwipeBack appBar={{ title: '' }}>
       <div className={styles.wrapper}>
-        <div
-          onClick={() => {
-            const currentStepIndex = getCurrentStepIndex(steps, step)
-            const previousStep = getPreviousStep(steps, currentStepIndex)
-            setStep(previousStep)
-          }}
-        >
-          이전으로
+        <div className={styles.progressBar}>
+          <div className={styles.indicator}></div>
         </div>
-        <Funnel>
-          <Step name="암장">
-            <PartyPlaceForm
-              onNext={() => {
-                setStep('조건')
-                stepPush({
-                  title: 'condition',
-                })
-              }}
-              formData={formData}
-              updateFormData={updateFormData}
-            />
-          </Step>
-          <Step name="조건">
-            <PartyConditionForm
-              onNext={() => {
-                setStep('소개')
-                stepPush({
-                  title: 'introduce',
-                })
-              }}
-              formData={formData}
-              updateFormData={updateFormData}
-            />
-          </Step>
-          <Step name="소개">
-            <PartyIntroduceForm
-              onNext={() => {
-                setStep('일정')
-                stepPush({
-                  title: 'date',
-                })
-              }}
-              formData={formData}
-              updateFormData={updateFormData}
-            />
-          </Step>
-          <Step name="일정">
-            <PartyScheduleForm
-              onNext={() => {
-                pop()
-              }}
-              formData={formData}
-              updateFormData={updateFormData}
-            />
-          </Step>
-        </Funnel>
+        {isFirstStep ? (
+          <PartyTypeForm
+            formData={formData}
+            updateFormData={updateFormData}
+            onNext={() => {
+              setIsFirstStep(false)
+            }}
+          />
+        ) : formData.isNatural ? (
+          <OutdoorStep formData={formData} updateFormData={updateFormData} />
+        ) : (
+          <IndoorStep formData={formData} updateFormData={updateFormData} />
+        )}
       </div>
     </AppScreen>
   )

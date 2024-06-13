@@ -6,11 +6,11 @@ import { PartyIntroduceForm } from './PartyIntroduceForm.tsx'
 import { PartyScheduleForm } from './PartyScheduleForm.tsx'
 import { PartySurveyFormData, UpdateFormData } from '../PartySurveyFormPage.tsx'
 
-const steps = ['암장', '조건', '소개', '일정'] as const
-type StepName = (typeof steps)[number]
+const indoorSteps = ['암장', '조건', '소개', '일정'] as const
+type IndoorStepName = (typeof indoorSteps)[number]
 
-const OutdoorSteps = ['암장', '어프로치', '조건', '소개', '일정'] as const
-type OutdoorStepName = (typeof OutdoorSteps)[number]
+const outdoorSteps = ['암장', '어프로치', '조건', '소개', '일정'] as const
+type OutdoorStepName = (typeof outdoorSteps)[number]
 
 type StepProps = {
   formData: PartySurveyFormData
@@ -18,15 +18,15 @@ type StepProps = {
 }
 
 export function IndoorStep({ formData, updateFormData }: StepProps) {
-  const { Funnel, Step, setStep, step } = useFunnel<StepName>('암장')
+  const { Funnel, Step, setStep, step } = useFunnel<IndoorStepName>('암장')
   const { stepPush } = useStepFlow('HomePage')
   const { pop } = useFlow()
 
-  const getCurrentStepIndex = (steps: readonly StepName[], step: StepName) => {
+  const getCurrentStepIndex = (steps: readonly IndoorStepName[], step: IndoorStepName) => {
     return steps.findIndex((el) => el === step)
   }
 
-  const getPreviousStep = (steps: readonly StepName[], currentStepIndex: number) => {
+  const getPreviousStep = (steps: readonly IndoorStepName[], currentStepIndex: number) => {
     if (currentStepIndex <= 0) {
       return steps[0]
     }
@@ -38,8 +38,8 @@ export function IndoorStep({ formData, updateFormData }: StepProps) {
     <>
       <div
         onClick={() => {
-          const currentStepIndex = getCurrentStepIndex(steps, step)
-          const previousStep = getPreviousStep(steps, currentStepIndex)
+          const currentStepIndex = getCurrentStepIndex(indoorSteps, step)
+          const previousStep = getPreviousStep(indoorSteps, currentStepIndex)
           setStep(previousStep)
         }}
       >
@@ -116,8 +116,8 @@ export function OutdoorStep({ formData, updateFormData }: StepProps) {
     <>
       <div
         onClick={() => {
-          const currentStepIndex = getCurrentStepIndex(steps, step)
-          const previousStep = getPreviousStep(steps, currentStepIndex)
+          const currentStepIndex = getCurrentStepIndex(indoorSteps, step)
+          const previousStep = getPreviousStep(indoorSteps, currentStepIndex)
           setStep(previousStep)
         }}
       >

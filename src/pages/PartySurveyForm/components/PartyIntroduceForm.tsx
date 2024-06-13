@@ -13,17 +13,7 @@ export function PartyIntroduceForm({ onNext, formData, updateFormData }: PartyIn
   const [partyName, setPartyName] = useState(formData.partyName)
   const [partyIntroduce, setPartyIntroduce] = useState(formData.partyIntroduce)
 
-  const isFormValid = () => {
-    if (partyName.length < 5) {
-      return false
-    }
-
-    if (partyIntroduce.length < 10) {
-      return false
-    }
-
-    return true
-  }
+  const disabled = partyName.length < 5 || partyIntroduce.length < 10
 
   return (
     <div className={styles.container}>
@@ -59,10 +49,10 @@ export function PartyIntroduceForm({ onNext, formData, updateFormData }: PartyIn
       <div className={styles.footer}>
         <button
           className={classNames(styles.nextBtn, {
-            [styles.disabled]: !isFormValid(),
+            [styles.disabled]: disabled,
           })}
           onClick={() => {
-            if (!isFormValid()) {
+            if (disabled) {
               return
             }
             updateFormData('partyName', partyName)

@@ -12,9 +12,7 @@ type PartyPlaceFormProps = {
 export function PartyPlaceForm({ onNext, formData, updateFormData }: PartyPlaceFormProps) {
   const [value, setValue] = useState(formData.cragName)
 
-  const isFormValid = () => {
-    return value !== ''
-  }
+  const disabled = !value
 
   return (
     <div className={styles.container}>
@@ -36,10 +34,10 @@ export function PartyPlaceForm({ onNext, formData, updateFormData }: PartyPlaceF
       <div className={styles.footer}>
         <button
           className={classNames(styles.nextBtn, {
-            [styles.disabled]: !isFormValid(),
+            [styles.disabled]: disabled,
           })}
           onClick={() => {
-            if (!isFormValid()) {
+            if (disabled) {
               return
             }
             updateFormData('cragName', value)

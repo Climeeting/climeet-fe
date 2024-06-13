@@ -1,0 +1,39 @@
+.SliderRoot {
+  position: relative;
+  display: flex;
+  align-items: center;
+  user-select: none;
+  touch-action: none;
+
+  &[data-orientation='horizontal'] {
+    height: 20px;
+  }
+}
+
+.SliderTrack {
+  background-color: #f6f6f6;
+  position: relative;
+  flex-grow: 1;
+
+  &[data-orientation='horizontal'] {
+    height: 4px;
+  }
+}
+
+.SliderRange {
+  position: absolute;
+  background-color: #e5e5e5;
+  border-radius: 9999px;
+
+  &[data-orientation='horizontal'] {
+    height: 100%;
+  }
+}
+
+.SliderThumb {
+  display: block;
+  width: 16px;
+  height: 16px;
+  background-color: #333333;
+  border-radius: 50%;
+}

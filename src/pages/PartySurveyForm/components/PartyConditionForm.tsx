@@ -4,6 +4,8 @@ import { RadioButtonGroup } from '../../../components/RadioButtonGroup.tsx'
 import { AccordionContent, AccordionTrigger } from '../../../components/Accordion.tsx'
 import * as Accordion from '@radix-ui/react-accordion'
 import { useState } from 'react'
+import { Slider } from '@/components/Slider.tsx'
+import classNames from 'classnames'
 
 type PartyConditionFormProps = {
   onNext: () => void
@@ -81,29 +83,39 @@ export function PartyConditionForm({ onNext, formData, updateFormData }: PartyCo
             <h3 className={styles.questionTitle}>실력</h3>
             <Accordion.Item className="AccordionItem" value={`level`}>
               <AccordionTrigger>
-                {condition.minSkillLevel}부터{condition.maxSkillLevel}
+                V{condition.minSkillLevel}부터 V{condition.maxSkillLevel} 까지
               </AccordionTrigger>
               <AccordionContent>
-                <input
-                  type="range"
-                  step={1}
+                <Slider
+                  defaultValue={[condition.minSkillLevel, condition.maxSkillLevel]}
+                  value={[condition.minSkillLevel, condition.maxSkillLevel]}
                   min={0}
-                  max={5}
-                  value={condition.minSkillLevel}
-                  onChange={(e) => {
-                    updateConditionData('minSkillLevel', e.target.value)
+                  max={10}
+                  step={1}
+                  onValueChange={(value) => {
+                    updateConditionData('minSkillLevel', value[0])
+                    updateConditionData('maxSkillLevel', value[1])
                   }}
                 />
-                <input
-                  type="range"
-                  step={1}
-                  min={0}
-                  max={5}
-                  value={condition.maxSkillLevel}
-                  onChange={(e) => {
-                    updateConditionData('maxSkillLevel', e.target.value)
+                <div className={styles.xAxis}>
+                  <span>Vb</span>
+                  <span>V9-V10</span>
+                </div>
+                <div
+                  className={styles.checkboxWrapper}
+                  onClick={() => {
+                    updateConditionData('minSkillLevel', 0)
+                    updateConditionData('maxSkillLevel', 10)
                   }}
-                />
+                >
+                  <div
+                    className={classNames(styles.checkbox, {
+                      [styles.checked]:
+                        condition.minSkillLevel === 0 && condition.maxSkillLevel === 10,
+                    })}
+                  ></div>
+                  <span className={styles.checkboxLabel}>상관없음</span>
+                </div>
               </AccordionContent>
             </Accordion.Item>
           </div>

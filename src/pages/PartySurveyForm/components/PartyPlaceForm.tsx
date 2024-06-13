@@ -1,6 +1,7 @@
 import styles from './PartyPlaceForm.module.scss'
 import { PartySurveyFormData, UpdateFormData } from '../PartySurveyFormPage.tsx'
 import { useState } from 'react'
+import classNames from 'classnames'
 
 type PartyPlaceFormProps = {
   onNext: () => void
@@ -10,6 +11,8 @@ type PartyPlaceFormProps = {
 
 export function PartyPlaceForm({ onNext, formData, updateFormData }: PartyPlaceFormProps) {
   const [value, setValue] = useState(formData.cragName)
+
+  const disabled = !value
 
   return (
     <div className={styles.container}>
@@ -30,8 +33,13 @@ export function PartyPlaceForm({ onNext, formData, updateFormData }: PartyPlaceF
       </div>
       <div className={styles.footer}>
         <button
-          className={styles.nextBtn}
+          className={classNames(styles.nextBtn, {
+            [styles.disabled]: disabled,
+          })}
           onClick={() => {
+            if (disabled) {
+              return
+            }
             updateFormData('cragName', value)
             onNext()
           }}

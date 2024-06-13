@@ -1,6 +1,7 @@
 import styles from './PartyIntroduceForm.module.scss'
 import { PartySurveyFormData, UpdateFormData } from '../PartySurveyFormPage.tsx'
 import { useState } from 'react'
+import classNames from 'classnames'
 
 type PartyIntroduceFormProps = {
   onNext: () => void
@@ -11,6 +12,8 @@ type PartyIntroduceFormProps = {
 export function PartyIntroduceForm({ onNext, formData, updateFormData }: PartyIntroduceFormProps) {
   const [partyName, setPartyName] = useState(formData.partyName)
   const [partyIntroduce, setPartyIntroduce] = useState(formData.partyIntroduce)
+
+  const disabled = partyName.length < 5 || partyIntroduce.length < 10
 
   return (
     <div className={styles.container}>
@@ -45,8 +48,13 @@ export function PartyIntroduceForm({ onNext, formData, updateFormData }: PartyIn
       </div>
       <div className={styles.footer}>
         <button
-          className={styles.nextBtn}
+          className={classNames(styles.nextBtn, {
+            [styles.disabled]: disabled,
+          })}
           onClick={() => {
+            if (disabled) {
+              return
+            }
             updateFormData('partyName', partyName)
             updateFormData('partyIntroduce', partyIntroduce)
             onNext()

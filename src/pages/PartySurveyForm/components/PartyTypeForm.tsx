@@ -63,12 +63,7 @@ export function PartyTypeForm({ onNext, formData, updateFormData }: PartyTypeFor
         </div>
       </div>
       <div className={styles.footer}>
-        <button
-          className={styles.nextBtn}
-          onClick={() => {
-            onNext()
-          }}
-        >
+        <button className={styles.nextBtn} onClick={onNext}>
           다음
         </button>
       </div>

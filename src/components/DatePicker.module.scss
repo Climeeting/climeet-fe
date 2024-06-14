@@ -1,0 +1,54 @@
+.Container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: rem(20px);
+}
+.List {
+  width: 100%;
+  overflow-y: scroll;
+  display: flex;
+  gap: rem(8px);
+  justify-content: space-between;
+  align-items: center;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+.Title {
+  color: $gray-700;
+  font-size: rem(14px);
+  font-weight: 500;
+}
+.Button {
+  width: rem(46px);
+  height: rem(64px);
+  border-radius: rem(26px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .Day {
+    font-size: rem(14px);
+    color: $gray-400;
+  }
+  .Date {
+    font-size: rem(18px);
+    font-weight: 700;
+    color: $gray-900;
+  }
+}
+
+.Button[data-active='true'] {
+  background-color: $gray-900;
+  color: white;
+
+  .Day {
+    color: white;
+  }
+  .Date {
+    color: white;
+  }
+}

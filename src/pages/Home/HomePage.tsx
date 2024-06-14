@@ -10,6 +10,7 @@ import FilterList from './components/FilterList'
 import Tabs from './components/Tabs'
 import { Search } from '@/components/Search'
 import PartyCard from './components/PartyCard'
+import DatePicker from '@/components/DatePicker'
 
 export default function HomePage() {
   const stack = useStack()
@@ -29,6 +30,7 @@ export default function HomePage() {
         <div className={styles.SearchForm}>
           <Tabs tabs={['암장', '자연']} />
           <Search placeholder="암장을 검색해 보세요." />
+          <DatePicker />
         </div>
 
         <div className={styles.Contents}>

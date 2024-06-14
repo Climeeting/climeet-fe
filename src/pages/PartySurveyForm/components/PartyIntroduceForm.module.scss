@@ -37,10 +37,10 @@
     font-size: 14px;
     line-height: 1.7;
     letter-spacing: -0.02;
-    color: #9a9a9a;
+    color: $gray-600;
 
     strong {
-      color: #333333;
+      color: $gray-800;
       font-weight: 400;
     }
   }

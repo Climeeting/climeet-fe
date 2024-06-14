@@ -32,6 +32,19 @@
     line-height: 1.7;
   }
 
+  .minMax {
+    text-align: right;
+    font-size: 14px;
+    line-height: 1.7;
+    letter-spacing: -0.02;
+    color: #9a9a9a;
+
+    strong {
+      color: #333333;
+      font-weight: 400;
+    }
+  }
+
   .footer {
     @include footer;
   }

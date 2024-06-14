@@ -1,13 +1,11 @@
 .container {
-  overflow: hidden;
   background-color: $gray-100;
 }
 
 .main {
   margin-top: rem(56px);
-  margin-bottom: rem(65px);
-  height: calc(100vh - (rem(56px) + rem(65px)));
-  overflow-y: auto;
+  padding-bottom: rem(100px);
+  background-color: $gray-100;
 
   h1 {
     font-size: rem(20px);

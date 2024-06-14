@@ -1,4 +1,4 @@
-.container {
+.Main {
   width: 100%;
   padding: rem(16px);
   display: flex;
@@ -8,4 +8,37 @@
   left: 0;
   z-index: 1;
   background-color: #fff;
+}
+
+.Default {
+  width: 100%;
+  height: rem(48px);
+  border-bottom: 1px solid $gray-100;
+  color: $gray-900;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  background-color: #fff;
+
+  .Title {
+    font-size: rem(18px);
+    font-weight: 800;
+    color: $gray-900;
+    line-height: 1.7;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .Left {
+    display: flex;
+    align-items: center;
+    gap: rem(16px);
+    position: absolute;
+    left: rem(16px);
+    top: 50%;
+    transform: translateY(-50%);
+  }
 }

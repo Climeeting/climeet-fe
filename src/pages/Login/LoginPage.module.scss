@@ -1,7 +1,8 @@
 .Container {
   width: 100%;
   position: relative;
-  height: calc(100vh - rem(44px));
+  padding-top: rem(48px);
+  height: calc(100vh);
 
   img {
     position: absolute;

@@ -1,24 +1,25 @@
+import TopBar from '@/components/NavBar/TopBar'
 import Profile from '@/components/Profile'
 import { useIsLogin } from '@/services/user'
-import { AppScreen } from '@stackflow/plugin-basic-ui'
 import { useEffect } from 'react'
-import { useFlow } from '../stackflow'
+import { useNavigate } from 'react-router-dom'
 
 export default function MyPage() {
+  const navigate = useNavigate()
   const isLogin = useIsLogin()
-  const { replace } = useFlow()
 
   useEffect(
     function GoHome() {
-      if (!isLogin) replace('LoginPage', {})
+      if (!isLogin) navigate('/login', { replace: true })
     },
     [isLogin]
   )
 
   return (
-    <AppScreen preventSwipeBack appBar={{ title: '마이페이지' }}>
+    <div>
+      <TopBar />
       <Profile />
       {isLogin ? '로그인 되어 있습니다.' : '로그인 되어 있지 않습니다.'}
-    </AppScreen>
+    </div>
   )
 }

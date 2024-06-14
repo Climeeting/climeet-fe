@@ -1,6 +1,7 @@
 import styles from './PartyTypeForm.module.scss'
 import classNames from 'classnames'
 import { PartySurveyFormData, UpdateFormData } from '../PartySurveyFormPage.tsx'
+import Icon from '@/components/Icon/Icon.tsx'
 
 type PartyTypeFormProps = {
   onNext: () => void
@@ -29,14 +30,11 @@ export function PartyTypeForm({ onNext, formData, updateFormData }: PartyTypeFor
               <span className={styles.desc}>볼더링, 리드, 지구력을 함께 즐겨요!</span>
             </div>
             <div className={styles.radioItemRight}>
-              <div
-                className={classNames(
-                  {
-                    [styles.selected]: !formData.isNatural,
-                  },
-                  styles.indicator
-                )}
-              ></div>
+              {formData.isNatural ? (
+                <Icon icon={'RadioEmpty'} size={20} />
+              ) : (
+                <Icon icon={'RadioChecked'} size={20} />
+              )}
             </div>
           </div>
           <div
@@ -50,14 +48,11 @@ export function PartyTypeForm({ onNext, formData, updateFormData }: PartyTypeFor
               <span className={styles.desc}>자연 암장에서 함께 즐겨요!</span>
             </div>
             <div className={styles.radioItemRight}>
-              <div
-                className={classNames(
-                  {
-                    [styles.selected]: formData.isNatural,
-                  },
-                  styles.indicator
-                )}
-              ></div>
+              {formData.isNatural ? (
+                <Icon icon={'RadioChecked'} size={20} />
+              ) : (
+                <Icon icon={'RadioEmpty'} size={20} />
+              )}
             </div>
           </div>
         </div>

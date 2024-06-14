@@ -5,7 +5,7 @@ import { AccordionContent, AccordionTrigger } from '../../../components/Accordio
 import * as Accordion from '@radix-ui/react-accordion'
 import { useState } from 'react'
 import { Slider } from '@/components/Slider.tsx'
-import classNames from 'classnames'
+import Icon from '@/components/Icon/Icon.tsx'
 
 type PartyConditionFormProps = {
   onNext: () => void
@@ -30,6 +30,8 @@ export function PartyConditionForm({ onNext, formData, updateFormData }: PartyCo
   const updateConditionData = (key: keyof Condition, value: Condition[keyof Condition]) => {
     setCondition((prev) => ({ ...prev, [key]: value }))
   }
+
+  const isAllSkillLevel = condition.minSkillLevel === 0 && condition.maxSkillLevel === 10
 
   return (
     <div className={styles.container}>
@@ -108,12 +110,11 @@ export function PartyConditionForm({ onNext, formData, updateFormData }: PartyCo
                     updateConditionData('maxSkillLevel', 10)
                   }}
                 >
-                  <div
-                    className={classNames(styles.checkbox, {
-                      [styles.checked]:
-                        condition.minSkillLevel === 0 && condition.maxSkillLevel === 10,
-                    })}
-                  ></div>
+                  {isAllSkillLevel ? (
+                    <Icon icon={'CheckboxChecked'} size={16} />
+                  ) : (
+                    <Icon icon={'CheckboxEmpty'} size={16} />
+                  )}
                   <span className={styles.checkboxLabel}>상관없음</span>
                 </div>
               </AccordionContent>

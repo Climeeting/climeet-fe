@@ -4,7 +4,7 @@ import dayjs from 'dayjs'
 
 type Props = {
   initDate?: dayjs.Dayjs
-  onClick?: () => void
+  onClick?: (date: dayjs.Dayjs) => void
 }
 export default function DatePicker({ initDate, onClick }: Props) {
   const now = useMemo(() => initDate || dayjs(), [initDate])
@@ -17,14 +17,14 @@ export default function DatePicker({ initDate, onClick }: Props) {
       <h3 className={styles.Title}>{now.format('YYYY년 MM월 DD일 (dd)')}</h3>
       <ul className={styles.List}>
         {week.map((date, index) => (
-          <li>
+          <li key={date.format()}>
             <button
               key={index}
               className={styles.Button}
               data-active={dayjs(activeDate).isSame(date)}
               onClick={() => {
                 setActiveDate(date)
-                onClick?.()
+                onClick?.(date)
               }}
             >
               <span className={styles.Day}>{date.format('dd')}</span>

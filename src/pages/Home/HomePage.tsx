@@ -6,13 +6,9 @@ import FilterList from './components/FilterList'
 import Tabs from './components/Tabs'
 import { Search } from '@/components/Search'
 import PartyCard from './components/PartyCard'
-import { useGeolocation } from 'react-use'
 import { Link } from 'react-router-dom'
 
 export default function HomePage() {
-  const location = useGeolocation()
-  console.log(location)
-
   return (
     <div className={styles.container}>
       <TopBar type="main" />

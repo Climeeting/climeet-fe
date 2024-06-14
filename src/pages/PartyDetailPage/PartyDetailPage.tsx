@@ -1,20 +1,18 @@
-import { AppScreen } from '@stackflow/plugin-basic-ui'
 import styles from './PartyDetailPage.module.scss'
 import Chip from '@/components/Chip'
 import { PartyMainInfo } from './components/PartyMainInfo'
 import { PartyDescription } from './components/PartyDescription'
 import { PartyClimbInfo } from './components/PartyClimbInfo'
 import { PartyParticipants } from './components/PartyParticipants'
+import { useParams } from 'react-router-dom'
+import TopBar from '@/components/NavBar/TopBar'
 
-type Props = {
-  params: { id: string }
-}
-
-export function PartyDetailPage({ params }: Props) {
-  const { id } = params
+export function PartyDetailPage() {
+  const { id } = useParams<{ id: string }>()
 
   return (
-    <AppScreen preventSwipeBack appBar={{ title: `파티 상세 ${id}` }}>
+    <>
+      <TopBar type="default" title={`파티 디테일 ${id}`} />
       <div className={styles.Container}>
         <section>
           <PartyMainInfo />
@@ -37,6 +35,6 @@ export function PartyDetailPage({ params }: Props) {
           <button>지금 파티 참가하기!</button>
         </Chip>
       </div>
-    </AppScreen>
+    </>
   )
 }

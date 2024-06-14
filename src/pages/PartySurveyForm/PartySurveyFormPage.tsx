@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import styles from './PartySurveyFormPage.module.scss'
-import { AppScreen } from '@stackflow/plugin-basic-ui'
 import { PartyTypeForm } from './components/PartyTypeForm.tsx'
 import { IndoorStep, OutdoorStep } from './components/Steps.tsx'
+import TopBar from '@/components/NavBar/TopBar.tsx'
 
 export type UpdateFormData = (
   key: keyof PartySurveyFormData,
@@ -49,7 +49,8 @@ export function PartySurveyFormPage() {
   }
 
   return (
-    <AppScreen preventSwipeBack appBar={{ title: '' }}>
+    <>
+      <TopBar />
       <div className={styles.wrapper}>
         <div className={styles.progressBar}>
           <div className={styles.indicator}></div>
@@ -68,6 +69,6 @@ export function PartySurveyFormPage() {
           <IndoorStep formData={formData} updateFormData={updateFormData} />
         )}
       </div>
-    </AppScreen>
+    </>
   )
 }

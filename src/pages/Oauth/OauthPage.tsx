@@ -1,12 +1,12 @@
 import { useAsync, useSearchParam } from 'react-use'
 import { post_kakao_oauth_token, post_oauth_login } from '@/services/oauth'
-import { useFlow } from '../stackflow'
 import Spinner from '@/components/Spinner'
 import styles from './OauthPage.module.scss'
+import { useNavigate } from 'react-router-dom'
 
 export default function OauthPage() {
   const code = useSearchParam('code')
-  const { replace } = useFlow()
+  const navigate = useNavigate()
 
   useAsync(async () => {
     if (!code) return
@@ -16,7 +16,7 @@ export default function OauthPage() {
     // 2. 로그인 요청
     await post_oauth_login(accessToken)
 
-    replace('HomePage', {})
+    navigate('/', { replace: true })
   }, [code])
 
   return (

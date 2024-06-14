@@ -8,6 +8,7 @@ import { Search } from '@/components/Search'
 import PartyCard from './components/PartyCard'
 import { useGeolocation } from 'react-use'
 import { Link } from 'react-router-dom'
+import DatePicker from '@/components/DatePicker'
 
 export default function HomePage() {
   const location = useGeolocation()
@@ -20,6 +21,7 @@ export default function HomePage() {
         <div className={styles.SearchForm}>
           <Tabs tabs={['암장', '자연']} />
           <Search placeholder="암장을 검색해 보세요." />
+          <DatePicker />
         </div>
 
         <div className={styles.Contents}>

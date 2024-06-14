@@ -6,9 +6,16 @@ import { PartyClimbInfo } from './components/PartyClimbInfo'
 import { PartyParticipants } from './components/PartyParticipants'
 import { useParams } from 'react-router-dom'
 import TopBar from '@/components/NavBar/TopBar'
+import { useGeolocation } from 'react-use'
+import { useEffect } from 'react'
 
 export function PartyDetailPage() {
   const { id } = useParams<{ id: string }>()
+  const location = useGeolocation();
+
+  useEffect(() => {
+    console.log(location)
+  }, [location])
 
   return (
     <>

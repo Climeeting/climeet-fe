@@ -22,6 +22,7 @@ export type PartySurveyFormData = {
   minSkillLevel: number
   maxSkillLevel: number
   isNatural: boolean
+  approachDescription: string
 }
 export type Condition = Pick<
   PartySurveyFormData,
@@ -43,6 +44,7 @@ export function PartySurveyFormPage() {
     minSkillLevel: 0,
     maxSkillLevel: 5,
     isNatural: false,
+    approachDescription: '',
   })
   const [isFirstStep, setIsFirstStep] = useState(true)
 

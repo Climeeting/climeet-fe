@@ -19,5 +19,11 @@ export type PostPartyNewRes = {
 }
 
 export const post_party_new = async (reqBody: PostPartyNewReq) => {
-  return await api.post<PostPartyNewRes>('/v1/party/new', reqBody)
+  try {
+    const result = await api.post<PostPartyNewRes>('/v1/party/new', reqBody)
+    return result
+  } catch (e) {
+    console.error(e)
+    throw new Error('파티 생성에 실패하였습니다. post v1/party/new')
+  }
 }

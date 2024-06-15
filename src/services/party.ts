@@ -1,9 +1,11 @@
 import api from '@/utils/api.ts'
+import { ClimbingTypeEn, GenderEn } from '@/pages/PartySurveyForm/components/PartyConditionForm.tsx'
 
 export type PostPartyNewReq = {
-  constraints: 'BOTH' | 'MALE_ONLY' | 'FEMALE_ONLY'
-  climbingType: 'BOULDERING' | 'LEAD' | 'ENDURANCE' | 'ANY'
+  constraints: GenderEn
+  climbingType: ClimbingTypeEn
   maximumParticipationNumber: number
+  partyTitle: string
   isNatural: boolean
   minSkillLevel: number
   maxSkillLevel: number

@@ -5,6 +5,7 @@ import { ClimbingTypeEn, GenderEn, PartyConditionForm } from './PartyConditionFo
 import { PartyIntroduceForm } from './PartyIntroduceForm.tsx'
 import { PartyScheduleForm } from './PartyScheduleForm.tsx'
 import { PartySurveyFormData, UpdateFormData } from '../PartySurveyFormPage.tsx'
+import { post_party_new, PostPartyNewReq } from '@/services/party.ts'
 
 const indoorSteps = ['암장', '조건', '소개', '일정'] as const
 type IndoorStepName = (typeof indoorSteps)[number]
@@ -84,8 +85,14 @@ export function IndoorStep({ formData, updateFormData }: StepProps) {
         </Step>
         <Step name="일정">
           <PartyScheduleForm
-            onNext={() => {
-              pop()
+            onNext={async () => {
+              try {
+                const reqBody: PostPartyNewReq = new PartyNewAdapter(formData).adapt()
+                await post_party_new(reqBody)
+                pop()
+              } catch (e) {
+                console.log(e)
+              }
             }}
             formData={formData}
             updateFormData={updateFormData}

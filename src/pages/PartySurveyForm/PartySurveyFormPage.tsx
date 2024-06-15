@@ -12,11 +12,11 @@ export type UpdateFormData = (
 export type PartySurveyFormData = {
   cragName: string
   locationId: number
-  members: number
+  maximumParticipationNumber: number
   gender: string
-  subject: string // @desc 종목
+  climbingType: string // @desc 종목
   partyName: string
-  partyIntroduce: string
+  partyDescription: string
   partyDate: string
   partyTime: string
   minSkillLevel: number
@@ -25,7 +25,7 @@ export type PartySurveyFormData = {
 }
 export type Condition = Pick<
   PartySurveyFormData,
-  'members' | 'gender' | 'subject' | 'minSkillLevel' | 'maxSkillLevel'
+  'maximumParticipationNumber' | 'gender' | 'climbingType' | 'minSkillLevel' | 'maxSkillLevel'
 >
 export type Schedule = Pick<PartySurveyFormData, 'partyDate' | 'partyTime'>
 
@@ -33,11 +33,11 @@ export function PartySurveyFormPage() {
   const [formData, setFormData] = useState<PartySurveyFormData>({
     cragName: '',
     locationId: 0,
-    members: 3,
+    maximumParticipationNumber: 3,
     gender: '남녀 모두',
-    subject: '볼더링',
+    climbingType: '볼더링',
     partyName: '',
-    partyIntroduce: '',
+    partyDescription: '',
     partyDate: new Date().toISOString().substring(0, 10),
     partyTime: '18:00',
     minSkillLevel: 0,

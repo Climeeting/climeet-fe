@@ -11,7 +11,7 @@ type PartyIntroduceFormProps = {
 
 export function PartyIntroduceForm({ onNext, formData, updateFormData }: PartyIntroduceFormProps) {
   const [partyName, setPartyName] = useState(formData.partyName)
-  const [partyIntroduce, setPartyIntroduce] = useState(formData.partyIntroduce)
+  const [partyIntroduce, setPartyIntroduce] = useState(formData.partyDescription)
 
   const disabled = partyName.length < 5 || partyIntroduce.length < 10
 
@@ -56,7 +56,7 @@ export function PartyIntroduceForm({ onNext, formData, updateFormData }: PartyIn
               return
             }
             updateFormData('partyName', partyName)
-            updateFormData('partyIntroduce', partyIntroduce)
+            updateFormData('partyDescription', partyIntroduce)
             onNext()
           }}
         >

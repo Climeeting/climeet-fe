@@ -11,6 +11,7 @@ export type UpdateFormData = (
 
 export type PartySurveyFormData = {
   cragName: string
+  locationId: number
   members: number
   gender: string
   subject: string // @desc 종목
@@ -31,6 +32,7 @@ export type Schedule = Pick<PartySurveyFormData, 'partyDate' | 'partyTime'>
 export function PartySurveyFormPage() {
   const [formData, setFormData] = useState<PartySurveyFormData>({
     cragName: '',
+    locationId: 0,
     members: 3,
     gender: '남녀 모두',
     subject: '볼더링',

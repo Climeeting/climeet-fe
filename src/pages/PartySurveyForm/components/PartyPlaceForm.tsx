@@ -2,6 +2,8 @@ import styles from './PartyPlaceForm.module.scss'
 import { PartySurveyFormData, UpdateFormData } from '../PartySurveyFormPage.tsx'
 import { useState } from 'react'
 import classNames from 'classnames'
+import { ClimbSearchItem } from '@/pages/types/api.ts'
+import { get_climb_search } from '@/services/gymSearch.ts'
 
 type PartyPlaceFormProps = {
   onNext: () => void
@@ -10,7 +12,9 @@ type PartyPlaceFormProps = {
 }
 
 export function PartyPlaceForm({ onNext, formData, updateFormData }: PartyPlaceFormProps) {
+  const [locationId, setLocationId] = useState<number>(formData.locationId)
   const [value, setValue] = useState(formData.cragName)
+  const [gymList, setGymList] = useState<ClimbSearchItem[]>([])
 
   const disabled = !value
 
@@ -29,7 +33,25 @@ export function PartyPlaceForm({ onNext, formData, updateFormData }: PartyPlaceF
           }}
           className={styles.input}
           placeholder={'암장 이름을 입력해주세요.'}
+          onBlur={async () => {
+            if (value !== '') {
+              const res = await get_climb_search(value)
+              setGymList(res.content)
+            }
+          }}
         />
+        <div>
+          {gymList.map((el) => (
+            <div
+              onClick={() => {
+                setValue(el.name)
+                setLocationId(el.id)
+              }}
+            >
+              {el.name}
+            </div>
+          ))}
+        </div>
       </div>
       <div className={styles.footer}>
         <button
@@ -41,6 +63,7 @@ export function PartyPlaceForm({ onNext, formData, updateFormData }: PartyPlaceF
               return
             }
             updateFormData('cragName', value)
+            updateFormData('locationId', locationId)
             onNext()
           }}
         >

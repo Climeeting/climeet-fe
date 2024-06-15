@@ -3,6 +3,7 @@ import styles from './PartySurveyFormPage.module.scss'
 import { PartyTypeForm } from './components/PartyTypeForm.tsx'
 import { IndoorStep, OutdoorStep } from './components/Steps.tsx'
 import TopBar from '@/components/NavBar/TopBar.tsx'
+import { ClimbingTypeKo, GenderKo } from '@/pages/PartySurveyForm/components/PartyConditionForm.tsx'
 
 export type UpdateFormData = (
   key: keyof PartySurveyFormData,
@@ -13,8 +14,8 @@ export type PartySurveyFormData = {
   cragName: string
   locationId: number
   maximumParticipationNumber: number
-  gender: string
-  climbingType: string // @desc 종목
+  gender: GenderKo
+  climbingType: ClimbingTypeKo
   partyName: string
   partyDescription: string
   partyDate: string

@@ -13,12 +13,9 @@ type PartyConditionFormProps = {
   updateFormData: UpdateFormData
 }
 
-type Gender = '남녀 모두' | '남자만' | '여자만'
-type Subject = '볼더링' | '리드' | '지구력' | '상관없음'
-
 export function PartyConditionForm({ onNext, formData, updateFormData }: PartyConditionFormProps) {
-  const genderList: Gender[] = ['남녀 모두', '남자만', '여자만']
-  const subjectList: Subject[] = ['볼더링', '리드', '지구력', '상관없음']
+  const genderList: GenderKo[] = ['남녀 모두', '남자만', '여자만']
+  const subjectList: ClimbingTypeKo[] = ['볼더링', '리드', '지구력', '상관없음']
   const [condition, setCondition] = useState<Condition>({
     maximumParticipationNumber: formData.maximumParticipationNumber,
     gender: formData.gender,
@@ -47,7 +44,7 @@ export function PartyConditionForm({ onNext, formData, updateFormData }: PartyCo
                   max={12}
                   value={condition.maximumParticipationNumber}
                   onChange={(e) => {
-                    updateConditionData('maximumParticipationNumber', e.target.value)
+                    updateConditionData('maximumParticipationNumber', Number(e.target.value))
                   }}
                 />
               </AccordionContent>
@@ -60,7 +57,7 @@ export function PartyConditionForm({ onNext, formData, updateFormData }: PartyCo
               <AccordionContent>
                 <RadioButtonGroup
                   list={genderList}
-                  onValueChange={(value) => updateConditionData('gender', value)}
+                  onValueChange={(value) => updateConditionData('gender', value as GenderKo)}
                   defaultValue={condition.gender}
                 />
               </AccordionContent>
@@ -73,7 +70,9 @@ export function PartyConditionForm({ onNext, formData, updateFormData }: PartyCo
               <AccordionContent>
                 <RadioButtonGroup
                   list={subjectList}
-                  onValueChange={(value) => updateConditionData('climbingType', value)}
+                  onValueChange={(value) =>
+                    updateConditionData('climbingType', value as ClimbingTypeKo)
+                  }
                   defaultValue={condition.climbingType}
                 />
               </AccordionContent>
@@ -139,3 +138,20 @@ export function PartyConditionForm({ onNext, formData, updateFormData }: PartyCo
     </div>
   )
 }
+
+export const Gender = {
+  BOTH: '남녀 모두',
+  MALE_ONLY: '남자만',
+  FEMALE_ONLY: '여자만',
+} as const
+export type GenderEn = keyof typeof Gender
+export type GenderKo = (typeof Gender)[GenderEn]
+
+const ClimbingType = {
+  BOULDERING: '볼더링',
+  LEAD: '리드',
+  ENDURANCE: '지구력',
+  ANY: '상관없음',
+} as const
+export type ClimbingTypeEn = keyof typeof ClimbingType
+export type ClimbingTypeKo = (typeof ClimbingType)[ClimbingTypeEn]

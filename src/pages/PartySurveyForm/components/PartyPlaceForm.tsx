@@ -26,20 +26,27 @@ export function PartyPlaceForm({ onNext, formData, updateFormData }: PartyPlaceF
           <br />
           암장을 알려주세요.
         </h2>
-        <input
-          value={value}
-          onChange={(e) => {
-            setValue(e.target.value)
-          }}
-          className={styles.input}
-          placeholder={'암장 이름을 입력해주세요.'}
-          onBlur={async () => {
-            if (value !== '') {
-              const res = await get_climb_search(value)
-              setGymList(res.content)
-            }
-          }}
-        />
+        <div className={styles.inputContainer}>
+          <input
+            value={value}
+            onChange={(e) => {
+              setValue(e.target.value)
+            }}
+            className={styles.input}
+            placeholder={'암장 이름을 입력해주세요.'}
+          />
+          <button
+            className={styles.searchBtn}
+            onClick={async () => {
+              if (value !== '') {
+                const res = await get_climb_search(value)
+                setGymList(res.content)
+              }
+            }}
+          >
+            검색
+          </button>
+        </div>
         <div>
           {gymList.map((el) => (
             <div

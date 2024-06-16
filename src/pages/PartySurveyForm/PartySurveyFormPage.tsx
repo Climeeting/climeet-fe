@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import styles from './PartySurveyFormPage.module.scss'
 import { PartyTypeForm } from './components/PartyTypeForm.tsx'
-import { IndoorStep, OutdoorStep } from './components/Steps.tsx'
+import { IndoorStep } from './components/Steps.tsx'
 import TopBar from '@/components/NavBar/TopBar.tsx'
 
 export type UpdateFormData = (
@@ -64,7 +64,7 @@ export function PartySurveyFormPage() {
             }}
           />
         ) : formData.isNatural ? (
-          <OutdoorStep formData={formData} updateFormData={updateFormData} />
+          <IndoorStep formData={formData} updateFormData={updateFormData} />
         ) : (
           <IndoorStep formData={formData} updateFormData={updateFormData} />
         )}

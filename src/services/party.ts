@@ -1,7 +1,8 @@
 import { PageData, Party } from '@/pages/types/api'
 import api from '../utils/api'
 import { stringify } from '@/utils/query'
-import { useQuery } from '@tanstack/react-query'
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { queryClient } from '@/utils/tanstack'
 
 type GetPartyListParams = {
   page?: number
@@ -30,7 +31,7 @@ export const get_party_list = async (params?: GetPartyListParams) => {
 export const PARTY_LIST_KEY = ['party', 'list']
 
 export const usePartyList = (params?: GetPartyListParams) => {
-  return useQuery({
+  return useSuspenseQuery({
     queryKey: PARTY_LIST_KEY,
     queryFn: () => get_party_list(params),
     // 1시간마다 새로고침
@@ -40,4 +41,17 @@ export const usePartyList = (params?: GetPartyListParams) => {
     // 윈도우 포커스시에 새로고침하지 않음
     refetchOnWindowFocus: false,
   })
+}
+
+export const PartyListQuery = {
+  invalidate: async () =>
+    await queryClient.invalidateQueries({
+      queryKey: PARTY_LIST_KEY,
+      refetchType: 'all',
+    }),
+
+  refetch: async () =>
+    await queryClient.refetchQueries({
+      queryKey: PARTY_LIST_KEY,
+    }),
 }

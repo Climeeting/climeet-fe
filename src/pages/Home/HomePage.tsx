@@ -5,15 +5,13 @@ import BottomBar from '@/components/NavBar/BottomBar'
 import FilterList from './components/FilterList'
 import Tabs from './components/Tabs'
 import { Search } from '@/components/Search'
-import PartyCard from './components/PartyCard'
-import { Link } from 'react-router-dom'
 import DatePicker from '@/components/DatePicker'
-import { usePartyList } from '@/services/party'
+import PartyList from './components/PartyList'
+import { Suspense } from 'react'
+import { ErrorBoundary } from "react-error-boundary";
+import { PartyListQuery } from '@/services/party'
 
 export default function HomePage() {
-  const { data } = usePartyList()
-  console.log(data)
-
   return (
     <div className={styles.container}>
       <TopBar type="main" />
@@ -26,18 +24,16 @@ export default function HomePage() {
 
         <div className={styles.Contents}>
           <h1>오늘의 파티</h1>
-          <FilterList />
+
+          {/* https://tanstack.com/query/latest/docs/framework/react/guides/suspense */}
+          <ErrorBoundary fallback={<Retry onClickRetry={PartyListQuery.refetch} />}>
+            <Suspense fallback={<Loading />}>
+              <FilterList />
+            </Suspense>
+          </ErrorBoundary>
         </div>
 
-        <ul className={styles.PartyUl}>
-          {mockParty.map((party, index) => (
-            <li>
-              <Link to={`/party/${index}`} key={index}>
-                <PartyCard {...party} />
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <PartyList />
         <Profile />
       </main>
       <BottomBar />
@@ -45,41 +41,15 @@ export default function HomePage() {
   )
 }
 
-const mockParty = [
-  {
-    time: '오전 10:00',
-    title:
-      'V8 스승님 구합니다.. 타이틀 길어질 경우 2줄까지 표시 타이틀 길어질 경우 2줄까지 표시 타이틀 길어질 경우 2줄까지 표시',
-    location: '서울숲 클라이밍 영등포점',
-    constrains: '남자',
-    status: '신청하기',
-  },
-  {
-    time: '오후 2:00',
-    title: 'V8 스승님 구합니다',
-    location: '서울숲 클라이밍 영등포점',
-    constrains: '남자',
-    status: '신청하기',
-  },
-  {
-    time: '오후 5:00',
-    title: 'V8 스승님 구합니다',
-    location: '서울숲 클라이밍 영등포점',
-    constrains: '남자',
-    status: '신청하기',
-  },
-  {
-    time: '오후 7:00',
-    title: 'V8 스승님 구합니다',
-    location: '서울숲 클라이밍 영등포점',
-    constrains: '남자',
-    status: '신청하기',
-  },
-  {
-    time: '오후 10:00',
-    title: 'V8 스승님 구합니다',
-    location: '서울숲 클라이밍 영등포점',
-    constrains: '남자',
-    status: '신청하기',
-  },
-]
+function Loading() {
+  return <div>Loading... (in home page)</div>
+}
+
+function Retry({ onClickRetry }: { onClickRetry: () => void }) {
+  return (
+    <div>
+      <div>오류가 발생했습니다.</div>
+      <button onClick={onClickRetry}>재시도</button>
+    </div>
+  )
+}

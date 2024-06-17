@@ -1,21 +1,14 @@
 import Chip from '@/components/Chip'
 import Icon from '@/components/Icon/Icon'
 import styles from './PartyCard.module.scss'
+import { Party } from '@/pages/types/api'
 
-type Props = {
-  time: string
-  title: string
-  location: string
-  constrains: string
-  status: string
-}
-
-export default function PartyCard({ time, title, location, constrains, status }: Props) {
+export default function PartyCard({ appointmentTime, partyTitle, locationId, constraints }: Party) {
   return (
     <div className={styles.Container}>
       <section className={styles.Top}>
-        <span className={styles.Time}>{time}</span>
-        <h3>{title}</h3>
+        <span className={styles.Time}>{appointmentTime}</span>
+        <h3>{partyTitle}</h3>
       </section>
 
       <div className={styles.Divider} />
@@ -24,15 +17,16 @@ export default function PartyCard({ time, title, location, constrains, status }:
         <div>
           <div className={styles.Info}>
             <Icon icon={'LocationFill'} size="14" />
-            {location}
+            {locationId}
           </div>
           <div className={styles.Info}>
             <Icon icon={'PersonFill'} size="14" />
-            {constrains}
+            {constraints}
           </div>
         </div>
         <Chip className={styles.Chip} variable={'primary'}>
-          {status}
+          {/* {status} */}
+          신청하기
         </Chip>
       </section>
     </div>

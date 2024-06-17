@@ -6,6 +6,7 @@ import { PartyIntroduceForm } from './PartyIntroduceForm.tsx'
 import { PartyScheduleForm } from './PartyScheduleForm.tsx'
 import { PartySurveyFormData, UpdateFormData } from '../PartySurveyFormPage.tsx'
 import { post_party_new, PostPartyNewReq } from '@/services/party.ts'
+import { useNavigate } from 'react-router-dom'
 
 const indoorSteps = ['암장', '조건', '소개', '일정'] as const
 type IndoorStepName = (typeof indoorSteps)[number]
@@ -21,7 +22,7 @@ type StepProps = {
 export function IndoorStep({ formData, updateFormData }: StepProps) {
   const { Funnel, Step, setStep, step } = useFunnel<IndoorStepName>('암장')
   const { stepPush } = useStepFlow('HomePage')
-  const { pop } = useFlow()
+  const navigate = useNavigate()
 
   const getCurrentStepIndex = (steps: readonly IndoorStepName[], step: IndoorStepName) => {
     return steps.findIndex((el) => el === step)
@@ -89,7 +90,7 @@ export function IndoorStep({ formData, updateFormData }: StepProps) {
               try {
                 const reqBody: PostPartyNewReq = new PartyNewAdapter(formData).adapt()
                 await post_party_new(reqBody)
-                pop()
+                navigate('/')
               } catch (e) {
                 console.log(e)
               }

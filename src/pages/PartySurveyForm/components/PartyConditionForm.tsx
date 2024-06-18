@@ -13,16 +13,13 @@ type PartyConditionFormProps = {
   updateFormData: UpdateFormData
 }
 
-type Gender = '남녀 모두' | '남자만' | '여자만'
-type Subject = '볼더링' | '리드' | '지구력' | '상관없음'
-
 export function PartyConditionForm({ onNext, formData, updateFormData }: PartyConditionFormProps) {
-  const genderList: Gender[] = ['남녀 모두', '남자만', '여자만']
-  const subjectList: Subject[] = ['볼더링', '리드', '지구력', '상관없음']
+  const genderList: GenderKo[] = ['남녀 모두', '남자만', '여자만']
+  const subjectList: ClimbingTypeKo[] = ['볼더링', '리드', '지구력', '상관없음']
   const [condition, setCondition] = useState<Condition>({
-    members: formData.members,
+    maximumParticipationNumber: formData.maximumParticipationNumber,
     gender: formData.gender,
-    subject: formData.subject,
+    climbingType: formData.climbingType,
     minSkillLevel: formData.minSkillLevel,
     maxSkillLevel: formData.maxSkillLevel,
   })
@@ -39,15 +36,15 @@ export function PartyConditionForm({ onNext, formData, updateFormData }: PartyCo
           <div className={styles.question}>
             <h3 className={styles.questionTitle}>파티 인원 (본인 포함)</h3>
             <Accordion.Item className="AccordionItem" value={`members`}>
-              <AccordionTrigger>{condition.members}</AccordionTrigger>
+              <AccordionTrigger>{condition.maximumParticipationNumber}</AccordionTrigger>
               <AccordionContent>
                 <input
                   type="number"
                   min={2}
                   max={12}
-                  value={condition.members}
+                  value={condition.maximumParticipationNumber}
                   onChange={(e) => {
-                    updateConditionData('members', e.target.value)
+                    updateConditionData('maximumParticipationNumber', Number(e.target.value))
                   }}
                 />
               </AccordionContent>
@@ -60,7 +57,7 @@ export function PartyConditionForm({ onNext, formData, updateFormData }: PartyCo
               <AccordionContent>
                 <RadioButtonGroup
                   list={genderList}
-                  onValueChange={(value) => updateConditionData('gender', value)}
+                  onValueChange={(value) => updateConditionData('gender', value as GenderKo)}
                   defaultValue={condition.gender}
                 />
               </AccordionContent>
@@ -69,12 +66,14 @@ export function PartyConditionForm({ onNext, formData, updateFormData }: PartyCo
           <div className={styles.question}>
             <h3 className={styles.questionTitle}>종목</h3>
             <Accordion.Item className="AccordionItem" value={`subject`}>
-              <AccordionTrigger>{condition.subject}</AccordionTrigger>
+              <AccordionTrigger>{condition.climbingType}</AccordionTrigger>
               <AccordionContent>
                 <RadioButtonGroup
                   list={subjectList}
-                  onValueChange={(value) => updateConditionData('subject', value)}
-                  defaultValue={condition.subject}
+                  onValueChange={(value) =>
+                    updateConditionData('climbingType', value as ClimbingTypeKo)
+                  }
+                  defaultValue={condition.climbingType}
                 />
               </AccordionContent>
             </Accordion.Item>
@@ -125,9 +124,9 @@ export function PartyConditionForm({ onNext, formData, updateFormData }: PartyCo
         <button
           className={styles.nextBtn}
           onClick={() => {
-            updateFormData('members', condition.members)
+            updateFormData('maximumParticipationNumber', condition.maximumParticipationNumber)
             updateFormData('gender', condition.gender)
-            updateFormData('subject', condition.subject)
+            updateFormData('climbingType', condition.climbingType)
             updateFormData('minSkillLevel', condition.minSkillLevel)
             updateFormData('maxSkillLevel', condition.maxSkillLevel)
             onNext()
@@ -139,3 +138,20 @@ export function PartyConditionForm({ onNext, formData, updateFormData }: PartyCo
     </div>
   )
 }
+
+export const Gender = {
+  BOTH: '남녀 모두',
+  MALE_ONLY: '남자만',
+  FEMALE_ONLY: '여자만',
+} as const
+export type GenderEn = keyof typeof Gender
+export type GenderKo = (typeof Gender)[GenderEn]
+
+const ClimbingType = {
+  BOULDERING: '볼더링',
+  LEAD: '리드',
+  ENDURANCE: '지구력',
+  ANY: '상관없음',
+} as const
+export type ClimbingTypeEn = keyof typeof ClimbingType
+export type ClimbingTypeKo = (typeof ClimbingType)[ClimbingTypeEn]

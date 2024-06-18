@@ -3,6 +3,7 @@ import styles from './PartySurveyFormPage.module.scss'
 import { PartyTypeForm } from './components/PartyTypeForm.tsx'
 import { IndoorStep, OutdoorStep } from './components/Steps.tsx'
 import TopBar from '@/components/NavBar/TopBar.tsx'
+import { ClimbingTypeKo, GenderKo } from '@/pages/PartySurveyForm/components/PartyConditionForm.tsx'
 
 export type UpdateFormData = (
   key: keyof PartySurveyFormData,
@@ -12,20 +13,21 @@ export type UpdateFormData = (
 export type PartySurveyFormData = {
   cragName: string
   locationId: number
-  members: number
-  gender: string
-  subject: string // @desc 종목
+  maximumParticipationNumber: number
+  gender: GenderKo
+  climbingType: ClimbingTypeKo
   partyName: string
-  partyIntroduce: string
+  partyDescription: string
   partyDate: string
   partyTime: string
   minSkillLevel: number
   maxSkillLevel: number
   isNatural: boolean
+  approachDescription: string
 }
 export type Condition = Pick<
   PartySurveyFormData,
-  'members' | 'gender' | 'subject' | 'minSkillLevel' | 'maxSkillLevel'
+  'maximumParticipationNumber' | 'gender' | 'climbingType' | 'minSkillLevel' | 'maxSkillLevel'
 >
 export type Schedule = Pick<PartySurveyFormData, 'partyDate' | 'partyTime'>
 
@@ -33,16 +35,17 @@ export function PartySurveyFormPage() {
   const [formData, setFormData] = useState<PartySurveyFormData>({
     cragName: '',
     locationId: 0,
-    members: 3,
+    maximumParticipationNumber: 3,
     gender: '남녀 모두',
-    subject: '볼더링',
+    climbingType: '볼더링',
     partyName: '',
-    partyIntroduce: '',
+    partyDescription: '',
     partyDate: new Date().toISOString().substring(0, 10),
     partyTime: '18:00',
     minSkillLevel: 0,
     maxSkillLevel: 5,
     isNatural: false,
+    approachDescription: '',
   })
   const [isFirstStep, setIsFirstStep] = useState(true)
 

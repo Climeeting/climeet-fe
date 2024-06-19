@@ -11,7 +11,7 @@ type PartyIntroduceFormProps = {
 
 export function PartyIntroduceForm({ onNext, formData, updateFormData }: PartyIntroduceFormProps) {
   const [partyName, setPartyName] = useState(formData.partyName)
-  const [partyIntroduce, setPartyIntroduce] = useState(formData.partyIntroduce)
+  const [partyIntroduce, setPartyIntroduce] = useState(formData.partyDescription)
 
   const disabled = partyName.length < 5 || partyIntroduce.length < 10
 
@@ -30,6 +30,13 @@ export function PartyIntroduceForm({ onNext, formData, updateFormData }: PartyIn
                 setPartyName(e.target.value)
               }}
             />
+            {partyName === '' ? (
+              <div className={styles.minMax}>최소 5자 / 최대 20자</div>
+            ) : (
+              <div className={styles.minMax}>
+                <strong>{partyName.length}자</strong> / 최대 20자
+              </div>
+            )}
           </div>
         </div>
         <div className={styles.question}>
@@ -43,6 +50,13 @@ export function PartyIntroduceForm({ onNext, formData, updateFormData }: PartyIn
                 setPartyIntroduce(e.target.value)
               }}
             />
+            {partyIntroduce === '' ? (
+              <div className={styles.minMax}>최소 10자 / 최대 300자</div>
+            ) : (
+              <div className={styles.minMax}>
+                <strong>{partyIntroduce.length}자</strong> / 최대 300자
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -56,7 +70,7 @@ export function PartyIntroduceForm({ onNext, formData, updateFormData }: PartyIn
               return
             }
             updateFormData('partyName', partyName)
-            updateFormData('partyIntroduce', partyIntroduce)
+            updateFormData('partyDescription', partyIntroduce)
             onNext()
           }}
         >

@@ -17,7 +17,6 @@ export default function BottomBar() {
 
 function NavLink({ icon, title, to }: { icon: string; title: string; to: string }) {
   const { pathname } = useLocation()
-  console.log({ pathname })
 
   return (
     <Link

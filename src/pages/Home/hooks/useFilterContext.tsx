@@ -1,10 +1,10 @@
 import { PropsWithChildren, createContext, useContext, useState } from 'react'
 
 export type FilterContextType = {
-  addressList: AddressOption[]
-  clibing: ClibingOption
-  constrains: ConstrainsOption
-  status: StatusOption
+  addressList: (AddressOption | '')[]
+  clibing: ClibingOption | ''
+  constrains: ConstrainsOption | ''
+  status: StatusOption | ''
 }
 
 export const defaultFilter: FilterContextType = {
@@ -14,19 +14,27 @@ export const defaultFilter: FilterContextType = {
   status: '전체',
 }
 
+export const initialFilter: FilterContextType = {
+  addressList: [],
+  clibing: '',
+  constrains: '',
+  status: '',
+}
+
 const FilterContext = createContext<FilterContextType>(defaultFilter)
 
 export function useFilter() {
   const [addressList, setAddressList] = useState<FilterContextType['addressList']>(
-    defaultFilter.addressList
+    initialFilter.addressList
   )
-  const [clibing, setClibing] = useState<FilterContextType['clibing']>(defaultFilter.clibing)
+  const [clibing, setClibing] = useState<FilterContextType['clibing']>(initialFilter.clibing)
   const [constrains, setConstrains] = useState<FilterContextType['constrains']>(
-    defaultFilter.constrains
+    initialFilter.constrains
   )
-  const [status, setStatus] = useState<FilterContextType['status']>(defaultFilter.status)
+  const [status, setStatus] = useState<FilterContextType['status']>(initialFilter.status)
 
-  const toggleAddressList = (addressList: AddressOption) => {
+  const toggleAddressList = (addressList: AddressOption | '') => {
+    if (!addressList) return
     setAddressList((prev) => {
       const newAddressList = toggleDuplicates(prev, addressList)
       if (addressList === '모든 지역' || newAddressList.length >= addressOptions.length - 1)
@@ -45,25 +53,31 @@ export function useFilter() {
   const actions = {
     addressList: {
       toggle: toggleAddressList,
-      reset: () => setAddressList(defaultFilter.addressList),
+      init: () => setAddressList(initialFilter.addressList),
     },
     clibing: {
       toggle: setClibing,
-      reset: () => setClibing(defaultFilter.clibing),
+      init: () => setClibing(initialFilter.clibing),
     },
     constrains: {
       toggle: setConstrains,
-      reset: () => setConstrains(defaultFilter.constrains),
+      init: () => setConstrains(initialFilter.constrains),
     },
     status: {
       toggle: setStatus,
-      reset: () => setStatus(defaultFilter.status),
+      init: () => setStatus(initialFilter.status),
     },
     update: (filters = defaultFilter) => {
       setAddressList(filters.addressList)
       setClibing(filters.clibing)
       setConstrains(filters.constrains)
       setStatus(filters.status)
+    },
+    init: () => {
+      setAddressList(initialFilter.addressList)
+      setClibing(initialFilter.clibing)
+      setConstrains(initialFilter.constrains)
+      setStatus(initialFilter.status)
     },
     reset: () => {
       setAddressList(defaultFilter.addressList)
@@ -79,39 +93,41 @@ export function useFilter() {
 const ActionsContext = createContext<{
   addressList: {
     toggle: (option: AddressOption) => void
-    reset: () => void
+    init: () => void
   }
   clibing: {
     toggle: (option: ClibingOption) => void
-    reset: () => void
+    init: () => void
   }
   constrains: {
     toggle: (option: ConstrainsOption) => void
-    reset: () => void
+    init: () => void
   }
   status: {
     toggle: (option: StatusOption) => void
-    reset: () => void
+    init: () => void
   }
+  init: () => void
   reset: () => void
   update: (filters?: FilterContextType) => void
 }>({
   addressList: {
     toggle: () => {},
-    reset: () => {},
+    init: () => {},
   },
   clibing: {
     toggle: () => {},
-    reset: () => {},
+    init: () => {},
   },
   constrains: {
     toggle: () => {},
-    reset: () => {},
+    init: () => {},
   },
   status: {
     toggle: () => {},
-    reset: () => {},
+    init: () => {},
   },
+  init: () => {},
   reset: () => {},
   update: () => {},
 })

@@ -2,9 +2,11 @@ import styles from './FilterBottomSheet.module.scss'
 import Icon from '@/components/Icon/Icon'
 import BottomSheet from '@/components/BottomSheet'
 import {
+  FilterContextType,
   addressOptions,
   clibingOptions,
   constrainsOptions,
+  defaultFilter,
   statusOptions,
   useFilter,
   useFilterActions,
@@ -38,6 +40,7 @@ export default function FilterBottomSheetMain() {
               <span>(중복 선택 가능)</span>
             </div>
             <OptionList
+              name="addressList"
               selected={localFilter.addressList}
               onClick={localActions.addressList.toggle}
               options={addressOptions}
@@ -46,6 +49,7 @@ export default function FilterBottomSheetMain() {
           <section className={styles.Section}>
             <h3>성별</h3>
             <OptionList
+              name="constrains"
               selected={localFilter.constrains}
               onClick={localActions.constrains.toggle}
               options={constrainsOptions}
@@ -54,6 +58,7 @@ export default function FilterBottomSheetMain() {
           <section className={styles.Section}>
             <h3>신청 현황</h3>
             <OptionList
+              name="status"
               selected={localFilter.status}
               onClick={localActions.status.toggle}
               options={statusOptions}
@@ -63,6 +68,7 @@ export default function FilterBottomSheetMain() {
           <section className={styles.Section}>
             <h3>종목</h3>
             <OptionList
+              name="clibing"
               selected={localFilter.clibing}
               onClick={localActions.clibing.toggle}
               options={clibingOptions}
@@ -71,7 +77,7 @@ export default function FilterBottomSheetMain() {
         </div>
 
         <div className={styles.Controls}>
-          <button onClick={localActions.reset} className={styles.ResetButton}>
+          <button onClick={localActions.init} className={styles.ResetButton}>
             초기화
           </button>
           <BottomSheet.Close
@@ -87,13 +93,19 @@ export default function FilterBottomSheetMain() {
 }
 
 type OptionListProps<T> = {
+  name: keyof FilterContextType
   selected: T[] | T
   options: T[]
   onClick: (option: T) => void
 }
 
-function OptionList<T extends string>({ selected, options, onClick }: OptionListProps<T>) {
+function OptionList<T extends string>({ name, selected, options, onClick }: OptionListProps<T>) {
+  const defaultOption = defaultFilter[name]
+
   const pressed = (option: T) => {
+    if (!selected) return option === defaultOption
+    if (selected.length === 0) return option === defaultOption[0]
+
     if (typeof selected === 'string') return option === selected
     return (selected as string[]).includes(option)
   }

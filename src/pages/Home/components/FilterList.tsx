@@ -24,7 +24,7 @@ function FilterTriggerList() {
   return (
     <div className={styles.container}>
       <BottomSheet.Trigger>
-        <FilterButton remove={actions.addressList.reset} active={addressList.length !== 0}>
+        <FilterButton remove={actions.addressList.init} active={addressList.length !== 0}>
           {addressList.includes('모든 지역')
             ? '모든 지역'
             : addressList.length
@@ -34,19 +34,19 @@ function FilterTriggerList() {
       </BottomSheet.Trigger>
 
       <BottomSheet.Trigger>
-        <FilterButton remove={actions.constrains.reset} active={!!constrains}>
+        <FilterButton remove={actions.constrains.init} active={!!constrains}>
           {constrains || '성별'}
         </FilterButton>
       </BottomSheet.Trigger>
 
       <BottomSheet.Trigger>
-        <FilterButton remove={actions.status.reset} active={!!status}>
+        <FilterButton remove={actions.status.init} active={!!status}>
           {status || '신청 현황'}
         </FilterButton>
       </BottomSheet.Trigger>
 
       <BottomSheet.Trigger>
-        <FilterButton remove={actions.clibing.reset} active={!!clibing}>
+        <FilterButton remove={actions.clibing.init} active={!!clibing}>
           {clibing || '종목'}
         </FilterButton>
       </BottomSheet.Trigger>

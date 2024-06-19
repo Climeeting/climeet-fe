@@ -8,8 +8,7 @@ import { Search } from '@/components/Search'
 import DatePicker from '@/components/DatePicker'
 import PartyList from './components/PartyList'
 import { Suspense } from 'react'
-import { ErrorBoundary } from "react-error-boundary";
-import { PartyListQuery } from '@/services/party'
+import { ErrorBoundary } from 'react-error-boundary'
 
 export default function HomePage() {
   return (
@@ -24,32 +23,19 @@ export default function HomePage() {
 
         <div className={styles.Contents}>
           <h1>오늘의 파티</h1>
-
-          {/* https://tanstack.com/query/latest/docs/framework/react/guides/suspense */}
-          <ErrorBoundary fallback={<Retry onClickRetry={PartyListQuery.refetch} />}>
-            <Suspense fallback={<Loading />}>
-              <FilterList />
-            </Suspense>
-          </ErrorBoundary>
+          <FilterList />
         </div>
 
-        <PartyList />
+        {/* https://tanstack.com/query/latest/docs/framework/react/guides/suspense */}
+        <ErrorBoundary fallback={<PartyList.Retry />}>
+          <Suspense fallback={<PartyList.Skeleton />}>
+            <PartyList />
+          </Suspense>
+        </ErrorBoundary>
+
         <Profile />
       </main>
       <BottomBar />
-    </div>
-  )
-}
-
-function Loading() {
-  return <div>Loading... (in home page)</div>
-}
-
-function Retry({ onClickRetry }: { onClickRetry: () => void }) {
-  return (
-    <div>
-      <div>오류가 발생했습니다.</div>
-      <button onClick={onClickRetry}>재시도</button>
     </div>
   )
 }

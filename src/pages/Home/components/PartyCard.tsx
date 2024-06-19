@@ -2,6 +2,7 @@ import Chip from '@/components/Chip'
 import Icon from '@/components/Icon/Icon'
 import styles from './PartyCard.module.scss'
 import { Party } from '@/pages/types/api'
+import classNames from 'classnames'
 
 export default function PartyCard({ appointmentTime, partyTitle, locationId, constraints }: Party) {
   return (
@@ -32,3 +33,17 @@ export default function PartyCard({ appointmentTime, partyTitle, locationId, con
     </div>
   )
 }
+
+PartyCard.Skeleton = () => (
+  <div className={styles.SkeletonContainer}>
+    <section className={styles.SkeletonTop}>
+      <div className={classNames(styles.Skeleton, styles['w-80'], styles['h-25'])} />
+      <div className={classNames(styles.Skeleton, styles['w-60'])} />
+    </section>
+    <div className={styles.Divider} />
+    <section className={styles.SkeletonSection}>
+      <div className={classNames(styles.Skeleton, styles['w-60'])} />
+      <div className={classNames(styles.Skeleton, styles['w-40'])} />
+    </section>
+  </div>
+)

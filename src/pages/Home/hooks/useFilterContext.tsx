@@ -79,12 +79,6 @@ export function useFilter() {
       setConstrains(initialFilter.constrains)
       setStatus(initialFilter.status)
     },
-    reset: () => {
-      setAddressList(defaultFilter.addressList)
-      setClibing(defaultFilter.clibing)
-      setConstrains(defaultFilter.constrains)
-      setStatus(defaultFilter.status)
-    },
   }
 
   return { states, actions }
@@ -108,7 +102,6 @@ const ActionsContext = createContext<{
     init: () => void
   }
   init: () => void
-  reset: () => void
   update: (filters?: FilterContextType) => void
 }>({
   addressList: {
@@ -128,7 +121,6 @@ const ActionsContext = createContext<{
     init: () => {},
   },
   init: () => {},
-  reset: () => {},
   update: () => {},
 })
 

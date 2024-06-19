@@ -20,15 +20,15 @@ export default function FilterBottomSheetMain() {
   const filterContext = useFilterContext()
   const filterActions = useFilterActions()
 
-  const resetByFilterContext = () => localActions.update(filterContext)
-  useEffect(resetByFilterContext, [filterContext])
+  const syncFilterContext = () => localActions.update(filterContext)
+  useEffect(syncFilterContext, [filterContext])
 
   return (
-    <BottomSheet.Content onClickOverlay={resetByFilterContext}>
+    <BottomSheet.Content onClickOverlay={syncFilterContext}>
       <div className={styles.Container}>
         <div className={styles.Header}>
           <h2>필터</h2>
-          <BottomSheet.Close onClick={resetByFilterContext} className={styles.Close}>
+          <BottomSheet.Close onClick={syncFilterContext} className={styles.Close}>
             <Icon icon="Close" size="24" />
           </BottomSheet.Close>
         </div>

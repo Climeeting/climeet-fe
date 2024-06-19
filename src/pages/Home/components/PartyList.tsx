@@ -12,7 +12,7 @@ export default function PartyList() {
   return (
     <ul className={styles.PartyUl}>
       {data?.content.map((party, index) => (
-        <li>
+        <li key={party.id}>
           <Link to={`/party/${index}`} key={index}>
             <PartyCard {...party} />
           </Link>
@@ -25,7 +25,7 @@ export default function PartyList() {
 PartyList.Skeleton = () => (
   <ul className={styles.PartyUl}>
     {Array.from({ length: 5 }).map((_, index) => (
-      <li>
+      <li key={index}>
         <PartyCard.Skeleton key={index} />
       </li>
     ))}

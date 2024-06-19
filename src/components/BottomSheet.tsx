@@ -2,10 +2,11 @@ import { PropsWithChildren } from 'react'
 import styles from './BottomSheet.module.scss'
 import * as Dialog from '@radix-ui/react-dialog'
 
-function BottomSheetContent({ children }: PropsWithChildren) {
+type Props = { onClickOverlay?: () => void } & PropsWithChildren
+function BottomSheetContent({ children, onClickOverlay }: Props) {
   return (
     <Dialog.Portal>
-      <Dialog.Overlay className={styles.Overlay} />
+      <Dialog.Overlay onClick={onClickOverlay} className={styles.Overlay} />
       <Dialog.Content className={styles.Content}>{children}</Dialog.Content>
     </Dialog.Portal>
   )

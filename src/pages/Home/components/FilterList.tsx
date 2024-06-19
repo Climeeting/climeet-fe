@@ -1,17 +1,15 @@
 import BottomSheet from '@/components/BottomSheet'
-import { FilterProvider, useFilterActions, useFilterContext } from '../hooks/useFilterContext'
+import { useFilterActions, useFilterContext } from '../hooks/useFilterContext'
 import FilterBottomSheet from './FilterBottomSheet'
 import FilterButton from './FilterButton'
 import styles from './FilterList.module.scss'
 
 export default function FilterList() {
   return (
-    <FilterProvider>
-      <BottomSheet>
-        <FilterTriggerList />
-        <FilterBottomSheet />
-      </BottomSheet>
-    </FilterProvider>
+    <BottomSheet>
+      <FilterTriggerList />
+      <FilterBottomSheet />
+    </BottomSheet>
   )
 }
 
@@ -30,8 +28,8 @@ function FilterTriggerList() {
           {addressList.includes('모든 지역')
             ? '모든 지역'
             : addressList.length
-            ? `지역 ${addressCount}`
-            : '지역'}
+              ? `지역 ${addressCount}`
+              : '지역'}
         </FilterButton>
       </BottomSheet.Trigger>
 

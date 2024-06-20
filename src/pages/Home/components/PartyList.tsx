@@ -1,25 +1,33 @@
+import React from 'react'
 import { Link } from 'react-router-dom'
 import styles from './PartyList.module.scss'
 import PartyCard from './PartyCard'
 import { usePartyList } from '@/services/party'
 import { PartyListQuery } from '@/services/party'
 import { PartyListParams, useFilterContext } from '../hooks/useFilterContext'
+import { useLoadMore } from '@/utils/useLoadMore'
 
 export default function PartyList() {
   const filters = useFilterContext()
-  const { data } = usePartyList(new PartyListParams(filters).adapt())
+  const { data, fetchNextPage } = usePartyList(new PartyListParams(filters).adapt())
+  const ref = useLoadMore(fetchNextPage)
 
-  if (data.content.length === 0) return <div>데이터가 없습니다.</div>
+  if (data.pages[0].totalElements === 0) return <div>데이터가 없습니다.</div>
 
   return (
     <ul className={styles.PartyUl}>
-      {data?.content.map((party, index) => (
-        <li key={party.id}>
-          <Link to={`/party/${index}`} key={index}>
-            <PartyCard {...party} />
-          </Link>
-        </li>
+      {data.pages.map((parties, i) => (
+        <React.Fragment key={i}>
+          {parties.content.map((party) => (
+            <li key={i}>
+              <Link to={`/party/${party.id}`} key={party.id}>
+                <PartyCard {...party} />
+              </Link>
+            </li>
+          ))}
+        </React.Fragment>
       ))}
+      <div ref={ref} />
     </ul>
   )
 }

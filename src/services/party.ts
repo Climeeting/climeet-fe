@@ -1,7 +1,7 @@
 import { PageData, Party } from '@/pages/types/api'
 import api from '../utils/api'
 import { stringify } from '@/utils/query'
-import { useSuspenseQuery } from '@tanstack/react-query'
+import { useSuspenseInfiniteQuery } from '@tanstack/react-query'
 import { queryClient } from '@/utils/tanstack'
 import { ClimbingTypeEn, GenderEn } from '@/pages/PartySurveyForm/components/PartyConditionForm.tsx'
 
@@ -34,11 +34,11 @@ export const get_party_list = async (params?: GetPartyListParams) => {
 export const PARTY_LIST_KEY = ['party', 'list']
 
 export const usePartyList = (params?: GetPartyListParams) => {
-  return useSuspenseQuery({
+  return useSuspenseInfiniteQuery({
     queryKey: [PARTY_LIST_KEY, params && stringify(params)],
-    queryFn: () => get_party_list(params),
-    // 1시간마다 새로고침
-    refetchInterval: 60 * 60 * 1000,
+    queryFn: ({pageParam}) => get_party_list({...params, page: pageParam ?? 0}),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage) => lastPage.totalPages <= lastPage.pageable.pageNumber ? null : lastPage.pageable.pageNumber + 1,
     // 마운트시에 요청 보내지 않음
     retryOnMount: false,
     // 윈도우 포커스시에 새로고침하지 않음

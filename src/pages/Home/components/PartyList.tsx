@@ -27,7 +27,7 @@ export default function PartyList() {
           {parties.content.map((party) => (
             <li key={i}>
               <Link to={`/party/${party.id}`} key={party.id}>
-                <PartyCard {...party} />
+                <PartyCard party={party} />
               </Link>
             </li>
           ))}

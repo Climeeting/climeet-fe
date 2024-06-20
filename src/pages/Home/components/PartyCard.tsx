@@ -1,10 +1,12 @@
 import Chip from '@/components/Chip'
 import Icon from '@/components/Icon/Icon'
 import styles from './PartyCard.module.scss'
-import { Party } from '@/pages/types/api'
 import classNames from 'classnames'
+import { PartyItem } from '@/services/party'
+import { Party } from '@/pages/types/api'
 
-export default function PartyCard({ appointmentTime, partyTitle, locationId, constraints }: Party) {
+export default function PartyCard({ party }: { party: Party }) {
+  const { appointmentTime, partyTitle, locationId, constraints } = new PartyItem(party)
   return (
     <div className={styles.Container}>
       <section className={styles.Top}>

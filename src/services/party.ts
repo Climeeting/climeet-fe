@@ -4,6 +4,7 @@ import { stringify } from '@/utils/query'
 import { useSuspenseInfiniteQuery } from '@tanstack/react-query'
 import { queryClient } from '@/utils/tanstack'
 import { ClimbingTypeEn, GenderEn } from '@/pages/PartySurveyForm/components/PartyConditionForm.tsx'
+import dayjs from 'dayjs'
 
 /************* GET Party List **************/
 export type GetPartyListParams = {
@@ -58,6 +59,62 @@ export const PartyListQuery = {
       queryKey: PARTY_LIST_KEY,
     }),
 }
+
+export class PartyItem {
+  private value: Party
+
+  constructor(value: Party) {
+    this.value = value
+  }
+
+  get partyTitle() {
+    return this.value.partyTitle
+  }
+
+  get locationId() {
+    return this.value.locationId
+  }
+
+  get appointmentTime() {
+    return dayjs(this.value.appointmentTime).format('A h:mm')
+  }
+
+  get constraints() {
+    switch (this.value.constraints) {
+      case 'BOTH':
+        return '남녀 모두'
+      case 'MALE_ONLY':
+        return '남자'
+      case 'FEMALE_ONLY':
+        return '여자'
+      default:
+        return '남녀 모두'
+    }
+  }
+
+  get climbingType() {
+    switch (this.value.climbingType) {
+      case 'BOULDERING':
+        return '볼더링'
+      case 'LEAD':
+        return '리드'
+      case 'ENDURANCE':
+        return '지구력'
+      case 'ANY':
+        return '상관없음'
+      default:
+        return '상관없음'
+    }
+  }
+
+  adapt() {
+    return {
+      constraints: this.constraints,
+      climbingType: this.climbingType,
+    }
+  }
+}
+
 
 /************* POST Party New **************/
 export type PostPartyNewReq = {

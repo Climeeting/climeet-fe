@@ -5,7 +5,8 @@ import { useSuspenseQuery } from '@tanstack/react-query'
 import { queryClient } from '@/utils/tanstack'
 import { ClimbingTypeEn, GenderEn } from '@/pages/PartySurveyForm/components/PartyConditionForm.tsx'
 
-type GetPartyListParams = {
+/************* GET Party List **************/
+export type GetPartyListParams = {
   page?: number
   size?: number
   sortColumn?: "CREATED_AT"
@@ -15,6 +16,7 @@ type GetPartyListParams = {
   constraints?: "BOTH" | "MALE_ONLY" | "FEMALE_ONLY"
   appointmentDate?: string
   address1List?: string[]
+  locationId?: number
 }
 
 export const get_party_list = async (params?: GetPartyListParams) => {
@@ -33,7 +35,7 @@ export const PARTY_LIST_KEY = ['party', 'list']
 
 export const usePartyList = (params?: GetPartyListParams) => {
   return useSuspenseQuery({
-    queryKey: PARTY_LIST_KEY,
+    queryKey: [PARTY_LIST_KEY, params && stringify(params)],
     queryFn: () => get_party_list(params),
     // 1시간마다 새로고침
     refetchInterval: 60 * 60 * 1000,
@@ -57,6 +59,7 @@ export const PartyListQuery = {
     }),
 }
 
+/************* POST Party New **************/
 export type PostPartyNewReq = {
   constraints: GenderEn
   climbingType: ClimbingTypeEn

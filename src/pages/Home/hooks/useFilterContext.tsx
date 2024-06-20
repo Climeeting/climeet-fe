@@ -1,23 +1,24 @@
+import { GetPartyListParams } from '@/services/party'
 import { PropsWithChildren, createContext, useContext, useState } from 'react'
 
 export type FilterContextType = {
   addressList: (AddressOption | '')[]
   clibing: ClibingOption | ''
-  constrains: ConstrainsOption | ''
+  constraints: constraintsOption | ''
   status: StatusOption | ''
 }
 
 export const defaultFilter: FilterContextType = {
   addressList: ['모든 지역'],
   clibing: '볼더링',
-  constrains: '남녀 모두',
+  constraints: '남녀 모두',
   status: '전체',
 }
 
 export const initialFilter: FilterContextType = {
   addressList: [],
   clibing: '',
-  constrains: '',
+  constraints: '',
   status: '',
 }
 
@@ -28,8 +29,8 @@ export function useFilter() {
     initialFilter.addressList
   )
   const [clibing, setClibing] = useState<FilterContextType['clibing']>(initialFilter.clibing)
-  const [constrains, setConstrains] = useState<FilterContextType['constrains']>(
-    initialFilter.constrains
+  const [constraints, setconstraints] = useState<FilterContextType['constraints']>(
+    initialFilter.constraints
   )
   const [status, setStatus] = useState<FilterContextType['status']>(initialFilter.status)
 
@@ -46,7 +47,7 @@ export function useFilter() {
   const states = {
     addressList,
     clibing,
-    constrains,
+    constraints,
     status,
   }
 
@@ -59,9 +60,9 @@ export function useFilter() {
       toggle: setClibing,
       init: () => setClibing(initialFilter.clibing),
     },
-    constrains: {
-      toggle: setConstrains,
-      init: () => setConstrains(initialFilter.constrains),
+    constraints: {
+      toggle: setconstraints,
+      init: () => setconstraints(initialFilter.constraints),
     },
     status: {
       toggle: setStatus,
@@ -70,13 +71,13 @@ export function useFilter() {
     update: (filters = defaultFilter) => {
       setAddressList(filters.addressList)
       setClibing(filters.clibing)
-      setConstrains(filters.constrains)
+      setconstraints(filters.constraints)
       setStatus(filters.status)
     },
     init: () => {
       setAddressList(initialFilter.addressList)
       setClibing(initialFilter.clibing)
-      setConstrains(initialFilter.constrains)
+      setconstraints(initialFilter.constraints)
       setStatus(initialFilter.status)
     },
   }
@@ -93,8 +94,8 @@ const ActionsContext = createContext<{
     toggle: (option: ClibingOption) => void
     init: () => void
   }
-  constrains: {
-    toggle: (option: ConstrainsOption) => void
+  constraints: {
+    toggle: (option: constraintsOption) => void
     init: () => void
   }
   status: {
@@ -112,7 +113,7 @@ const ActionsContext = createContext<{
     toggle: () => {},
     init: () => {},
   },
-  constrains: {
+  constraints: {
     toggle: () => {},
     init: () => {},
   },
@@ -172,7 +173,7 @@ export type AddressOption =
   | '제주'
 
 export type ClibingOption = '볼더링' | '리드' | '지구력' | '상관없음'
-export type ConstrainsOption = '남녀 모두' | '남자' | '여성'
+export type constraintsOption = '남녀 모두' | '남자' | '여자'
 export type StatusOption = '전체' | '신청하기' | '마감임박' | '마감'
 
 export const addressOptions: AddressOption[] = [
@@ -195,5 +196,54 @@ export const addressOptions: AddressOption[] = [
   '제주',
 ]
 export const clibingOptions: ClibingOption[] = ['볼더링', '리드', '지구력', '상관없음']
-export const constrainsOptions: ConstrainsOption[] = ['남녀 모두', '남자', '여성']
+export const constraintsOptions: constraintsOption[] = ['남녀 모두', '남자', '여자']
 export const statusOptions: StatusOption[] = ['전체', '신청하기', '마감임박', '마감']
+
+export class PartyListParams {
+  private value: FilterContextType
+
+  constructor(value: FilterContextType) {
+    this.value = value
+  }
+
+  get constraints(): GetPartyListParams['constraints'] {
+    switch (this.value.constraints) {
+      case '남녀 모두':
+        return 'BOTH'
+      case '남자':
+        return 'MALE_ONLY'
+      case '여자':
+        return 'FEMALE_ONLY'
+      default:
+        return 'BOTH'
+    }
+  }
+
+  get climbingType(): GetPartyListParams['climbingType'] {
+    switch (this.value.clibing) {
+      case '볼더링':
+        return 'BOULDERING'
+      case '리드':
+        return 'LEAD'
+      case '지구력':
+        return 'ENDURANCE'
+      case '상관없음':
+        return 'ANY'
+      default:
+        return 'ANY'
+    }
+  }
+
+  get address1List(): GetPartyListParams['address1List'] {
+    return this.value.addressList.map((address) => address as string)
+  }
+
+  adapt(): GetPartyListParams {
+    return {
+      constraints: this.constraints,
+      climbingType: this.climbingType,
+      address1List: this.address1List,
+      // locationId: this.locationId,
+    }
+  }
+}

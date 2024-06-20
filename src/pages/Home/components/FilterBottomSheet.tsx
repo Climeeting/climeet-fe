@@ -5,7 +5,7 @@ import {
   FilterContextType,
   addressOptions,
   clibingOptions,
-  constrainsOptions,
+  constraintsOptions,
   defaultFilter,
   statusOptions,
   useFilter,
@@ -49,10 +49,10 @@ export default function FilterBottomSheetMain() {
           <section className={styles.Section}>
             <h3>성별</h3>
             <OptionList
-              name="constrains"
-              selected={localFilter.constrains}
-              onClick={localActions.constrains.toggle}
-              options={constrainsOptions}
+              name="constraints"
+              selected={localFilter.constraints}
+              onClick={localActions.constraints.toggle}
+              options={constraintsOptions}
             />
           </section>
           <section className={styles.Section}>

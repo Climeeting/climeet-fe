@@ -14,7 +14,7 @@ export default function FilterList() {
 }
 
 function FilterTriggerList() {
-  const { addressList, clibing, constrains, status } = useFilterContext()
+  const { addressList, clibing, constraints, status } = useFilterContext()
   const actions = useFilterActions()
 
   const addressCount = addressList.includes('모든 지역')
@@ -34,8 +34,8 @@ function FilterTriggerList() {
       </BottomSheet.Trigger>
 
       <BottomSheet.Trigger>
-        <FilterButton remove={actions.constrains.init} active={!!constrains}>
-          {constrains || '성별'}
+        <FilterButton remove={actions.constraints.init} active={!!constraints}>
+          {constraints || '성별'}
         </FilterButton>
       </BottomSheet.Trigger>
 

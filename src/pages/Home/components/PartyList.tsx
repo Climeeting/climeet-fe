@@ -6,10 +6,16 @@ import { usePartyList } from '@/services/party'
 import { PartyListQuery } from '@/services/party'
 import { PartyListParams, useFilterContext } from '../hooks/useFilterContext'
 import { useLoadMore } from '@/utils/useLoadMore'
+import { useDateContext } from '../hooks/useDateContext'
 
 export default function PartyList() {
+  const date = useDateContext()
   const filters = useFilterContext()
-  const { data, fetchNextPage } = usePartyList(new PartyListParams(filters).adapt())
+  const params = {
+    ...new PartyListParams(filters).adapt(),
+    date: date.tz('Asia/Seoul').format(),
+  }
+  const { data, fetchNextPage } = usePartyList(params)
   const ref = useLoadMore(fetchNextPage)
 
   if (data.pages[0].totalElements === 0) return <div>데이터가 없습니다.</div>

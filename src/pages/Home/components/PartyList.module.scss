@@ -1,0 +1,14 @@
+.PartyUl {
+  display: flex;
+  flex-wrap: wrap;
+  gap: rem(16px);
+  padding: 0 rem(16px);
+
+  li {
+    width: 100%;
+  }
+
+  li:last-child {
+    margin-bottom: rem(16px);
+  }
+}

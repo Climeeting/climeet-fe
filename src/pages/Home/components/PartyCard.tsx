@@ -1,21 +1,17 @@
 import Chip from '@/components/Chip'
 import Icon from '@/components/Icon/Icon'
 import styles from './PartyCard.module.scss'
+import classNames from 'classnames'
+import { PartyItem } from '@/services/party'
+import { Party } from '@/pages/types/api'
 
-type Props = {
-  time: string
-  title: string
-  location: string
-  constrains: string
-  status: string
-}
-
-export default function PartyCard({ time, title, location, constrains, status }: Props) {
+export default function PartyCard({ party }: { party: Party }) {
+  const { appointmentTime, partyTitle, locationId, constraints } = new PartyItem(party)
   return (
     <div className={styles.Container}>
       <section className={styles.Top}>
-        <span className={styles.Time}>{time}</span>
-        <h3>{title}</h3>
+        <span className={styles.Time}>{appointmentTime}</span>
+        <h3>{partyTitle}</h3>
       </section>
 
       <div className={styles.Divider} />
@@ -24,17 +20,32 @@ export default function PartyCard({ time, title, location, constrains, status }:
         <div>
           <div className={styles.Info}>
             <Icon icon={'LocationFill'} size="14" />
-            {location}
+            {locationId}
           </div>
           <div className={styles.Info}>
             <Icon icon={'PersonFill'} size="14" />
-            {constrains}
+            {constraints}
           </div>
         </div>
         <Chip className={styles.Chip} variable={'primary'}>
-          {status}
+          {/* {status} */}
+          신청하기
         </Chip>
       </section>
     </div>
   )
 }
+
+PartyCard.Skeleton = () => (
+  <div className={styles.SkeletonContainer}>
+    <section className={styles.SkeletonTop}>
+      <div className={classNames(styles.Skeleton, styles['w-80'], styles['h-25'])} />
+      <div className={classNames(styles.Skeleton, styles['w-60'])} />
+    </section>
+    <div className={styles.Divider} />
+    <section className={styles.SkeletonSection}>
+      <div className={classNames(styles.Skeleton, styles['w-60'])} />
+      <div className={classNames(styles.Skeleton, styles['w-40'])} />
+    </section>
+  </div>
+)

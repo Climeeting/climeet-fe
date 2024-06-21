@@ -1,22 +1,20 @@
 import BottomSheet from '@/components/BottomSheet'
-import { FilterProvider, useFilterActions, useFilterContext } from '../hooks/useFilterContext'
+import { useFilterActions, useFilterContext } from '../hooks/useFilterContext'
 import FilterBottomSheet from './FilterBottomSheet'
 import FilterButton from './FilterButton'
 import styles from './FilterList.module.scss'
 
 export default function FilterList() {
   return (
-    <FilterProvider>
-      <BottomSheet>
-        <FilterTriggerList />
-        <FilterBottomSheet />
-      </BottomSheet>
-    </FilterProvider>
+    <BottomSheet>
+      <FilterTriggerList />
+      <FilterBottomSheet />
+    </BottomSheet>
   )
 }
 
 function FilterTriggerList() {
-  const { addressList, clibing, constrains, status } = useFilterContext()
+  const { addressList, clibing, constraints, status } = useFilterContext()
   const actions = useFilterActions()
 
   const addressCount = addressList.includes('모든 지역')
@@ -26,29 +24,29 @@ function FilterTriggerList() {
   return (
     <div className={styles.container}>
       <BottomSheet.Trigger>
-        <FilterButton remove={actions.addressList.reset} active={addressList.length !== 0}>
+        <FilterButton remove={actions.addressList.init} active={addressList.length !== 0}>
           {addressList.includes('모든 지역')
             ? '모든 지역'
             : addressList.length
-            ? `지역 ${addressCount}`
-            : '지역'}
+              ? `지역 ${addressCount}`
+              : '지역'}
         </FilterButton>
       </BottomSheet.Trigger>
 
       <BottomSheet.Trigger>
-        <FilterButton remove={actions.constrains.reset} active={!!constrains}>
-          {constrains || '성별'}
+        <FilterButton remove={actions.constraints.init} active={!!constraints}>
+          {constraints || '성별'}
         </FilterButton>
       </BottomSheet.Trigger>
 
       <BottomSheet.Trigger>
-        <FilterButton remove={actions.status.reset} active={!!status}>
+        <FilterButton remove={actions.status.init} active={!!status}>
           {status || '신청 현황'}
         </FilterButton>
       </BottomSheet.Trigger>
 
       <BottomSheet.Trigger>
-        <FilterButton remove={actions.clibing.reset} active={!!clibing}>
+        <FilterButton remove={actions.clibing.init} active={!!clibing}>
           {clibing || '종목'}
         </FilterButton>
       </BottomSheet.Trigger>

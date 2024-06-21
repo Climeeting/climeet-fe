@@ -1,16 +1,16 @@
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import styles from './DatePicker.module.scss'
 import dayjs from 'dayjs'
+import { useDateActions, useDateContext } from '@/pages/Home/hooks/useDateContext'
 
 type Props = {
-  initDate?: dayjs.Dayjs
   onClick?: (date: dayjs.Dayjs) => void
 }
-export default function DatePicker({ initDate, onClick }: Props) {
-  const now = useMemo(() => initDate || dayjs(), [initDate])
+export default function DatePicker({ onClick }: Props) {
+  const selected = useDateContext()
+  const now = useMemo(dayjs, [])
+  const updateDate = useDateActions()
   const week = useMemo(() => Array.from({ length: 14 }, (_, index) => now.add(index, 'day')), [now])
-
-  const [activeDate, setActiveDate] = useState(now)
 
   return (
     <div className={styles.Container}>
@@ -21,9 +21,9 @@ export default function DatePicker({ initDate, onClick }: Props) {
             <button
               key={index}
               className={styles.Button}
-              data-active={dayjs(activeDate).isSame(date)}
+              data-active={dayjs(selected).isSame(date, 'date')}
               onClick={() => {
-                setActiveDate(date)
+                updateDate(date)
                 onClick?.(date)
               }}
             >

@@ -15,20 +15,21 @@ import {
 import ToggleButton from '@/components/ToggleButton'
 import { useEffect } from 'react'
 
-export default function FilterBottomSheetMain() {
+export default function FilterBottomSheet() {
   const { states: localFilter, actions: localActions } = useFilter()
   const filterContext = useFilterContext()
   const filterActions = useFilterActions()
 
-  const syncFilterContext = () => localActions.update(filterContext)
-  useEffect(syncFilterContext, [filterContext])
+  useEffect(function syncFilterContext () {
+    localActions.update(filterContext)
+  }, [filterContext])
 
   return (
-    <BottomSheet.Content onClickOverlay={syncFilterContext}>
+    <BottomSheet.Content>
       <div className={styles.Container}>
         <div className={styles.Header}>
           <h2>필터</h2>
-          <BottomSheet.Close onClick={syncFilterContext} className={styles.Close}>
+          <BottomSheet.Close className={styles.Close}>
             <Icon icon="Close" size="24" />
           </BottomSheet.Close>
         </div>

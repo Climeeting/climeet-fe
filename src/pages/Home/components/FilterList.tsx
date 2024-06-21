@@ -3,12 +3,14 @@ import { useFilterActions, useFilterContext } from '../hooks/useFilterContext'
 import FilterBottomSheet from './FilterBottomSheet'
 import FilterButton from './FilterButton'
 import styles from './FilterList.module.scss'
+import { useState } from 'react'
 
 export default function FilterList() {
+  const [open, setOpen] = useState(false)
   return (
-    <BottomSheet>
+    <BottomSheet open={open} onOpenChange={setOpen}>
       <FilterTriggerList />
-      <FilterBottomSheet />
+      {open && <FilterBottomSheet />}
     </BottomSheet>
   )
 }

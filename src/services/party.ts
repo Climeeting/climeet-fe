@@ -145,3 +145,102 @@ export const post_party_new = async (reqBody: PostPartyNewReq) => {
     throw new Error('파티 생성에 실패하였습니다. post v1/party/new')
   }
 }
+
+export class PostPartyNewReqAdapter {
+  private value: PartySurveyFormData
+
+  constructor(value: PartySurveyFormData) {
+    this.value = value
+  }
+
+  get constraints(): GenderEn {
+    switch (this.value.gender) {
+      case '남녀 모두':
+        return 'BOTH'
+      case '남자만':
+        return 'MALE_ONLY'
+      case '여자만':
+        return 'FEMALE_ONLY'
+      default:
+        return 'BOTH'
+    }
+  }
+
+  get climbingType(): ClimbingTypeEn {
+    switch (this.value.climbingType) {
+      case '볼더링':
+        return 'BOULDERING'
+      case '리드':
+        return 'LEAD'
+      case '지구력':
+        return 'ENDURANCE'
+      case '상관없음':
+        return 'ANY'
+      default:
+        return 'ANY'
+    }
+  }
+
+  get maximumParticipationNumber(): number {
+    return this.value.maximumParticipationNumber
+  }
+
+  get partyTitle(): string {
+    return this.value.partyName
+  }
+
+  get isNatural(): boolean {
+    return this.value.isNatural
+  }
+
+  get minSkillLevel(): number {
+    return this.value.minSkillLevel
+  }
+
+  get maxSkillLevel(): number {
+    return this.value.maxSkillLevel
+  }
+
+  get locationId(): number {
+    return this.value.locationId
+  }
+
+  // @todo 임시로 설정
+  get participationDeadline(): string {
+    return this.appointmentTime
+  }
+
+  get approachDescription(): string {
+    return this.value.approachDescription
+  }
+
+  get partyDescription(): string {
+    return this.value.partyDescription
+  }
+
+  get appointmentTime(): string {
+    const date = this.value.partyDate
+    const time = this.value.partyTime
+    // @desc ss, ms는 입력받을 수 없으니 임의로 설정
+    const dummyTime = ':00.000Z'
+
+    return `${date}T${time}${dummyTime}`
+  }
+
+  adapt(): PostPartyNewReq {
+    return {
+      constraints: this.constraints,
+      climbingType: this.climbingType,
+      maximumParticipationNumber: this.maximumParticipationNumber,
+      partyTitle: this.partyTitle,
+      isNatural: this.isNatural,
+      minSkillLevel: this.minSkillLevel,
+      maxSkillLevel: this.maxSkillLevel,
+      locationId: this.locationId,
+      participationDeadline: this.participationDeadline,
+      approacheDescription: this.approachDescription,
+      partyDescription: this.partyDescription,
+      appointmentTime: this.appointmentTime,
+    }
+  }
+}

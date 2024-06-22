@@ -57,6 +57,29 @@
     right: 0;
   }
 
+  .searchList {
+    margin-top: rem(12px);
+  }
+
+  .searchItem {
+    display: flex;
+    align-items: center;
+    font-size: rem(16px);
+    line-height: 1.7;
+    letter-spacing: -0.02;
+    font-weight: 400;
+    height: rem(44px);
+    overflow: hidden;
+
+    svg {
+      flex-shrink: 0;
+    }
+  }
+
+  .searchItemText {
+    margin-left: rem(10px);
+  }
+
   .footer {
     @include footer;
   }

@@ -244,3 +244,126 @@ export class PostPartyNewReqAdapter {
     }
   }
 }
+
+/************* PUT Party New **************/
+export type PutPartyEditReq = {
+  constraints: GenderEn
+  minSkillLevel: number
+  maxSkillLevel: number
+  locationId: number
+  participationDeadline: string
+  userLimitCount: number
+  approacheDescription: string
+  isNatural: boolean
+  description: string
+  appointmentTime: string
+  climbingType: ClimbingTypeEn
+  partyTitle: string
+}
+
+export const put_party_edit = async (partyId: number | string, reqBody: PutPartyEditReq) => {
+  try {
+    const result = await api.put<PostPartyNewRes>(`/v1/party/${partyId}`, reqBody)
+    return result
+  } catch (e) {
+    console.error(e)
+    throw new Error(`파티 수정에 실패하였습니다. put v1/party/${partyId}`)
+  }
+}
+
+export class PutPartyReqAdapter {
+  private value: PartySurveyFormData
+
+  constructor(value: PartySurveyFormData) {
+    this.value = value
+  }
+
+  get constraints(): GenderEn {
+    switch (this.value.gender) {
+      case '남녀 모두':
+        return 'BOTH'
+      case '남자만':
+        return 'MALE_ONLY'
+      case '여자만':
+        return 'FEMALE_ONLY'
+      default:
+        return 'BOTH'
+    }
+  }
+
+  get climbingType(): ClimbingTypeEn {
+    switch (this.value.climbingType) {
+      case '볼더링':
+        return 'BOULDERING'
+      case '리드':
+        return 'LEAD'
+      case '지구력':
+        return 'ENDURANCE'
+      case '상관없음':
+        return 'ANY'
+      default:
+        return 'ANY'
+    }
+  }
+
+  get maximumParticipationNumber(): number {
+    return this.value.maximumParticipationNumber
+  }
+
+  get partyTitle(): string {
+    return this.value.partyName
+  }
+
+  get isNatural(): boolean {
+    return this.value.isNatural
+  }
+
+  get minSkillLevel(): number {
+    return this.value.minSkillLevel
+  }
+
+  get maxSkillLevel(): number {
+    return this.value.maxSkillLevel
+  }
+
+  get locationId(): number {
+    return this.value.locationId
+  }
+
+  get participationDeadline(): string {
+    return this.appointmentTime
+  }
+
+  get approachDescription(): string {
+    return this.value.approachDescription
+  }
+
+  get partyDescription(): string {
+    return this.value.partyDescription
+  }
+
+  get appointmentTime(): string {
+    const date = this.value.partyDate
+    const time = this.value.partyTime
+    const dummyTime = ':00.000Z'
+
+    return `${date}T${time}${dummyTime}`
+  }
+
+  adapt(): PutPartyEditReq {
+    return {
+      constraints: this.constraints,
+      climbingType: this.climbingType,
+      userLimitCount: this.maximumParticipationNumber,
+      partyTitle: this.partyTitle,
+      isNatural: this.isNatural,
+      minSkillLevel: this.minSkillLevel,
+      maxSkillLevel: this.maxSkillLevel,
+      locationId: this.locationId,
+      participationDeadline: this.participationDeadline,
+      approacheDescription: this.approachDescription,
+      description: this.partyDescription,
+      appointmentTime: this.appointmentTime,
+    }
+  }
+}

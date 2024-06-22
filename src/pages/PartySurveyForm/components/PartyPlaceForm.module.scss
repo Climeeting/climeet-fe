@@ -52,6 +52,17 @@
     line-height: 1.7;
   }
 
+  .textarea {
+    width: 100%;
+    height: 263px;
+    outline: none;
+    border: 1px solid #e5e5e5;
+    padding: 16px;
+    resize: none;
+    font-size: rem(16px);
+    line-height: 1.7;
+  }
+
   .searchBtn {
     position: absolute;
     right: 0;

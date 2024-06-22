@@ -43,7 +43,7 @@ export function PartyIntroduceForm({ onNext, formData, updateFormData }: PartyIn
           <h3 className={styles.questionTitle}>파티 소개 내용</h3>
           <div className={styles.content}>
             <textarea
-              className={styles.input}
+              className={styles.textarea}
               placeholder={'내용을 입력해주세요.'}
               value={partyIntroduce}
               onChange={(e) => {

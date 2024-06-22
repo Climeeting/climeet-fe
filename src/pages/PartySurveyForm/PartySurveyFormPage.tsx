@@ -8,64 +8,6 @@ import { useParams } from 'react-router-dom'
 import { get_party_detail, SurveyFormAdapter } from '@/services/party.ts'
 import { useAsync } from 'react-use'
 
-export type PartySurveyFormData = {
-  cragName: string
-  locationId: number
-  maximumParticipationNumber: number
-  gender: GenderKo
-  climbingType: ClimbingTypeKo
-  partyName: string
-  partyDescription: string
-  partyDate: string
-  partyTime: string
-  minSkillLevel: number
-  maxSkillLevel: number
-  isNatural: boolean
-  approachDescription: string
-}
-export type Condition = Pick<
-  PartySurveyFormData,
-  'maximumParticipationNumber' | 'gender' | 'climbingType' | 'minSkillLevel' | 'maxSkillLevel'
->
-export type Schedule = Pick<PartySurveyFormData, 'partyDate' | 'partyTime'>
-
-export type UpdateFormData = <K extends keyof PartySurveyFormData>(
-  key: K,
-  value: PartySurveyFormData[K]
-) => void
-
-const usePartySurveyForm = () => {
-  const formData = useRef<PartySurveyFormData>({
-    cragName: '',
-    locationId: 0,
-    maximumParticipationNumber: 3,
-    gender: '남녀 모두',
-    climbingType: '볼더링',
-    partyName: '',
-    partyDescription: '',
-    partyDate: new Date().toISOString().substring(0, 10),
-    partyTime: '18:00',
-    minSkillLevel: 0,
-    maxSkillLevel: 5,
-    isNatural: false,
-    approachDescription: '',
-  })
-
-  const updateFormData: UpdateFormData = (key, value) => {
-    formData.current[key] = value
-  }
-
-  const setFormData = (data: PartySurveyFormData) => {
-    formData.current = data
-  }
-
-  return {
-    formData: formData.current,
-    updateFormData,
-    setFormData,
-  }
-}
-
 export function PartySurveyFormPage() {
   const { formData, updateFormData, setFormData } = usePartySurveyForm()
   const [isFirstStep, setIsFirstStep] = useState(true)
@@ -111,4 +53,63 @@ export function PartySurveyFormPage() {
       </div>
     </>
   )
+}
+
+export type PartySurveyFormData = {
+  cragName: string
+  locationId: number
+  maximumParticipationNumber: number
+  gender: GenderKo
+  climbingType: ClimbingTypeKo
+  partyName: string
+  partyDescription: string
+  partyDate: string
+  partyTime: string
+  minSkillLevel: number
+  maxSkillLevel: number
+  isNatural: boolean
+  approachDescription: string
+}
+export type Condition = Pick<
+  PartySurveyFormData,
+  'maximumParticipationNumber' | 'gender' | 'climbingType' | 'minSkillLevel' | 'maxSkillLevel'
+>
+
+export type Schedule = Pick<PartySurveyFormData, 'partyDate' | 'partyTime'>
+
+export type UpdateFormData = <K extends keyof PartySurveyFormData>(
+  key: K,
+  value: PartySurveyFormData[K]
+) => void
+
+const usePartySurveyForm = () => {
+  const formData = useRef<PartySurveyFormData>({
+    cragName: '',
+    locationId: 0,
+    maximumParticipationNumber: 3,
+    gender: '남녀 모두',
+    climbingType: '볼더링',
+    partyName: '',
+    partyDescription: '',
+    partyDate: new Date().toISOString().substring(0, 10),
+    partyTime: '18:00',
+    minSkillLevel: 0,
+    maxSkillLevel: 5,
+    isNatural: false,
+    approachDescription: '',
+  })
+
+  const updateFormData: UpdateFormData = (key, value) => {
+    formData.current[key] = value
+  }
+
+  const setFormData = (data: PartySurveyFormData) => {
+    formData.current = data
+  }
+
+  return {
+    formData: formData.current,
+    updateFormData,
+    setFormData,
+  }
 }

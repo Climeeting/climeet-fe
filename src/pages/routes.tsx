@@ -18,6 +18,7 @@ const router = createBrowserRouter(
       <Route path="mypage" element={<MyPage />} />
       <Route path="/party/:id" element={<PartyDetailPage />} />
       <Route path="party-suervey" element={<PartySurveyFormPage />} />
+      <Route path="party-suervey/:id" element={<PartySurveyFormPage />} />
     </Route>
   )
 )

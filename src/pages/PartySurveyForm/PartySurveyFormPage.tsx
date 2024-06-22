@@ -4,6 +4,9 @@ import { PartyTypeForm } from './components/PartyTypeForm.tsx'
 import { IndoorStep } from './components/Steps.tsx'
 import TopBar from '@/components/NavBar/TopBar.tsx'
 import { ClimbingTypeKo, GenderKo } from '@/pages/PartySurveyForm/components/PartyConditionForm.tsx'
+import { useParams } from 'react-router-dom'
+import { get_party_detail, SurveyFormAdapter } from '@/services/party.ts'
+import { useAsync } from 'react-use'
 
 export type UpdateFormData = (
   key: keyof PartySurveyFormData,
@@ -31,7 +34,7 @@ export type Condition = Pick<
 >
 export type Schedule = Pick<PartySurveyFormData, 'partyDate' | 'partyTime'>
 
-export function PartySurveyFormPage() {
+const usePartySurveyForm = () => {
   const [formData, setFormData] = useState<PartySurveyFormData>({
     cragName: '',
     locationId: 0,
@@ -47,11 +50,39 @@ export function PartySurveyFormPage() {
     isNatural: false,
     approachDescription: '',
   })
-  const [isFirstStep, setIsFirstStep] = useState(true)
 
   const updateFormData: UpdateFormData = (key, value) => {
     setFormData((prev) => ({ ...prev, [key]: value }))
   }
+
+  return {
+    formData,
+    updateFormData,
+    setFormData,
+  }
+}
+
+export function PartySurveyFormPage() {
+  const { formData, updateFormData, setFormData } = usePartySurveyForm()
+  const [isFirstStep, setIsFirstStep] = useState(true)
+  const { id } = useParams<{ id: string }>()
+
+  useAsync(async () => {
+    // @todo 현재 로그인한 사용자가 쓴 글인지 확인하는 로직 필요
+    const isPartyEdit = id !== undefined
+    if (isPartyEdit) {
+      try {
+        const partyDetail = await get_party_detail(id)
+        if (!partyDetail) {
+          throw new Error('파티 상세 정보가 존재하지 않습니다.')
+        }
+        const nextSurveyFormData = new SurveyFormAdapter(partyDetail).adapt()
+        setFormData(nextSurveyFormData)
+      } catch (e) {
+        console.log(e)
+      }
+    }
+  }, [id])
 
   return (
     <>

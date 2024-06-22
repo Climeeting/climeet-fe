@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import styles from './PartySurveyFormPage.module.scss'
 import { PartyTypeForm } from './components/PartyTypeForm.tsx'
 import { IndoorStep } from './components/Steps.tsx'
@@ -7,11 +7,6 @@ import { ClimbingTypeKo, GenderKo } from '@/pages/PartySurveyForm/components/Par
 import { useParams } from 'react-router-dom'
 import { get_party_detail, SurveyFormAdapter } from '@/services/party.ts'
 import { useAsync } from 'react-use'
-
-export type UpdateFormData = (
-  key: keyof PartySurveyFormData,
-  value: PartySurveyFormData[keyof PartySurveyFormData]
-) => void
 
 export type PartySurveyFormData = {
   cragName: string
@@ -34,8 +29,13 @@ export type Condition = Pick<
 >
 export type Schedule = Pick<PartySurveyFormData, 'partyDate' | 'partyTime'>
 
+export type UpdateFormData = <K extends keyof PartySurveyFormData>(
+  key: K,
+  value: PartySurveyFormData[K]
+) => void
+
 const usePartySurveyForm = () => {
-  const [formData, setFormData] = useState<PartySurveyFormData>({
+  const formData = useRef<PartySurveyFormData>({
     cragName: '',
     locationId: 0,
     maximumParticipationNumber: 3,
@@ -52,11 +52,15 @@ const usePartySurveyForm = () => {
   })
 
   const updateFormData: UpdateFormData = (key, value) => {
-    setFormData((prev) => ({ ...prev, [key]: value }))
+    formData.current[key] = value
+  }
+
+  const setFormData = (data: PartySurveyFormData) => {
+    formData.current = data
   }
 
   return {
-    formData,
+    formData: formData.current,
     updateFormData,
     setFormData,
   }

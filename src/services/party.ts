@@ -137,6 +137,7 @@ export type GetPartyDetailRes = {
   locationId: number
   minimumSkillLevel: number
   maximumSkillLevel: number
+  isNatural: boolean
 }
 
 export const get_party_detail = async (partyId: number | string) => {
@@ -200,22 +201,18 @@ export class SurveyFormAdapter {
     return this.value.partyDescription
   }
 
-  // @todo 백엔드 변경 후 수정 필요
   get partyDate() {
     /**
      * @desc "2024-06-17T18:00:00.000Z" -> "2024-06-17"
      */
-    // return this.value.appointmentTime.substring(0, 10)
-    return '2024-06-17'
+    return this.value.appointmentTime.substring(0, 10)
   }
 
-  // @todo 백엔드 변경 후 수정 필요
   get partyTime() {
     /**
      * @desc "2024-06-17T18:00:00.000Z" -> "18:00"
      */
-    // return this.value.appointmentTime.substring(11, 16)
-    return '18:00'
+    return this.value.appointmentTime.substring(11, 16)
   }
 
   get minSkillLevel() {
@@ -226,10 +223,8 @@ export class SurveyFormAdapter {
     return this.value.maximumSkillLevel
   }
 
-  // @todo 백엔드 변경 후 수정 필요
   get isNatural() {
-    return false
-    // return this.value.isNatural
+    return this.value.isNatural
   }
 
   get approachDescription() {

@@ -16,17 +16,16 @@ export function PartySurveyFormPage() {
   useAsync(async () => {
     // @todo 현재 로그인한 사용자가 쓴 글인지 확인하는 로직 필요
     const isPartyEdit = id !== undefined
-    if (isPartyEdit) {
-      try {
-        const partyDetail = await get_party_detail(id)
-        if (!partyDetail) {
-          throw new Error('파티 상세 정보가 존재하지 않습니다.')
-        }
-        const nextSurveyFormData = new SurveyFormAdapter(partyDetail).adapt()
-        setFormData(nextSurveyFormData)
-      } catch (e) {
-        console.log(e)
+    if (!isPartyEdit) return
+    try {
+      const partyDetail = await get_party_detail(id)
+      if (!partyDetail) {
+        throw new Error('파티 상세 정보가 존재하지 않습니다.')
       }
+      const nextSurveyFormData = new SurveyFormAdapter(partyDetail).adapt()
+      setFormData(nextSurveyFormData)
+    } catch (e) {
+      console.log(e)
     }
   }, [id])
 

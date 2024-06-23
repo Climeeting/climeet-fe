@@ -8,9 +8,7 @@ import { PartySurveyFormData, UpdateFormData } from '../PartySurveyFormPage.tsx'
 import {
   PostPartyNewReqAdapter,
   post_party_new,
-  PostPartyNewReq,
   put_party_edit,
-  PutPartyEditReq,
   PutPartyReqAdapter,
 } from '@/services/party.ts'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -98,10 +96,10 @@ export function IndoorStep({ formData, updateFormData }: StepProps) {
               try {
                 const isPartyEdit = id !== undefined
                 if (isPartyEdit) {
-                  const req: PutPartyEditReq = new PutPartyReqAdapter(formData).adapt()
+                  const req = new PutPartyReqAdapter(formData).adapt()
                   await put_party_edit(id, req)
                 } else {
-                  const req: PostPartyNewReq = new PostPartyNewReqAdapter(formData).adapt()
+                  const req = new PostPartyNewReqAdapter(formData).adapt()
                   await post_party_new(req)
                 }
                 navigate('/')

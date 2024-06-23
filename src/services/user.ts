@@ -3,6 +3,7 @@ import api from '../utils/api'
 import { MyProfile, Skill } from '../pages/types/api'
 import { isAxiosError } from 'axios'
 import { queryClient } from '../utils/tanstack'
+import { sexFe2Be } from './adaptor'
 
 /**
  * GET /v1/user/myProfile
@@ -97,14 +98,7 @@ export class AdditionalInfoAddapter {
   }
 
   get sex(): PostAdditonalInfoParams['sex'] {
-    switch (this.value.sex) {
-      case '남자':
-        return 'MALE'
-      case '여자':
-        return 'FEMALE'
-      default:
-        return 'MALE'
-    }
+    return sexFe2Be(this.value.sex)
   }
 
   get skill(): PostAdditonalInfoParams['skill'] {

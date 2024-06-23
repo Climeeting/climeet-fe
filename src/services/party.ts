@@ -5,6 +5,7 @@ import { useSuspenseInfiniteQuery, useSuspenseQuery } from '@tanstack/react-quer
 import { queryClient } from '@/utils/tanstack'
 import { ClimbingTypeEn, GenderEn } from '@/pages/PartySurveyForm/components/PartyConditionForm.tsx'
 import dayjs from 'dayjs'
+import { clibingBe2Fe, constraintsBe2Fe } from './adaptor'
 
 /**
  * GET /v1/party/list?${queryString}
@@ -17,6 +18,7 @@ export type GetPartyListParams = {
   isNatural?: boolean
   climbingType?: 'BOULDERING' | 'LEAD' | 'ENDURANCE' | 'ANY'
   constraints?: 'BOTH' | 'MALE_ONLY' | 'FEMALE_ONLY'
+  joinStatus?: 'AVAILABLE' | 'IMMINENT_FULL' | 'FULL' | null
   appointmentDate?: string
   address1List?: string[]
   locationId?: number
@@ -75,31 +77,11 @@ export class PartyItem {
   }
 
   get constraints() {
-    switch (this.value.constraints) {
-      case 'BOTH':
-        return '남녀 모두'
-      case 'MALE_ONLY':
-        return '남자'
-      case 'FEMALE_ONLY':
-        return '여자'
-      default:
-        return '남녀 모두'
-    }
+    return constraintsBe2Fe(this.value.constraints)
   }
 
   get climbingType() {
-    switch (this.value.climbingType) {
-      case 'BOULDERING':
-        return '볼더링'
-      case 'LEAD':
-        return '리드'
-      case 'ENDURANCE':
-        return '지구력'
-      case 'ANY':
-        return '상관없음'
-      default:
-        return '상관없음'
-    }
+    return clibingBe2Fe(this.value.climbingType)
   }
 
   adapt() {
@@ -183,31 +165,11 @@ export class PartyDetailAdapter {
   }
 
   get climbingType() {
-    switch (this.value.climbingType) {
-      case 'BOULDERING':
-        return '볼더링'
-      case 'LEAD':
-        return '리드'
-      case 'ENDURANCE':
-        return '지구력'
-      case 'ANY':
-        return '상관없음'
-      default:
-        return '상관없음'
-    }
+    return clibingBe2Fe(this.value.climbingType)
   }
 
   get constraints() {
-    switch (this.value.constraints) {
-      case 'BOTH':
-        return '남녀 모두'
-      case 'MALE_ONLY':
-        return '남자'
-      case 'FEMALE_ONLY':
-        return '여자'
-      default:
-        return '남녀 모두'
-    }
+    return constraintsBe2Fe(this.value.constraints)
   }
 
   adapt() {

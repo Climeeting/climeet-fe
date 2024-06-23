@@ -1,12 +1,18 @@
 import { useFunnel } from '../../../utils/useFunnel.tsx'
 import { useFlow, useStepFlow } from '../../stackflow.ts'
 import { PartyPlaceForm } from './PartyPlaceForm.tsx'
-import { ClimbingTypeEn, GenderEn, PartyConditionForm } from './PartyConditionForm.tsx'
+import { PartyConditionForm } from './PartyConditionForm.tsx'
 import { PartyIntroduceForm } from './PartyIntroduceForm.tsx'
 import { PartyScheduleForm } from './PartyScheduleForm.tsx'
 import { PartySurveyFormData, UpdateFormData } from '../PartySurveyFormPage.tsx'
-import { post_party_new, PostPartyNewReq } from '@/services/party.ts'
-import { useNavigate } from 'react-router-dom'
+import {
+  PostPartyNewReqAdapter,
+  post_party_new,
+  put_party_edit,
+  PutPartyReqAdapter,
+} from '@/services/party.ts'
+import { useNavigate, useParams } from 'react-router-dom'
+import ProgressBar from '@/components/ProgressBar.tsx'
 
 const indoorSteps = ['암장', '조건', '소개', '일정'] as const
 type IndoorStepName = (typeof indoorSteps)[number]
@@ -23,6 +29,7 @@ export function IndoorStep({ formData, updateFormData }: StepProps) {
   const { Funnel, Step, setStep, step } = useFunnel<IndoorStepName>('암장')
   const { stepPush } = useStepFlow('HomePage')
   const navigate = useNavigate()
+  const { id } = useParams<{ id: string }>()
 
   const getCurrentStepIndex = (steps: readonly IndoorStepName[], step: IndoorStepName) => {
     return steps.findIndex((el) => el === step)
@@ -38,6 +45,7 @@ export function IndoorStep({ formData, updateFormData }: StepProps) {
 
   return (
     <>
+      <ProgressBar ratio={calcCurrentProgressValue(indoorSteps, step)} />
       <div
         onClick={() => {
           const currentStepIndex = getCurrentStepIndex(indoorSteps, step)
@@ -88,8 +96,14 @@ export function IndoorStep({ formData, updateFormData }: StepProps) {
           <PartyScheduleForm
             onNext={async () => {
               try {
-                const reqBody: PostPartyNewReq = new PartyNewAdapter(formData).adapt()
-                await post_party_new(reqBody)
+                const isPartyEdit = id !== undefined
+                if (isPartyEdit) {
+                  const req = new PutPartyReqAdapter(formData).adapt()
+                  await put_party_edit(id, req)
+                } else {
+                  const req = new PostPartyNewReqAdapter(formData).adapt()
+                  await post_party_new(req)
+                }
                 navigate('/')
               } catch (e) {
                 console.log(e)
@@ -158,101 +172,11 @@ export function OutdoorStep({ formData, updateFormData }: StepProps) {
   )
 }
 
-class PartyNewAdapter {
-  private value: PartySurveyFormData
+function calcCurrentProgressValue(steps: typeof indoorSteps, currentStep: IndoorStepName): number
+function calcCurrentProgressValue(steps: typeof outdoorSteps, currentStep: OutdoorStepName): number
 
-  constructor(value: PartySurveyFormData) {
-    this.value = value
-  }
+function calcCurrentProgressValue(steps: any, currentStep: any): number {
+  const index = steps.findIndex((el: any) => el === currentStep)
 
-  get constraints(): GenderEn {
-    switch (this.value.gender) {
-      case '남녀 모두':
-        return 'BOTH'
-      case '남자만':
-        return 'MALE_ONLY'
-      case '여자만':
-        return 'FEMALE_ONLY'
-      default:
-        return 'BOTH'
-    }
-  }
-
-  get climbingType(): ClimbingTypeEn {
-    switch (this.value.climbingType) {
-      case '볼더링':
-        return 'BOULDERING'
-      case '리드':
-        return 'LEAD'
-      case '지구력':
-        return 'ENDURANCE'
-      case '상관없음':
-        return 'ANY'
-      default:
-        return 'ANY'
-    }
-  }
-
-  get maximumParticipationNumber(): number {
-    return this.value.maximumParticipationNumber
-  }
-
-  get partyTitle(): string {
-    return this.value.partyName
-  }
-
-  get isNatural(): boolean {
-    return this.value.isNatural
-  }
-
-  get minSkillLevel(): number {
-    return this.value.minSkillLevel
-  }
-
-  get maxSkillLevel(): number {
-    return this.value.maxSkillLevel
-  }
-
-  get locationId(): number {
-    return this.value.locationId
-  }
-
-  // @todo 임시로 설정
-  get participationDeadline(): string {
-    return this.appointmentTime
-  }
-
-  get approachDescription(): string {
-    return this.value.approachDescription
-  }
-
-  get partyDescription(): string {
-    return this.value.partyDescription
-  }
-
-  get appointmentTime(): string {
-    const date = this.value.partyDate
-    const time = this.value.partyTime
-    // @desc ss, ms는 입력받을 수 없으니 임의로 설정
-    const dummyTime = ':00.000Z'
-
-    return `${date}T${time}${dummyTime}`
-  }
-
-  adapt(): PostPartyNewReq {
-    return {
-      constraints: this.constraints,
-      climbingType: this.climbingType,
-      maximumParticipationNumber: this.maximumParticipationNumber,
-      partyTitle: this.partyTitle,
-      isNatural: this.isNatural,
-      minSkillLevel: this.minSkillLevel,
-      maxSkillLevel: this.maxSkillLevel,
-      locationId: this.locationId,
-      participationDeadline: this.participationDeadline,
-      approacheDescription: this.approachDescription,
-      partyDescription: this.partyDescription,
-      appointmentTime: this.appointmentTime,
-    }
-  }
+  return Math.round(((index + 1) / steps.length) * 100)
 }

@@ -36,6 +36,7 @@ h5,
 h6,
 p {
   overflow-wrap: break-word;
+  all: unset;
 }
 #__next,
 #root {
@@ -54,5 +55,9 @@ li {
   all: unset;
 }
 a {
+  all: unset;
+}
+
+fieldset {
   all: unset;
 }

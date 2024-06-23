@@ -67,3 +67,39 @@ export type ClimbSearchItem = {
 export type ClimbSearch = {
   content: ClimbSearchItem[]
 }
+
+export type PartyDetail = {
+  partyName: string
+  appointmentTime: string
+  climbingType: 'BOULDERING' | 'LEAD' | 'ENDURANCE' | 'ANY'
+  constraints: 'BOTH' | 'MALE_ONLY' | 'FEMALE_ONLY'
+  maxParticipants: number
+  currentParticipants: number
+  gymName: string
+  partyDescription: string
+  masterName: string
+  skillDistributions: SkillDestribute[]
+  approachDescription: string
+  locationId: number
+  minimumSkillLevel: number
+  maximumSkillLevel: number
+  isNatural: boolean
+  masterProfileImageUrl: string
+}
+
+export type SkillDestribute = {
+  skill: Skill
+  count: number
+}
+
+export type Skill =
+  | 'BLUE'
+  | 'RED'
+  | 'WHITE'
+  | 'YELLOW'
+  | 'ORANGE'
+  | 'GREEN'
+  | 'PURPLE'
+  | 'GREY'
+  | 'BROWN'
+  | 'BLACK'

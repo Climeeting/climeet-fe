@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import api from '../utils/api'
-import { MyProfile } from '../pages/types/api'
+import { MyProfile, Skill } from '../pages/types/api'
 import { isAxiosError } from 'axios'
 import { queryClient } from '../utils/tanstack'
 
@@ -63,32 +63,12 @@ export const post_user_additionalInfo = async (params: PostAdditonalInfoParams) 
 export type PostAdditonalInfoParams = {
   description: string
   sex: 'MALE' | 'FEMALE'
-  skill:
-    | 'BLUE'
-    | 'RED'
-    | 'WHITE'
-    | 'YELLOW'
-    | 'ORANGE'
-    | 'GREEN'
-    | 'PURPLE'
-    | 'GREY'
-    | 'BROWN'
-    | 'BLACK'
+  skill: Skill
 }
 
 export type MyInfo = {
   sex: '남자' | '여자'
-  skill:
-    | 'BLUE'
-    | 'RED'
-    | 'WHITE'
-    | 'YELLOW'
-    | 'ORANGE'
-    | 'GREEN'
-    | 'PURPLE'
-    | 'GREY'
-    | 'BROWN'
-    | 'BLACK'
+  skill: Skill
   description: string
 }
 

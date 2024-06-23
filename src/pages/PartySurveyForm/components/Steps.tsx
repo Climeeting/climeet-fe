@@ -12,6 +12,7 @@ import {
   PutPartyReqAdapter,
 } from '@/services/party.ts'
 import { useNavigate, useParams } from 'react-router-dom'
+import ProgressBar from '@/components/ProgressBar.tsx'
 
 const indoorSteps = ['암장', '조건', '소개', '일정'] as const
 type IndoorStepName = (typeof indoorSteps)[number]
@@ -44,6 +45,7 @@ export function IndoorStep({ formData, updateFormData }: StepProps) {
 
   return (
     <>
+      <ProgressBar ratio={calcCurrentProgressValue(indoorSteps, step)} />
       <div
         onClick={() => {
           const currentStepIndex = getCurrentStepIndex(indoorSteps, step)
@@ -168,4 +170,13 @@ export function OutdoorStep({ formData, updateFormData }: StepProps) {
       </Funnel>
     </>
   )
+}
+
+function calcCurrentProgressValue(steps: typeof indoorSteps, currentStep: IndoorStepName): number
+function calcCurrentProgressValue(steps: typeof outdoorSteps, currentStep: OutdoorStepName): number
+
+function calcCurrentProgressValue(steps: any, currentStep: any): number {
+  const index = steps.findIndex((el: any) => el === currentStep)
+
+  return Math.round(((index + 1) / steps.length) * 100)
 }

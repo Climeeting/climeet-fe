@@ -33,9 +33,6 @@ export function PartySurveyFormPage() {
     <>
       <TopBar />
       <div className={styles.wrapper}>
-        <div className={styles.progressBar}>
-          <div className={styles.indicator}></div>
-        </div>
         {isFirstStep ? (
           <PartyTypeForm
             formData={formData}

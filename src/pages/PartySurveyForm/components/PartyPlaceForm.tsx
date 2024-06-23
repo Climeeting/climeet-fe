@@ -4,6 +4,7 @@ import { useState } from 'react'
 import classNames from 'classnames'
 import { ClimbSearchItem } from '@/pages/types/api.ts'
 import { get_climb_search } from '@/services/gymSearch.ts'
+import Icon from '@/components/Icon/Icon.tsx'
 
 type PartyPlaceFormProps = {
   onNext: () => void
@@ -47,15 +48,17 @@ export function PartyPlaceForm({ onNext, formData, updateFormData }: PartyPlaceF
             검색
           </button>
         </div>
-        <div>
+        <div className={styles.searchList}>
           {gymList.map((el) => (
             <div
+              className={styles.searchItem}
               onClick={() => {
                 setValue(el.name)
                 setLocationId(el.id)
               }}
             >
-              {el.name}
+              <Icon icon={'Search'} size={16} />
+              <span className={styles.searchItemText}>{el.name}</span>
             </div>
           ))}
         </div>

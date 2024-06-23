@@ -1,11 +1,10 @@
 import styles from './PartyDetailPage.module.scss'
 import Chip from '@/components/Chip'
-import { PartyMainInfo } from './components/PartyMainInfo'
-import { PartyDescription } from './components/PartyDescription'
-import { PartyClimbInfo } from './components/PartyClimbInfo'
-import { PartyParticipants } from './components/PartyParticipants'
 import { useParams } from 'react-router-dom'
 import TopBar from '@/components/NavBar/TopBar'
+import PartyDetail from './components/PartyDetail'
+import { Suspense } from 'react'
+import { ErrorBoundary } from 'react-error-boundary'
 
 export function PartyDetailPage() {
   const { id } = useParams<{ id: string }>()
@@ -14,21 +13,11 @@ export function PartyDetailPage() {
     <>
       <TopBar type="default" title={`파티 디테일 ${id}`} />
       <div className={styles.Container}>
-        <section>
-          <PartyMainInfo />
-        </section>
-
-        <section>
-          <PartyDescription />
-        </section>
-
-        <section>
-          <PartyParticipants />
-        </section>
-
-        <section>
-          <PartyClimbInfo />
-        </section>
+        <ErrorBoundary fallback={<PartyDetail.Retry />}>
+          <Suspense fallback={<PartyDetail.Skeleton />}>
+            <PartyDetail id={Number(id)} />
+          </Suspense>
+        </ErrorBoundary>
       </div>
       <div className={styles.Bottom}>
         <Chip className={styles.Button} variable="primary" asChild>

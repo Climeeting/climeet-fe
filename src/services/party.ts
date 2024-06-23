@@ -179,7 +179,7 @@ export class PartyDetailAdapter {
   }
 
   get appointmentTime() {
-    return dayjs(this.value.appointmentTime).format('A h:mm')
+    return dayjs(this.value.appointmentTime).format('M월 DD일 (dd) A h:mm')
   }
 
   get climbingType() {

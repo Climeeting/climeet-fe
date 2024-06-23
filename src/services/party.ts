@@ -6,22 +6,24 @@ import { queryClient } from '@/utils/tanstack'
 import { ClimbingTypeEn, GenderEn } from '@/pages/PartySurveyForm/components/PartyConditionForm.tsx'
 import dayjs from 'dayjs'
 
-/************* GET Party List **************/
+/**
+ * GET /v1/party/list?${queryString}
+ */
 export type GetPartyListParams = {
   page?: number
   size?: number
-  sortColumn?: "CREATED_AT"
-  sortOrder?: "DESC" | "ASC"
+  sortColumn?: 'CREATED_AT'
+  sortOrder?: 'DESC' | 'ASC'
   isNatural?: boolean
-  climbingType?: "BOULDERING" | "LEAD" | "ENDURANCE" | "ANY"
-  constraints?: "BOTH" | "MALE_ONLY" | "FEMALE_ONLY"
+  climbingType?: 'BOULDERING' | 'LEAD' | 'ENDURANCE' | 'ANY'
+  constraints?: 'BOTH' | 'MALE_ONLY' | 'FEMALE_ONLY'
   appointmentDate?: string
   address1List?: string[]
   locationId?: number
 }
 
 export const get_party_list = async (params?: GetPartyListParams) => {
-  const queryString = params ? `?${stringify(params)}` : ""
+  const queryString = params ? `?${stringify(params)}` : ''
 
   try {
     const result = await api.get<PageData<Party>>(`/v1/party/list?${queryString}`)
@@ -37,9 +39,10 @@ export const PARTY_LIST_KEY = ['party', 'list']
 export const usePartyList = (params?: GetPartyListParams) => {
   return useSuspenseInfiniteQuery({
     queryKey: [PARTY_LIST_KEY, params && stringify(params)],
-    queryFn: ({pageParam}) => get_party_list({...params, page: pageParam ?? 0}),
+    queryFn: ({ pageParam }) => get_party_list({ ...params, page: pageParam ?? 0 }),
     initialPageParam: 0,
-    getNextPageParam: (lastPage) => lastPage.totalPages <= lastPage.pageable.pageNumber ? null : lastPage.pageable.pageNumber + 1,
+    getNextPageParam: (lastPage) =>
+      lastPage.totalPages <= lastPage.pageable.pageNumber ? null : lastPage.pageable.pageNumber + 1,
     // 마운트시에 요청 보내지 않음
     retryOnMount: false,
     // 윈도우 포커스시에 새로고침하지 않음
@@ -115,8 +118,9 @@ export class PartyItem {
   }
 }
 
-
-/************* POST Party New **************/
+/**
+ * POST /v1/party/new
+ */
 export type PostPartyNewReq = {
   constraints: GenderEn
   climbingType: ClimbingTypeEn

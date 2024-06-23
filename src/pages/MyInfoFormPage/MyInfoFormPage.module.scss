@@ -1,0 +1,45 @@
+.Container {
+  width: 100%;
+  position: relative;
+  padding-top: rem(48px);
+  height: calc(100vh);
+}
+
+.Main {
+  padding: rem(16px);
+  padding-bottom: rem(84px);
+
+  h1 {
+    font-size: rem(20px);
+    font-weight: 700;
+  }
+  h2 {
+    font-size: rem(16px);
+    font-weight: 700;
+  }
+
+  fieldset {
+    width: 100%;
+    margin: rem(16px) 0;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.Bottom {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: white;
+  padding: rem(16px);
+  border-top: 1px solid $gray-100;
+
+  .Button {
+    width: 100%;
+    box-sizing: border-box;
+    height: rem(52px);
+    border-radius: rem(26px);
+    font-size: rem(16px);
+    font-weight: 700;
+  }
+}

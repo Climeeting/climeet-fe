@@ -4,6 +4,9 @@ import { MyProfile } from '../pages/types/api'
 import { isAxiosError } from 'axios'
 import { queryClient } from '../utils/tanstack'
 
+/**
+ * GET /v1/user/myProfile
+ */
 export const get_user_myProfile = async () => {
   return await api.get<MyProfile>('/v1/user/myProfile')
 }
@@ -48,4 +51,91 @@ export const MyProfileQuery = {
     await queryClient.refetchQueries({
       queryKey: USER_KEY,
     }),
+}
+
+/**
+ * POST /v1/user/additional-info
+ */
+export const post_user_additionalInfo = async (params: PostAdditonalInfoParams) => {
+  return await api.post<PostAdditonalInfoParams>('/v1/user/additional-info', params)
+}
+
+export type PostAdditonalInfoParams = {
+  description: string
+  sex: 'MALE' | 'FEMALE'
+  skill:
+    | 'BLUE'
+    | 'RED'
+    | 'WHITE'
+    | 'YELLOW'
+    | 'ORANGE'
+    | 'GREEN'
+    | 'PURPLE'
+    | 'GREY'
+    | 'BROWN'
+    | 'BLACK'
+}
+
+export type MyInfo = {
+  sex: '남자' | '여자'
+  skill:
+    | 'BLUE'
+    | 'RED'
+    | 'WHITE'
+    | 'YELLOW'
+    | 'ORANGE'
+    | 'GREEN'
+    | 'PURPLE'
+    | 'GREY'
+    | 'BROWN'
+    | 'BLACK'
+  description: string
+}
+
+export const skillOptions: MyInfo['skill'][] = [
+  'BLUE',
+  'RED',
+  'WHITE',
+  'YELLOW',
+  'ORANGE',
+  'GREEN',
+  'PURPLE',
+  'GREY',
+  'BROWN',
+  'BLACK',
+]
+
+export class AdditionalInfoAddapter {
+  private value: MyInfo
+
+  constructor(value: MyInfo) {
+    this.value = value
+  }
+
+  get description(): PostAdditonalInfoParams['description'] {
+    return this.value.description
+  }
+
+  get sex(): PostAdditonalInfoParams['sex'] {
+    switch (this.value.sex) {
+      case '남자':
+        return 'MALE'
+      case '여자':
+        return 'FEMALE'
+      default:
+        return 'MALE'
+    }
+  }
+
+  get skill(): PostAdditonalInfoParams['skill'] {
+    return this.value.skill
+  }
+
+  adapt() {
+    return {
+      description: this.description,
+      sex: this.sex,
+      skill: this.skill,
+    }
+  }
 }

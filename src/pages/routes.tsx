@@ -7,6 +7,7 @@ import NotFoundPage from './NotFoundPage'
 import MyPage from './MyPage/MyPage'
 import { PartySurveyFormPage } from './PartySurveyForm/PartySurveyFormPage'
 import { PartyDetailPage } from './PartyDetailPage/PartyDetailPage'
+import MyInfoFormPage from './MyInfoFormPage/MyInfoFormPage'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -16,6 +17,7 @@ const router = createBrowserRouter(
       <Route path="oauth" element={<OauthPage />} />
       <Route path="404" element={<NotFoundPage />} />
       <Route path="mypage" element={<MyPage />} />
+      <Route path="mypage/new" element={<MyInfoFormPage />} />
       <Route path="/party/:id" element={<PartyDetailPage />} />
       <Route path="party-suervey" element={<PartySurveyFormPage />} />
     </Route>

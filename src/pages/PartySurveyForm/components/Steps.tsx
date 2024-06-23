@@ -47,7 +47,7 @@ export function IndoorStep({ formData, updateFormData }: StepProps) {
 
   return (
     <>
-      <ProgressBar value={calcCurrentProgressValue(indoorSteps, step)} />
+      <ProgressBar ratio={calcCurrentProgressValue(indoorSteps, step)} />
       <div
         onClick={() => {
           const currentStepIndex = getCurrentStepIndex(indoorSteps, step)

@@ -13,7 +13,7 @@ type PartyTypeFormProps = {
 export function PartyTypeForm({ onNext, formData, updateFormData }: PartyTypeFormProps) {
   return (
     <div className={styles.container}>
-      <ProgressBar value={0} />
+      <ProgressBar ratio={0} />
       <div>
         <h2 className={styles.title}>
           원하시는 파티를

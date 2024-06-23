@@ -107,6 +107,7 @@ export class PartyItem {
       ...this.value,
       constraints: this.constraints,
       climbingType: this.climbingType,
+      appointmentTime: this.appointmentTime,
     }
   }
 }

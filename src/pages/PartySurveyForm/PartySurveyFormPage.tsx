@@ -5,7 +5,7 @@ import { IndoorStep } from './components/Steps.tsx'
 import TopBar from '@/components/NavBar/TopBar.tsx'
 import { ClimbingTypeKo, GenderKo } from '@/pages/PartySurveyForm/components/PartyConditionForm.tsx'
 import { useParams } from 'react-router-dom'
-import { get_party_detail, SurveyFormAdapter } from '@/services/party.ts'
+import { get_party_$partyId_detail, SurveyFormAdapter } from '@/services/party.ts'
 import { useAsync } from 'react-use'
 
 export function PartySurveyFormPage() {
@@ -18,7 +18,7 @@ export function PartySurveyFormPage() {
     const isPartyEdit = id !== undefined
     if (!isPartyEdit) return
     try {
-      const partyDetail = await get_party_detail(id)
+      const partyDetail = await get_party_$partyId_detail(Number(id))
       if (!partyDetail) {
         throw new Error('파티 상세 정보가 존재하지 않습니다.')
       }

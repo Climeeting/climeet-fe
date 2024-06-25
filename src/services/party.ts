@@ -1,7 +1,7 @@
-import { PageData, Party } from '@/pages/types/api'
+import { PageData, Party, PartyDetail } from '@/pages/types/api'
 import api from '../utils/api'
 import { stringify } from '@/utils/query'
-import { useSuspenseInfiniteQuery } from '@tanstack/react-query'
+import { useSuspenseInfiniteQuery, useSuspenseQuery } from '@tanstack/react-query'
 import { queryClient } from '@/utils/tanstack'
 import {
   ClimbingTypeEn,
@@ -76,14 +76,6 @@ export class PartyItem {
     this.value = value
   }
 
-  get partyTitle() {
-    return this.value.partyTitle
-  }
-
-  get locationId() {
-    return this.value.locationId
-  }
-
   get appointmentTime() {
     return dayjs(this.value.appointmentTime).format('A h:mm')
   }
@@ -118,16 +110,15 @@ export class PartyItem {
 
   adapt() {
     return {
+      ...this.value,
       constraints: this.constraints,
       climbingType: this.climbingType,
+      appointmentTime: this.appointmentTime,
     }
   }
 }
 
-
-/**
- * GET /v1/party/${partyId}/detail
- */
+// TODO: PartyDetail 과 통합 필요
 export type GetPartyDetailRes = {
   partyName: string
   appointmentTime: string
@@ -144,16 +135,6 @@ export type GetPartyDetailRes = {
   minimumSkillLevel: number
   maximumSkillLevel: number
   isNatural: boolean
-}
-
-export const get_party_detail = async (partyId: number | string) => {
-  try {
-    const result = await api.get<GetPartyDetailRes>(`/v1/party/${partyId}/detail`)
-    return result
-  } catch (e) {
-    console.error(e)
-    throw new Error(`파티 상세 조회에 실패하였습니다. get v1/party/${partyId}/detail`)
-  }
 }
 
 export class SurveyFormAdapter {
@@ -288,6 +269,81 @@ export const post_party_new = async (reqBody: PostPartyNewReq) => {
   }
 }
 
+/**
+ * GET /v1/party/${partyId}/detail
+ */
+export const get_party_$partyId_detail = async (partyId: number) => {
+  try {
+    const result = await api.get<PartyDetail>(`/v1/party/${partyId}/detail`)
+    return result
+  } catch (e) {
+    console.error(e)
+    throw new Error('파티 상세 조회에 실패하였습니다. get v1/party/${partyId}/detail')
+  }
+}
+
+export const PARTY_DETAIL_KEY = ['party', 'detail']
+
+export const usePartyDetail = (partyId: number) => {
+  return useSuspenseQuery({
+    queryKey: [...PARTY_DETAIL_KEY, partyId],
+    queryFn: () => get_party_$partyId_detail(partyId),
+    retryOnMount: false,
+    refetchOnWindowFocus: false,
+    select: (data) => new PartyDetailAdapter(data).adapt(),
+  })
+}
+
+export type PartyDetailType = ReturnType<PartyDetailAdapter['adapt']>
+
+export class PartyDetailAdapter {
+  private value: PartyDetail
+
+  constructor(value: PartyDetail) {
+    this.value = value
+  }
+
+  get appointmentTime() {
+    return dayjs(this.value.appointmentTime).format('M월 DD일 (dd) A h:mm')
+  }
+
+  get climbingType() {
+    switch (this.value.climbingType) {
+      case 'BOULDERING':
+        return '볼더링'
+      case 'LEAD':
+        return '리드'
+      case 'ENDURANCE':
+        return '지구력'
+      case 'ANY':
+        return '상관없음'
+      default:
+        return '상관없음'
+    }
+  }
+
+  get constraints() {
+    switch (this.value.constraints) {
+      case 'BOTH':
+        return '남녀 모두'
+      case 'MALE_ONLY':
+        return '남자'
+      case 'FEMALE_ONLY':
+        return '여자'
+      default:
+        return '남녀 모두'
+    }
+  }
+
+  adapt() {
+    return {
+      ...this.value,
+      appointmentTime: this.appointmentTime,
+      climbingType: this.climbingType,
+      constraints: this.climbingType,
+    }
+  }
+}
 export class PostPartyNewReqAdapter {
   private value: PartySurveyFormData
 

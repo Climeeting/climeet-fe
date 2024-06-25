@@ -78,7 +78,7 @@ export type PartyDetail = {
   gymName: string
   partyDescription: string
   masterName: string
-  skillDistributions: SkillDestribute[]
+  skillDistributions: SkillDistribution[]
   approachDescription: string
   locationId: number
   minimumSkillLevel: number
@@ -87,7 +87,7 @@ export type PartyDetail = {
   masterProfileImageUrl: string
 }
 
-export type SkillDestribute = {
+export type SkillDistribution = {
   skill: Skill
   count: number
 }

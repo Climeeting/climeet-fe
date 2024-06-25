@@ -1,11 +1,18 @@
+import {
+  ClibingFe,
+  ConstraintsFe,
+  JoinStatusFe,
+  clibingFe2Be,
+  constraintsFe2Be,
+} from '@/services/adaptor'
 import { GetPartyListParams } from '@/services/party'
 import { PropsWithChildren, createContext, useContext, useState } from 'react'
 
 export type FilterContextType = {
   addressList: (AddressOption | '')[]
-  clibing: ClibingOption | ''
-  constraints: constraintsOption | ''
-  status: StatusOption | ''
+  clibing: ClibingFe | ''
+  constraints: ConstraintsFe | ''
+  status: JoinStatusFe | ''
 }
 
 export const defaultFilter: FilterContextType = {
@@ -91,15 +98,15 @@ const ActionsContext = createContext<{
     init: () => void
   }
   clibing: {
-    toggle: (option: ClibingOption) => void
+    toggle: (option: ClibingFe) => void
     init: () => void
   }
   constraints: {
-    toggle: (option: constraintsOption) => void
+    toggle: (option: ConstraintsFe) => void
     init: () => void
   }
   status: {
-    toggle: (option: StatusOption) => void
+    toggle: (option: JoinStatusFe) => void
     init: () => void
   }
   init: () => void
@@ -172,10 +179,6 @@ export type AddressOption =
   | '전북'
   | '제주'
 
-export type ClibingOption = '볼더링' | '리드' | '지구력' | '상관없음'
-export type constraintsOption = '남녀 모두' | '남자' | '여자'
-export type StatusOption = '전체' | '신청하기' | '마감임박' | '마감'
-
 export const addressOptions: AddressOption[] = [
   '모든 지역',
   '서울',
@@ -195,9 +198,9 @@ export const addressOptions: AddressOption[] = [
   '전북',
   '제주',
 ]
-export const clibingOptions: ClibingOption[] = ['볼더링', '리드', '지구력', '상관없음']
-export const constraintsOptions: constraintsOption[] = ['남녀 모두', '남자', '여자']
-export const statusOptions: StatusOption[] = ['전체', '신청하기', '마감임박', '마감']
+export const clibingOptions: ClibingFe[] = ['볼더링', '리드', '지구력', '상관없음']
+export const constraintsOptions: ConstraintsFe[] = ['남녀 모두', '남자', '여자']
+export const statusOptions: JoinStatusFe[] = ['전체', '신청하기', '마감임박', '마감']
 
 export class PartyListParams {
   private value: FilterContextType
@@ -207,31 +210,11 @@ export class PartyListParams {
   }
 
   get constraints(): GetPartyListParams['constraints'] {
-    switch (this.value.constraints) {
-      case '남녀 모두':
-        return 'BOTH'
-      case '남자':
-        return 'MALE_ONLY'
-      case '여자':
-        return 'FEMALE_ONLY'
-      default:
-        return 'BOTH'
-    }
+    return constraintsFe2Be(this.value.constraints)
   }
 
   get climbingType(): GetPartyListParams['climbingType'] {
-    switch (this.value.clibing) {
-      case '볼더링':
-        return 'BOULDERING'
-      case '리드':
-        return 'LEAD'
-      case '지구력':
-        return 'ENDURANCE'
-      case '상관없음':
-        return 'ANY'
-      default:
-        return 'ANY'
-    }
+    return clibingFe2Be(this.value.clibing)
   }
 
   get address1List(): GetPartyListParams['address1List'] {

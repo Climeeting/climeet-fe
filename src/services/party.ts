@@ -118,6 +118,25 @@ export class PartyItem {
   }
 }
 
+// TODO: PartyDetail 과 통합 필요
+export type GetPartyDetailRes = {
+  partyName: string
+  appointmentTime: string
+  climbingType: ClimbingTypeEn
+  constraints: GenderEn
+  maxParticipants: number
+  currentParticipants: number
+  gymName: string
+  partyDescription: string
+  masterName: string
+  skillDistributions: { skill: string; count: number }[]
+  approachDescription: string
+  locationId: number
+  minimumSkillLevel: number
+  maximumSkillLevel: number
+  isNatural: boolean
+}
+
 export class SurveyFormAdapter {
   constructor(private value: GetPartyDetailRes) {}
 

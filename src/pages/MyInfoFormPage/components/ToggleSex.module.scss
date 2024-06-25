@@ -1,0 +1,23 @@
+.ToggleGroup {
+  display: flex;
+  justify-content: space-between;
+  gap: rem(16px);
+}
+
+.ToggleGroupItem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: rem(14px);
+  width: 50%;
+  color: $gray-900;
+  border: 1px solid $gray-900;
+  padding: rem(6px);
+  border-radius: rem(10px);
+  cursor: pointer;
+}
+
+.ToggleGroupItem[data-state='on'] {
+  background-color: $gray-900;
+  color: white;
+}

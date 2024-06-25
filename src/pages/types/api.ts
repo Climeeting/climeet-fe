@@ -2,25 +2,28 @@ export type MyProfile = {
   userId: number
   nickname: string
   profileImageUrl: string
+  description?: string
+  skillLevel?: string
+  sex?: string
 }
 
 export type Party = {
   createdAt: string
   updatedAt: string
   id: number
-  constraints: "BOTH" | "MALE_ONLY" | "FEMALE_ONLY"
+  constraints: 'BOTH' | 'MALE_ONLY' | 'FEMALE_ONLY'
   minSkillLevel: number
-  maxSkillLevel:	number
+  maxSkillLevel: number
   locationId: number
   participationDeadline: string
   description: string
-  userLimitCount:	number
-  currentTotalMemberCount:	number
-  approacheDescription:	string
+  userLimitCount: number
+  currentTotalMemberCount: number
+  approacheDescription: string
   appointmentTime: string
-  climbingType:	"BOULDERING" | "LEAD" | "ENDURANCE" | "ANY"
+  climbingType: 'BOULDERING' | 'LEAD' | 'ENDURANCE' | 'ANY'
   masterId: number
-  partyTitle:	string
+  partyTitle: string
   natural: boolean
 }
 

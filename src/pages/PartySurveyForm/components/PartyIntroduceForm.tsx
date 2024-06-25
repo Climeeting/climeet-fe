@@ -13,7 +13,19 @@ export function PartyIntroduceForm({ onNext, formData, updateFormData }: PartyIn
   const [partyName, setPartyName] = useState(formData.partyName)
   const [partyIntroduce, setPartyIntroduce] = useState(formData.partyDescription)
 
-  const disabled = partyName.length < 5 || partyIntroduce.length < 10
+  const PARTY_NAME_MIN_LIMIT = 5
+  const PARTY_NAME_MAX_LIMIT = 20
+  const PARTY_INTRODUCE_MIN_LIMIT = 10
+  const PARTY_INTRODUCE_MAX_LIMIT = 300
+
+  const isPartyNameValid =
+    partyName.length >= PARTY_NAME_MIN_LIMIT && partyName.length <= PARTY_NAME_MAX_LIMIT
+
+  const isPartyIntroduceValid =
+    partyIntroduce.length >= PARTY_INTRODUCE_MIN_LIMIT &&
+    partyIntroduce.length <= PARTY_INTRODUCE_MAX_LIMIT
+
+  const isFormValid = isPartyNameValid && isPartyIntroduceValid
 
   return (
     <div className={styles.container}>
@@ -31,10 +43,12 @@ export function PartyIntroduceForm({ onNext, formData, updateFormData }: PartyIn
               }}
             />
             {partyName === '' ? (
-              <div className={styles.minMax}>최소 5자 / 최대 20자</div>
+              <div className={styles.minMax}>
+                최소 {PARTY_NAME_MIN_LIMIT}자 / 최대 {PARTY_NAME_MAX_LIMIT}자
+              </div>
             ) : (
               <div className={styles.minMax}>
-                <strong>{partyName.length}자</strong> / 최대 20자
+                <strong>{partyName.length}자</strong> / 최대 {PARTY_NAME_MAX_LIMIT}자
               </div>
             )}
           </div>
@@ -51,10 +65,12 @@ export function PartyIntroduceForm({ onNext, formData, updateFormData }: PartyIn
               }}
             />
             {partyIntroduce === '' ? (
-              <div className={styles.minMax}>최소 10자 / 최대 300자</div>
+              <div className={styles.minMax}>
+                최소 {PARTY_INTRODUCE_MIN_LIMIT}자 / 최대 {PARTY_INTRODUCE_MAX_LIMIT}자
+              </div>
             ) : (
               <div className={styles.minMax}>
-                <strong>{partyIntroduce.length}자</strong> / 최대 300자
+                <strong>{partyIntroduce.length}자</strong> / 최대 {PARTY_INTRODUCE_MAX_LIMIT}자
               </div>
             )}
           </div>
@@ -63,10 +79,10 @@ export function PartyIntroduceForm({ onNext, formData, updateFormData }: PartyIn
       <div className={styles.footer}>
         <button
           className={classNames(styles.nextBtn, {
-            [styles.disabled]: disabled,
+            [styles.disabled]: !isFormValid,
           })}
           onClick={() => {
-            if (disabled) {
+            if (!isFormValid) {
               return
             }
             updateFormData('partyName', partyName)

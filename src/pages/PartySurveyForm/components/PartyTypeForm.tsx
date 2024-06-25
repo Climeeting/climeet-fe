@@ -2,6 +2,7 @@ import styles from './PartyTypeForm.module.scss'
 import classNames from 'classnames'
 import { PartySurveyFormData, UpdateFormData } from '../PartySurveyFormPage.tsx'
 import Icon from '@/components/Icon/Icon.tsx'
+import ProgressBar from '@/components/ProgressBar.tsx'
 
 type PartyTypeFormProps = {
   onNext: () => void
@@ -12,6 +13,7 @@ type PartyTypeFormProps = {
 export function PartyTypeForm({ onNext, formData, updateFormData }: PartyTypeFormProps) {
   return (
     <div className={styles.container}>
+      <ProgressBar ratio={0} />
       <div>
         <h2 className={styles.title}>
           원하시는 파티를

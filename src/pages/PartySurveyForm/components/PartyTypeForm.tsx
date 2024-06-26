@@ -3,6 +3,7 @@ import classNames from 'classnames'
 import { PartySurveyFormData, UpdateFormData } from '../PartySurveyFormPage.tsx'
 import Icon from '@/components/Icon/Icon.tsx'
 import ProgressBar from '@/components/ProgressBar.tsx'
+import { useState } from 'react'
 
 type PartyTypeFormProps = {
   onNext: () => void
@@ -11,6 +12,8 @@ type PartyTypeFormProps = {
 }
 
 export function PartyTypeForm({ onNext, formData, updateFormData }: PartyTypeFormProps) {
+  const [isNatural, setIsNatural] = useState(formData.isNatural)
+
   return (
     <div className={styles.container}>
       <ProgressBar ratio={0} />
@@ -23,16 +26,16 @@ export function PartyTypeForm({ onNext, formData, updateFormData }: PartyTypeFor
         <div>
           <div
             className={classNames(styles.radioItem, {
-              [styles.selected]: !formData.isNatural,
+              [styles.selected]: !isNatural,
             })}
-            onClick={() => updateFormData('isNatural', false)}
+            onClick={() => setIsNatural(false)}
           >
             <div className={styles.radioItemLeft}>
               <span className={styles.partyType}>암장</span>
               <span className={styles.desc}>볼더링, 리드, 지구력을 함께 즐겨요!</span>
             </div>
             <div className={styles.radioItemRight}>
-              {formData.isNatural ? (
+              {isNatural ? (
                 <Icon icon={'RadioEmpty'} size={20} />
               ) : (
                 <Icon icon={'RadioChecked'} size={20} />
@@ -41,16 +44,16 @@ export function PartyTypeForm({ onNext, formData, updateFormData }: PartyTypeFor
           </div>
           <div
             className={classNames(styles.radioItem, {
-              [styles.selected]: formData.isNatural,
+              [styles.selected]: isNatural,
             })}
-            onClick={() => updateFormData('isNatural', true)}
+            onClick={() => setIsNatural(true)}
           >
             <div className={styles.radioItemLeft}>
               <span className={styles.partyType}>자연</span>
               <span className={styles.desc}>자연 암장에서 함께 즐겨요!</span>
             </div>
             <div className={styles.radioItemRight}>
-              {formData.isNatural ? (
+              {isNatural ? (
                 <Icon icon={'RadioChecked'} size={20} />
               ) : (
                 <Icon icon={'RadioEmpty'} size={20} />
@@ -60,7 +63,13 @@ export function PartyTypeForm({ onNext, formData, updateFormData }: PartyTypeFor
         </div>
       </div>
       <div className={styles.footer}>
-        <button className={styles.nextBtn} onClick={onNext}>
+        <button
+          className={styles.nextBtn}
+          onClick={() => {
+            updateFormData('isNatural', isNatural)
+            onNext()
+          }}
+        >
           다음
         </button>
       </div>

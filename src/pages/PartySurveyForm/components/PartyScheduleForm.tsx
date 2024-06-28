@@ -3,6 +3,13 @@ import styles from './PartyScheduleForm.module.scss'
 import * as Accordion from '@radix-ui/react-accordion'
 import { AccordionContent, AccordionTrigger } from '../../../components/Accordion.tsx'
 import { useState } from 'react'
+import ScrollPicker from '@/components/ScrollPicker.tsx'
+import {
+  HOURS,
+  MERIDIEM,
+  MINUTES,
+  useTimePicker,
+} from '@/pages/PartySurveyForm/hooks/useTimePicker.ts'
 
 type PartyScheduleFormProps = {
   onNext: () => void
@@ -11,6 +18,7 @@ type PartyScheduleFormProps = {
 }
 
 export function PartyScheduleForm({ onNext, formData, updateFormData }: PartyScheduleFormProps) {
+  const { setTimePicker, timePicker, getNextTime } = useTimePicker(formData.partyTime)
   const [schedule, setSchedule] = useState<Schedule>({
     partyDate: formData.partyDate,
     partyTime: formData.partyTime,
@@ -48,15 +56,59 @@ export function PartyScheduleForm({ onNext, formData, updateFormData }: PartySch
             <div className={styles.question}>
               <h3 className={styles.questionTitle}>파티 시간</h3>
               <Accordion.Item className="AccordionItem" value={`partyTime`}>
+                {/*아래 값이 이상함 */}
                 <AccordionTrigger>{schedule.partyTime}</AccordionTrigger>
                 <AccordionContent>
-                  <input
-                    type="time"
-                    value={schedule.partyTime}
-                    onChange={(e) => {
-                      updateScheduleData('partyTime', e.target.value)
-                    }}
-                  />
+                  <div className={styles.ScrollPickerWrapper}>
+                    <ScrollPicker
+                      list={MERIDIEM}
+                      onSelectedChange={(value) => {
+                        const nextValue = {
+                          ...timePicker,
+                          meridiem: value as string,
+                        }
+                        setTimePicker(nextValue)
+                        const nextPartyTime = getNextTime(
+                          nextValue.meridiem,
+                          nextValue.hours,
+                          nextValue.minutes
+                        )
+                        updateScheduleData('partyTime', nextPartyTime)
+                      }}
+                    />
+                    <ScrollPicker
+                      list={HOURS}
+                      onSelectedChange={(value) => {
+                        const nextValue = {
+                          ...timePicker,
+                          hours: value as string,
+                        }
+                        setTimePicker(nextValue)
+                        const nextPartyTime = getNextTime(
+                          nextValue.meridiem,
+                          nextValue.hours,
+                          nextValue.minutes
+                        )
+                        updateScheduleData('partyTime', nextPartyTime)
+                      }}
+                    />
+                    <ScrollPicker
+                      list={MINUTES}
+                      onSelectedChange={(value) => {
+                        const nextValue = {
+                          ...timePicker,
+                          minutes: value as string,
+                        }
+                        setTimePicker(nextValue)
+                        const nextPartyTime = getNextTime(
+                          nextValue.meridiem,
+                          nextValue.hours,
+                          nextValue.minutes
+                        )
+                        updateScheduleData('partyTime', nextPartyTime)
+                      }}
+                    />
+                  </div>
                 </AccordionContent>
               </Accordion.Item>
             </div>

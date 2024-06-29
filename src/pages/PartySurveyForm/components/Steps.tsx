@@ -145,6 +145,7 @@ export function OutdoorStep({ formData, updateFormData, goToFirstStep }: StepPro
           setStep(previousStep)
         }}
       />
+      <ProgressBar ratio={calcCurrentProgressValue(outdoorSteps, step)} />
       <Funnel>
         <Step name="소개">
           <PartyIntroduceForm

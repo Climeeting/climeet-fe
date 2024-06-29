@@ -25,8 +25,8 @@ export default function PartyList() {
       {data.pages.map((parties, i) => (
         <React.Fragment key={i}>
           {parties.content.map((party) => (
-            <li key={i}>
-              <Link to={`/party/${party.id}`} key={party.id}>
+            <li key={party.id}>
+              <Link to={`/party/${party.id}`}>
                 <PartyCard party={party} />
               </Link>
             </li>

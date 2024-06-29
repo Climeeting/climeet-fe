@@ -15,7 +15,7 @@ export function PartyDetailPage() {
       <div className={styles.Container}>
         <ErrorBoundary fallback={<PartyDetail.Retry />}>
           <Suspense fallback={<PartyDetail.Skeleton />}>
-            <PartyDetail id={Number(id)} />
+            <PartyDetail.Query id={Number(id)} />
           </Suspense>
         </ErrorBoundary>
       </div>

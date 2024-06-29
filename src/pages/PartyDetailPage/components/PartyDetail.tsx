@@ -1,12 +1,10 @@
-import { usePartyDetail } from '@/services/party'
+import { PartyDetailType, usePartyDetail } from '@/services/party'
 import { PartyMainInfo } from './PartyMainInfo'
 import { PartyDescription } from './PartyDescription'
 import { PartyParticipants } from './PartyParticipants'
 // import { PartyClimbInfo } from './PartyClimbInfo'
 
-export default function PartyDetail({ id }: { id: number }) {
-  const { data } = usePartyDetail(id)
-
+export default function PartyDetail({ data }: { data: PartyDetailType }) {
   return (
     <>
       <section>
@@ -26,6 +24,11 @@ export default function PartyDetail({ id }: { id: number }) {
       </section> */}
     </>
   )
+}
+
+PartyDetail.Query = function Container({ id }: { id: number }) {
+  const { data } = usePartyDetail(id)
+  return <PartyDetail data={data} />
 }
 
 PartyDetail.Retry = () => {

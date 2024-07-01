@@ -5,6 +5,7 @@ import classNames from 'classnames'
 import { ClimbSearchItem } from '@/pages/types/api.ts'
 import { get_climb_search } from '@/services/gymSearch.ts'
 import Icon from '@/components/Icon/Icon.tsx'
+import { useDebounce } from 'react-use'
 
 type PartyPlaceFormProps = {
   onNext: () => void
@@ -16,6 +17,14 @@ export function PartyPlaceForm({ onNext, formData, updateFormData }: PartyPlaceF
   const [locationId, setLocationId] = useState<number>(formData.locationId)
   const [value, setValue] = useState(formData.cragName)
   const [gymList, setGymList] = useState<ClimbSearchItem[]>([])
+  useDebounce(
+    async () => {
+      const res = await get_climb_search(value)
+      setGymList(res.content)
+    },
+    500,
+    [value]
+  )
 
   const disabled = !value
 

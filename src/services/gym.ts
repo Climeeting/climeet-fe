@@ -9,11 +9,11 @@ export const get_climb_$locationId = async (locationId: number) => {
   return await api.get<ClimbingGym>(`/v1/climb/${locationId}`)
 }
 
-export const USER_KEY = ['user']
+export const CLIMB_KEY = ['climb', 'gym']
 
 export const useClimbingGym = (locationId: number) => {
   return useSuspenseQuery({
-    queryKey: USER_KEY,
+    queryKey: [...CLIMB_KEY, locationId],
     queryFn: () => get_climb_$locationId(locationId),
     // 1시간마다 새로고침
     refetchInterval: 60 * 60 * 1000,

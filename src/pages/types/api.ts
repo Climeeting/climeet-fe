@@ -103,3 +103,11 @@ export type Skill =
   | 'GREY'
   | 'BROWN'
   | 'BLACK'
+
+export type ClimbingGym = {
+  id: number
+  name: string
+  address1: string
+  address2: string
+  address3: string
+}

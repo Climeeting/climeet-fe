@@ -53,6 +53,9 @@ dependencies:
   '@tanstack/react-query':
     specifier: ^5.32.1
     version: 5.37.1(react@18.3.1)
+  '@uidotdev/usehooks':
+    specifier: ^2.4.1
+    version: 2.4.1(react-dom@18.3.1)(react@18.3.1)
   axios:
     specifier: ^1.6.8
     version: 1.7.0
@@ -112,6 +115,9 @@ devDependencies:
   eslint-plugin-react-refresh:
     specifier: ^0.4.6
     version: 0.4.7(eslint@8.57.0)
+  kakao.maps.d.ts:
+    specifier: ^0.1.40
+    version: 0.1.40
   prettier:
     specifier: ^3.3.1
     version: 3.3.1
@@ -3194,6 +3200,17 @@ packages:
       eslint-visitor-keys: 3.4.3
     dev: true
 
+  /@uidotdev/usehooks@2.4.1(react-dom@18.3.1)(react@18.3.1):
+    resolution: {integrity: sha512-1I+RwWyS+kdv3Mv0Vmc+p0dPYH0DTRAo04HLyXReYBL9AeseDWUJyi4THuksBJcu9F0Pih69Ak150VDnqbVnXg==}
+    engines: {node: '>=16'}
+    peerDependencies:
+      react: '>=18.0.0'
+      react-dom: '>=18.0.0'
+    dependencies:
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+    dev: false
+
   /@ungap/structured-clone@1.2.0:
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
     dev: true
@@ -4615,6 +4632,10 @@ packages:
   /jsonpointer@5.0.1:
     resolution: {integrity: sha512-p/nXbhSEcu3pZRdkW1OfJhpsVtW1gd4Wa1fnQc9YLiTfAjn0312eMKimbdIQzuZl9aa9xUGaRlP9T/CJE/ditQ==}
     engines: {node: '>=0.10.0'}
+    dev: true
+
+  /kakao.maps.d.ts@0.1.40:
+    resolution: {integrity: sha512-nX69MB1ok04epe3OqS+/tEeWBbU31GSQbvDPJmQRRltzzqn6t4jBsO5v1nzalUjCKzwcH2CptOc767NZ7Hbu3g==}
     dev: true
 
   /keyv@4.5.4:

@@ -1,6 +1,8 @@
 import Icon, { IconType } from '@/components/Icon/Icon'
 import styles from './PartyMainInfo.module.scss'
 import { PartyDetailType } from '@/services/party'
+import { useClimbingGym } from '@/services/gym'
+import { useKakaoStaticMap } from '@/utils/useKakaoMap'
 
 export function PartyMainInfo({
   partyName,
@@ -9,6 +11,7 @@ export function PartyMainInfo({
   constraints,
   maxParticipants,
   currentParticipants,
+  locationId,
 }: PartyDetailType) {
   return (
     <>
@@ -30,7 +33,7 @@ export function PartyMainInfo({
         </li>
       </ul>
 
-      <div className={styles.LocationLink} />
+      <KakaoMap locationId={locationId} />
     </>
   )
 }
@@ -45,4 +48,14 @@ function InfoItem({ icon, title, content }: { icon: IconType; title: string; con
       <div className={styles.InfoContent}>{content}</div>
     </>
   )
+}
+
+function KakaoMap({ locationId }: { locationId: number }) {
+  const {
+    data: { name, address1, address2, address3 },
+  } = useClimbingGym(locationId)
+
+  const { mapRef } = useKakaoStaticMap({ name, address: `${address1} ${address2} ${address3}` })
+
+  return <div ref={mapRef} className={styles.KakaoMap}></div>
 }

@@ -1,5 +1,4 @@
 import Chip from '@/components/Chip'
-import TopBar from '@/components/NavBar/TopBar'
 import styles from './MyInfoFormPage.module.scss'
 import ToggleSex from './components/ToggleSex'
 import { useState } from 'react'
@@ -21,10 +20,20 @@ export default function MyInfoFormPage() {
 
   return (
     <div className={styles.Container}>
-      <TopBar />
-
       <div className={styles.Main}>
-        <h1>서비스 이용 시 필요한 정보입니다!</h1>
+        <div className={styles.Header}>
+          <h1 className={styles.Title}>
+            클라이밋에 오신것을
+            <br />
+            환영합니다🎉
+          </h1>
+
+          <span className={styles.Description}>
+            간단한 자기소개로
+            <br />
+            나와 꼭 맞는 파트너를 구해보세요!
+          </span>
+        </div>
 
         <fieldset>
           <h2>성별</h2>

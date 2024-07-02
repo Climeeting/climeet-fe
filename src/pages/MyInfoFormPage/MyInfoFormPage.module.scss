@@ -3,16 +3,31 @@
   position: relative;
   padding-top: rem(48px);
   height: calc(100vh);
+  background: white;
+  background: linear-gradient(180deg, rgba(228, 219, 248, 1) 0%, rgba(255, 255, 255, 1) 30%);
 }
 
 .Main {
-  padding: rem(16px);
-  padding-bottom: rem(84px);
+  padding: 0 rem(16px) rem(84px);
 
-  h1 {
-    font-size: rem(20px);
+  .Header {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: start;
+    gap: 16px;
+    margin: 52px 0 60px;
+  }
+
+  .Title {
+    font-size: rem(24px);
     font-weight: 700;
   }
+
+  .Description {
+    color: $gray-700;
+  }
+
   h2 {
     font-size: rem(16px);
     font-weight: 700;

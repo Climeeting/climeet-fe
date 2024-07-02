@@ -61,7 +61,6 @@ export const post_user_additionalInfo = async (params: PostAdditonalInfoParams) 
 }
 
 export type PostAdditonalInfoParams = {
-  description: string
   sex: 'MALE' | 'FEMALE'
   skill: Skill
 }
@@ -69,7 +68,6 @@ export type PostAdditonalInfoParams = {
 export type MyInfo = {
   sex: '남자' | '여자'
   skill: Skill
-  description: string
 }
 
 export const skillOptions: MyInfo['skill'][] = [
@@ -92,10 +90,6 @@ export class AdditionalInfoAddapter {
     this.value = value
   }
 
-  get description(): PostAdditonalInfoParams['description'] {
-    return this.value.description
-  }
-
   get sex(): PostAdditonalInfoParams['sex'] {
     switch (this.value.sex) {
       case '남자':
@@ -113,7 +107,6 @@ export class AdditionalInfoAddapter {
 
   adapt() {
     return {
-      description: this.description,
       sex: this.sex,
       skill: this.skill,
     }

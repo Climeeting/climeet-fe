@@ -10,7 +10,7 @@ export default function BottomBar() {
       <NavLink icon="LocationLine" title="탐색" to="/location" />
       <NavLink icon="Plus" title="만들기" to="/party-suervey" />
       <NavLink icon="ChatLine" title="채팅" to="/chat" />
-      <NavLink icon="MyPage" title="마이페이지" to="/mypage" />
+      <NavLink icon="MyPage" title="My" to="/mypage" />
     </div>
   )
 }

@@ -13,6 +13,7 @@ import {
 } from '@/services/party.ts'
 import { useNavigate, useParams } from 'react-router-dom'
 import ProgressBar from '@/components/ProgressBar.tsx'
+import TopBar from '@/components/NavBar/TopBar.tsx'
 
 const indoorSteps = ['암장', '조건', '소개', '일정'] as const
 type IndoorStepName = (typeof indoorSteps)[number]
@@ -23,9 +24,10 @@ type OutdoorStepName = (typeof outdoorSteps)[number]
 type StepProps = {
   formData: PartySurveyFormData
   updateFormData: UpdateFormData
+  goToFirstStep?: () => void
 }
 
-export function IndoorStep({ formData, updateFormData }: StepProps) {
+export function IndoorStep({ formData, updateFormData, goToFirstStep }: StepProps) {
   const { Funnel, Step, setStep, step } = useFunnel<IndoorStepName>('암장')
   const { stepPush } = useStepFlow('HomePage')
   const navigate = useNavigate()
@@ -45,16 +47,15 @@ export function IndoorStep({ formData, updateFormData }: StepProps) {
 
   return (
     <>
-      <ProgressBar ratio={calcCurrentProgressValue(indoorSteps, step)} />
-      <div
+      <TopBar
         onClick={() => {
           const currentStepIndex = getCurrentStepIndex(indoorSteps, step)
+          if (currentStepIndex === 0) return goToFirstStep?.()
           const previousStep = getPreviousStep(indoorSteps, currentStepIndex)
           setStep(previousStep)
         }}
-      >
-        이전으로
-      </div>
+      />
+      <ProgressBar ratio={calcCurrentProgressValue(indoorSteps, step)} />
       <Funnel>
         <Step name="암장">
           <PartyPlaceForm
@@ -118,7 +119,7 @@ export function IndoorStep({ formData, updateFormData }: StepProps) {
   )
 }
 
-export function OutdoorStep({ formData, updateFormData }: StepProps) {
+export function OutdoorStep({ formData, updateFormData, goToFirstStep }: StepProps) {
   const { Funnel, Step, setStep, step } = useFunnel<OutdoorStepName>('소개')
   const { stepPush } = useStepFlow('HomePage')
   const { pop } = useFlow()
@@ -136,15 +137,15 @@ export function OutdoorStep({ formData, updateFormData }: StepProps) {
 
   return (
     <>
-      <div
+      <TopBar
         onClick={() => {
           const currentStepIndex = getCurrentStepIndex(indoorSteps, step)
+          if (currentStepIndex === 0) return goToFirstStep?.()
           const previousStep = getPreviousStep(indoorSteps, currentStepIndex)
           setStep(previousStep)
         }}
-      >
-        이전으로
-      </div>
+      />
+      <ProgressBar ratio={calcCurrentProgressValue(outdoorSteps, step)} />
       <Funnel>
         <Step name="소개">
           <PartyIntroduceForm

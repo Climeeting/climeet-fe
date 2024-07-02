@@ -2,7 +2,6 @@ import { useRef, useState } from 'react'
 import styles from './PartySurveyFormPage.module.scss'
 import { PartyTypeForm } from './components/PartyTypeForm.tsx'
 import { IndoorStep } from './components/Steps.tsx'
-import TopBar from '@/components/NavBar/TopBar.tsx'
 import { ClimbingTypeKo, GenderKo } from '@/pages/PartySurveyForm/components/PartyConditionForm.tsx'
 import { useParams } from 'react-router-dom'
 import { get_party_$partyId_detail, SurveyFormAdapter } from '@/services/party.ts'
@@ -31,7 +30,6 @@ export function PartySurveyFormPage() {
 
   return (
     <>
-      <TopBar />
       <div className={styles.wrapper}>
         {isFirstStep ? (
           <PartyTypeForm
@@ -42,9 +40,21 @@ export function PartySurveyFormPage() {
             }}
           />
         ) : formData.isNatural ? (
-          <IndoorStep formData={formData} updateFormData={updateFormData} />
+          <IndoorStep
+            goToFirstStep={() => {
+              setIsFirstStep(true)
+            }}
+            formData={formData}
+            updateFormData={updateFormData}
+          />
         ) : (
-          <IndoorStep formData={formData} updateFormData={updateFormData} />
+          <IndoorStep
+            goToFirstStep={() => {
+              setIsFirstStep(true)
+            }}
+            formData={formData}
+            updateFormData={updateFormData}
+          />
         )}
       </div>
     </>

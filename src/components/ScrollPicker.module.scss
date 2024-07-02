@@ -1,0 +1,45 @@
+$item-height: 47px;
+
+.List {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  width: 100%;
+  display: block;
+  height: $item-height * 3;
+  overflow-y: scroll;
+  position: relative;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.ListCenter {
+  box-sizing: border-box;
+  border-top: 1.3px solid #e5e5e5;
+  border-bottom: 1.3px solid #e5e5e5;
+  height: $item-height;
+  position: sticky;
+  top: $item-height;
+}
+
+.ListItem {
+  height: $item-height;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $gray-400;
+  font-size: rem(16px);
+  font-weight: 500;
+  line-height: 1.7;
+  letter-spacing: -0.02;
+
+  &.selected {
+    font-weight: bold;
+    color: $gray-800;
+  }
+}

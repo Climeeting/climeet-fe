@@ -71,6 +71,8 @@
 
   .searchList {
     margin-top: rem(12px);
+    height: 300px;
+    overflow-y: auto;
   }
 
   .searchItem {

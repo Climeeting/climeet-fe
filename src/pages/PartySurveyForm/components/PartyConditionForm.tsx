@@ -6,6 +6,9 @@ import * as Accordion from '@radix-ui/react-accordion'
 import { useState } from 'react'
 import { Slider } from '@/components/Slider.tsx'
 import Icon from '@/components/Icon/Icon.tsx'
+import ScrollPicker from '@/components/ScrollPicker.tsx'
+
+const MEMBERS = Array.from({ length: 11 }, (_, i) => i + 2)
 
 type PartyConditionFormProps = {
   onNext: () => void
@@ -40,15 +43,14 @@ export function PartyConditionForm({ onNext, formData, updateFormData }: PartyCo
             <Accordion.Item className="AccordionItem" value={`members`}>
               <AccordionTrigger>{condition.maximumParticipationNumber}</AccordionTrigger>
               <AccordionContent>
-                <input
-                  type="number"
-                  min={2}
-                  max={12}
-                  value={condition.maximumParticipationNumber}
-                  onChange={(e) => {
-                    updateConditionData('maximumParticipationNumber', Number(e.target.value))
-                  }}
-                />
+                <div className={styles.ScrollPickerWrapper}>
+                  <ScrollPicker
+                    list={MEMBERS}
+                    onSelectedChange={(value) => {
+                      updateConditionData('maximumParticipationNumber', Number(value))
+                    }}
+                  />
+                </div>
               </AccordionContent>
             </Accordion.Item>
           </div>

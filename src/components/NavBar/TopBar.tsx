@@ -9,9 +9,17 @@ type Props = {
   back?: boolean
   left?: () => React.ReactNode
   right?: () => React.ReactNode
+  onClick?: () => void
 }
 
-export default function TopBar({ type = 'default', title, back = true, left, right }: Props) {
+export default function TopBar({
+  type = 'default',
+  title,
+  back = true,
+  left,
+  right,
+  onClick,
+}: Props) {
   const navigate = useNavigate()
 
   if (type === 'main')
@@ -25,7 +33,14 @@ export default function TopBar({ type = 'default', title, back = true, left, rig
   return (
     <div className={styles.Default}>
       {!left && back && (
-        <button className={styles.Left} onClick={() => navigate(-1)}>
+        <button
+          className={styles.Left}
+          onClick={() => {
+            if (onClick) return onClick()
+
+            navigate(-1)
+          }}
+        >
           <Icon icon="ArrowLeft" />
         </button>
       )}

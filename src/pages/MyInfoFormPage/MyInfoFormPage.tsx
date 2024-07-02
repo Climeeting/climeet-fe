@@ -1,7 +1,6 @@
 import Chip from '@/components/Chip'
-import TopBar from '@/components/NavBar/TopBar'
 import styles from './MyInfoFormPage.module.scss'
-import ToggleSex from './components/ToggleSex'
+import RadioSex from './components/RadioSex'
 import { useState } from 'react'
 import {
   AdditionalInfoAddapter,
@@ -10,35 +9,53 @@ import {
   skillOptions,
 } from '@/services/user'
 
-const DEFAULT_SKILL = skillOptions[0]
-
 export default function MyInfoFormPage() {
   const [sex, setSex] = useState<MyInfo['sex'] | ''>('')
-  const [skill, setSkill] = useState<MyInfo['skill'] | ''>(DEFAULT_SKILL)
-  const [description, setDescription] = useState<MyInfo['description']>('')
+  const [skill, setSkill] = useState<MyInfo['skill'] | ''>('')
+  const [submited, setSubmited] = useState(false)
 
-  const disabled = !sex || !skill || !description
+  const disabled = !sex || !skill
+  const warningSex = submited && !sex
+  const warningSkill = submited && !skill
 
   return (
     <div className={styles.Container}>
-      <TopBar />
-
       <div className={styles.Main}>
-        <h1>서비스 이용 시 필요한 정보입니다!</h1>
+        <div className={styles.Header}>
+          <h1 className={styles.Title}>
+            클라이밋에 오신것을
+            <br />
+            환영합니다🎉
+          </h1>
 
-        <fieldset>
-          <h2>성별</h2>
-          <ToggleSex sex={sex} setSex={setSex} />
+          <span className={styles.Description}>
+            간단한 자기소개로
+            <br />
+            나와 꼭 맞는 파트너를 구해보세요!
+          </span>
+        </div>
+
+        <fieldset className={styles.Fileldset}>
+          <div className={styles.LabelWrapper}>
+            <h2 className={styles.Label}>성별</h2>
+            {warningSex ? <p className={styles.Warning}>성별을 선택해주세요.</p> : null}
+          </div>
+          <RadioSex sex={sex} setSex={setSex} />
         </fieldset>
 
-        <fieldset>
-          <h2>실력</h2>
+        <fieldset className={styles.Fileldset}>
+          <div className={styles.LabelWrapper}>
+            <h2 className={styles.Label}>실력</h2>
+            {warningSkill ? <p className={styles.Warning}>실력을 선택해주세요.</p> : null}
+          </div>
           <select
             value={skill}
-            defaultValue={DEFAULT_SKILL}
             onChange={(e) => setSkill(e.target.value as MyInfo['skill'])}
             name="skill"
           >
+            <option disabled selected value={''}>
+              실력 없음
+            </option>
             {skillOptions.map((skill) => (
               <option key={skill} value={skill}>
                 {skill}
@@ -46,27 +63,21 @@ export default function MyInfoFormPage() {
             ))}
           </select>
         </fieldset>
-
-        <fieldset>
-          <h2>소개</h2>
-          <textarea
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            placeholder="소개를 입력해주세요"
-          />
-        </fieldset>
       </div>
 
       <div className={styles.Bottom}>
+        <p className={styles.Info}>해당 정보는 마이페이지에서 수정 가능합니다.</p>
         <Chip className={styles.Button} variable={disabled ? 'default' : 'primary'} asChild>
           <button
             disabled={disabled}
             onClick={async () => {
-              if (disabled) return
+              if (disabled) {
+                setSubmited(true)
+                return
+              }
               try {
                 await post_user_additionalInfo(
                   new AdditionalInfoAddapter({
-                    description,
                     sex,
                     skill,
                   }).adapt()

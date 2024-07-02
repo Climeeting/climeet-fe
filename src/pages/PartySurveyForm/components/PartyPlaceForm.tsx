@@ -60,6 +60,7 @@ export function PartyPlaceForm({ onNext, formData, updateFormData }: PartyPlaceF
         <div className={styles.searchList}>
           {gymList.map((el) => (
             <div
+              key={el.id}
               className={styles.searchItem}
               onClick={() => {
                 setValue(el.name)

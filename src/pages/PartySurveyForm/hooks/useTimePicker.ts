@@ -45,14 +45,10 @@ export const useTimePicker = (defaultTime: string) => {
     return hours
   }
 
-  const calculateTime = (meridiem: string, hours: string, minutes: string): string => {
+  const getNextTime = (meridiem: string, hours: string, minutes: string): string => {
     const numericHours = parseInt(hours, 10)
     const convertedHours = convertTo24HourFormat(meridiem, numericHours)
     return createTimeString(convertedHours, minutes)
-  }
-
-  const getNextTime = (meridiem: string, hours: string, minutes: string): string => {
-    return calculateTime(meridiem, hours, minutes)
   }
 
   return {

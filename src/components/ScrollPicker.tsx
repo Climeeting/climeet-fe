@@ -1,6 +1,9 @@
 import { useRef, useEffect, useState } from 'react'
 import styles from './ScrollPicker.module.scss'
 
+const SCROLL_DEBOUNCE_TIME = 100
+const ITEM_HEIGHT = 47
+
 interface ScrollPickerProps {
   list: (string | number)[]
   onSelectedChange?: (selectedIndex: string | number) => void
@@ -8,8 +11,6 @@ interface ScrollPickerProps {
 
 const ScrollPicker = ({ list, onSelectedChange }: ScrollPickerProps) => {
   const [selectedIndex, setSelectedIndex] = useState(1)
-  const SCROLL_DEBOUNCE_TIME = 100
-  const ITEM_HEIGHT = 47
   const newList = ['', ...list, '']
   const ref = useRef<HTMLUListElement>(null)
   const itemRefs = useRef<(HTMLLIElement | null)[]>([])
@@ -36,7 +37,7 @@ const ScrollPicker = ({ list, onSelectedChange }: ScrollPickerProps) => {
         if (isEmptyItem) {
           setSelectedIndex(index)
           moveScroll(index)
-          onSelectedChange && onSelectedChange(newList[index])
+          onSelectedChange?.(newList[index])
         }
       }, SCROLL_DEBOUNCE_TIME)
     }

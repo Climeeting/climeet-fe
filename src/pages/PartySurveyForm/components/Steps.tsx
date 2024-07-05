@@ -1,5 +1,4 @@
 import { useFunnel } from '../../../utils/useFunnel.tsx'
-import { useFlow, useStepFlow } from '../../stackflow.ts'
 import { PartyPlaceForm } from './PartyPlaceForm.tsx'
 import { PartyConditionForm } from './PartyConditionForm.tsx'
 import { PartyIntroduceForm } from './PartyIntroduceForm.tsx'
@@ -30,7 +29,6 @@ type StepProps = {
 
 export function IndoorStep({ formData, updateFormData, goToFirstStep }: StepProps) {
   const { Funnel, Step, setStep, step } = useFunnel<IndoorStepName>('암장')
-  const { stepPush } = useStepFlow('HomePage')
   const navigate = useNavigate()
   const { id } = useParams<{ id: string }>()
 
@@ -62,9 +60,6 @@ export function IndoorStep({ formData, updateFormData, goToFirstStep }: StepProp
           <PartyPlaceForm
             onNext={() => {
               setStep('조건')
-              stepPush({
-                title: 'condition',
-              })
             }}
             formData={formData}
             updateFormData={updateFormData}
@@ -74,9 +69,6 @@ export function IndoorStep({ formData, updateFormData, goToFirstStep }: StepProp
           <PartyConditionForm
             onNext={() => {
               setStep('소개')
-              stepPush({
-                title: 'introduce',
-              })
             }}
             formData={formData}
             updateFormData={updateFormData}
@@ -86,9 +78,6 @@ export function IndoorStep({ formData, updateFormData, goToFirstStep }: StepProp
           <PartyIntroduceForm
             onNext={() => {
               setStep('일정')
-              stepPush({
-                title: 'date',
-              })
             }}
             formData={formData}
             updateFormData={updateFormData}
@@ -98,9 +87,6 @@ export function IndoorStep({ formData, updateFormData, goToFirstStep }: StepProp
           <PartyScheduleForm
             onNext={async () => {
               setStep('미리보기')
-              stepPush({
-                title: 'preview',
-              })
             }}
             formData={formData}
             updateFormData={updateFormData}
@@ -134,7 +120,6 @@ export function IndoorStep({ formData, updateFormData, goToFirstStep }: StepProp
 
 export function OutdoorStep({ formData, updateFormData, goToFirstStep }: StepProps) {
   const { Funnel, Step, setStep, step } = useFunnel<OutdoorStepName>('소개')
-  const { stepPush } = useStepFlow('HomePage')
   const navigate = useNavigate()
   const { id } = useParams<{ id: string }>()
   const getCurrentStepIndex = (steps: readonly OutdoorStepName[], step: OutdoorStepName) => {
@@ -165,9 +150,6 @@ export function OutdoorStep({ formData, updateFormData, goToFirstStep }: StepPro
           <PartyIntroduceForm
             onNext={() => {
               setStep('일정')
-              stepPush({
-                title: 'date',
-              })
             }}
             formData={formData}
             updateFormData={updateFormData}
@@ -177,9 +159,6 @@ export function OutdoorStep({ formData, updateFormData, goToFirstStep }: StepPro
           <PartyScheduleForm
             onNext={() => {
               setStep('미리보기')
-              stepPush({
-                title: 'preview',
-              })
             }}
             formData={formData}
             updateFormData={updateFormData}

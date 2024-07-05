@@ -62,11 +62,13 @@ export const post_user_additionalInfo = async (params: PostAdditonalInfoParams) 
 export type PostAdditonalInfoParams = {
   sex: 'MALE' | 'FEMALE'
   skill: Skill
+  description?: string
 }
 
 export type MyInfo = {
   sex: '남자' | '여자'
   skill: Skill
+  description?: string
 }
 
 export const skillOptions: MyInfo['skill'][] = [
@@ -106,6 +108,7 @@ export class AdditionalInfoAddapter {
 
   adapt() {
     return {
+      ...this.value,
       sex: this.sex,
       skill: this.skill,
     }

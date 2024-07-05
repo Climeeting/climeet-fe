@@ -9,6 +9,7 @@ import { PartyDetailPage } from './PartyDetailPage/PartyDetailPage'
 import MyNewPage from './MyNewPage/MyNewPage'
 import CheckIsLogin from '@/components/CheckIsLogin'
 import UserPage from './UserPage/UserPage'
+import MyUpdatePage from './MyUpdatePage/MyUpdatePage'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -19,7 +20,7 @@ const router = createBrowserRouter(
       <Route path="404" element={<NotFoundPage />} />
       <Route element={<CheckIsLogin />}>
         <Route path="/user/my" element={<UserPage />} />
-        <Route path="/user/my/update" element={<MyNewPage />} />
+        <Route path="/user/my/update" element={<MyUpdatePage />} />
         <Route path="/user/my/new" element={<MyNewPage />} />
         <Route path="party-suervey" element={<PartySurveyFormPage />} />
         <Route path="party-suervey/:id" element={<PartySurveyFormPage />} />

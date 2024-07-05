@@ -6,11 +6,12 @@ type Props = {
   src: string
   alt: string
   size?: 'small' | 'middle' | 'large'
+  className?: string
 }
 
-export default function Avatar({ src, alt, size = 'middle' }: Props) {
+export default function Avatar({ src, alt, size = 'middle', className }: Props) {
   return (
-    <AvatarUi.Root className={classNames(styles.AvatarRoot, styles[size])}>
+    <AvatarUi.Root className={classNames(styles.AvatarRoot, styles[size], className)}>
       <AvatarUi.Image className={styles.AvatarImage} src={src} alt={alt} />
       <AvatarUi.Fallback className={styles.AvatarFallback} delayMs={600}>
         {alt}

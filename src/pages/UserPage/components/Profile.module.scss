@@ -1,0 +1,38 @@
+.Container {
+  display: flex;
+  width: 100%;
+  position: relative;
+}
+
+.Icon {
+  color: #ccc;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 0;
+}
+
+.Avatar {
+  margin-right: 16px;
+}
+
+.ProfileInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: $gray-600;
+  font-size: rem(14px);
+
+  .Name {
+    font-size: rem(18px);
+    font-weight: 700;
+    color: $gray-900;
+  }
+}
+
+.Description {
+  width: 100%;
+  color: $gray-800;
+  font-size: rem(14px);
+  margin-top: 16px;
+}

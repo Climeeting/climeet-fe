@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query'
+import { useSuspenseQuery } from '@tanstack/react-query'
 import api from '../utils/api'
 import { MyProfile, Skill } from '../pages/types/api'
 import { isAxiosError } from 'axios'
@@ -14,7 +14,7 @@ export const get_user_myProfile = async () => {
 export const USER_KEY = ['user']
 
 export const useMyProfile = () => {
-  return useQuery({
+  return useSuspenseQuery({
     queryKey: USER_KEY,
     queryFn: get_user_myProfile,
     // 1시간마다 새로고침
@@ -26,7 +26,6 @@ export const useMyProfile = () => {
 
     // 인증 만료시 재시도하지 않음
     retry: (failureCount, error) => {
-      console.log({ error })
       if (isAxiosError(error) && error.response && error.response.status === 403) {
         return false
       }

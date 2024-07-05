@@ -6,7 +6,6 @@ import HomePage from './Home/HomePage'
 import { historySyncPlugin } from '@stackflow/plugin-history-sync'
 import OauthPage from './Oauth/OauthPage'
 import NotFoundPage from './NotFoundPage'
-import MyPage from './MyPage/MyPage'
 import { PartyDetailPage } from './PartyDetailPage/PartyDetailPage'
 import { PartySurveyFormPage } from './PartySurveyForm/PartySurveyFormPage.tsx'
 
@@ -15,7 +14,6 @@ const activities = {
   LoginPage,
   OauthPage,
   NotFoundPage,
-  MyPage,
   PartyDetailPage,
   PartySurveyFormPage,
 }

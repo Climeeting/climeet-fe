@@ -2,9 +2,9 @@ import styles from './MyUpdatePage.module.scss'
 import RadioSex from './components/RadioSex'
 import { useState } from 'react'
 import {
-  AdditionalInfoAddapter,
+  // AdditionalInfoAddapter,
   MyInfo,
-  post_user_additionalInfo,
+  // post_user_additionalInfo,
   skillOptions,
 } from '@/services/user'
 import TopBar from '@/components/NavBar/TopBar'
@@ -16,9 +16,12 @@ export default function MyUpdatePage() {
   const [sex, setSex] = useState<MyInfo['sex'] | ''>('')
   const [skill, setSkill] = useState<MyInfo['skill'] | ''>('')
   const [description, setDescription] = useState<MyInfo['description'] | ''>('')
-  const [submited, setSubmited] = useState(false)
+  const [
+    submited,
+    // setSubmited
+  ] = useState(false)
 
-  const disabled = !sex || !skill
+  // const disabled = !sex || !skill
   const warningName = submited && !name
   const warningSex = submited && !sex
   const warningSkill = submited && !skill

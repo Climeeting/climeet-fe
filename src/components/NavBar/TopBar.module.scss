@@ -41,4 +41,14 @@
     top: 50%;
     transform: translateY(-50%);
   }
+
+  .Right {
+    display: flex;
+    align-items: center;
+    gap: rem(16px);
+    position: absolute;
+    right: rem(16px);
+    top: 50%;
+    transform: translateY(-50%);
+  }
 }

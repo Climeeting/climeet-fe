@@ -14,11 +14,12 @@ import {
 import { useNavigate, useParams } from 'react-router-dom'
 import ProgressBar from '@/components/ProgressBar.tsx'
 import TopBar from '@/components/NavBar/TopBar.tsx'
+import { PartyPreview } from '@/pages/PartySurveyForm/components/PartyPreview.tsx'
 
-const indoorSteps = ['암장', '조건', '소개', '일정'] as const
+const indoorSteps = ['암장', '조건', '소개', '일정', '미리보기'] as const
 type IndoorStepName = (typeof indoorSteps)[number]
 
-const outdoorSteps = ['암장', '어프로치', '조건', '소개', '일정'] as const
+const outdoorSteps = ['암장', '어프로치', '조건', '소개', '일정', '미리보기'] as const
 type OutdoorStepName = (typeof outdoorSteps)[number]
 
 type StepProps = {
@@ -95,6 +96,18 @@ export function IndoorStep({ formData, updateFormData, goToFirstStep }: StepProp
         </Step>
         <Step name="일정">
           <PartyScheduleForm
+            onNext={async () => {
+              setStep('미리보기')
+              stepPush({
+                title: 'preview',
+              })
+            }}
+            formData={formData}
+            updateFormData={updateFormData}
+          />
+        </Step>
+        <Step name="미리보기">
+          <PartyPreview
             onNext={async () => {
               try {
                 const isPartyEdit = id !== undefined

@@ -17,18 +17,13 @@ const router = createBrowserRouter(
       <Route path="login" element={<LoginPage />} />
       <Route path="oauth" element={<OauthPage />} />
       <Route path="404" element={<NotFoundPage />} />
-      <Route
-        path="mypage"
-        element={
-          <CheckIsLogin>
-            <MyPage />
-          </CheckIsLogin>
-        }
-      />
-      <Route path="mypage/new" element={<MyInfoFormPage />} />
+      <Route element={<CheckIsLogin />}>
+        <Route path="mypage" element={<MyPage />} />
+        <Route path="mypage/new" element={<MyInfoFormPage />} />
+        <Route path="party-suervey" element={<PartySurveyFormPage />} />
+        <Route path="party-suervey/:id" element={<PartySurveyFormPage />} />
+      </Route>
       <Route path="/party/:id" element={<PartyDetailPage />} />
-      <Route path="party-suervey" element={<PartySurveyFormPage />} />
-      <Route path="party-suervey/:id" element={<PartySurveyFormPage />} />
     </Route>
   )
 )

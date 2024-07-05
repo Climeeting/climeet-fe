@@ -135,7 +135,8 @@ export function IndoorStep({ formData, updateFormData, goToFirstStep }: StepProp
 export function OutdoorStep({ formData, updateFormData, goToFirstStep }: StepProps) {
   const { Funnel, Step, setStep, step } = useFunnel<OutdoorStepName>('소개')
   const { stepPush } = useStepFlow('HomePage')
-  const { pop } = useFlow()
+  const navigate = useNavigate()
+  const { id } = useParams<{ id: string }>()
   const getCurrentStepIndex = (steps: readonly OutdoorStepName[], step: OutdoorStepName) => {
     return steps.findIndex((el) => el === step)
   }
@@ -175,7 +176,31 @@ export function OutdoorStep({ formData, updateFormData, goToFirstStep }: StepPro
         <Step name="일정">
           <PartyScheduleForm
             onNext={() => {
-              pop()
+              setStep('미리보기')
+              stepPush({
+                title: 'preview',
+              })
+            }}
+            formData={formData}
+            updateFormData={updateFormData}
+          />
+        </Step>
+        <Step name="미리보기">
+          <PartyPreview
+            onNext={async () => {
+              try {
+                const isPartyEdit = id !== undefined
+                if (isPartyEdit) {
+                  const req = new PutPartyReqAdapter(formData).adapt()
+                  await put_party_edit(id, req)
+                } else {
+                  const req = new PostPartyNewReqAdapter(formData).adapt()
+                  await post_party_new(req)
+                }
+                navigate('/')
+              } catch (e) {
+                console.log(e)
+              }
             }}
             formData={formData}
             updateFormData={updateFormData}

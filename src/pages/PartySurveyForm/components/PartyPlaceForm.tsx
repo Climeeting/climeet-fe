@@ -6,6 +6,7 @@ import { ClimbSearchItem } from '@/pages/types/api.ts'
 import { get_climb_search } from '@/services/gymSearch.ts'
 import Icon from '@/components/Icon/Icon.tsx'
 import { useDebounce } from 'react-use'
+import { Hangul } from '@/utils/hangul.ts'
 
 type PartyPlaceFormProps = {
   onNext: () => void
@@ -19,6 +20,7 @@ export function PartyPlaceForm({ onNext, formData, updateFormData }: PartyPlaceF
   const [gymList, setGymList] = useState<ClimbSearchItem[]>([])
   useDebounce(
     async () => {
+      if (!Hangul.isCompleteAll(value)) return
       const res = await get_climb_search(value)
       setGymList(res.content)
     },

@@ -1,5 +1,5 @@
 import Chip from '@/components/Chip'
-import styles from './MyInfoFormPage.module.scss'
+import styles from './MyNewPage.module.scss'
 import RadioSex from './components/RadioSex'
 import { useState } from 'react'
 import {
@@ -9,7 +9,7 @@ import {
   skillOptions,
 } from '@/services/user'
 
-export default function MyInfoFormPage() {
+export default function MyNewPage() {
   const [sex, setSex] = useState<MyInfo['sex'] | ''>('')
   const [skill, setSkill] = useState<MyInfo['skill'] | ''>('')
   const [submited, setSubmited] = useState(false)

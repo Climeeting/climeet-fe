@@ -6,7 +6,7 @@ import OauthPage from './Oauth/OauthPage'
 import NotFoundPage from './NotFoundPage'
 import { PartySurveyFormPage } from './PartySurveyForm/PartySurveyFormPage'
 import { PartyDetailPage } from './PartyDetailPage/PartyDetailPage'
-import MyInfoFormPage from './MyInfoFormPage/MyInfoFormPage'
+import MyNewPage from './MyNewPage/MyNewPage'
 import CheckIsLogin from '@/components/CheckIsLogin'
 import UserPage from './UserPage/UserPage'
 
@@ -19,8 +19,8 @@ const router = createBrowserRouter(
       <Route path="404" element={<NotFoundPage />} />
       <Route element={<CheckIsLogin />}>
         <Route path="/user/my" element={<UserPage />} />
-        <Route path="/user/my/update" element={<MyInfoFormPage />} />
-        <Route path="/user/my/new" element={<MyInfoFormPage />} />
+        <Route path="/user/my/update" element={<MyNewPage />} />
+        <Route path="/user/my/new" element={<MyNewPage />} />
         <Route path="party-suervey" element={<PartySurveyFormPage />} />
         <Route path="party-suervey/:id" element={<PartySurveyFormPage />} />
       </Route>

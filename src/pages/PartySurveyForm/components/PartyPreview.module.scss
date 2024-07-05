@@ -13,3 +13,17 @@
     @include nextBtn;
   }
 }
+
+.Container {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  overflow-y: scroll;
+  gap: rem(12px);
+  background-color: $gray-100;
+
+  section {
+    background-color: white;
+    padding: rem(28px) 0;
+  }
+}

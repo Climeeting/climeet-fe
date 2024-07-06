@@ -8,6 +8,7 @@ export const useClimbingGymSearch = (value: string) => {
   const [gymList, setGymList] = useState<ClimbSearchItem[]>([])
   useDebounce(
     async () => {
+      if (value === '') return
       if (!Hangul.isCompleteAll(value)) return
       const res = await get_climb_search(value)
       setGymList(res.content)

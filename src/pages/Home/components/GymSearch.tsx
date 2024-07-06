@@ -11,7 +11,10 @@ export default function GymSearch() {
 
   return (
     <Dialog.Root>
-      <Dialog.Trigger>검색 모달 열기</Dialog.Trigger>
+      <Dialog.Trigger>
+        <Search placeholder="암장을 검색해 보세요." />
+      </Dialog.Trigger>
+      <Dialog.Overlay />
       <Dialog.Portal>
         <Dialog.Content className={styles.container}>
           <div className={styles.top}>

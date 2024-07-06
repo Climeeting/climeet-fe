@@ -4,13 +4,13 @@ import styles from './HomePage.module.scss'
 import BottomBar from '@/components/NavBar/BottomBar'
 import FilterList from './components/FilterList'
 import Tabs from './components/Tabs'
-import { Search } from '@/components/Search'
 import DatePicker from '@/components/DatePicker'
 import PartyList from './components/PartyList'
 import { Suspense } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 import { FilterProvider } from './hooks/useFilterContext'
 import { DateProvider } from './hooks/useDateContext'
+import GymSearch from '@/pages/Home/components/GymSearch.tsx'
 
 export default function HomePage() {
   return (
@@ -21,7 +21,7 @@ export default function HomePage() {
           <main className={styles.main}>
             <div className={styles.SearchForm}>
               <Tabs tabs={['암장', '자연']} />
-              <Search placeholder="암장을 검색해 보세요." />
+              <GymSearch />
               <DatePicker />
             </div>
 

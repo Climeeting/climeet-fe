@@ -4,10 +4,15 @@ import Icon from '@/components/Icon/Icon.tsx'
 import * as Dialog from '@radix-ui/react-dialog'
 import { useClimbingGymSearch } from '@/utils/useClimbingGymSearch.tsx'
 import { useState } from 'react'
+import { useClimbingGymRecentSearches } from '@/services/gymSearch.ts'
 
 export default function GymSearch() {
   const [value, setValue] = useState('')
   const { gymList } = useClimbingGymSearch(value)
+  /**
+   * @todo 다른 파일로 분리 필요. 현재 메인 페이지에서 가져오는 중...
+   */
+  const { data } = useClimbingGymRecentSearches()
 
   return (
     <Dialog.Root>
@@ -33,6 +38,13 @@ export default function GymSearch() {
           </div>
           <div className={styles.recentSearchesContainer}>
             <h3 className={styles.title}>최근 검색어</h3>
+            <div className={styles.recentSearchList}>
+              {data?.content.map((el) => (
+                <div key={el.searchedAt} className={styles.recentSearchItem}>
+                  {el.gymName}
+                </div>
+              ))}
+            </div>
           </div>
           <div className={styles.searchContainer}>
             <h3 className={styles.title}>암장 정보</h3>

@@ -33,9 +33,27 @@
 
 .recentSearchesContainer {
   margin-top: rem(32px);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+
+  .recentSearchList {
+    display: flex;
+    margin-top: rem(12px);
+    overflow-x: auto;
+  }
+
+  .recentSearchItem {
+    display: flex;
+    padding: 0 rem(12px);
+    border-radius: 9999px;
+    justify-content: center;
+    align-items: center;
+    height: rem(32px);
+    border: 1px solid $gray-200;
+    line-height: 1.7;
+    letter-spacing: -0.02;
+    font-size: rem(14px);
+    font-weight: 500;
+    flex-shrink: 0;
+  }
 }
 
 .searchContainer {
@@ -45,6 +63,7 @@
     margin-top: rem(12px);
     height: 220px;
     overflow-y: auto;
+    width: 100%;
   }
 
   .searchItem {
@@ -56,6 +75,7 @@
     font-weight: 400;
     height: rem(44px);
     overflow: hidden;
+    overflow-y: hidden;
 
     svg {
       flex-shrink: 0;

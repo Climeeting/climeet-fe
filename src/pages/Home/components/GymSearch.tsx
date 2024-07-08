@@ -37,7 +37,11 @@ export default function GymSearch() {
             <h3 className={styles.title}>최근 검색어</h3>
             <ErrorBoundary fallback={<div>최근 검색어 불러오기 실패</div>}>
               <Suspense fallback={<div>로딩중...</div>}>
-                <RecentSearches />
+                <RecentSearches
+                  onClick={(recentSearchText) => {
+                    setValue(recentSearchText)
+                  }}
+                />
               </Suspense>
             </ErrorBoundary>
           </div>
@@ -64,7 +68,11 @@ export default function GymSearch() {
   )
 }
 
-function RecentSearches() {
+type RecentSearchesProps = {
+  onClick: (gymName: string) => void
+}
+
+function RecentSearches({ onClick }: RecentSearchesProps) {
   const { data } = useClimbingGymRecentSearches()
 
   if (data.content.length === 0) return <div>최근 검색어 없음</div>
@@ -73,7 +81,11 @@ function RecentSearches() {
     <div>
       <div className={styles.recentSearchList}>
         {data.content.map((el) => (
-          <div key={el.searchedAt} className={styles.recentSearchItem}>
+          <div
+            onClick={() => onClick(el.gymName)}
+            key={el.searchedAt}
+            className={styles.recentSearchItem}
+          >
             {el.gymName}
           </div>
         ))}

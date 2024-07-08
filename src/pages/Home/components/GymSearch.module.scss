@@ -38,6 +38,7 @@
     display: flex;
     margin-top: rem(12px);
     overflow-x: auto;
+    gap: rem(6px);
   }
 
   .recentSearchItem {
@@ -53,6 +54,7 @@
     font-size: rem(14px);
     font-weight: 500;
     flex-shrink: 0;
+    cursor: pointer;
   }
 }
 

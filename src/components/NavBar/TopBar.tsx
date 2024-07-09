@@ -41,9 +41,13 @@ function LeftContent(props: LeftContentProps) {
     )
   }
 
-  const { asChild, className, ...rest } = props
-  const Comp = asChild ? Slot : 'div'
-  return <Comp className={classNames(styles.Left, className)} {...rest} />
+  const { asChild, ...rest } = props
+  const Comp = asChild ? Slot : 'button'
+  return (
+    <div className={styles.Left}>
+      <Comp {...rest} />
+    </div>
+  )
 }
 
 // @ts-expect-error - type 추론을 위해 사용
@@ -79,9 +83,13 @@ function RightContent(props: RightContentProps) {
     )
   }
 
-  const { asChild, className, ...rest } = props
+  const { asChild, ...rest } = props
   const Comp = asChild ? Slot : 'button'
-  return <Comp className={classNames(styles.Right, className)} {...rest} />
+  return (
+    <div className={styles.Right}>
+      <Comp {...rest} />
+    </div>
+  )
 }
 
 // @ts-expect-error - type 추론을 위해 사용
@@ -108,9 +116,13 @@ type CenterContentProps =
 function CenterContent(props: CenterContentProps) {
   if (typeof props.title === 'string') return <h1 className={styles.Center}>{props.title}</h1>
 
-  const { asChild, className, ...rest } = props
+  const { asChild, ...rest } = props
   const Comp = asChild ? Slot : 'h1'
-  return <Comp className={classNames(styles.Center, className)} {...rest} />
+  return (
+    <div className={styles.Center}>
+      <Comp {...rest} />
+    </div>
+  )
 }
 
 // @ts-expect-error - type 추론을 위해 사용

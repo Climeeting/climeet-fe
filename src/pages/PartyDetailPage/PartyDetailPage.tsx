@@ -3,13 +3,17 @@ import Chip from '@/components/Chip'
 import { useParams } from 'react-router-dom'
 import TopBar from '@/components/NavBar/TopBar'
 import PartyDetail from './components/PartyDetail'
-import { Suspense } from 'react'
+import { Suspense, useState } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 import { post_party_$partyId_participate } from '@/services/party'
 import { useIsLogin } from '@/services/user'
+import Icon from '@/components/Icon/Icon'
+import Dialog from '@/components/Dialog'
+import Dropdown from '@/components/Dropdown'
 
 export function PartyDetailPage() {
   const isLogin = useIsLogin()
+  const [openAlertLogin, onOpenAlertLogin] = useState(false)
   const { id } = useParams<{ id: string }>()
 
   return (
@@ -17,6 +21,26 @@ export function PartyDetailPage() {
       <TopBar>
         <TopBar.Left back />
         <TopBar.Center>{`파티 디테일 ${id}`}</TopBar.Center>
+
+        <TopBar.Right>
+          <Dropdown>
+            <Dropdown.Trigger>
+              <Icon icon="More" />
+            </Dropdown.Trigger>
+
+            <Dropdown.Content>
+              <Dropdown.Item>
+                <p>파티 수정하기</p>
+                <Icon size="16" icon="Pencil" />
+              </Dropdown.Item>
+
+              <Dropdown.Item onClick={() => onOpenAlertLogin(true)}>
+                <p>파티 삭제하기</p>
+                <Icon size="16" icon="Remove" />
+              </Dropdown.Item>
+            </Dropdown.Content>
+          </Dropdown>
+        </TopBar.Right>
       </TopBar>
 
       <div className={styles.Container}>
@@ -38,6 +62,14 @@ export function PartyDetailPage() {
           </button>
         </Chip>
       </div>
+
+      <Dialog open={openAlertLogin} onOpenChange={onOpenAlertLogin}>
+        <Dialog.Content>
+          로그인이 필요한 서비스입니다.
+          <br />
+          로그인 하시겠습니까?
+        </Dialog.Content>
+      </Dialog>
     </>
   )
 }

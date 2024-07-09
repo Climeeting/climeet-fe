@@ -2,7 +2,7 @@ import logo from '/logo.png'
 import styles from './TopBar.module.scss'
 import Icon from '../Icon/Icon'
 import { useNavigate } from 'react-router-dom'
-import { Slot } from '@radix-ui/react-slot'
+import { Slot, SlotProps } from '@radix-ui/react-slot'
 import { Children, ReactNode, isValidElement } from 'react'
 import classNames from 'classnames'
 
@@ -15,11 +15,12 @@ type LeftContentProps =
       onClick?: () => void
       onBeforeBack?: () => void
     }
-  | {
+  | ({
       back?: false
       asChild?: boolean
       children: React.ReactNode
-    }
+      className?: string
+    } & SlotProps)
 
 function LeftContent(props: LeftContentProps) {
   const navigate = useNavigate()
@@ -40,10 +41,9 @@ function LeftContent(props: LeftContentProps) {
     )
   }
 
-  const { children, asChild } = props
+  const { asChild, className, ...rest } = props
   const Comp = asChild ? Slot : 'div'
-
-  return <Comp className={styles.Left}>{children}</Comp>
+  return <Comp className={classNames(styles.Left, className)} {...rest} />
 }
 
 // @ts-expect-error - type 추론을 위해 사용
@@ -62,12 +62,12 @@ type RightContentProps =
       onClick?: () => void
       className?: string
     }
-  | {
+  | ({
       close?: false
       asChild?: boolean
       children: React.ReactNode
       className?: string
-    }
+    } & SlotProps)
 
 function RightContent(props: RightContentProps) {
   if (props.close) {
@@ -79,9 +79,9 @@ function RightContent(props: RightContentProps) {
     )
   }
 
-  const { children, asChild, className } = props
+  const { asChild, className, ...rest } = props
   const Comp = asChild ? Slot : 'button'
-  return <Comp className={classNames(styles.Right, className)}>{children}</Comp>
+  return <Comp className={classNames(styles.Right, className)} {...rest} />
 }
 
 // @ts-expect-error - type 추론을 위해 사용
@@ -98,18 +98,19 @@ type CenterContentProps =
   | {
       title: string
     }
-  | {
+  | ({
       title?: false
       asChild?: boolean
       children: React.ReactNode
-    }
+      className?: string
+    } & SlotProps)
 
 function CenterContent(props: CenterContentProps) {
   if (typeof props.title === 'string') return <h1 className={styles.Center}>{props.title}</h1>
 
-  const { children, asChild } = props
+  const { asChild, className, ...rest } = props
   const Comp = asChild ? Slot : 'h1'
-  return <Comp className={styles.Center}>{children}</Comp>
+  return <Comp className={classNames(styles.Center, className)} {...rest} />
 }
 
 // @ts-expect-error - type 추론을 위해 사용

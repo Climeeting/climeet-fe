@@ -5,7 +5,7 @@ import TopBar from '@/components/NavBar/TopBar'
 import PartyDetail from './components/PartyDetail'
 import { Suspense, useState } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
-import { post_party_$partyId_participate } from '@/services/party'
+import { delete_party_$partyId, post_party_$partyId_participate } from '@/services/party'
 import { useIsLogin } from '@/services/user'
 import Icon from '@/components/Icon/Icon'
 import Dialog from '@/components/Dialog'
@@ -35,9 +35,19 @@ export function PartyDetailPage() {
               </Dropdown.Item>
 
               <Dropdown.Item
-                onSelect={() => {
+                onSelect={async () => {
                   onOpenDropdown(false)
-                  onOpenAlertLogin(true)
+                  // 작성자인지 아닌지 확인 필요
+                  if (!isLogin) {
+                    onOpenAlertLogin(true)
+                    return
+                  }
+                  try {
+                    await delete_party_$partyId(Number(id))
+                    navigate(-1)
+                  } catch (e) {
+                    console.error(e)
+                  }
                 }}
               >
                 <p>파티 삭제하기</p>

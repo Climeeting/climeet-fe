@@ -578,3 +578,16 @@ export const post_party_$partyId_participate = async (partyId: number) => {
     throw new Error(`파티 참가에 실패하였습니다. post v1/party/${partyId}/participate`)
   }
 }
+
+/**
+ * DELETE /v1/party/{partyId}
+ */
+export const delete_party_$partyId = async (partyId: number) => {
+  try {
+    const result = await api.delete(`/v1/party/${partyId}`)
+    return result
+  } catch (e) {
+    console.error(e)
+    throw new Error(`파티 삭제에 실패하였습니다. delete v1/party/${partyId}`)
+  }
+}

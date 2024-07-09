@@ -1,6 +1,6 @@
 import styles from './PartyDetailPage.module.scss'
 import Chip from '@/components/Chip'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import TopBar from '@/components/NavBar/TopBar'
 import PartyDetail from './components/PartyDetail'
 import { Suspense, useState } from 'react'
@@ -12,7 +12,9 @@ import Dialog from '@/components/Dialog'
 import Dropdown from '@/components/Dropdown'
 
 export function PartyDetailPage() {
+  const navigate = useNavigate()
   const isLogin = useIsLogin()
+  const [openDropdown, onOpenDropdown] = useState(false)
   const [openAlertLogin, onOpenAlertLogin] = useState(false)
   const { id } = useParams<{ id: string }>()
 
@@ -21,20 +23,23 @@ export function PartyDetailPage() {
       <TopBar>
         <TopBar.Left back />
         <TopBar.Center>{`파티 디테일 ${id}`}</TopBar.Center>
-
-        <TopBar.Right>
-          <Dropdown>
+        <TopBar.Right asChild>
+          <Dropdown open={openDropdown} onOpenChange={onOpenDropdown}>
             <Dropdown.Trigger>
               <Icon icon="More" />
             </Dropdown.Trigger>
-
             <Dropdown.Content>
               <Dropdown.Item>
                 <p>파티 수정하기</p>
                 <Icon size="16" icon="Pencil" />
               </Dropdown.Item>
 
-              <Dropdown.Item onClick={() => onOpenAlertLogin(true)}>
+              <Dropdown.Item
+                onSelect={() => {
+                  onOpenDropdown(false)
+                  onOpenAlertLogin(true)
+                }}
+              >
                 <p>파티 삭제하기</p>
                 <Icon size="16" icon="Remove" />
               </Dropdown.Item>
@@ -64,7 +69,7 @@ export function PartyDetailPage() {
       </div>
 
       <Dialog open={openAlertLogin} onOpenChange={onOpenAlertLogin}>
-        <Dialog.Content>
+        <Dialog.Content onConfirm={() => navigate('/login')}>
           로그인이 필요한 서비스입니다.
           <br />
           로그인 하시겠습니까?

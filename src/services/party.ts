@@ -565,3 +565,16 @@ export class PutPartyReqAdapter {
     }
   }
 }
+
+/**
+ * POST /v1/party/{partyId}/participate
+ */
+export const post_party_$partyId_participate = async (partyId: number) => {
+  try {
+    const result = await api.post(`/v1/party/${partyId}/participate`)
+    return result
+  } catch (e) {
+    console.error(e)
+    throw new Error(`파티 참가에 실패하였습니다. post v1/party/${partyId}/participate`)
+  }
+}

@@ -1,0 +1,28 @@
+.RadioGroupRoot {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+}
+
+.RadioGroupItem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: rem(14px);
+  width: 100%;
+  color: $gray-700;
+  border: 1px solid $gray-200;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.RadioGroupItem[data-state='checked'] {
+  border: 1px solid $gray-800;
+  color: $gray-800;
+}
+
+.RadioGroupIndicator {
+  display: hidden;
+}

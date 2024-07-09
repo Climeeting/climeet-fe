@@ -1,12 +1,12 @@
 import { useIsLogin } from '@/services/user'
 import { PropsWithChildren, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
 
 type Props = {
   redirect?: '/login' | '/home'
 } & PropsWithChildren
 
-export default function CheckIsLogin({ children, redirect = '/login' }: Props) {
+export default function CheckIsLogin({ redirect = '/login' }: Props) {
   const navigate = useNavigate()
   const isLogin = useIsLogin()
 
@@ -17,5 +17,9 @@ export default function CheckIsLogin({ children, redirect = '/login' }: Props) {
     [isLogin, redirect]
   )
 
-  return children
+  return (
+    <>
+      <Outlet />
+    </>
+  )
 }

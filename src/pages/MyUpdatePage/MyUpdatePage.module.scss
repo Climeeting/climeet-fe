@@ -1,0 +1,62 @@
+.Container {
+  width: 100%;
+  position: relative;
+  padding: 16px;
+  padding-top: 48px;
+  padding-bottom: 67px;
+}
+
+.Fileldset {
+  width: 100%;
+  margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+
+  .LabelWrapper {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    gap: 8px;
+  }
+
+  .Label {
+    font-size: rem(14px);
+    color: $gray-700;
+  }
+
+  .Warning {
+    font-size: rem(12px);
+    color: red;
+  }
+
+  .Input {
+    padding: 8px 0;
+    border-bottom: 1px solid $gray-200;
+  }
+
+  .Textarea {
+    padding: 16px;
+    color: $gray-900;
+    border: 1px solid $gray-200;
+    resize: none;
+    height: 194px;
+  }
+
+  .Input,
+  .Input:focus,
+  .Textarea,
+  .Textarea:focus {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+}
+
+.Fileldset:first-of-type {
+  margin-top: 32px;
+}
+
+.SaveButton {
+  color: $gray-800;
+  font-weight: 600;
+  font-size: rem(16px);
+}

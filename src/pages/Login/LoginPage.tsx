@@ -6,7 +6,9 @@ import TopBar from '@/components/NavBar/TopBar'
 export default function LoginPage() {
   return (
     <div className={styles.Container}>
-      <TopBar />
+      <TopBar>
+        <TopBar.Left back />
+      </TopBar>
       <div>
         <img src={Logo} width={114} alt="logo" />
         <div className={styles.Bottom}>

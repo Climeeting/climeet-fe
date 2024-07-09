@@ -11,7 +11,11 @@ export function PartyDetailPage() {
 
   return (
     <>
-      <TopBar type="default" title={`파티 디테일 ${id}`} />
+      <TopBar>
+        <TopBar.Left back />
+        <TopBar.Center>{`파티 디테일 ${id}`}</TopBar.Center>
+      </TopBar>
+
       <div className={styles.Container}>
         <ErrorBoundary fallback={<PartyDetail.Retry />}>
           <Suspense fallback={<PartyDetail.Skeleton />}>

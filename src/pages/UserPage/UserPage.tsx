@@ -10,7 +10,11 @@ export default function UserPage() {
 
   return (
     <div className={styles.Container}>
-      <TopBar title={isMine ? '마이페이지' : ''} />
+      <TopBar>
+        <TopBar.Left back />
+        <TopBar.Center>마이페이지</TopBar.Center>
+        <TopBar.Right close />
+      </TopBar>
       <section className={styles.ProfileSection}>
         <Profile isMine={isMine} />
       </section>

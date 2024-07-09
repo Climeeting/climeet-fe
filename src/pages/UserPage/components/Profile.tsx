@@ -6,9 +6,11 @@ import Icon from '@/components/Icon/Icon'
 import { PropsWithChildren } from 'react'
 
 export default function Profile({ isMine }: { isMine: boolean }) {
-  const {
-    data: { profileImageUrl, nickname, skillLevel, description },
-  } = useMyProfile()
+  const { data } = useMyProfile()
+
+  if (!data) return
+
+  const { profileImageUrl, nickname, skillLevel, description } = data
 
   return (
     <>

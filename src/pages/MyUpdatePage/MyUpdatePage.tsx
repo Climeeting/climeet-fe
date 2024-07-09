@@ -28,7 +28,11 @@ export default function MyUpdatePage() {
 
   return (
     <div className={styles.Container}>
-      <TopBar right={SaveButton} />
+      <TopBar>
+        <TopBar.Left back />
+        <TopBar.Center>프로필 수정</TopBar.Center>
+        <TopBar.Right className={styles.SaveButton}>저장</TopBar.Right>
+      </TopBar>
 
       <fieldset className={styles.Fileldset}>
         <div className={styles.LabelWrapper}>
@@ -96,8 +100,4 @@ export default function MyUpdatePage() {
       <BottomBar />
     </div>
   )
-}
-
-function SaveButton() {
-  return <button className={styles.SaveButton}>저장</button>
 }

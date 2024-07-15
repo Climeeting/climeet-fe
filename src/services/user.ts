@@ -126,6 +126,15 @@ export class AdditionalInfoAddapter {
   }
 }
 
+export type MyProfileInfo = {
+  nickname: string
+  profileImageUrl: string
+  skillLevel: Skill
+  sex: '남자' | '여자'
+  description: string
+}
+
+
 export class MyProfileBe2FeAdpter {
   private value: MyProfile
 
@@ -138,15 +147,15 @@ export class MyProfileBe2FeAdpter {
     return sexBe2Fe(this.value.sex)
   }
 
-  get skill(): MyInfo['skill'] {
-    return this.value.skillLevel as MyInfo['skill']
+  get skillLevel(): MyProfileInfo['skillLevel'] {
+    return this.value.skillLevel as MyProfileInfo['skillLevel']
   }
 
   adapt() {
     return {
       ...this.value,
       sex: this.sex,
-      skill: this.skill,
+      skillLevel: this.skillLevel,
     }
   }
 }

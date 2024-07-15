@@ -1,28 +1,25 @@
 import styles from './MyUpdateForm.module.scss'
-import { MyInfo, MyProfileBe2FeAdpter, skillOptions } from '@/services/user'
+import { MyProfileInfo, skillOptions } from '@/services/user'
 import { Root as VisuallyHidden } from '@radix-ui/react-visually-hidden'
 import PreviewImage from './PreviewImage'
 import RadioSex from './RadioSex'
 import { MyProfile } from '@/pages/types/api'
-import useFormValue from '@/utils/useFormValue'
+import { useMyInfoFormActions, useMyInfoFormContext } from '../hooks/useMyInfoForm'
 
 type MyUpdateFormProps = {
   submited: boolean
   data?: MyProfile
 }
 
-export function MyUpdateForm({ submited, data }: MyUpdateFormProps) {
-  const myData = data ? new MyProfileBe2FeAdpter(data).adapt() : null
-  const [name, setName] = useFormValue<string>(myData?.nickname ?? '')
-  const [sex, setSex] = useFormValue<MyInfo['sex'] | ''>(myData?.sex ?? '')
-  const [skill, setSkill] = useFormValue<MyInfo['skill'] | ''>(myData?.skill ?? '')
-  const [description, setDescription] = useFormValue<MyInfo['description'] | ''>('')
-  const [profileImageUrl, setProfileImageUrl] = useFormValue<string>(myData?.profileImageUrl ?? '')
+export function MyUpdateForm({ submited }: MyUpdateFormProps) {
+  const { nickname, sex, skillLevel, description, profileImageUrl } = useMyInfoFormContext()
+  const { setNickName, setSex, setSkillLevel, setDescription, setProfileImageUrl } =
+    useMyInfoFormActions()
 
   // const disabled = !sex || !skill
-  const warningName = submited && !name
+  const warningName = submited && !nickname
   const warningSex = submited && !sex
-  const warningSkill = submited && !skill
+  const warningSkill = submited && !skillLevel
 
   return (
     <>
@@ -43,8 +40,8 @@ export function MyUpdateForm({ submited, data }: MyUpdateFormProps) {
         <input
           className={styles.Input}
           type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          value={nickname}
+          onChange={(e) => setNickName(e.target.value)}
         />
       </fieldset>
 
@@ -62,8 +59,8 @@ export function MyUpdateForm({ submited, data }: MyUpdateFormProps) {
           {warningSkill ? <p className={styles.Warning}>실력을 선택해주세요.</p> : null}
         </div>
         <select
-          value={skill}
-          onChange={(e) => setSkill(e.target.value as MyInfo['skill'])}
+          value={skillLevel}
+          onChange={(e) => setSkillLevel(e.target.value as MyProfileInfo['skillLevel'])}
           name="skill"
         >
           <option disabled selected value={''}>

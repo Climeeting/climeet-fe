@@ -4,7 +4,7 @@ export type MyProfile = {
   profileImageUrl: string
   description?: string
   skillLevel?: string
-  sex?: string
+  sex?: 'MALE' | 'FEMALE'
 }
 
 export type Party = {

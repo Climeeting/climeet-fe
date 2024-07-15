@@ -4,9 +4,13 @@ import { useRef } from 'react'
 import styles from './PreviewImage.module.scss'
 import Icon from '@/components/Icon/Icon'
 
-export default function PreviewImage() {
+type Props = {
+  src?: string
+}
+
+export default function PreviewImage({ src }: Props) {
   const ref = useRef<HTMLInputElement>(null)
-  const imageSrc = usePreviewImage(ref)
+  const imageSrc = usePreviewImage(ref, src)
 
   return (
     <div className={styles.Container}>

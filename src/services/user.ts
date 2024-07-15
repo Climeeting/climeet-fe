@@ -3,7 +3,7 @@ import api from '../utils/api'
 import { MyProfile, Skill } from '../pages/types/api'
 import { isAxiosError } from 'axios'
 import { queryClient } from '../utils/tanstack'
-import { sexFe2Be } from './adaptor'
+import { sexBe2Fe, sexFe2Be } from './adaptor'
 
 /**
  * GET /v1/user/myProfile
@@ -115,6 +115,31 @@ export class AdditionalInfoAddapter {
 
   get skill(): PostAdditonalInfoParams['skill'] {
     return this.value.skill
+  }
+
+  adapt() {
+    return {
+      ...this.value,
+      sex: this.sex,
+      skill: this.skill,
+    }
+  }
+}
+
+export class MyProfileBe2FeAdpter {
+  private value: MyProfile
+
+  constructor(value: MyProfile) {
+    this.value = value
+  }
+
+  get sex() {
+    if (!this.value.sex) return this.value.sex
+    return sexBe2Fe(this.value.sex)
+  }
+
+  get skill(): MyInfo['skill'] {
+    return this.value.skillLevel as MyInfo['skill']
   }
 
   adapt() {

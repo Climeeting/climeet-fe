@@ -99,3 +99,13 @@ export const sexFe2Be = (sex: SexFe | ''): SexBe => {
       return 'MALE'
   }
 }
+export const sexBe2Fe = (sex: SexBe | ''): SexFe => {
+  switch (sex) {
+    case 'MALE':
+      return '남자'
+    case 'FEMALE':
+      return '여자'
+    default:
+      return '남자'
+  }
+}

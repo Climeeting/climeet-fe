@@ -1,14 +1,14 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
+import useFormValue from './useFormValue'
 
-export function usePreviewImage(inputRef: React.RefObject<HTMLInputElement>) {
-  const [imageSrc, setImageSrc] = useState('')
+export function usePreviewImage(inputRef: React.RefObject<HTMLInputElement>, initSrc?: string) {
+  const [imageSrc, setImageSrc] = useFormValue(initSrc || '')
 
   const encodeFileToBase64 = (fileBlob: Blob) => {
     const reader = new FileReader()
     reader.readAsDataURL(fileBlob)
     return new Promise((resolve) => {
       reader.onload = () => {
-        console.log(reader.result)
         setImageSrc(reader.result as string)
         resolve(true)
       }
@@ -18,7 +18,6 @@ export function usePreviewImage(inputRef: React.RefObject<HTMLInputElement>) {
   useEffect(() => {
     const handleFileChange = (e: Event) => {
       const target = e.target as HTMLInputElement
-      console.log({ target })
       if (target?.files?.[0]) encodeFileToBase64(target.files[0])
     }
 

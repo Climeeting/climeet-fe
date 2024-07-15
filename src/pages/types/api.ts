@@ -93,16 +93,7 @@ export type SkillDistribution = {
 }
 
 export type Skill =
-  | 'BLUE'
-  | 'RED'
-  | 'WHITE'
-  | 'YELLOW'
-  | 'ORANGE'
-  | 'GREEN'
-  | 'PURPLE'
-  | 'GREY'
-  | 'BROWN'
-  | 'BLACK'
+ 'VB' | 'V0-' | 'V0' | 'V0+' | 'V1-V2' | 'V3-V5' | 'V6' | 'V7' | 'V8' | 'V9-V10'
 
 export type ClimbingGym = {
   id: number

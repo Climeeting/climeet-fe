@@ -1,5 +1,5 @@
 import { MyProfile } from '@/pages/types/api'
-import { MyProfileBe2FeAdpter, MyProfileInfo } from '@/services/user'
+import { MyProfileBe2FeAdpter, MyProfileInfo, skillOptions } from '@/services/user'
 import useFormValue from '@/utils/useFormValue'
 import { PropsWithChildren, createContext, useContext } from 'react'
 
@@ -9,7 +9,7 @@ function useMyInfoForm(data?: MyProfile) {
   const [nickname, setNickName] = useFormValue<string>(myData?.nickname ?? '')
   const [sex, setSex] = useFormValue<MyProfileInfo['sex']>(myData?.sex ?? '남자')
   const [skillLevel, setSkillLevel] = useFormValue<MyProfileInfo['skillLevel']>(
-    myData?.skillLevel ?? 'BLACK'
+    myData?.skillLevel ?? skillOptions[0]
   )
   const [description, setDescription] = useFormValue<MyProfileInfo['description'] | ''>(
     myData?.description ?? ''
@@ -40,7 +40,7 @@ const MyInfoFormContext = createContext<MyProfileInfo>({
   nickname: '',
   profileImageUrl: '',
   sex: '남자',
-  skillLevel: 'BLACK',
+  skillLevel: skillOptions[0],
 })
 
 const ActionsContext = createContext<{

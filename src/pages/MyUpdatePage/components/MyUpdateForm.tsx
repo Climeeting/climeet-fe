@@ -7,19 +7,19 @@ import { MyProfile } from '@/pages/types/api'
 import { useMyInfoFormActions, useMyInfoFormContext } from '../hooks/useMyInfoForm'
 
 type MyUpdateFormProps = {
-  submited: boolean
+  checkValid: boolean
   data?: MyProfile
 }
 
-export function MyUpdateForm({ submited }: MyUpdateFormProps) {
+export function MyUpdateForm({ checkValid }: MyUpdateFormProps) {
   const { nickname, sex, skillLevel, description, profileImageUrl } = useMyInfoFormContext()
   const { setNickName, setSex, setSkillLevel, setDescription, setProfileImageUrl } =
     useMyInfoFormActions()
 
-  const warningName = submited && !nickname
-  const warningSex = submited && !sex
-  const warningSkill = submited && !skillLevel
-  const warningDescription = submited && !description
+  const warningName = checkValid && !nickname
+  const warningSex = checkValid && !sex
+  const warningSkill = checkValid && !skillLevel
+  const warningDescription = checkValid && !description
 
   return (
     <>

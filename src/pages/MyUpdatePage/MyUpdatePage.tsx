@@ -8,7 +8,7 @@ import { MyInfoFormProvider } from './hooks/useMyInfoForm'
 import { SaveButton } from './components/SaveButton'
 
 export default function MyUpdatePage() {
-  const [submited, setSubmited] = useState(false)
+  const [checkValid, setCheckValid] = useState(false)
 
   const { data } = useMyProfile()
 
@@ -19,12 +19,12 @@ export default function MyUpdatePage() {
           <TopBar.Left back />
           <TopBar.Center>프로필 수정</TopBar.Center>
           <TopBar.Right asChild>
-            <SaveButton onClick={() => setSubmited(true)} />
+            <SaveButton onClick={() => setCheckValid(true)} />
           </TopBar.Right>
         </TopBar>
 
         <main>
-          <MyUpdateForm data={data} submited={submited} />
+          <MyUpdateForm data={data} checkValid={checkValid} />
         </main>
 
         <BottomBar />

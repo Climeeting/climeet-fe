@@ -10,6 +10,7 @@ import {
   MINUTES,
   useTimePicker,
 } from '@/pages/PartySurveyForm/hooks/useTimePicker.ts'
+import { XXXDatePicker } from '@/components/DatePicker.tsx'
 
 type PartyScheduleFormProps = {
   onNext: () => void
@@ -41,13 +42,12 @@ export function PartyScheduleForm({ onNext, formData, updateFormData }: PartySch
             <div className={styles.question}>
               <h3 className={styles.questionTitle}>파티 날짜</h3>
               <Accordion.Item className="AccordionItem" value={`partyDate`}>
-                <AccordionTrigger>{schedule.partyDate}</AccordionTrigger>
+                <AccordionTrigger>{schedule.partyDate.format('YYYY-MM-DD')}</AccordionTrigger>
                 <AccordionContent>
-                  <input
-                    type="date"
-                    value={schedule.partyDate}
-                    onChange={(e) => {
-                      updateScheduleData('partyDate', e.target.value)
+                  <XXXDatePicker
+                    selected={schedule.partyDate}
+                    onClick={(date) => {
+                      updateScheduleData('partyDate', date)
                     }}
                   />
                 </AccordionContent>

@@ -1,7 +1,7 @@
 import { PageData, Party, PartyDetail } from '@/pages/types/api'
 import api from '../utils/api'
 import { stringify } from '@/utils/query'
-import { useSuspenseInfiniteQuery, useSuspenseQuery } from '@tanstack/react-query'
+import { useQuery, useSuspenseInfiniteQuery, useSuspenseQuery } from '@tanstack/react-query'
 import { queryClient } from '@/utils/tanstack'
 import {
   ClimbingTypeEn,
@@ -284,7 +284,18 @@ export const get_party_$partyId_detail = async (partyId: number) => {
 
 export const PARTY_DETAIL_KEY = ['party', 'detail']
 
-export const usePartyDetail = (partyId: number) => {
+export const usePartyDetail = (partyId?: number) => {
+  return useQuery({
+    queryKey: [...PARTY_DETAIL_KEY, partyId],
+    queryFn: () => get_party_$partyId_detail(partyId!),
+    retryOnMount: false,
+    refetchOnWindowFocus: false,
+    select: (data) => new PartyDetailAdapter(data).adapt(),
+    enabled: !!partyId,
+  })
+}
+
+export const usePartyDetailSuspense = (partyId: number) => {
   return useSuspenseQuery({
     queryKey: [...PARTY_DETAIL_KEY, partyId],
     queryFn: () => get_party_$partyId_detail(partyId),
@@ -293,6 +304,7 @@ export const usePartyDetail = (partyId: number) => {
     select: (data) => new PartyDetailAdapter(data).adapt(),
   })
 }
+
 
 export type PartyDetailType = ReturnType<PartyDetailAdapter['adapt']>
 
@@ -563,5 +575,31 @@ export class PutPartyReqAdapter {
       description: this.partyDescription,
       appointmentTime: this.appointmentTime,
     }
+  }
+}
+
+/**
+ * POST /v1/party/{partyId}/participate
+ */
+export const post_party_$partyId_participate = async (partyId: number) => {
+  try {
+    const result = await api.post(`/v1/party/${partyId}/participate`)
+    return result
+  } catch (e) {
+    console.error(e)
+    throw new Error(`파티 참가에 실패하였습니다. post v1/party/${partyId}/participate`)
+  }
+}
+
+/**
+ * DELETE /v1/party/{partyId}
+ */
+export const delete_party_$partyId = async (partyId: number) => {
+  try {
+    const result = await api.delete(`/v1/party/${partyId}`)
+    return result
+  } catch (e) {
+    console.error(e)
+    throw new Error(`파티 삭제에 실패하였습니다. delete v1/party/${partyId}`)
   }
 }

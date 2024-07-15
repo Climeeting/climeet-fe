@@ -1,22 +1,16 @@
 import styles from './PartyDetailPage.module.scss'
 import Chip from '@/components/Chip'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import TopBar from '@/components/NavBar/TopBar'
 import PartyDetail from './components/PartyDetail'
-import { Suspense, useState } from 'react'
+import { Suspense } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
-import { delete_party_$partyId, post_party_$partyId_participate } from '@/services/party'
+import { post_party_$partyId_participate } from '@/services/party'
 import { useIsLogin } from '@/services/user'
-import Icon from '@/components/Icon/Icon'
-import Dialog from '@/components/Dialog'
-import Dropdown from '@/components/Dropdown'
+import MoreMenu from './components/MoreMenu'
 
 export function PartyDetailPage() {
-  const navigate = useNavigate()
   const isLogin = useIsLogin()
-  const [openDropdown, onOpenDropdown] = useState(false)
-  const [openAlertLogin, onOpenAlertLogin] = useState(false)
-  const [openAlertDelete, onOpenAlertDelete] = useState(false)
   const { id } = useParams<{ id: string }>()
 
   return (
@@ -25,29 +19,7 @@ export function PartyDetailPage() {
         <TopBar.Left back />
         <TopBar.Center>{`파티 디테일 ${id}`}</TopBar.Center>
         <TopBar.Right asChild>
-          <Dropdown open={openDropdown} onOpenChange={onOpenDropdown}>
-            <Dropdown.Trigger>
-              <Icon icon="More" />
-            </Dropdown.Trigger>
-            <Dropdown.Content>
-              <Dropdown.Item>
-                <p>파티 수정하기</p>
-                <Icon size="16" icon="Pencil" />
-              </Dropdown.Item>
-
-              <Dropdown.Item
-                onSelect={() => {
-                  onOpenDropdown(false)
-                  // TODO: 작성자인지 아닌지 확인 필요
-                  if (isLogin) onOpenAlertDelete(true)
-                  if (!isLogin) onOpenAlertLogin(true)
-                }}
-              >
-                <p>파티 삭제하기</p>
-                <Icon size="16" icon="Remove" />
-              </Dropdown.Item>
-            </Dropdown.Content>
-          </Dropdown>
+          <MoreMenu id={id} />
         </TopBar.Right>
       </TopBar>
 
@@ -70,29 +42,6 @@ export function PartyDetailPage() {
           </button>
         </Chip>
       </div>
-
-      <Dialog open={openAlertLogin} onOpenChange={onOpenAlertLogin}>
-        <Dialog.Content onAction={() => navigate('/login')}>
-          로그인이 필요한 서비스입니다.
-          <br />
-          로그인 하시겠습니까?
-        </Dialog.Content>
-      </Dialog>
-
-      <Dialog open={openAlertDelete} onOpenChange={onOpenAlertDelete}>
-        <Dialog.Content
-          onAction={async () => {
-            try {
-              await delete_party_$partyId(Number(id))
-              navigate(-1)
-            } catch (e) {
-              console.error(e)
-            }
-          }}
-        >
-          정말 삭제하시겠습니까?
-        </Dialog.Content>
-      </Dialog>
     </>
   )
 }

@@ -16,10 +16,10 @@ export function MyUpdateForm({ submited }: MyUpdateFormProps) {
   const { setNickName, setSex, setSkillLevel, setDescription, setProfileImageUrl } =
     useMyInfoFormActions()
 
-  // const disabled = !sex || !skill
   const warningName = submited && !nickname
   const warningSex = submited && !sex
   const warningSkill = submited && !skillLevel
+  const warningDescription = submited && !description
 
   return (
     <>
@@ -77,12 +77,13 @@ export function MyUpdateForm({ submited }: MyUpdateFormProps) {
       <fieldset className={styles.Fileldset}>
         <div className={styles.LabelWrapper}>
           <h2 className={styles.Label}>자기소개</h2>
-          {warningName ? <p className={styles.Warning}>자기소개를 작성해주세요.</p> : null}
+          {warningDescription ? <p className={styles.Warning}>자기소개를 작성해주세요.</p> : null}
         </div>
         <textarea
           className={styles.Textarea}
           value={description}
           onChange={(e) => setDescription(e.target.value)}
+          maxLength={150}
         />
       </fieldset>
     </>

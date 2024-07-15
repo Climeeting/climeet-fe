@@ -10,6 +10,7 @@ import {
 import TopBar from '@/components/NavBar/TopBar'
 import { Root as VisuallyHidden } from '@radix-ui/react-visually-hidden'
 import BottomBar from '@/components/NavBar/BottomBar'
+import PreviewImage from './components/PreviewImage'
 
 export default function MyUpdatePage() {
   const [name, setName] = useState<string>('')
@@ -34,13 +35,13 @@ export default function MyUpdatePage() {
         <TopBar.Right className={styles.SaveButton}>저장</TopBar.Right>
       </TopBar>
 
-      <fieldset className={styles.Fileldset}>
+      <fieldset className={styles.FileldsetCenter}>
         <div className={styles.LabelWrapper}>
           <VisuallyHidden asChild>
             <h2>프로필 이미지</h2>
           </VisuallyHidden>
         </div>
-        <input type="file" />
+        <PreviewImage />
       </fieldset>
 
       <fieldset className={styles.Fileldset}>

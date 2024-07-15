@@ -5,6 +5,7 @@ import PreviewImage from './PreviewImage'
 import RadioSex from './RadioSex'
 import { MyProfile } from '@/pages/types/api'
 import { useMyInfoFormActions, useMyInfoFormContext } from '../hooks/useMyInfoForm'
+import Select from '@/components/Select'
 
 type MyUpdateFormProps = {
   checkValid: boolean
@@ -58,20 +59,21 @@ export function MyUpdateForm({ checkValid }: MyUpdateFormProps) {
           <h2 className={styles.Label}>실력</h2>
           {warningSkill ? <p className={styles.Warning}>실력을 선택해주세요.</p> : null}
         </div>
-        <select
-          value={skillLevel}
-          onChange={(e) => setSkillLevel(e.target.value as MyProfileInfo['skillLevel'])}
+        <Select
+          value={skillLevel || '실력 없음'}
+          onValueChange={(newSkill) => setSkillLevel(newSkill as MyProfileInfo['skillLevel'])}
           name="skill"
+          placeholder={'실력 없음'}
         >
-          <option disabled selected value={''}>
+          <Select.Item disabled value={'실력 없음'}>
             실력 없음
-          </option>
+          </Select.Item>
           {skillOptions.map((skill) => (
-            <option key={skill} value={skill}>
+            <Select.Item key={skill} value={skill}>
               {skill}
-            </option>
+            </Select.Item>
           ))}
-        </select>
+        </Select>
       </fieldset>
 
       <fieldset className={styles.Fileldset}>

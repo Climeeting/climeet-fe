@@ -17,6 +17,7 @@ export function MyUpdateForm({ submited, data }: MyUpdateFormProps) {
   const [sex, setSex] = useFormValue<MyInfo['sex'] | ''>(myData?.sex ?? '')
   const [skill, setSkill] = useFormValue<MyInfo['skill'] | ''>(myData?.skill ?? '')
   const [description, setDescription] = useFormValue<MyInfo['description'] | ''>('')
+  const [profileImageUrl, setProfileImageUrl] = useFormValue<string>(myData?.profileImageUrl ?? '')
 
   // const disabled = !sex || !skill
   const warningName = submited && !name
@@ -31,7 +32,7 @@ export function MyUpdateForm({ submited, data }: MyUpdateFormProps) {
             <h2>프로필 이미지</h2>
           </VisuallyHidden>
         </div>
-        <PreviewImage src={myData?.profileImageUrl} />
+        <PreviewImage src={profileImageUrl} onChange={setProfileImageUrl} />
       </fieldset>
 
       <fieldset className={styles.Fileldset}>

@@ -6,11 +6,12 @@ import Icon from '@/components/Icon/Icon'
 
 type Props = {
   src?: string
+  onChange: (src: string) => void
 }
 
-export default function PreviewImage({ src }: Props) {
+export default function PreviewImage({ src, onChange }: Props) {
   const ref = useRef<HTMLInputElement>(null)
-  const imageSrc = usePreviewImage(ref, src)
+  usePreviewImage(ref, onChange)
 
   return (
     <div className={styles.Container}>
@@ -21,12 +22,12 @@ export default function PreviewImage({ src }: Props) {
           if (ref.current) ref.current.click()
         }}
       >
-        {!imageSrc && (
+        {!src && (
           <div className={styles.Default}>
             <Icon icon="PersonFill" size="40" />
           </div>
         )}
-        {imageSrc && <Avatar size="xl" src={imageSrc} alt="preview-img" />}
+        {src && <Avatar size="xl" src={src} alt="preview-img" />}
         <div className={styles.Icon}>
           <Icon size="16" icon="Camera" />
         </div>

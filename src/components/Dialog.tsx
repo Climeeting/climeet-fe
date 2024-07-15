@@ -1,40 +1,41 @@
 import { PropsWithChildren } from 'react'
 import styles from './Dialog.module.scss'
-import * as DialogUi from '@radix-ui/react-dialog'
+import * as AlertDialog from '@radix-ui/react-alert-dialog'
 import classNames from 'classnames'
 
 function DialogContent({
   children,
   onClose,
-  onConfirm,
-}: { onClose?: () => void; onConfirm?: () => void } & PropsWithChildren) {
+  onAction,
+}: { onClose?: () => void; onAction?: () => void } & PropsWithChildren) {
   return (
-    <DialogUi.Portal>
-      <DialogUi.Overlay className={styles.Overlay} />
-      <DialogUi.Content className={styles.Content}>
+    <AlertDialog.Portal>
+      <AlertDialog.Overlay className={styles.Overlay} />
+      <AlertDialog.Content className={styles.Content}>
         <h2 className={styles.Title}>{children}</h2>
         <div className={styles.Controls}>
-          <DialogUi.Close onClick={onClose} className={classNames(styles.Button, styles.Close)}>
+          <AlertDialog.Cancel onClick={onClose} className={classNames(styles.Button, styles.Close)}>
             취소
-          </DialogUi.Close>
-          <DialogUi.Close
+          </AlertDialog.Cancel>
+          <AlertDialog.Action
             onClick={() => {
-              onConfirm?.()
+              onAction?.()
               onClose?.()
             }}
             className={classNames(styles.Button, styles.Confirm)}
           >
             확인
-          </DialogUi.Close>
+          </AlertDialog.Action>
         </div>
-      </DialogUi.Content>
-    </DialogUi.Portal>
+      </AlertDialog.Content>
+    </AlertDialog.Portal>
   )
 }
 
-const Dialog = Object.assign(DialogUi.Root, {
-  Trigger: DialogUi.Trigger,
-  Close: DialogUi.Close,
+const Dialog = Object.assign(AlertDialog.Root, {
+  Trigger: AlertDialog.Trigger,
+  Action: AlertDialog.Action,
+  Cancel: AlertDialog.Cancel,
   Content: DialogContent,
 })
 

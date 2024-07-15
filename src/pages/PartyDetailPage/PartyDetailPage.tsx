@@ -16,6 +16,7 @@ export function PartyDetailPage() {
   const isLogin = useIsLogin()
   const [openDropdown, onOpenDropdown] = useState(false)
   const [openAlertLogin, onOpenAlertLogin] = useState(false)
+  const [openAlertDelete, onOpenAlertDelete] = useState(false)
   const { id } = useParams<{ id: string }>()
 
   return (
@@ -35,19 +36,11 @@ export function PartyDetailPage() {
               </Dropdown.Item>
 
               <Dropdown.Item
-                onSelect={async () => {
+                onSelect={() => {
                   onOpenDropdown(false)
-                  // 작성자인지 아닌지 확인 필요
-                  if (!isLogin) {
-                    onOpenAlertLogin(true)
-                    return
-                  }
-                  try {
-                    await delete_party_$partyId(Number(id))
-                    navigate(-1)
-                  } catch (e) {
-                    console.error(e)
-                  }
+                  // TODO: 작성자인지 아닌지 확인 필요
+                  if (isLogin) onOpenAlertDelete(true)
+                  if (!isLogin) onOpenAlertLogin(true)
                 }}
               >
                 <p>파티 삭제하기</p>
@@ -79,10 +72,25 @@ export function PartyDetailPage() {
       </div>
 
       <Dialog open={openAlertLogin} onOpenChange={onOpenAlertLogin}>
-        <Dialog.Content onConfirm={() => navigate('/login')}>
+        <Dialog.Content onAction={() => navigate('/login')}>
           로그인이 필요한 서비스입니다.
           <br />
           로그인 하시겠습니까?
+        </Dialog.Content>
+      </Dialog>
+
+      <Dialog open={openAlertDelete} onOpenChange={onOpenAlertDelete}>
+        <Dialog.Content
+          onAction={async () => {
+            try {
+              await delete_party_$partyId(Number(id))
+              navigate(-1)
+            } catch (e) {
+              console.error(e)
+            }
+          }}
+        >
+          정말 삭제하시겠습니까?
         </Dialog.Content>
       </Dialog>
     </>

@@ -6,7 +6,7 @@ import { useDateActions, useDateContext } from '@/pages/Home/hooks/useDateContex
 type Props = {
   onClick?: (date: dayjs.Dayjs) => void
 }
-export default function DatePicker({ onClick }: Props) {
+export default function DatePickerContainer({ onClick }: Props) {
   const selected = useDateContext()
   const now = useMemo(dayjs, [])
   const updateDate = useDateActions()
@@ -14,7 +14,7 @@ export default function DatePicker({ onClick }: Props) {
   return (
     <div className={styles.Container}>
       <h3 className={styles.Title}>{now.format('YYYY년 MM월 DD일 (dd)')}</h3>
-      <XXXDatePicker
+      <DatePicker
         selected={selected}
         onClick={(date: dayjs.Dayjs) => {
           updateDate(date)
@@ -25,11 +25,11 @@ export default function DatePicker({ onClick }: Props) {
   )
 }
 
-type XXXDatePickerProps = {
+type DatePickerProps = {
   onClick?: (date: dayjs.Dayjs) => void
   selected: dayjs.Dayjs
 }
-export function XXXDatePicker({ onClick, selected }: XXXDatePickerProps) {
+export function DatePicker({ onClick, selected }: DatePickerProps) {
   const now = useMemo(dayjs, [])
   const week = useMemo(() => Array.from({ length: 14 }, (_, index) => now.add(index, 'day')), [now])
 

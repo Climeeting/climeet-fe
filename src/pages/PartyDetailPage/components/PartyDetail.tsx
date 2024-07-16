@@ -1,4 +1,4 @@
-import { PartyDetailType, usePartyDetail } from '@/services/party'
+import { PartyDetailType, usePartyDetailSuspense } from '@/services/party'
 import { PartyMainInfo } from './PartyMainInfo'
 import { PartyDescription } from './PartyDescription'
 import { PartyParticipants } from './PartyParticipants'
@@ -27,7 +27,7 @@ export default function PartyDetail({ data }: { data: PartyDetailType }) {
 }
 
 PartyDetail.Query = function Container({ id }: { id: number }) {
-  const { data } = usePartyDetail(id)
+  const { data } = usePartyDetailSuspense(id)
   return <PartyDetail data={data} />
 }
 

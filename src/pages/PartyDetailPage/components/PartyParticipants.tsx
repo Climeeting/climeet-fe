@@ -4,9 +4,9 @@ import styles from './PartyParticipants.module.scss'
 export function PartyParticipants({
   minimumSkillLevel,
   maximumSkillLevel,
-  skillDistributions,
+  // skillDistributions,
 }: PartyDetailType) {
-  console.log({ skillDistributions })
+  // console.log({ skillDistributions })
 
   return (
     <>

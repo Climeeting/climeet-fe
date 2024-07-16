@@ -1,7 +1,7 @@
 import { PageData, Party, PartyDetail } from '@/pages/types/api'
 import api from '../utils/api'
 import { stringify } from '@/utils/query'
-import { useSuspenseInfiniteQuery, useSuspenseQuery } from '@tanstack/react-query'
+import { useQuery, useSuspenseInfiniteQuery, useSuspenseQuery } from '@tanstack/react-query'
 import { queryClient } from '@/utils/tanstack'
 import {
   ClimbingTypeEn,
@@ -10,6 +10,7 @@ import {
   GenderKo,
 } from '@/pages/PartySurveyForm/components/PartyConditionForm.tsx'
 import dayjs from 'dayjs'
+import { clibingBe2Fe, constraintsBe2Fe } from './adaptor'
 import { PartySurveyFormData } from '@/pages/PartySurveyForm/PartySurveyFormPage.tsx'
 
 /**
@@ -23,6 +24,7 @@ export type GetPartyListParams = {
   isNatural?: boolean
   climbingType?: 'BOULDERING' | 'LEAD' | 'ENDURANCE' | 'ANY'
   constraints?: 'BOTH' | 'MALE_ONLY' | 'FEMALE_ONLY'
+  joinStatus?: 'AVAILABLE' | 'IMMINENT_FULL' | 'FULL' | null
   appointmentDate?: string
   address1List?: string[]
   locationId?: number
@@ -81,31 +83,11 @@ export class PartyItem {
   }
 
   get constraints() {
-    switch (this.value.constraints) {
-      case 'BOTH':
-        return '남녀 모두'
-      case 'MALE_ONLY':
-        return '남자'
-      case 'FEMALE_ONLY':
-        return '여자'
-      default:
-        return '남녀 모두'
-    }
+    return constraintsBe2Fe(this.value.constraints)
   }
 
   get climbingType() {
-    switch (this.value.climbingType) {
-      case 'BOULDERING':
-        return '볼더링'
-      case 'LEAD':
-        return '리드'
-      case 'ENDURANCE':
-        return '지구력'
-      case 'ANY':
-        return '상관없음'
-      default:
-        return '상관없음'
-    }
+    return clibingBe2Fe(this.value.climbingType)
   }
 
   adapt() {
@@ -284,7 +266,18 @@ export const get_party_$partyId_detail = async (partyId: number) => {
 
 export const PARTY_DETAIL_KEY = ['party', 'detail']
 
-export const usePartyDetail = (partyId: number) => {
+export const usePartyDetail = (partyId?: number) => {
+  return useQuery({
+    queryKey: [...PARTY_DETAIL_KEY, partyId],
+    queryFn: () => get_party_$partyId_detail(partyId!),
+    retryOnMount: false,
+    refetchOnWindowFocus: false,
+    select: (data) => new PartyDetailAdapter(data).adapt(),
+    enabled: !!partyId,
+  })
+}
+
+export const usePartyDetailSuspense = (partyId: number) => {
   return useSuspenseQuery({
     queryKey: [...PARTY_DETAIL_KEY, partyId],
     queryFn: () => get_party_$partyId_detail(partyId),
@@ -293,6 +286,7 @@ export const usePartyDetail = (partyId: number) => {
     select: (data) => new PartyDetailAdapter(data).adapt(),
   })
 }
+
 
 export type PartyDetailType = ReturnType<PartyDetailAdapter['adapt']>
 
@@ -308,31 +302,11 @@ export class PartyDetailAdapter {
   }
 
   get climbingType() {
-    switch (this.value.climbingType) {
-      case 'BOULDERING':
-        return '볼더링'
-      case 'LEAD':
-        return '리드'
-      case 'ENDURANCE':
-        return '지구력'
-      case 'ANY':
-        return '상관없음'
-      default:
-        return '상관없음'
-    }
+    return clibingBe2Fe(this.value.climbingType)
   }
 
   get constraints() {
-    switch (this.value.constraints) {
-      case 'BOTH':
-        return '남녀 모두'
-      case 'MALE_ONLY':
-        return '남자'
-      case 'FEMALE_ONLY':
-        return '여자'
-      default:
-        return '남녀 모두'
-    }
+    return constraintsBe2Fe(this.value.constraints)
   }
 
   adapt() {
@@ -563,5 +537,31 @@ export class PutPartyReqAdapter {
       description: this.partyDescription,
       appointmentTime: this.appointmentTime,
     }
+  }
+}
+
+/**
+ * POST /v1/party/{partyId}/participate
+ */
+export const post_party_$partyId_participate = async (partyId: number) => {
+  try {
+    const result = await api.post(`/v1/party/${partyId}/participate`)
+    return result
+  } catch (e) {
+    console.error(e)
+    throw new Error(`파티 참가에 실패하였습니다. post v1/party/${partyId}/participate`)
+  }
+}
+
+/**
+ * DELETE /v1/party/{partyId}
+ */
+export const delete_party_$partyId = async (partyId: number) => {
+  try {
+    const result = await api.delete(`/v1/party/${partyId}`)
+    return result
+  } catch (e) {
+    console.error(e)
+    throw new Error(`파티 삭제에 실패하였습니다. delete v1/party/${partyId}`)
   }
 }

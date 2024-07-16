@@ -21,7 +21,7 @@
   z-index: 1;
   background-color: #fff;
 
-  .Title {
+  .Center {
     font-size: rem(18px);
     font-weight: 800;
     color: $gray-900;
@@ -38,6 +38,16 @@
     gap: rem(16px);
     position: absolute;
     left: rem(16px);
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .Right {
+    display: flex;
+    align-items: center;
+    gap: rem(16px);
+    position: absolute;
+    right: rem(16px);
     top: 50%;
     transform: translateY(-50%);
   }

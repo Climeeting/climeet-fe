@@ -46,14 +46,18 @@ export function IndoorStep({ formData, updateFormData, goToFirstStep }: StepProp
 
   return (
     <>
-      <TopBar
-        onClick={() => {
-          const currentStepIndex = getCurrentStepIndex(indoorSteps, step)
-          if (currentStepIndex === 0) return goToFirstStep?.()
-          const previousStep = getPreviousStep(indoorSteps, currentStepIndex)
-          setStep(previousStep)
-        }}
-      />
+      <TopBar>
+        <TopBar.Left
+          back
+          onClick={() => {
+            const currentStepIndex = getCurrentStepIndex(indoorSteps, step)
+            if (currentStepIndex === 0) return goToFirstStep?.()
+            const previousStep = getPreviousStep(indoorSteps, currentStepIndex)
+            setStep(previousStep)
+          }}
+        />
+        <TopBar.Right close />
+      </TopBar>
       <ProgressBar ratio={calcCurrentProgressValue(indoorSteps, step)} />
       <Funnel>
         <Step name="암장">
@@ -136,14 +140,18 @@ export function OutdoorStep({ formData, updateFormData, goToFirstStep }: StepPro
 
   return (
     <>
-      <TopBar
-        onClick={() => {
-          const currentStepIndex = getCurrentStepIndex(indoorSteps, step)
-          if (currentStepIndex === 0) return goToFirstStep?.()
-          const previousStep = getPreviousStep(indoorSteps, currentStepIndex)
-          setStep(previousStep)
-        }}
-      />
+      <TopBar>
+        <TopBar.Left
+          back
+          onClick={() => {
+            const currentStepIndex = getCurrentStepIndex(indoorSteps, step)
+            if (currentStepIndex === 0) return goToFirstStep?.()
+            const previousStep = getPreviousStep(indoorSteps, currentStepIndex)
+            setStep(previousStep)
+          }}
+        />
+        <TopBar.Right close />
+      </TopBar>
       <ProgressBar ratio={calcCurrentProgressValue(outdoorSteps, step)} />
       <Funnel>
         <Step name="소개">

@@ -1,5 +1,5 @@
 import Chip from '@/components/Chip'
-import styles from './MyInfoFormPage.module.scss'
+import styles from './MyNewPage.module.scss'
 import RadioSex from './components/RadioSex'
 import { useState } from 'react'
 import {
@@ -8,8 +8,9 @@ import {
   post_user_additionalInfo,
   skillOptions,
 } from '@/services/user'
+import Select from '@/components/Select'
 
-export default function MyInfoFormPage() {
+export default function MyNewPage() {
   const [sex, setSex] = useState<MyInfo['sex'] | ''>('')
   const [skill, setSkill] = useState<MyInfo['skill'] | ''>('')
   const [submited, setSubmited] = useState(false)
@@ -48,20 +49,22 @@ export default function MyInfoFormPage() {
             <h2 className={styles.Label}>실력</h2>
             {warningSkill ? <p className={styles.Warning}>실력을 선택해주세요.</p> : null}
           </div>
-          <select
-            value={skill}
-            onChange={(e) => setSkill(e.target.value as MyInfo['skill'])}
+
+          <Select
+            value={skill || '실력 없음'}
+            onValueChange={(newSkill) => setSkill(newSkill as MyInfo['skill'])}
             name="skill"
+            placeholder={'실력 없음'}
           >
-            <option disabled selected value={''}>
+            <Select.Item disabled value={'실력 없음'}>
               실력 없음
-            </option>
+            </Select.Item>
             {skillOptions.map((skill) => (
-              <option key={skill} value={skill}>
+              <Select.Item key={skill} value={skill}>
                 {skill}
-              </option>
+              </Select.Item>
             ))}
-          </select>
+          </Select>
         </fieldset>
       </div>
 

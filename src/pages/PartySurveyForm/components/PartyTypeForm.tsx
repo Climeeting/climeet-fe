@@ -17,7 +17,9 @@ export function PartyTypeForm({ onNext, formData, updateFormData }: PartyTypeFor
 
   return (
     <>
-      <TopBar />
+      <TopBar>
+        <TopBar.Left back />
+      </TopBar>
       <div className={styles.container}>
         <ProgressBar ratio={0} />
         <div>

@@ -7,12 +7,16 @@ import { PartyListQuery } from '@/services/party'
 import { PartyListParams, useFilterContext } from '../hooks/useFilterContext'
 import { useLoadMore } from '@/utils/useLoadMore'
 import { useDateContext } from '../hooks/useDateContext'
+import { useSearchContext } from '../hooks/useSearchContext'
 
 export default function PartyList() {
   const date = useDateContext()
   const filters = useFilterContext()
+  const searchResult = useSearchContext()
+
   const params = {
     ...new PartyListParams(filters).adapt(),
+    ...(searchResult ? { locationId: searchResult.id } : null),
     date: date.tz('Asia/Seoul').format(),
   }
   const { data, fetchNextPage } = usePartyList(params)

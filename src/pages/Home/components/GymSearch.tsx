@@ -6,15 +6,19 @@ import { useClimbingGymSearch } from '@/utils/useClimbingGymSearch.tsx'
 import { Suspense, useState } from 'react'
 import { useClimbingGymRecentSearches } from '@/services/gymSearch.ts'
 import { ErrorBoundary } from 'react-error-boundary'
+import { useSearchActions, useSearchContext } from '../hooks/useSearchContext'
 
 export default function GymSearch() {
-  const [value, setValue] = useState('')
-  const { gymList } = useClimbingGymSearch(value)
+  const [open, onOpenChange] = useState(false)
+  const [query, setQuery] = useState('')
+  const { gymList } = useClimbingGymSearch(query)
+  const searchResult = useSearchContext()
+  const updateSearchResult = useSearchActions()
 
   return (
-    <Dialog.Root>
+    <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Trigger>
-        <Search placeholder="암장을 검색해 보세요." />
+        <Search placeholder="암장을 검색해 보세요." value={searchResult?.name} />
       </Dialog.Trigger>
       <Dialog.Overlay />
       <Dialog.Portal>
@@ -27,9 +31,9 @@ export default function GymSearch() {
             </Dialog.Close>
             <Search
               placeholder="암장을 검색해 보세요."
-              value={value}
+              value={query}
               onChange={(e) => {
-                setValue(e.target.value)
+                setQuery(e.target.value)
               }}
             />
           </div>
@@ -39,7 +43,7 @@ export default function GymSearch() {
               <Suspense fallback={<div>로딩중...</div>}>
                 <RecentSearches
                   onClick={(recentSearchText) => {
-                    setValue(recentSearchText)
+                    setQuery(recentSearchText)
                   }}
                 />
               </Suspense>
@@ -53,7 +57,9 @@ export default function GymSearch() {
                   key={el.id}
                   className={styles.searchItem}
                   onClick={() => {
-                    setValue(el.name)
+                    setQuery(el.name)
+                    updateSearchResult(el)
+                    onOpenChange(false)
                   }}
                 >
                   <Icon icon={'Search'} size={16} />

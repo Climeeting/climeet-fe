@@ -1,7 +1,7 @@
 import { PartyDetailType, usePartyDetailSuspense } from '@/services/party'
 import { PartyMainInfo } from './PartyMainInfo'
-import { PartyDescription } from './PartyDescription'
 import { PartyParticipants } from './PartyParticipants'
+import { PartyLocation } from './PartyLocation'
 // import { PartyClimbInfo } from './PartyClimbInfo'
 
 export default function PartyDetail({ data }: { data: PartyDetailType }) {
@@ -12,7 +12,7 @@ export default function PartyDetail({ data }: { data: PartyDetailType }) {
       </section>
 
       <section>
-        <PartyDescription {...data} />
+        <PartyLocation {...data} />
       </section>
 
       <section>

@@ -1,8 +1,7 @@
 import Icon, { IconType } from '@/components/Icon/Icon'
 import styles from './PartyMainInfo.module.scss'
 import { PartyDetailType } from '@/services/party'
-import { useClimbingGym } from '@/services/gym'
-import { useKakaoStaticMap } from '@/utils/useKakaoMap'
+import Avatar from '@/components/Avatar'
 
 export function PartyMainInfo({
   partyName,
@@ -11,7 +10,9 @@ export function PartyMainInfo({
   constraints,
   maxParticipants,
   currentParticipants,
-  locationId,
+  masterProfileImageUrl,
+  masterName,
+  partyDescription,
 }: PartyDetailType) {
   return (
     <>
@@ -33,7 +34,18 @@ export function PartyMainInfo({
         </li>
       </ul>
 
-      <KakaoMap locationId={locationId} />
+      <div className={styles.Divider} />
+
+      <div>
+        <div className={styles.UserInfo}>
+          <div className={styles.Profile}>
+            <Avatar src={masterProfileImageUrl} size="small" alt={masterName} />
+            <span>{masterName}</span>
+          </div>
+          님이 진행하는 파티입니다.
+        </div>
+        <p className={styles.Description}>{partyDescription}</p>
+      </div>
     </>
   )
 }
@@ -48,14 +60,4 @@ function InfoItem({ icon, title, content }: { icon: IconType; title: string; con
       <div className={styles.InfoContent}>{content}</div>
     </>
   )
-}
-
-function KakaoMap({ locationId }: { locationId: number }) {
-  const {
-    data: { name, address1, address2, address3 },
-  } = useClimbingGym(locationId)
-
-  const { mapRef } = useKakaoStaticMap({ name, address: `${address1} ${address2} ${address3}` })
-
-  return <div ref={mapRef} className={styles.KakaoMap}></div>
 }

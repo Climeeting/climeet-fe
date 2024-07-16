@@ -8,8 +8,8 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: rem(4px);
-  margin: rem(20px) 0;
+  gap: 4px;
+  margin: 20px 0;
 }
 .Li {
   width: 100%;
@@ -21,19 +21,41 @@
 .InfoTitle {
   color: $gray-700;
   display: flex;
-  gap: rem(6px);
+  gap: 6px;
 }
 .InfoContent {
   color: $gray-800;
 }
-.LocationLink {
+
+.UserInfo {
   width: 100%;
-  height: rem(76px);
-  background-color: $gray-100;
-  border-radius: rem(8px);
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin: 20px 0 16px;
+  font-size: rem(16px);
 }
-.KakaoMap {
+
+.Profile {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  span {
+    color: $gray-800;
+    font-weight: 700;
+  }
+}
+
+.Divider {
   width: 100%;
-  height: 150px;
-  cursor: pointer;
+  height: 1px;
+  background-color: $gray-100;
+  margin: 16px 0;
+}
+
+.Description {
+  font-size: rem(16px);
+  color: $gray-700;
+  line-height: 1.7;
 }

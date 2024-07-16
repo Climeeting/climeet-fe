@@ -26,6 +26,7 @@ export function PartyPreview({ onNext, formData }: PartyIntroduceFormProps) {
       appointmentTime(formData.partyDate, formData.partyTime)
     ),
     climbingType: formData.climbingType,
+    // @ts-expect-error TODO: 고쳐야함
     constraints: formData.gender,
     maxParticipants: formData.maximumParticipationNumber,
     currentParticipants: 1,

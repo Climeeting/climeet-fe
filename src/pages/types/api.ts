@@ -24,6 +24,7 @@ export type Party = {
   climbingType: 'BOULDERING' | 'LEAD' | 'ENDURANCE' | 'ANY'
   masterId: number
   partyTitle: string
+  gymName: string
   natural: boolean
 }
 

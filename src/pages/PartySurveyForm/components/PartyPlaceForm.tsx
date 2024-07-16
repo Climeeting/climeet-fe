@@ -2,10 +2,8 @@ import styles from './PartyPlaceForm.module.scss'
 import { PartySurveyFormData, UpdateFormData } from '../PartySurveyFormPage.tsx'
 import { useState } from 'react'
 import classNames from 'classnames'
-import { ClimbSearchItem } from '@/pages/types/api.ts'
-import { get_climb_search } from '@/services/gymSearch.ts'
 import Icon from '@/components/Icon/Icon.tsx'
-import { useDebounce } from 'react-use'
+import { useClimbingGymSearch } from '@/utils/useClimbingGymSearch.tsx'
 
 type PartyPlaceFormProps = {
   onNext: () => void
@@ -16,15 +14,7 @@ type PartyPlaceFormProps = {
 export function PartyPlaceForm({ onNext, formData, updateFormData }: PartyPlaceFormProps) {
   const [locationId, setLocationId] = useState<number>(formData.locationId)
   const [value, setValue] = useState(formData.cragName)
-  const [gymList, setGymList] = useState<ClimbSearchItem[]>([])
-  useDebounce(
-    async () => {
-      const res = await get_climb_search(value)
-      setGymList(res.content)
-    },
-    500,
-    [value]
-  )
+  const { gymList } = useClimbingGymSearch(value)
 
   const disabled = !value
 
@@ -45,17 +35,6 @@ export function PartyPlaceForm({ onNext, formData, updateFormData }: PartyPlaceF
             className={styles.input}
             placeholder={'암장 이름을 입력해주세요.'}
           />
-          <button
-            className={styles.searchBtn}
-            onClick={async () => {
-              if (value !== '') {
-                const res = await get_climb_search(value)
-                setGymList(res.content)
-              }
-            }}
-          >
-            검색
-          </button>
         </div>
         <div className={styles.searchList}>
           {gymList.map((el) => (

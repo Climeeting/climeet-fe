@@ -8,13 +8,14 @@ type Props = {
 
 export default function CheckIsLogin({ redirect = '/login' }: Props) {
   const navigate = useNavigate()
-  const { data: isLogin } = useIsLogin()
+  const { data: isLogin, isLoading } = useIsLogin()
 
   useEffect(
     function GoLogin() {
+      if (isLoading) return
       if (!isLogin && redirect) navigate(redirect, { replace: true })
     },
-    [isLogin, redirect]
+    [isLoading, isLogin, redirect]
   )
 
   return (

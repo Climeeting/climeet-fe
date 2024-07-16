@@ -6,7 +6,7 @@ import { PartyItem } from '@/services/party'
 import { Party } from '@/pages/types/api'
 
 export default function PartyCard({ party }: { party: Party }) {
-  const { appointmentTime, partyTitle, locationId, constraints } = new PartyItem(party).adapt()
+  const { appointmentTime, partyTitle, gymName, constraints } = new PartyItem(party).adapt()
 
   return (
     <div className={styles.Container}>
@@ -21,7 +21,7 @@ export default function PartyCard({ party }: { party: Party }) {
         <div>
           <div className={styles.Info}>
             <Icon icon={'LocationFill'} size="14" />
-            {locationId}
+            {gymName}
           </div>
           <div className={styles.Info}>
             <Icon icon={'PersonFill'} size="14" />

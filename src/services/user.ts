@@ -117,6 +117,52 @@ export class AdditionalInfoAddapter {
   }
 }
 
+/**
+ * PUT /v1/user/information
+ */
+export const put_user_information = async (body: PutUserInformationBody) => {
+  return await api.put<PutUserInformationBody>('/v1/user/information', body)
+}
+
+type PutUserInformationBody = {
+  userName: string
+  profileImageUrl: string
+  skill?: Skill
+  description?: string
+  sex?: 'MALE' | 'FEMALE'
+}
+
+export class PutUserInfomationAdapter {
+  private value: MyProfileInfo
+
+  constructor(value: MyProfileInfo) {
+    this.value = value
+  }
+
+  get userName() {
+    return this.value.nickname
+  }
+
+  get sex(): PutUserInformationBody['sex'] {
+    return sexFe2Be(this.value.sex)
+  }
+
+  get skill() {
+    return this.value.skillLevel
+  }
+
+  adapt(): PutUserInformationBody {
+    return {
+      userName: this.userName,
+      profileImageUrl: this.value.profileImageUrl,
+      description: this.value.description,
+      skill: this.skill,
+      // sex: this.sex,
+    }
+  }
+}
+
+
 export type MyProfileInfo = {
   nickname: string
   profileImageUrl: string
@@ -124,7 +170,6 @@ export type MyProfileInfo = {
   sex: '남자' | '여자'
   description: string
 }
-
 
 export class MyProfileBe2FeAdpter {
   private value: MyProfile
@@ -150,3 +195,4 @@ export class MyProfileBe2FeAdpter {
     }
   }
 }
+

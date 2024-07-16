@@ -1,0 +1,90 @@
+.container {
+  width: 100%;
+  position: fixed;
+  background-color: white;
+  left: 0;
+  top: 0;
+  height: 100%;
+  z-index: 10;
+  padding: 0 rem(16px);
+
+  .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    height: rem(48px);
+
+    .Left {
+      flex-shrink: 0;
+      flex-grow: 0;
+      cursor: pointer;
+    }
+  }
+
+  .title {
+    line-height: 1.7;
+    letter-spacing: -0.02;
+    font-size: rem(18px);
+    font-weight: 600;
+  }
+}
+
+.recentSearchesContainer {
+  margin-top: rem(32px);
+
+  .recentSearchList {
+    display: flex;
+    margin-top: rem(12px);
+    overflow-x: auto;
+    gap: rem(6px);
+  }
+
+  .recentSearchItem {
+    display: flex;
+    padding: 0 rem(12px);
+    border-radius: 9999px;
+    justify-content: center;
+    align-items: center;
+    height: rem(32px);
+    border: 1px solid $gray-200;
+    line-height: 1.7;
+    letter-spacing: -0.02;
+    font-size: rem(14px);
+    font-weight: 500;
+    flex-shrink: 0;
+    cursor: pointer;
+  }
+}
+
+.searchContainer {
+  margin-top: rem(40px);
+
+  .searchList {
+    margin-top: rem(12px);
+    height: 220px;
+    overflow-y: auto;
+    width: 100%;
+  }
+
+  .searchItem {
+    display: flex;
+    align-items: center;
+    font-size: rem(16px);
+    line-height: 1.7;
+    letter-spacing: -0.02;
+    font-weight: 400;
+    height: rem(44px);
+    overflow: hidden;
+    overflow-y: hidden;
+
+    svg {
+      flex-shrink: 0;
+    }
+  }
+
+  .searchItemText {
+    margin-left: rem(10px);
+  }
+}

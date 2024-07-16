@@ -3,7 +3,7 @@ import api from '../utils/api'
 import { MyProfile, Skill } from '../pages/types/api'
 import { isAxiosError } from 'axios'
 import { queryClient } from '../utils/tanstack'
-import { sexFe2Be } from './adaptor'
+import { sexBe2Fe, sexFe2Be } from './adaptor'
 
 /**
  * GET /v1/user/myProfile
@@ -90,16 +90,7 @@ export type MyInfo = {
 }
 
 export const skillOptions: MyInfo['skill'][] = [
-  'BLUE',
-  'RED',
-  'WHITE',
-  'YELLOW',
-  'ORANGE',
-  'GREEN',
-  'PURPLE',
-  'GREY',
-  'BROWN',
-  'BLACK',
+ 'VB', 'V0-', 'V0', 'V0+', 'V1-V2', 'V3-V5', 'V6', 'V7', 'V8', 'V9-V10'
 ]
 
 export class AdditionalInfoAddapter {
@@ -122,6 +113,40 @@ export class AdditionalInfoAddapter {
       ...this.value,
       sex: this.sex,
       skill: this.skill,
+    }
+  }
+}
+
+export type MyProfileInfo = {
+  nickname: string
+  profileImageUrl: string
+  skillLevel?: Skill
+  sex: '남자' | '여자'
+  description: string
+}
+
+
+export class MyProfileBe2FeAdpter {
+  private value: MyProfile
+
+  constructor(value: MyProfile) {
+    this.value = value
+  }
+
+  get sex() {
+    if (!this.value.sex) return this.value.sex
+    return sexBe2Fe(this.value.sex)
+  }
+
+  get skillLevel(): MyProfileInfo['skillLevel'] {
+    return this.value.skillLevel as MyProfileInfo['skillLevel']
+  }
+
+  adapt() {
+    return {
+      ...this.value,
+      sex: this.sex,
+      skillLevel: this.skillLevel,
     }
   }
 }

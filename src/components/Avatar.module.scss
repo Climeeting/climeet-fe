@@ -8,21 +8,27 @@
   border-radius: 100%;
 
   &.small {
-    width: rem(32px);
-    height: rem(32px);
-    font-size: rem(12px);
+    width: 32px;
+    height: 32px;
+    font-size: 12px;
   }
 
   &.middle {
-    width: rem(45px);
-    height: rem(45px);
-    font-size: rem(15px);
+    width: 45px;
+    height: 45px;
+    font-size: 15px;
   }
 
   &.large {
-    width: rem(60px);
-    height: rem(60px);
-    font-size: rem(18px);
+    width: 60px;
+    height: 60px;
+    font-size: 18px;
+  }
+
+  &.xl {
+    width: 100px;
+    height: 100px;
+    font-size: 24px;
   }
 }
 

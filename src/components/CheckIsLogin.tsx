@@ -8,7 +8,7 @@ type Props = {
 
 export default function CheckIsLogin({ redirect = '/login' }: Props) {
   const navigate = useNavigate()
-  const isLogin = useIsLogin()
+  const { data: isLogin } = useIsLogin()
 
   useEffect(
     function GoLogin() {

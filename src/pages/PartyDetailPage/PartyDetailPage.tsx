@@ -10,7 +10,7 @@ import { useIsLogin } from '@/services/user'
 import MoreMenu from './components/MoreMenu'
 
 export function PartyDetailPage() {
-  const isLogin = useIsLogin()
+  const { data: isLogin } = useIsLogin()
   const { id } = useParams<{ id: string }>()
 
   return (

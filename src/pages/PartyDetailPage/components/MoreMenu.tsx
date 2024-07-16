@@ -8,7 +8,7 @@ import Dropdown from '@/components/Dropdown'
 
 export default function MoreMenu({ id }: { id?: string }) {
   const navigate = useNavigate()
-  const isLogin = useIsLogin()
+  const { data: isLogin } = useIsLogin()
   const [openDropdown, onOpenDropdown] = useState(false)
   const [openAlertLogin, onOpenAlertLogin] = useState(false)
   const [openAlertDelete, onOpenAlertDelete] = useState(false)

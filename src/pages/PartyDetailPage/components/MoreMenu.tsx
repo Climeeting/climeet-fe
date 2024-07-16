@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import { delete_party_$partyId, usePartyDetail } from '@/services/party'
-import { useIsLogin, useMyProfile } from '@/services/user'
+import { useIsLogin } from '@/services/user'
 import Icon from '@/components/Icon/Icon'
 import Dialog from '@/components/Dialog'
 import Dropdown from '@/components/Dropdown'
@@ -14,12 +14,8 @@ export default function MoreMenu({ id }: { id?: string }) {
   const [openAlertDelete, onOpenAlertDelete] = useState(false)
 
   const { data: partyData } = usePartyDetail(Number(id))
-  const { data: myData } = useMyProfile()
 
-  // TODO: 임시로 작성자 이름으로 비교.
-  const isMaster = partyData?.masterName === myData?.nickname
-
-  if (!id || !isMaster) return null
+  if (!id || !partyData?.isMaster) return null
 
   return (
     <>

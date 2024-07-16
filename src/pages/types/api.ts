@@ -86,6 +86,8 @@ export type PartyDetail = {
   maximumSkillLevel: number
   isNatural: boolean
   masterProfileImageUrl: string
+  isMaster: boolean
+  isParticipation: boolean
 }
 
 export type SkillDistribution = {

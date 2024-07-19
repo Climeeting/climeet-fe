@@ -10,6 +10,7 @@ import MyNewPage from './MyNewPage/MyNewPage'
 import CheckIsLogin from '@/components/CheckIsLogin'
 import UserPage from './UserPage/UserPage'
 import MyUpdatePage from './MyUpdatePage/MyUpdatePage'
+import ChatPage from '@/pages/ChatPage/ChatPage.tsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -25,6 +26,7 @@ const router = createBrowserRouter(
         <Route path="party-suervey" element={<PartySurveyFormPage />} />
         <Route path="party-suervey/:id" element={<PartySurveyFormPage />} />
       </Route>
+      <Route path="/chat" element={<ChatPage />} />
       <Route path="/user/:id" element={<UserPage />} />
       <Route path="/party/:id" element={<PartyDetailPage />} />
     </Route>

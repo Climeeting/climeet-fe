@@ -2,6 +2,9 @@ import styles from './ChatRoomPage.module.scss'
 import TopBar from '@/components/NavBar/TopBar.tsx'
 import classNames from 'classnames'
 import Icon from '@/components/Icon/Icon.tsx'
+import { useState } from 'react'
+import SideSheet from '@/components/SideSheet.tsx'
+import ChatSidebar from '@/pages/ChatRoomPage/components/ChatSidebar.tsx'
 
 function ChatRoomPage() {
   return (
@@ -10,7 +13,7 @@ function ChatRoomPage() {
         <TopBar.Left back />
         <TopBar.Center>친해지실 분 구해유</TopBar.Center>
         <TopBar.Right close={false}>
-          <Icon icon={'Hamburger'} size={32} />
+          <ChatRoomInfo />
         </TopBar.Right>
       </TopBar>
       <div className={styles.Alert}>
@@ -38,3 +41,15 @@ function ChatRoomPage() {
 }
 
 export default ChatRoomPage
+
+function ChatRoomInfo() {
+  const [open, setOpen] = useState(false)
+  return (
+    <SideSheet open={open} onOpenChange={setOpen}>
+      <SideSheet.Trigger className={styles.Trigger} style={{ display: 'flex' }}>
+        <Icon icon={'Hamburger'} size={32} />
+      </SideSheet.Trigger>
+      {open && <ChatSidebar />}
+    </SideSheet>
+  )
+}

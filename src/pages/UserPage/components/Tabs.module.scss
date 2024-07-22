@@ -1,0 +1,39 @@
+/* reset */
+button,
+fieldset,
+input {
+  all: unset;
+}
+
+.TabsRoot {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.TabsList {
+  flex-shrink: 0;
+  display: flex;
+}
+
+.TabsTrigger {
+  font-family: inherit;
+  background-color: white;
+  padding: 0 20px;
+  height: 45px;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: rem(18px);
+  color: $gray-900;
+  user-select: none;
+}
+.TabsTrigger[data-state='active'] {
+  border-bottom: 2px solid $gray-900;
+  font-weight: 600;
+}
+
+.TabsContent {
+  flex-grow: 1;
+}

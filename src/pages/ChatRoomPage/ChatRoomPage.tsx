@@ -1,10 +1,10 @@
 import styles from './ChatRoomPage.module.scss'
 import TopBar from '@/components/NavBar/TopBar.tsx'
-import classNames from 'classnames'
 import Icon from '@/components/Icon/Icon.tsx'
 import { useLayoutEffect, useRef, useState } from 'react'
 import SideSheet from '@/components/SideSheet.tsx'
 import ChatSidebar from '@/pages/ChatRoomPage/components/ChatSidebar.tsx'
+import Avatar from '@/components/Avatar.tsx'
 
 function ChatRoomPage() {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -68,16 +68,28 @@ function ChatRoomPage() {
           <br />
           개인 정보 요구, 외부 채팅방으로 유도하는 경우 주의해주세요!
         </div>
-        <div className={styles.MessageList}>
-          {Array.from({ length: 20 }).map(() => (
-            <div className={styles.MessageItem}>안녕하세요 친해져요~</div>
-          ))}
-          <div
-            className={classNames(styles.MessageItem, {
-              [styles.MyMessage]: true,
-            })}
-          >
-            안녕하세요 친해져요~
+        <div className={styles.LastDate}>2024년 6월 29일 토요일</div>
+        <div className={styles.MemberEnterLayout}>
+          <div className={styles.MemberEnter}>이성진 님이 들어왔습니다.</div>
+        </div>
+        <div className={styles.OtherMessageContainer}>
+          <Avatar src={''} alt={'아바타'} size={'small'} className={styles.MemberAvatar} />
+          <div>
+            <div className={styles.MemberName}>양혜윤</div>
+            <div className={styles.OtherMessageList}>
+              {Array.from({ length: 20 }).map(() => (
+                <div className={styles.MessageItem}>안녕하세요 친해져요~</div>
+              ))}
+            </div>
+          </div>
+          <div className={styles.SendTime}>오전 10:42</div>
+        </div>
+        <div className={styles.MyMessageContainer}>
+          <div className={styles.SendTime}>오전 10:42</div>
+          <div className={styles.MyMessageList}>
+            {Array.from({ length: 4 }).map(() => (
+              <div className={styles.MessageItem}>안녕하세요 친해져요~</div>
+            ))}
           </div>
         </div>
       </div>

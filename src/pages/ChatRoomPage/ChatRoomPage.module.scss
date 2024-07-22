@@ -1,6 +1,7 @@
 .Container {
   padding-top: 48px;
   overflow-y: auto;
+  padding-bottom: 71px;
 
   .Alert {
     height: 80px;
@@ -12,18 +13,103 @@
     font-size: 14px;
     font-weight: 400;
     color: $gray-800;
+    margin-bottom: 24px;
   }
 
-  .MessageList {
+  .LastDate {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.7;
+    color: $gray-400;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .MemberEnterLayout {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .MemberEnter {
+    padding: 8px 10px;
+    font-size: 12px;
+    font-weight: 400;
+    color: $gray-600;
+    border: 1px solid $gray-100;
+    border-radius: 999px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+  }
+
+  .OtherMessageContainer,
+  .MyMessageContainer {
     padding: 0 16px;
+    display: flex;
+    margin-bottom: 16px;
+
+    .SendTime {
+      font-size: 10px;
+      line-height: 1;
+      font-weight: 500;
+      color: $gray-400;
+      align-self: end;
+    }
+
+    .MessageItem {
+      background-color: $gray-100;
+      border-radius: 9999px;
+      padding: 7px 12px;
+      color: $gray-900;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.7;
+    }
   }
 
-  .MessageItem {
-    background-color: $gray-100;
-    border-radius: 9999px;
+  .OtherMessageContainer {
+    .MemberAvatar {
+      margin-right: 8px;
+    }
 
-    &.MyMessage {
+    .MemberName {
+      font-size: 12px;
+      font-weight: 500;
+      color: $gray-600;
+      margin-bottom: 6px;
+    }
+
+    .OtherMessageList {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-right: 4px;
+    }
+  }
+
+  .MyMessageContainer {
+    gap: 8px;
+    justify-content: flex-end;
+
+    .MessageItem {
+      color: white;
       background-color: $primary-500;
+    }
+
+    .SendTime {
+      margin-right: 4px;
+    }
+
+    .MyMessageList {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 6px;
     }
   }
 }

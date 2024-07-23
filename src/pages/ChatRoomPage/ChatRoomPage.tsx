@@ -1,57 +1,14 @@
 import styles from './ChatRoomPage.module.scss'
 import TopBar from '@/components/NavBar/TopBar.tsx'
 import Icon from '@/components/Icon/Icon.tsx'
-import { useLayoutEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 import SideSheet from '@/components/SideSheet.tsx'
 import ChatSidebar from '@/pages/ChatRoomPage/components/ChatSidebar.tsx'
 import Avatar from '@/components/Avatar.tsx'
+import { useVisualViewport } from '@/pages/ChatRoomPage/hooks/useVisualViewport.tsx'
 
 function ChatRoomPage() {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const wrapperRef = useRef<HTMLDivElement>(null)
-
-  // 가상 영역이 스크롤되는 문제를 해결 (viewport 이상으로 스크롤 안되도록 설정)
-  const handleViewportScroll = (e: Event) => {
-    const viewportScrollY = (e.target as HTMLElement).offsetTop
-    if (!wrapperRef.current) {
-      return
-    }
-    wrapperRef.current.style.transform = `translateY(${viewportScrollY}px)`
-  }
-
-  const setWrapperHeight = () => {
-    if (!wrapperRef.current) {
-      return
-    }
-
-    const nextHeight = visualViewport?.height ?? 0
-    wrapperRef.current.style.height = `${nextHeight}px`
-  }
-
-  const setContainerHeight = () => {
-    if (!containerRef.current) {
-      return
-    }
-
-    const nextHeight = (visualViewport?.height ?? 0) - 64
-    containerRef.current.style.height = `${nextHeight}px`
-  }
-
-  const setHeight = () => {
-    setWrapperHeight()
-    setContainerHeight()
-  }
-
-  useLayoutEffect(() => {
-    setHeight()
-    visualViewport?.addEventListener('resize', setHeight)
-    visualViewport?.addEventListener('scroll', handleViewportScroll)
-
-    return () => {
-      visualViewport?.removeEventListener('resize', setHeight)
-      visualViewport?.removeEventListener('scroll', handleViewportScroll)
-    }
-  }, [])
+  const { wrapperRef, containerRef } = useVisualViewport()
 
   return (
     <div ref={wrapperRef}>

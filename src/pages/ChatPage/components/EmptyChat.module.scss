@@ -1,0 +1,32 @@
+.EmptyChat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  .EmptyChatText {
+    text-align: center;
+    line-height: 1.55;
+    font-size: 16px;
+    font-weight: 400;
+    color: $gray-500;
+    margin-top: 16px;
+  }
+
+  .Button {
+    height: 44px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 999px;
+    border: 1px solid $gray-200;
+    padding: 10px 16px;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+}

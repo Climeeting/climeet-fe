@@ -130,7 +130,7 @@ export class AdditionalInfoAddapter {
 /**
  * PUT /v1/user/information
  */
-export const put_user_information = async (body: PutUserInformationBody) => {
+export const put_user_information = async (body: Partial<PutUserInformationBody>) => {
   return await api.put<PutUserInformationBody>('/v1/user/information', body)
 }
 

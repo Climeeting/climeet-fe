@@ -15,8 +15,11 @@ export default function OauthPage() {
     const accessToken = await post_kakao_oauth_token(code)
     // 2. 로그인 요청
     await post_oauth_login(accessToken)
-
-    navigate('/', { replace: true })
+    // 3. 리다이렉트 처리
+    const redirect = localStorage.getItem('redirect')
+    localStorage.removeItem('redirect')
+    if (redirect) navigate(redirect, { replace: true })
+    else navigate('/', { replace: true })
   }, [code])
 
   return (

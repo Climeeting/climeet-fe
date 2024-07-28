@@ -6,16 +6,24 @@ import Icon from '@/components/Icon/Icon'
 
 type Props = {
   src?: string
-  onChange: (src: string) => void
+  onChange: (file: File) => void
+  onChangeSrc: (src: string) => void
 }
 
-export default function PreviewImage({ src, onChange }: Props) {
+export default function PreviewImage({ src, onChange, onChangeSrc }: Props) {
   const ref = useRef<HTMLInputElement>(null)
-  usePreviewImage(ref, onChange)
+  usePreviewImage(ref, onChangeSrc)
 
   return (
     <div className={styles.Container}>
-      <input className={styles.Hidden} type="file" ref={ref} />
+      <input
+        className={styles.Hidden}
+        type="file"
+        ref={ref}
+        onChange={(e) => {
+          if (e.target.files) onChange(e.target.files[0])
+        }}
+      />
       <button
         className={styles.Button}
         onClick={() => {

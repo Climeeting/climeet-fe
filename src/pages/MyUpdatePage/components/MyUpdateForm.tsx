@@ -6,6 +6,7 @@ import RadioSex from './RadioSex'
 import { MyProfile } from '@/pages/types/api'
 import { useMyInfoFormActions, useMyInfoFormContext } from '../hooks/useMyInfoForm'
 import Select from '@/components/Select'
+import { useFileActions } from '../hooks/useFileContext'
 
 type MyUpdateFormProps = {
   checkValid: boolean
@@ -16,6 +17,8 @@ export function MyUpdateForm({ checkValid }: MyUpdateFormProps) {
   const { nickname, sex, skillLevel, description, profileImageUrl } = useMyInfoFormContext()
   const { setNickName, setSex, setSkillLevel, setDescription, setProfileImageUrl } =
     useMyInfoFormActions()
+
+  const updateProfileFile = useFileActions()
 
   const warningName = checkValid && !nickname
   const warningSex = checkValid && !sex
@@ -30,7 +33,11 @@ export function MyUpdateForm({ checkValid }: MyUpdateFormProps) {
             <h2>프로필 이미지</h2>
           </VisuallyHidden>
         </div>
-        <PreviewImage src={profileImageUrl} onChange={setProfileImageUrl} />
+        <PreviewImage
+          src={profileImageUrl}
+          onChange={updateProfileFile}
+          onChangeSrc={setProfileImageUrl}
+        />
       </fieldset>
 
       <fieldset className={styles.Fileldset}>

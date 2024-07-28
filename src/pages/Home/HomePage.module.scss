@@ -38,6 +38,8 @@
   padding: 32px 16px 24px;
   display: flex;
   flex-direction: column;
+  justify-content: start;
+  align-items: start;
 }
 
 .Title {
@@ -45,5 +47,20 @@
   font-weight: 800;
   color: $gray-900;
   line-height: 1.7;
+}
+
+.ContentHeader {
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 16px;
+}
+
+.Buttons {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  gap: 8px;
 }

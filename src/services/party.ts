@@ -111,7 +111,7 @@ export type GetPartyDetailRes = {
   gymName: string
   partyDescription: string
   masterName: string
-  skillDistributions: { skill: string; count: number }[]
+  skillDistributions: { skillLevel: string; count: number }[]
   approachDescription: string
   locationId: number
   minimumSkillLevel: number
@@ -286,7 +286,6 @@ export const usePartyDetailSuspense = (partyId: number) => {
     select: (data) => new PartyDetailAdapter(data).adapt(),
   })
 }
-
 
 export type PartyDetailType = ReturnType<PartyDetailAdapter['adapt']>
 

@@ -7,14 +7,6 @@
   padding-bottom: 100px;
   background-color: $gray-100;
   min-height: calc(100vh - 56px);
-
-  h1 {
-    font-size: rem(20px);
-    font-weight: 800;
-    color: $gray-900;
-    line-height: 1.7;
-    margin-bottom: 16px;
-  }
 }
 
 .PartyUl {
@@ -43,6 +35,15 @@
 }
 
 .Contents {
-  padding: 32px 16px;
-  padding-bottom: 24px;
+  padding: 32px 16px 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.Title {
+  font-size: rem(20px);
+  font-weight: 800;
+  color: $gray-900;
+  line-height: 1.7;
+  margin-bottom: 16px;
 }

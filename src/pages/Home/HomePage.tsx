@@ -27,7 +27,7 @@ export default function HomePage() {
               </div>
 
               <div className={styles.Contents}>
-                <h1>오늘의 파티</h1>
+                <h1 className={styles.Title}>오늘의 파티</h1>
                 <FilterList />
               </div>
 

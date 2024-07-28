@@ -277,6 +277,19 @@ export const usePartyDetail = (partyId?: number) => {
   })
 }
 
+export const PartyDetailQuery = {
+  invalidate: async (partyId: number) =>
+    await queryClient.invalidateQueries({
+      queryKey: [...PARTY_DETAIL_KEY, partyId],
+      refetchType: 'all',
+    }),
+
+  refetch: async (partyId: number) =>
+    await queryClient.refetchQueries({
+      queryKey: [...PARTY_DETAIL_KEY, partyId],
+    }),
+}
+
 export const usePartyDetailSuspense = (partyId: number) => {
   return useSuspenseQuery({
     queryKey: [...PARTY_DETAIL_KEY, partyId],

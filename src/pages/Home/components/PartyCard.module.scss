@@ -19,11 +19,21 @@
     display: -webkit-box;
     -webkit-line-clamp: 2; /* 2줄 넘어가면 말줄임 */
     -webkit-box-orient: vertical;
+    margin-bottom: 8px;
   }
 
   .Time {
     font-size: rem(14px);
     color: $gray-700;
+    line-height: 1.7;
+  }
+
+  .GymName {
+    font-size: rem(12px);
+    color: $gray-700;
+    background-color: $gray-100;
+    border-radius: 2px;
+    padding: 4px 8px;
     line-height: 1.7;
   }
 }

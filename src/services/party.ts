@@ -59,15 +59,15 @@ export const usePartyList = (params?: GetPartyListParams) => {
 }
 
 export const PartyListQuery = {
-  invalidate: async () =>
+  invalidate: async (params?: GetPartyListParams) =>
     await queryClient.invalidateQueries({
-      queryKey: PARTY_LIST_KEY,
+      queryKey: [PARTY_LIST_KEY, params && stringify(params)],
       refetchType: 'all',
     }),
 
-  refetch: async () =>
+  refetch: async (params?: GetPartyListParams) =>
     await queryClient.refetchQueries({
-      queryKey: PARTY_LIST_KEY,
+      queryKey: [PARTY_LIST_KEY, params && stringify(params)],
     }),
 }
 

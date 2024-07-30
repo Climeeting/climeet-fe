@@ -11,6 +11,8 @@ import { FilterProvider } from './hooks/useFilterContext'
 import { DateProvider } from './hooks/useDateContext'
 import GymSearch from '@/pages/Home/components/GymSearch.tsx'
 import { SearchContextProvider } from './hooks/useSearchContext'
+import RefreshButton from './components/RefreshButton'
+import RemoveFullButton from './components/RemoveFullButton'
 
 export default function HomePage() {
   return (
@@ -27,8 +29,14 @@ export default function HomePage() {
               </div>
 
               <div className={styles.Contents}>
-                <h1>오늘의 파티</h1>
-                <FilterList />
+                <div className={styles.ContentHeader}>
+                  <h1 className={styles.Title}>오늘의 파티</h1>
+                  <RemoveFullButton />
+                </div>
+                <div className={styles.Buttons}>
+                  <RefreshButton />
+                  <FilterList />
+                </div>
               </div>
 
               {/* https://tanstack.com/query/latest/docs/framework/react/guides/suspense */}

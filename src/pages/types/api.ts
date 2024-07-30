@@ -26,6 +26,7 @@ export type Party = {
   partyTitle: string
   gymName: string
   natural: boolean
+  joinStatus: 'AVAILABLE' | 'IMMINENT_FULL' | 'FULL'
 }
 
 export type PageableObject = {

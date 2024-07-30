@@ -1,0 +1,19 @@
+.Button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3px;
+  font-size: rem(14px);
+}
+
+.Button[data-checked='true'] {
+  color: $primary-500;
+
+  .Icon {
+    color: $primary-500;
+  }
+}
+
+.Icon {
+  color: $gray-300;
+}

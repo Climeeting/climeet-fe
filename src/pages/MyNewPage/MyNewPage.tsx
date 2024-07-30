@@ -9,8 +9,13 @@ import {
   skillLevelOptions,
 } from '@/services/user'
 import Select from '@/components/Select'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 export default function MyNewPage() {
+  const navigate = useNavigate()
+  const { search } = useLocation()
+  const redirect = new URLSearchParams(search).get('redirect')
+
   const [sex, setSex] = useState<MyInfo['sex'] | ''>('')
   const [skillLevel, setSkillLevel] = useState<MyInfo['skillLevel'] | ''>('')
   const [submited, setSubmited] = useState(false)
@@ -85,7 +90,8 @@ export default function MyNewPage() {
                     skillLevel,
                   }).adapt()
                 )
-                console.log('저장 성공')
+                if (redirect) navigate(redirect, { replace: true })
+                else navigate('/', { replace: true })
               } catch (e) {
                 console.error(e)
               }

@@ -204,3 +204,17 @@ export class MyProfileBe2FeAdpter {
     }
   }
 }
+
+/*
+ * GET /v1/user/check-additional-info
+ */
+export const get_user_checkAdditionalInfo = async () => {
+  return await api.get<{ isTrue: boolean }>('/v1/user/check-additional-info')
+}
+
+export const useCheckAdditionalInfo = () => {
+  return useQuery({
+    queryKey: ['checkAdditionalInfo'],
+    queryFn: get_user_checkAdditionalInfo,
+  })
+}

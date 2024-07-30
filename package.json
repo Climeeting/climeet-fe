@@ -30,7 +30,7 @@
     "@stackflow/react": "^1.1.9",
     "@tanstack/react-query": "^5.32.1",
     "@uidotdev/usehooks": "^2.4.1",
-    "aws-sdk": "^2.1664.0",
+    "aws-sdk": "^2.1560.0",
     "axios": "^1.6.8",
     "classnames": "^2.5.1",
     "dayjs": "^1.11.11",

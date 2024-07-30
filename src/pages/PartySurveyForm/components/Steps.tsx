@@ -14,6 +14,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import ProgressBar from '@/components/ProgressBar.tsx'
 import TopBar from '@/components/NavBar/TopBar.tsx'
 import { PartyPreview } from '@/pages/PartySurveyForm/components/PartyPreview.tsx'
+import styles from './Steps.module.scss'
 
 const indoorSteps = ['암장', '조건', '소개', '일정', '미리보기'] as const
 type IndoorStepName = (typeof indoorSteps)[number]
@@ -58,7 +59,9 @@ export function IndoorStep({ formData, updateFormData, goToFirstStep }: StepProp
         />
         <TopBar.Right close />
       </TopBar>
-      <ProgressBar ratio={calcCurrentProgressValue(indoorSteps, step)} />
+      <div className={styles.ProgressBarContainer}>
+        <ProgressBar ratio={calcCurrentProgressValue(indoorSteps, step)} />
+      </div>
       <Funnel>
         <Step name="암장">
           <PartyPlaceForm

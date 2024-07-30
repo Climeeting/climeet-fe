@@ -26,6 +26,7 @@ export type Party = {
   partyTitle: string
   gymName: string
   natural: boolean
+  joinStatus: 'AVAILABLE' | 'IMMINENT_FULL' | 'FULL'
 }
 
 export type PageableObject = {
@@ -91,12 +92,11 @@ export type PartyDetail = {
 }
 
 export type SkillDistribution = {
-  skill: Skill
+  skillLevel: SkillLevel
   count: number
 }
 
-export type Skill =
- 'VB' | 'V0-' | 'V0' | 'V0+' | 'V1-V2' | 'V3-V5' | 'V6' | 'V7' | 'V8' | 'V9-V10'
+export type SkillLevel = 'V0' | 'V1' | 'V2' | 'V3' | 'V4' | 'V5' | 'V6' | 'V7' | 'V8' | 'V9' | 'V10'
 
 export type ClimbingGym = {
   id: number

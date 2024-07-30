@@ -4,21 +4,11 @@ import styles from './PartyList.module.scss'
 import PartyCard from './PartyCard'
 import { usePartyList } from '@/services/party'
 import { PartyListQuery } from '@/services/party'
-import { PartyListParams, useFilterContext } from '../hooks/useFilterContext'
 import { useLoadMore } from '@/utils/useLoadMore'
-import { useDateContext } from '../hooks/useDateContext'
-import { useSearchContext } from '../hooks/useSearchContext'
+import { useFilterParams } from '../hooks/useFilterParams'
 
 export default function PartyList() {
-  const date = useDateContext()
-  const filters = useFilterContext()
-  const searchResult = useSearchContext()
-
-  const params = {
-    ...new PartyListParams(filters).adapt(),
-    ...(searchResult ? { locationId: searchResult.id } : null),
-    date: date.tz('Asia/Seoul').format(),
-  }
+  const params = useFilterParams()
   const { data, fetchNextPage } = usePartyList(params)
   const ref = useLoadMore(fetchNextPage)
 

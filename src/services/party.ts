@@ -10,7 +10,7 @@ import {
   GenderKo,
 } from '@/pages/PartySurveyForm/components/PartyConditionForm.tsx'
 import dayjs from 'dayjs'
-import { clibingBe2Fe, constraintsBe2Fe } from './adaptor'
+import { JoinStatusBe2Fe, clibingBe2Fe, constraintsBe2Fe } from './adaptor'
 import { PartySurveyFormData } from '@/pages/PartySurveyForm/PartySurveyFormPage.tsx'
 
 /**
@@ -31,7 +31,7 @@ export type GetPartyListParams = {
 }
 
 export const get_party_list = async (params?: GetPartyListParams) => {
-  const queryString = params ? `?${stringify(params)}` : ''
+  const queryString = params ? `${stringify(params)}` : ''
 
   try {
     const result = await api.get<PageData<Party>>(`/v1/party/list?${queryString}`)
@@ -59,15 +59,15 @@ export const usePartyList = (params?: GetPartyListParams) => {
 }
 
 export const PartyListQuery = {
-  invalidate: async () =>
+  invalidate: async (params?: GetPartyListParams) =>
     await queryClient.invalidateQueries({
-      queryKey: PARTY_LIST_KEY,
+      queryKey: [PARTY_LIST_KEY, params && stringify(params)],
       refetchType: 'all',
     }),
 
-  refetch: async () =>
+  refetch: async (params?: GetPartyListParams) =>
     await queryClient.refetchQueries({
-      queryKey: PARTY_LIST_KEY,
+      queryKey: [PARTY_LIST_KEY, params && stringify(params)],
     }),
 }
 
@@ -90,12 +90,22 @@ export class PartyItem {
     return clibingBe2Fe(this.value.climbingType)
   }
 
+  get joinStatus() {
+    return JoinStatusBe2Fe(this.value.joinStatus)
+  }
+
+  get levelRange() {
+    return `V${this.value.minSkillLevel}부터 V${this.value.maxSkillLevel}까지`
+  }
+
   adapt() {
     return {
       ...this.value,
       constraints: this.constraints,
       climbingType: this.climbingType,
       appointmentTime: this.appointmentTime,
+      joinStatus: this.joinStatus,
+      levelRange: this.levelRange,
     }
   }
 }
@@ -111,7 +121,7 @@ export type GetPartyDetailRes = {
   gymName: string
   partyDescription: string
   masterName: string
-  skillDistributions: { skill: string; count: number }[]
+  skillDistributions: { skillLevel: string; count: number }[]
   approachDescription: string
   locationId: number
   minimumSkillLevel: number
@@ -277,6 +287,19 @@ export const usePartyDetail = (partyId?: number) => {
   })
 }
 
+export const PartyDetailQuery = {
+  invalidate: async (partyId: number) =>
+    await queryClient.invalidateQueries({
+      queryKey: [...PARTY_DETAIL_KEY, partyId],
+      refetchType: 'all',
+    }),
+
+  refetch: async (partyId: number) =>
+    await queryClient.refetchQueries({
+      queryKey: [...PARTY_DETAIL_KEY, partyId],
+    }),
+}
+
 export const usePartyDetailSuspense = (partyId: number) => {
   return useSuspenseQuery({
     queryKey: [...PARTY_DETAIL_KEY, partyId],
@@ -286,7 +309,6 @@ export const usePartyDetailSuspense = (partyId: number) => {
     select: (data) => new PartyDetailAdapter(data).adapt(),
   })
 }
-
 
 export type PartyDetailType = ReturnType<PartyDetailAdapter['adapt']>
 

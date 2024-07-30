@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { delete_party_$partyId, usePartyDetail } from '@/services/party'
 import { useIsLogin } from '@/services/user'
 import Icon from '@/components/Icon/Icon'
-import Dialog from '@/components/Dialog'
+import Dialog from '@/components/Dialog/Dialog'
 import Dropdown from '@/components/Dropdown'
 
 export default function MoreMenu({ id }: { id?: string }) {

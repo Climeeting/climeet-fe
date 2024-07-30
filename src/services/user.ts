@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import api from '../utils/api'
-import { MyProfile, Skill } from '../pages/types/api'
+import { MyProfile, SkillLevel } from '../pages/types/api'
 import { isAxiosError } from 'axios'
 import { queryClient } from '../utils/tanstack'
 import { sexBe2Fe, sexFe2Be } from './adaptor'
@@ -79,18 +79,28 @@ export const post_user_additionalInfo = async (params: PostAdditonalInfoParams) 
 
 export type PostAdditonalInfoParams = {
   sex: 'MALE' | 'FEMALE'
-  skill: Skill
+  skillLevel: SkillLevel
   description?: string
 }
 
 export type MyInfo = {
   sex: '남자' | '여자'
-  skill: Skill
+  skillLevel: SkillLevel
   description?: string
 }
 
-export const skillOptions: MyInfo['skill'][] = [
- 'VB', 'V0-', 'V0', 'V0+', 'V1-V2', 'V3-V5', 'V6', 'V7', 'V8', 'V9-V10'
+export const skillLevelOptions: MyInfo['skillLevel'][] = [
+  'V0',
+  'V1',
+  'V2',
+  'V3',
+  'V4',
+  'V5',
+  'V6',
+  'V7',
+  'V8',
+  'V9',
+  'V10',
 ]
 
 export class AdditionalInfoAddapter {
@@ -104,15 +114,15 @@ export class AdditionalInfoAddapter {
     return sexFe2Be(this.value.sex)
   }
 
-  get skill(): PostAdditonalInfoParams['skill'] {
-    return this.value.skill
+  get skillLevel(): PostAdditonalInfoParams['skillLevel'] {
+    return this.value.skillLevel
   }
 
   adapt() {
     return {
       ...this.value,
       sex: this.sex,
-      skill: this.skill,
+      skillLevel: this.skillLevel,
     }
   }
 }
@@ -120,14 +130,14 @@ export class AdditionalInfoAddapter {
 /**
  * PUT /v1/user/information
  */
-export const put_user_information = async (body: PutUserInformationBody) => {
+export const put_user_information = async (body: Partial<PutUserInformationBody>) => {
   return await api.put<PutUserInformationBody>('/v1/user/information', body)
 }
 
 type PutUserInformationBody = {
   userName: string
   profileImageUrl: string
-  skill?: Skill
+  skillLevel?: SkillLevel
   description?: string
   sex?: 'MALE' | 'FEMALE'
 }
@@ -147,7 +157,7 @@ export class PutUserInfomationAdapter {
     return sexFe2Be(this.value.sex)
   }
 
-  get skill() {
+  get skillLevel() {
     return this.value.skillLevel
   }
 
@@ -156,17 +166,16 @@ export class PutUserInfomationAdapter {
       userName: this.userName,
       profileImageUrl: this.value.profileImageUrl,
       description: this.value.description,
-      skill: this.skill,
+      skillLevel: this.skillLevel,
       // sex: this.sex,
     }
   }
 }
 
-
 export type MyProfileInfo = {
   nickname: string
   profileImageUrl: string
-  skillLevel?: Skill
+  skillLevel?: SkillLevel
   sex: '남자' | '여자'
   description: string
 }
@@ -196,3 +205,16 @@ export class MyProfileBe2FeAdpter {
   }
 }
 
+/*
+ * GET /v1/user/check-additional-info
+ */
+export const get_user_checkAdditionalInfo = async () => {
+  return await api.get<{ isTrue: boolean }>('/v1/user/check-additional-info')
+}
+
+export const useCheckAdditionalInfo = () => {
+  return useQuery({
+    queryKey: ['checkAdditionalInfo'],
+    queryFn: get_user_checkAdditionalInfo,
+  })
+}

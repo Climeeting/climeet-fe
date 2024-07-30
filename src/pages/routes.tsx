@@ -10,6 +10,8 @@ import MyNewPage from './MyNewPage/MyNewPage'
 import CheckIsLogin from '@/components/CheckIsLogin'
 import UserPage from './UserPage/UserPage'
 import MyUpdatePage from './MyUpdatePage/MyUpdatePage'
+import CheckIsLogout from '@/components/CheckIsLogout'
+import CheckAdditionalInfo from '@/components/CheckAdditionalInfo'
 import ChatPage from '@/pages/ChatPage/ChatPage.tsx'
 import ChatRoomPage from '@/pages/ChatRoomPage/ChatRoomPage.tsx'
 
@@ -17,14 +19,18 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Layout />}>
       <Route index element={<HomePage />} />
-      <Route path="login" element={<LoginPage />} />
       <Route path="oauth" element={<OauthPage />} />
       <Route path="404" element={<NotFoundPage />} />
+      <Route element={<CheckIsLogout />}>
+        <Route path="login" element={<LoginPage />} />
+      </Route>
       <Route element={<CheckIsLogin />}>
         <Route path="/user/my" element={<UserPage />} />
-        <Route path="/user/my/update" element={<MyUpdatePage />} />
         <Route path="/user/my/new" element={<MyNewPage />} />
-        <Route path="party-suervey" element={<PartySurveyFormPage />} />
+        <Route path="/user/my/update" element={<MyUpdatePage />} />
+        <Route element={<CheckAdditionalInfo />}>
+          <Route path="party-suervey" element={<PartySurveyFormPage />} />
+        </Route>
         <Route path="party-suervey/:id" element={<PartySurveyFormPage />} />
       </Route>
       <Route path="/chat" element={<ChatPage />} />

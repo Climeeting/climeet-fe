@@ -1,4 +1,4 @@
-import AWS from 'aws-sdk'
+import * as AWS from 'aws-sdk'
 import dayjs from 'dayjs'
 
 // 참고: https://medium.com/how-to-react/how-to-upload-files-on-an-s3-bucket-in-react-js-97a3ccd519d1
@@ -12,7 +12,6 @@ const SECRET_ACCESS_KEY = import.meta.env.VITE_S3_SECRET_ACCESS_KEY as string
 // Function to upload file to s3
 export const uploadFileS3 = async (file: File) => {
   // S3 Credentials
-  console.log({ S3_BUCKET, REGION, ACCESS_KEY, SECRET_ACCESS_KEY })
   AWS.config.update({
     accessKeyId: ACCESS_KEY,
     secretAccessKey: SECRET_ACCESS_KEY,

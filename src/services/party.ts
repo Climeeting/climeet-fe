@@ -181,10 +181,7 @@ export class SurveyFormAdapter {
   }
 
   get partyDate() {
-    /**
-     * @desc "2024-06-17T18:00:00.000Z" -> "2024-06-17"
-     */
-    return this.value.appointmentTime.substring(0, 10)
+    return dayjs(this.value.appointmentTime)
   }
 
   get partyTime() {
@@ -413,7 +410,7 @@ export class PostPartyNewReqAdapter {
   }
 
   get appointmentTime(): string {
-    const date = this.value.partyDate
+    const date = dayjs(this.value.partyDate).format('YYYY-MM-DD')
     const time = this.value.partyTime
     // @desc ss, ms는 입력받을 수 없으니 임의로 설정
     const dummyTime = ':00.000Z'

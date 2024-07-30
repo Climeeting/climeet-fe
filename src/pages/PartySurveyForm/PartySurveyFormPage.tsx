@@ -6,6 +6,7 @@ import { ClimbingTypeKo, GenderKo } from '@/pages/PartySurveyForm/components/Par
 import { useParams } from 'react-router-dom'
 import { get_party_$partyId_detail, SurveyFormAdapter } from '@/services/party.ts'
 import { useAsync } from 'react-use'
+import dayjs from 'dayjs'
 
 export function PartySurveyFormPage() {
   const { formData, updateFormData, setFormData } = usePartySurveyForm()
@@ -69,7 +70,7 @@ export type PartySurveyFormData = {
   climbingType: ClimbingTypeKo
   partyName: string
   partyDescription: string
-  partyDate: string
+  partyDate: dayjs.Dayjs
   partyTime: string
   minSkillLevel: number
   maxSkillLevel: number
@@ -97,7 +98,7 @@ const usePartySurveyForm = () => {
     climbingType: '볼더링',
     partyName: '',
     partyDescription: '',
-    partyDate: new Date().toISOString().substring(0, 10),
+    partyDate: dayjs(),
     partyTime: '18:00',
     minSkillLevel: 0,
     maxSkillLevel: 5,

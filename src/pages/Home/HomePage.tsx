@@ -3,7 +3,7 @@ import styles from './HomePage.module.scss'
 import BottomBar from '@/components/NavBar/BottomBar'
 import FilterList from './components/FilterList'
 import Tabs from './components/Tabs'
-import DatePicker from '@/components/DatePicker'
+import DatePickerContainer from '@/components/DatePicker.tsx'
 import PartyList from './components/PartyList'
 import { Suspense } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
@@ -25,7 +25,7 @@ export default function HomePage() {
               <div className={styles.SearchForm}>
                 <Tabs tabs={['암장', '자연']} />
                 <GymSearch />
-                <DatePicker />
+                <DatePickerContainer />
               </div>
 
               <div className={styles.Contents}>

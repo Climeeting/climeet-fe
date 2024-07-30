@@ -23,7 +23,7 @@ export function PartyPreview({ onNext, formData }: PartyIntroduceFormProps) {
   const partyDetailData: PartyDetailType = {
     partyName: formData.partyName,
     appointmentTime: appointmentTimeToFormatTime(
-      appointmentTime(formData.partyDate, formData.partyTime)
+      appointmentTime(formData.partyDate.format('YYYY-MM-DD'), formData.partyTime)
     ),
     climbingType: formData.climbingType,
     // @ts-expect-error TODO: 고쳐야함

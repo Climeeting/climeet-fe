@@ -1,5 +1,5 @@
 import { MyProfile } from '@/pages/types/api'
-import { MyProfileBe2FeAdpter, MyProfileInfo, skillOptions } from '@/services/user'
+import { MyProfileBe2FeAdpter, MyProfileInfo, skillLevelOptions } from '@/services/user'
 import useFormValue from '@/utils/useFormValue'
 import { PropsWithChildren, createContext, useContext } from 'react'
 
@@ -9,7 +9,7 @@ function useMyInfoForm(data?: MyProfile) {
   const [nickname, setNickName] = useFormValue<string>(myData?.nickname ?? '')
   const [sex, setSex] = useFormValue<MyProfileInfo['sex']>(myData?.sex ?? '남자')
   const [skillLevel, setSkillLevel] = useFormValue<MyProfileInfo['skillLevel']>(
-    myData?.skillLevel ?? skillOptions[0]
+    myData?.skillLevel ?? skillLevelOptions[0]
   )
   const [description, setDescription] = useFormValue<MyProfileInfo['description'] | ''>(
     myData?.description ?? ''
@@ -40,13 +40,13 @@ const MyInfoFormContext = createContext<MyProfileInfo>({
   nickname: '',
   profileImageUrl: '',
   sex: '남자',
-  skillLevel: skillOptions[0],
+  skillLevel: skillLevelOptions[0],
 })
 
 const ActionsContext = createContext<{
   setNickName: (name: string) => void
   setSex: (sex: MyProfileInfo['sex']) => void
-  setSkillLevel: (skill: MyProfileInfo['skillLevel']) => void
+  setSkillLevel: (skillLevel: MyProfileInfo['skillLevel']) => void
   setDescription: (description: MyProfileInfo['description']) => void
   setProfileImageUrl: (url: string) => void
 }>({

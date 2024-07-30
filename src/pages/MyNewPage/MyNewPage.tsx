@@ -6,18 +6,23 @@ import {
   AdditionalInfoAddapter,
   MyInfo,
   post_user_additionalInfo,
-  skillOptions,
+  skillLevelOptions,
 } from '@/services/user'
 import Select from '@/components/Select'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 export default function MyNewPage() {
+  const navigate = useNavigate()
+  const { search } = useLocation()
+  const redirect = new URLSearchParams(search).get('redirect')
+
   const [sex, setSex] = useState<MyInfo['sex'] | ''>('')
-  const [skill, setSkill] = useState<MyInfo['skill'] | ''>('')
+  const [skillLevel, setSkillLevel] = useState<MyInfo['skillLevel'] | ''>('')
   const [submited, setSubmited] = useState(false)
 
-  const disabled = !sex || !skill
+  const disabled = !sex || !skillLevel
   const warningSex = submited && !sex
-  const warningSkill = submited && !skill
+  const warningSkillLevel = submited && !skillLevel
 
   return (
     <div className={styles.Container}>
@@ -47,21 +52,21 @@ export default function MyNewPage() {
         <fieldset className={styles.Fileldset}>
           <div className={styles.LabelWrapper}>
             <h2 className={styles.Label}>실력</h2>
-            {warningSkill ? <p className={styles.Warning}>실력을 선택해주세요.</p> : null}
+            {warningSkillLevel ? <p className={styles.Warning}>실력을 선택해주세요.</p> : null}
           </div>
 
           <Select
-            value={skill || '실력 없음'}
-            onValueChange={(newSkill) => setSkill(newSkill as MyInfo['skill'])}
-            name="skill"
+            value={skillLevel || '실력 없음'}
+            onValueChange={(newSkillLevel) => setSkillLevel(newSkillLevel as MyInfo['skillLevel'])}
+            name="skillLevel"
             placeholder={'실력 없음'}
           >
             <Select.Item disabled value={'실력 없음'}>
               실력 없음
             </Select.Item>
-            {skillOptions.map((skill) => (
-              <Select.Item key={skill} value={skill}>
-                {skill}
+            {skillLevelOptions.map((skillLevel) => (
+              <Select.Item key={skillLevel} value={skillLevel}>
+                {skillLevel}
               </Select.Item>
             ))}
           </Select>
@@ -82,10 +87,11 @@ export default function MyNewPage() {
                 await post_user_additionalInfo(
                   new AdditionalInfoAddapter({
                     sex,
-                    skill,
+                    skillLevel,
                   }).adapt()
                 )
-                console.log('저장 성공')
+                if (redirect) navigate(redirect, { replace: true })
+                else navigate('/', { replace: true })
               } catch (e) {
                 console.error(e)
               }

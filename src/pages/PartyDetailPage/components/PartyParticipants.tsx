@@ -22,7 +22,7 @@ export function PartyParticipants({
       <div className={styles.GraphContainer}>
         {skillDistributions.map((skillDistribution) => (
           <SkillGraph
-            key={skillDistribution.skill}
+            key={skillDistribution.skillLevel}
             skillDistribution={skillDistribution}
             currentParticipants={currentParticipants}
           />
@@ -39,10 +39,10 @@ function SkillGraph({
   skillDistribution: SkillDistribution
   currentParticipants: number
 }) {
-  const { skill, count } = skillDistribution
+  const { skillLevel, count } = skillDistribution
   return (
     <div className={styles.Graph}>
-      <span className={styles.SkillName}>{skill}</span>
+      <span className={styles.SkillName}>{skillLevel}</span>
       <div className={styles.Progress}>
         <div
           style={{ width: `${Math.abs((count / currentParticipants) * 100)}%` }}

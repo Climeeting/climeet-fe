@@ -7,16 +7,22 @@ function DialogContent({
   children,
   onClose,
   onAction,
-}: { onClose?: () => void; onAction?: () => void } & PropsWithChildren) {
+  hasCancel = true,
+}: { onClose?: () => void; onAction?: () => void; hasCancel?: boolean } & PropsWithChildren) {
   return (
     <AlertDialog.Portal>
       <AlertDialog.Overlay className={styles.Overlay} />
       <AlertDialog.Content className={styles.Content}>
         <h2 className={styles.Title}>{children}</h2>
         <div className={styles.Controls}>
-          <AlertDialog.Cancel onClick={onClose} className={classNames(styles.Button, styles.Close)}>
-            취소
-          </AlertDialog.Cancel>
+          {hasCancel && (
+            <AlertDialog.Cancel
+              onClick={onClose}
+              className={classNames(styles.Button, styles.Close)}
+            >
+              취소
+            </AlertDialog.Cancel>
+          )}
           <AlertDialog.Action
             onClick={() => {
               onAction?.()

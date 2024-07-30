@@ -121,7 +121,7 @@ export type GetPartyDetailRes = {
   gymName: string
   partyDescription: string
   masterName: string
-  skillDistributions: { skill: string; count: number }[]
+  skillDistributions: { skillLevel: string; count: number }[]
   approachDescription: string
   locationId: number
   minimumSkillLevel: number
@@ -285,6 +285,19 @@ export const usePartyDetail = (partyId?: number) => {
     select: (data) => new PartyDetailAdapter(data).adapt(),
     enabled: !!partyId,
   })
+}
+
+export const PartyDetailQuery = {
+  invalidate: async (partyId: number) =>
+    await queryClient.invalidateQueries({
+      queryKey: [...PARTY_DETAIL_KEY, partyId],
+      refetchType: 'all',
+    }),
+
+  refetch: async (partyId: number) =>
+    await queryClient.refetchQueries({
+      queryKey: [...PARTY_DETAIL_KEY, partyId],
+    }),
 }
 
 export const usePartyDetailSuspense = (partyId: number) => {

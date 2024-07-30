@@ -6,6 +6,7 @@ import { MyUpdateForm } from './components/MyUpdateForm'
 import { useMyProfile } from '@/services/user'
 import { MyInfoFormProvider } from './hooks/useMyInfoForm'
 import { SaveButton } from './components/SaveButton'
+import { FileProvider } from './hooks/useFileContext'
 
 export default function MyUpdatePage() {
   const [checkValid, setCheckValid] = useState(false)
@@ -14,21 +15,23 @@ export default function MyUpdatePage() {
 
   return (
     <MyInfoFormProvider data={data}>
-      <div className={styles.Container}>
-        <TopBar>
-          <TopBar.Left back />
-          <TopBar.Center>프로필 수정</TopBar.Center>
-          <TopBar.Right asChild>
-            <SaveButton onClick={() => setCheckValid(true)} />
-          </TopBar.Right>
-        </TopBar>
+      <FileProvider>
+        <div className={styles.Container}>
+          <TopBar>
+            <TopBar.Left back />
+            <TopBar.Center>프로필 수정</TopBar.Center>
+            <TopBar.Right asChild>
+              <SaveButton onClick={() => setCheckValid(true)} />
+            </TopBar.Right>
+          </TopBar>
 
-        <main>
-          <MyUpdateForm data={data} checkValid={checkValid} />
-        </main>
+          <main>
+            <MyUpdateForm data={data} checkValid={checkValid} />
+          </main>
 
-        <BottomBar />
-      </div>
+          <BottomBar />
+        </div>
+      </FileProvider>
     </MyInfoFormProvider>
   )
 }

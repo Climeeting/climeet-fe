@@ -1,0 +1,91 @@
+$footer-height: 52px;
+
+.Container {
+  width: 80vw;
+  height: 100vh;
+  background-color: #ffffff;
+  position: relative;
+}
+
+.Top {
+  overflow-y: auto;
+  height: calc(100% - $footer-height);
+}
+
+.Title {
+  border-bottom: 1px solid $gray-100;
+  height: 48px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 16px;
+
+  .Title {
+    font-size: 16px;
+    font-weight: 600;
+    color: $gray-900;
+  }
+
+  .Alarm {
+    flex-shrink: 0;
+  }
+}
+
+.MemberInfo {
+  padding-top: 24px;
+  padding-left: 16px;
+
+  .MemberInfoTitle {
+    font-size: 16px;
+    font-weight: 500;
+    color: $gray-900;
+    margin-bottom: 16px;
+  }
+
+  .Member {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+
+  .Avatar {
+    width: 40px;
+    height: 40px;
+    margin-right: 8px;
+  }
+
+  .MemberName {
+    font-size: 14px;
+    font-weight: 400;
+    color: $gray-800;
+    margin-right: 4px;
+  }
+
+  .Chip {
+    background: $gray-100;
+    border-radius: 30px;
+    padding: 2px 6px;
+    font-size: 12px;
+    font-weight: 400;
+    color: $gray-600;
+    line-height: 1;
+  }
+}
+
+.Footer {
+  background: $gray-100;
+  border-top: $gray-200;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 52px;
+  padding: 0 16px;
+
+  .ExitText {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.7;
+    color: $gray-600;
+  }
+}

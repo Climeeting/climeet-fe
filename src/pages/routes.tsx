@@ -12,6 +12,8 @@ import UserPage from './UserPage/UserPage'
 import MyUpdatePage from './MyUpdatePage/MyUpdatePage'
 import CheckIsLogout from '@/components/CheckIsLogout'
 import CheckAdditionalInfo from '@/components/CheckAdditionalInfo'
+import ChatPage from '@/pages/ChatPage/ChatPage.tsx'
+import ChatRoomPage from '@/pages/ChatRoomPage/ChatRoomPage.tsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -31,6 +33,8 @@ const router = createBrowserRouter(
         </Route>
         <Route path="party-suervey/:id" element={<PartySurveyFormPage />} />
       </Route>
+      <Route path="/chat" element={<ChatPage />} />
+      <Route path="/chat/:id" element={<ChatRoomPage />} />
       <Route path="/user/:id" element={<UserPage />} />
       <Route path="/party/:id" element={<PartyDetailPage />} />
     </Route>

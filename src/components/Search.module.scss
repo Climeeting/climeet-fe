@@ -1,5 +1,6 @@
 .container {
-  color: $gray-500;
+  color: $gray-800;
+  font-size: rem(16px);
   position: relative;
   width: 100%;
 
@@ -7,6 +8,14 @@
     position: absolute;
     top: 50%;
     left: rem(16px);
+    transform: translateY(-50%);
+    color: $gray-500;
+  }
+
+  .delete {
+    position: absolute;
+    top: 50%;
+    right: rem(16px);
     transform: translateY(-50%);
     color: $gray-500;
   }

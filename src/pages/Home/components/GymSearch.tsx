@@ -13,12 +13,19 @@ export default function GymSearch() {
   const [query, setQuery] = useState('')
   const { gymList } = useClimbingGymSearch(query)
   const searchResult = useSearchContext()
-  const updateSearchResult = useSearchActions()
+  const searchActions = useSearchActions()
 
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Trigger>
-        <Search placeholder="암장을 검색해 보세요." value={searchResult?.name} />
+        <Search
+          placeholder={
+            searchResult.length === 0
+              ? '암장을 검색해 보세요.'
+              : '중복 검색어는 최대 3개까지 입력 가능합니다.'
+          }
+        />
+        {searchResult.length !== 0 && <SearchChips />}
       </Dialog.Trigger>
       <Dialog.Overlay />
       <Dialog.Portal>
@@ -32,6 +39,7 @@ export default function GymSearch() {
             <Search
               placeholder="암장을 검색해 보세요."
               value={query}
+              onDelete={() => setQuery('')}
               onChange={(e) => {
                 setQuery(e.target.value)
               }}
@@ -58,7 +66,7 @@ export default function GymSearch() {
                   className={styles.searchItem}
                   onClick={() => {
                     setQuery(el.name)
-                    updateSearchResult(el)
+                    searchActions.add(el)
                     onOpenChange(false)
                   }}
                 >
@@ -96,6 +104,28 @@ function RecentSearches({ onClick }: RecentSearchesProps) {
           </div>
         ))}
       </div>
+    </div>
+  )
+}
+
+function SearchChips() {
+  const searchResult = useSearchContext()
+  const searchActions = useSearchActions()
+  return (
+    <div onClick={(e) => e.stopPropagation()} className={styles.ChipList}>
+      {searchResult.map((item) => (
+        <div key={item.id} className={styles.Chip}>
+          {item.name}
+          <button
+            onClick={(e) => {
+              e.stopPropagation()
+              searchActions.remove(item)
+            }}
+          >
+            <Icon icon="Delete" size={12} />
+          </button>
+        </div>
+      ))}
     </div>
   )
 }

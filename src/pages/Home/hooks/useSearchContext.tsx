@@ -1,15 +1,34 @@
 import { ClimbSearchItem } from '@/pages/types/api'
 import { createContext, useContext, useState } from 'react'
 
-const SearchContext = createContext<ClimbSearchItem | null>(null)
-const SearchActions = createContext<(searchItem: ClimbSearchItem) => void>(() => {})
+type Actions = {
+  add: (searchItem: ClimbSearchItem) => void
+  remove: (searchItem: ClimbSearchItem) => void
+}
+
+const defaultActions: Actions = {
+  add: () => {},
+  remove: () => {},
+}
+
+const SearchContext = createContext<ClimbSearchItem[]>([])
+const SearchActions = createContext<Actions>(defaultActions)
 
 export function SearchContextProvider({ children }: { children: React.ReactNode }) {
-  const [searchItem, setSearchItem] = useState<ClimbSearchItem | null>(null)
+  const [searchItem, setSearchItem] = useState<ClimbSearchItem[]>([])
+
+  const actions = {
+    add: (searchItem: ClimbSearchItem) => {
+      setSearchItem((prev) => [...prev, searchItem])
+    },
+    remove: (searchItem: ClimbSearchItem) => {
+      setSearchItem((prev) => prev.filter((item) => item.id !== searchItem.id))
+    },
+  }
 
   return (
     <SearchContext.Provider value={searchItem}>
-      <SearchActions.Provider value={setSearchItem}>{children}</SearchActions.Provider>
+      <SearchActions.Provider value={actions}>{children}</SearchActions.Provider>
     </SearchContext.Provider>
   )
 }

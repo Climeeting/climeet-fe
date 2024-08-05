@@ -12,7 +12,9 @@ function BottomSheetContent({ children, onClickOverlay }: Props) {
   )
 }
 
-const BottomSheet = Object.assign(Dialog.Root, {
+const BottomSheetRoot = (props: Dialog.DialogProps) => Dialog.Root(props)
+
+const BottomSheet = Object.assign(BottomSheetRoot, {
   Trigger: Dialog.Trigger,
   Close: Dialog.Close,
   Content: BottomSheetContent,

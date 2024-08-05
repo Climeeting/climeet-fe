@@ -12,7 +12,9 @@ function SideSheetContent({ children, onClickOverlay }: Props) {
   )
 }
 
-const SideSheet = Object.assign(Dialog.Root, {
+const SideSheetRoot = (props: Dialog.DialogProps) => Dialog.Root(props)
+
+const SideSheet = Object.assign(SideSheetRoot, {
   Trigger: Dialog.Trigger,
   Close: Dialog.Close,
   Content: SideSheetContent,

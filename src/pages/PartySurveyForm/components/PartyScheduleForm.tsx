@@ -62,6 +62,7 @@ export function PartyScheduleForm({ onNext, formData, updateFormData }: PartySch
                   <div className={styles.ScrollPickerWrapper}>
                     <ScrollPicker
                       list={MERIDIEM}
+                      defaultValue={timePicker.meridiem}
                       onSelectedChange={(value) => {
                         const nextValue = {
                           ...timePicker,
@@ -77,6 +78,7 @@ export function PartyScheduleForm({ onNext, formData, updateFormData }: PartySch
                       }}
                     />
                     <ScrollPicker
+                      defaultValue={timePicker.hours}
                       list={HOURS}
                       onSelectedChange={(value) => {
                         const nextValue = {
@@ -93,6 +95,7 @@ export function PartyScheduleForm({ onNext, formData, updateFormData }: PartySch
                       }}
                     />
                     <ScrollPicker
+                      defaultValue={timePicker.minutes}
                       list={MINUTES}
                       onSelectedChange={(value) => {
                         const nextValue = {

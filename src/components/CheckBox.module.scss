@@ -15,7 +15,12 @@ button {
   align-items: center;
   justify-content: center;
   border: 1px solid $gray-800;
+  box-sizing: border-box;
   border-radius: 2px;
+}
+
+.CheckboxRoot[data-state='checked'] {
+  border: none;
 }
 
 .Label {

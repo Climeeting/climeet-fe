@@ -92,7 +92,7 @@ export type UpdateFormData = <K extends keyof PartySurveyFormData>(
 const usePartySurveyForm = () => {
   const formData = useRef<PartySurveyFormData>({
     cragName: '',
-    locationId: 0,
+    locationId: -1,
     maximumParticipationNumber: 3,
     gender: '남녀 모두',
     climbingType: '볼더링',

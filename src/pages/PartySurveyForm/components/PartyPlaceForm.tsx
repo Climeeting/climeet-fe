@@ -16,7 +16,7 @@ export function PartyPlaceForm({ onNext, formData, updateFormData }: PartyPlaceF
   const [value, setValue] = useState(formData.cragName)
   const { gymList } = useClimbingGymSearch(value)
 
-  const disabled = !value
+  const disabled = locationId === -1
 
   return (
     <div className={styles.container}>

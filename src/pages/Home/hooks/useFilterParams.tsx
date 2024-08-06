@@ -9,8 +9,10 @@ export const useFilterParams = () => {
 
   const params = {
     ...new PartyListParams(filters).adapt(),
-    ...(searchResult ? { locationId: searchResult.id } : null),
-    date: date.tz('Asia/Seoul').format(),
+    ...(searchResult.length !== 0
+      ? { locationId: searchResult.map(({ id }) => id).join(',') }
+      : null),
+    appointmentDate: date.tz('Asia/Seoul').format('YYYY-MM-DD'),
   }
 
   return params

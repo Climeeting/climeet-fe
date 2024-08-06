@@ -27,7 +27,7 @@ export type GetPartyListParams = {
   joinStatus?: 'AVAILABLE' | 'IMMINENT_FULL' | 'FULL' | null
   appointmentDate?: string
   address1List?: string[]
-  locationId?: number
+  locationId?: string
 }
 
 export const get_party_list = async (params?: GetPartyListParams) => {

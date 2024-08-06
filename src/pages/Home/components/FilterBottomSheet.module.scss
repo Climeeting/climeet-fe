@@ -42,10 +42,31 @@
     font-size: rem(12px);
   }
 }
+
+.SectionTitle {
+  margin-bottom: 12px;
+}
+
 .Flex {
   display: flex;
   align-items: center;
   gap: rem(3.5px);
+}
+
+.FlexSpaceBetween {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.SkillDescription {
+  font-size: rem(14px);
+  font-weight: 600;
+  color: $primary-500;
+}
+
+.Checkbox {
+  padding-top: 16px;
 }
 
 .Section:last-child {
@@ -53,7 +74,6 @@
 }
 
 .OptionList {
-  padding-top: rem(12px);
   width: 100%;
   display: flex;
   flex-wrap: wrap;

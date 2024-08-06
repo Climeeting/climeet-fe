@@ -1,0 +1,53 @@
+.Container {
+  width: 100%;
+
+  .LabelContainer {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: $gray-500;
+    padding: 0 4px;
+    padding-top: 4px;
+  }
+}
+.SliderRoot {
+  position: relative;
+  display: flex;
+  align-items: center;
+  user-select: none;
+  touch-action: none;
+
+  &[data-orientation='horizontal'] {
+    height: 20px;
+  }
+}
+
+.SliderTrack {
+  background-color: $gray-200;
+  position: relative;
+  flex-grow: 1;
+
+  &[data-orientation='horizontal'] {
+    height: 8px;
+  }
+}
+
+.SliderRange {
+  position: absolute;
+  background-color: $primary-500;
+  border-radius: 9999px;
+
+  &[data-orientation='horizontal'] {
+    height: 100%;
+  }
+}
+
+.SliderThumb {
+  display: block;
+  width: 28px;
+  height: 28px;
+  background-color: #fff;
+  border: 1.5px solid $gray-200;
+  border-radius: 50%;
+}

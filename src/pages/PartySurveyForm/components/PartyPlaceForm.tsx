@@ -14,6 +14,7 @@ type PartyPlaceFormProps = {
 export function PartyPlaceForm({ onNext, formData, updateFormData }: PartyPlaceFormProps) {
   const [locationId, setLocationId] = useState<number>(formData.locationId)
   const [value, setValue] = useState(formData.cragName)
+  const [lastSelectedCragName, setLastSelectedCragName] = useState<string>(formData.cragName)
   const { gymList } = useClimbingGymSearch(value)
 
   const disabled = locationId === -1
@@ -43,6 +44,7 @@ export function PartyPlaceForm({ onNext, formData, updateFormData }: PartyPlaceF
               className={styles.searchItem}
               onClick={() => {
                 setValue(el.name)
+                setLastSelectedCragName(el.name)
                 setLocationId(el.id)
               }}
             >
@@ -61,7 +63,7 @@ export function PartyPlaceForm({ onNext, formData, updateFormData }: PartyPlaceF
             if (disabled) {
               return
             }
-            updateFormData('cragName', value)
+            updateFormData('cragName', lastSelectedCragName)
             updateFormData('locationId', locationId)
             onNext()
           }}

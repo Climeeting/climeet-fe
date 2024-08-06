@@ -98,7 +98,7 @@ const usePartySurveyForm = () => {
     climbingType: '볼더링',
     partyName: '',
     partyDescription: '',
-    partyDate: dayjs(),
+    partyDate: dayjs().add(3, 'day'),
     partyTime: '18:00',
     minSkillLevel: 0,
     maxSkillLevel: 5,

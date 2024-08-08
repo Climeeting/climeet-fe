@@ -9,6 +9,7 @@
   padding: 0 rem(16px);
 
   .top {
+    padding-top: 16px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -86,5 +87,31 @@
 
   .searchItemText {
     margin-left: rem(10px);
+  }
+}
+
+.ChipList {
+  width: 100%;
+  overflow-x: scroll;
+  display: flex;
+  gap: 8px;
+  padding-top: 16px;
+}
+
+.Chip {
+  display: flex;
+  flex-shrink: 0;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  font-size: rem(14px);
+  height: 32px;
+  border-radius: 16px;
+  cursor: pointer;
+  background-color: $primary-200;
+
+  button {
+    color: $gray-600;
   }
 }

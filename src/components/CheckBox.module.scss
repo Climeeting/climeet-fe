@@ -1,0 +1,31 @@
+/* reset */
+button {
+  all: unset;
+}
+
+.Container {
+  display: flex;
+  align-items: center;
+}
+
+.CheckboxRoot {
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid $gray-800;
+  box-sizing: border-box;
+  border-radius: 2px;
+}
+
+.CheckboxRoot[data-state='checked'] {
+  border: none;
+}
+
+.Label {
+  padding-left: 6px;
+  font-size: rem(14px);
+  color: $gray-800;
+  font-weight: 600;
+}

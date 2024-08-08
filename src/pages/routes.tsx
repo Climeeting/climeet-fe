@@ -14,6 +14,7 @@ import CheckIsLogout from '@/components/CheckIsLogout'
 import CheckAdditionalInfo from '@/components/CheckAdditionalInfo'
 import ChatPage from '@/pages/ChatPage/ChatPage.tsx'
 import ChatRoomPage from '@/pages/ChatRoomPage/ChatRoomPage.tsx'
+import { PartyEditFormPage } from '@/pages/PartyEditFormPage/PartyEditFormPage.tsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -31,7 +32,7 @@ const router = createBrowserRouter(
         <Route element={<CheckAdditionalInfo />}>
           <Route path="party-suervey" element={<PartySurveyFormPage />} />
         </Route>
-        <Route path="party-suervey/:id" element={<PartySurveyFormPage />} />
+        <Route path="party-suervey/:id" element={<PartyEditFormPage />} />
       </Route>
       <Route path="/chat" element={<ChatPage />} />
       <Route path="/chat/:id" element={<ChatRoomPage />} />

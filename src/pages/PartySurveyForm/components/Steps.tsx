@@ -22,6 +22,9 @@ type IndoorStepName = (typeof indoorSteps)[number]
 const outdoorSteps = ['암장', '어프로치', '조건', '소개', '일정', '미리보기'] as const
 type OutdoorStepName = (typeof outdoorSteps)[number]
 
+const editSteps = ['소개', '미리보기'] as const
+type EditStepName = (typeof editSteps)[number]
+
 type StepProps = {
   formData: PartySurveyFormData
   updateFormData: UpdateFormData
@@ -201,8 +204,86 @@ export function OutdoorStep({ formData, updateFormData, goToFirstStep }: StepPro
   )
 }
 
+export function PartyEditStep({
+  formData,
+  updateFormData,
+  id,
+}: {
+  formData: PartySurveyFormData
+  updateFormData: UpdateFormData
+  id: string
+}) {
+  const { Funnel, Step, setStep, step } = useFunnel<EditStepName>('소개')
+  const navigate = useNavigate()
+
+  const getCurrentStepIndex = (steps: readonly EditStepName[], step: EditStepName) => {
+    return steps.findIndex((el) => el === step)
+  }
+
+  const getPreviousStep = (steps: readonly EditStepName[], currentStepIndex: number) => {
+    if (currentStepIndex <= 0) {
+      return steps[0]
+    }
+
+    return steps[currentStepIndex - 1]
+  }
+
+  return (
+    <div className={styles.Wrapper}>
+      <TopBar>
+        <TopBar.Left
+          back
+          onClick={() => {
+            const currentStepIndex = getCurrentStepIndex(editSteps, step)
+            if (currentStepIndex === 0) return navigate(-1)
+            const previousStep = getPreviousStep(editSteps, currentStepIndex)
+            setStep(previousStep)
+          }}
+        />
+        <TopBar.Right close />
+      </TopBar>
+      <div className={styles.ProgressBarContainer}>
+        <ProgressBar ratio={calcCurrentProgressValue(editSteps, step)} />
+      </div>
+      <Funnel>
+        <Step name="소개">
+          <PartyIntroduceForm
+            onNext={() => {
+              setStep('미리보기')
+            }}
+            formData={formData}
+            updateFormData={updateFormData}
+          />
+        </Step>
+        <Step name="미리보기">
+          <PartyPreview
+            onNext={async () => {
+              try {
+                const isPartyEdit = id !== undefined
+                if (isPartyEdit) {
+                  const req = new PutPartyReqAdapter(formData).adapt()
+                  await put_party_edit(id, req)
+                } else {
+                  const req = new PostPartyNewReqAdapter(formData).adapt()
+                  await post_party_new(req)
+                }
+                navigate('/')
+              } catch (e) {
+                console.log(e)
+              }
+            }}
+            formData={formData}
+            updateFormData={updateFormData}
+          />
+        </Step>
+      </Funnel>
+    </div>
+  )
+}
+
 function calcCurrentProgressValue(steps: typeof indoorSteps, currentStep: IndoorStepName): number
 function calcCurrentProgressValue(steps: typeof outdoorSteps, currentStep: OutdoorStepName): number
+function calcCurrentProgressValue(steps: typeof editSteps, currentStep: EditStepName): number
 
 function calcCurrentProgressValue(steps: any, currentStep: any): number {
   const index = steps.findIndex((el: any) => el === currentStep)

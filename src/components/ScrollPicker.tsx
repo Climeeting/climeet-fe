@@ -7,9 +7,10 @@ const ITEM_HEIGHT = 47
 interface ScrollPickerProps {
   list: (string | number)[]
   onSelectedChange?: (selectedIndex: string | number) => void
+  defaultValue?: string | number
 }
 
-const ScrollPicker = ({ list, onSelectedChange }: ScrollPickerProps) => {
+const ScrollPicker = ({ list, onSelectedChange, defaultValue }: ScrollPickerProps) => {
   const [selectedIndex, setSelectedIndex] = useState(1)
   const newList = ['', ...list, '']
   const ref = useRef<HTMLUListElement>(null)
@@ -43,11 +44,23 @@ const ScrollPicker = ({ list, onSelectedChange }: ScrollPickerProps) => {
     }
   }
 
+  const findIndex = (value: string | number) => {
+    return newList.findIndex((item) => item === value)
+  }
+
   useEffect(() => {
     if (ref.current) {
       ref.current.scrollTop = selectedIndex * ITEM_HEIGHT
     }
-  }, [])
+  }, [selectedIndex])
+
+  useEffect(() => {
+    if (defaultValue === undefined) {
+      return
+    }
+    const index = findIndex(defaultValue)
+    setSelectedIndex(index)
+  }, [defaultValue])
 
   return (
     <ul ref={ref} onScroll={handleScroll} className={styles.List}>

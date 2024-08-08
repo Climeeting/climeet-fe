@@ -45,6 +45,7 @@ export function PartyConditionForm({ onNext, formData, updateFormData }: PartyCo
               <AccordionContent>
                 <div className={styles.ScrollPickerWrapper}>
                   <ScrollPicker
+                    defaultValue={condition.maximumParticipationNumber}
                     list={MEMBERS}
                     onSelectedChange={(value) => {
                       updateConditionData('maximumParticipationNumber', Number(value))

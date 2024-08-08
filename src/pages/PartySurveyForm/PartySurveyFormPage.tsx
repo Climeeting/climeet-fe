@@ -3,31 +3,11 @@ import styles from './PartySurveyFormPage.module.scss'
 import { PartyTypeForm } from './components/PartyTypeForm.tsx'
 import { IndoorStep } from './components/Steps.tsx'
 import { ClimbingTypeKo, GenderKo } from '@/pages/PartySurveyForm/components/PartyConditionForm.tsx'
-import { useParams } from 'react-router-dom'
-import { get_party_$partyId_detail, SurveyFormAdapter } from '@/services/party.ts'
-import { useAsync } from 'react-use'
 import dayjs from 'dayjs'
 
 export function PartySurveyFormPage() {
-  const { formData, updateFormData, setFormData } = usePartySurveyForm()
+  const { formData, updateFormData } = usePartySurveyForm()
   const [isFirstStep, setIsFirstStep] = useState(true)
-  const { id } = useParams<{ id: string }>()
-
-  useAsync(async () => {
-    // @todo 현재 로그인한 사용자가 쓴 글인지 확인하는 로직 필요
-    const isPartyEdit = id !== undefined
-    if (!isPartyEdit) return
-    try {
-      const partyDetail = await get_party_$partyId_detail(Number(id))
-      if (!partyDetail) {
-        throw new Error('파티 상세 정보가 존재하지 않습니다.')
-      }
-      const nextSurveyFormData = new SurveyFormAdapter(partyDetail).adapt()
-      setFormData(nextSurveyFormData)
-    } catch (e) {
-      console.log(e)
-    }
-  }, [id])
 
   return (
     <>
@@ -89,16 +69,16 @@ export type UpdateFormData = <K extends keyof PartySurveyFormData>(
   value: PartySurveyFormData[K]
 ) => void
 
-const usePartySurveyForm = () => {
+export const usePartySurveyForm = () => {
   const formData = useRef<PartySurveyFormData>({
     cragName: '',
-    locationId: 0,
+    locationId: -1,
     maximumParticipationNumber: 3,
     gender: '남녀 모두',
     climbingType: '볼더링',
     partyName: '',
     partyDescription: '',
-    partyDate: dayjs(),
+    partyDate: dayjs().add(3, 'day'),
     partyTime: '18:00',
     minSkillLevel: 0,
     maxSkillLevel: 5,

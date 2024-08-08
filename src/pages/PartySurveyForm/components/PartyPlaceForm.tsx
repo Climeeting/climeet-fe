@@ -14,9 +14,10 @@ type PartyPlaceFormProps = {
 export function PartyPlaceForm({ onNext, formData, updateFormData }: PartyPlaceFormProps) {
   const [locationId, setLocationId] = useState<number>(formData.locationId)
   const [value, setValue] = useState(formData.cragName)
+  const [lastSelectedCragName, setLastSelectedCragName] = useState<string>(formData.cragName)
   const { gymList } = useClimbingGymSearch(value)
 
-  const disabled = !value
+  const disabled = locationId === -1
 
   return (
     <div className={styles.container}>
@@ -35,6 +36,13 @@ export function PartyPlaceForm({ onNext, formData, updateFormData }: PartyPlaceF
             className={styles.input}
             placeholder={'암장 이름을 입력해주세요.'}
           />
+          {value.length === 0 ? (
+            <Icon icon="Search" size={20} className={styles.SearchIcon} />
+          ) : (
+            <button onClick={() => setValue('')} className={styles.DeleteBtn} aria-label="지우기">
+              <Icon icon="DeleteCircle" size={18} />
+            </button>
+          )}
         </div>
         <div className={styles.searchList}>
           {gymList.map((el) => (
@@ -43,6 +51,7 @@ export function PartyPlaceForm({ onNext, formData, updateFormData }: PartyPlaceF
               className={styles.searchItem}
               onClick={() => {
                 setValue(el.name)
+                setLastSelectedCragName(el.name)
                 setLocationId(el.id)
               }}
             >
@@ -61,7 +70,7 @@ export function PartyPlaceForm({ onNext, formData, updateFormData }: PartyPlaceF
             if (disabled) {
               return
             }
-            updateFormData('cragName', value)
+            updateFormData('cragName', lastSelectedCragName)
             updateFormData('locationId', locationId)
             onNext()
           }}

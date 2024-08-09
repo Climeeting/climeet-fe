@@ -534,7 +534,7 @@ export class PutPartyReqAdapter {
   }
 
   get appointmentTime(): string {
-    const date = this.value.partyDate
+    const date = dayjs(this.value.partyDate).format('YYYY-MM-DD')
     const time = this.value.partyTime
     const dummyTime = ':00.000Z'
 

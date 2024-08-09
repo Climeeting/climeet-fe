@@ -4,9 +4,9 @@ import { RadioButtonGroup } from '../../../components/RadioButtonGroup.tsx'
 import { AccordionContent, AccordionTrigger } from '../../../components/Accordion.tsx'
 import * as Accordion from '@radix-ui/react-accordion'
 import { useState } from 'react'
-import { Slider } from '@/components/Slider.tsx'
 import Icon from '@/components/Icon/Icon.tsx'
 import ScrollPicker from '@/components/ScrollPicker.tsx'
+import { SkillRange } from '@/pages/Home/components/SkillRange.tsx'
 
 const MEMBERS = Array.from({ length: 11 }, (_, i) => i + 2)
 
@@ -87,10 +87,12 @@ export function PartyConditionForm({ onNext, formData, updateFormData }: PartyCo
             <h3 className={styles.questionTitle}>실력</h3>
             <Accordion.Item className="AccordionItem" value={`level`}>
               <AccordionTrigger>
-                V{condition.minSkillLevel}부터 V{condition.maxSkillLevel} 까지
+                {isAllSkillLevel
+                  ? '상관없음'
+                  : `V${condition.minSkillLevel}부터 V${condition.maxSkillLevel} 까지`}
               </AccordionTrigger>
               <AccordionContent>
-                <Slider
+                <SkillRange
                   defaultValue={[condition.minSkillLevel, condition.maxSkillLevel]}
                   value={[condition.minSkillLevel, condition.maxSkillLevel]}
                   min={0}
@@ -101,10 +103,6 @@ export function PartyConditionForm({ onNext, formData, updateFormData }: PartyCo
                     updateConditionData('maxSkillLevel', value[1])
                   }}
                 />
-                <div className={styles.xAxis}>
-                  <span>Vb</span>
-                  <span>V9-V10</span>
-                </div>
                 <div
                   className={styles.checkboxWrapper}
                   onClick={() => {

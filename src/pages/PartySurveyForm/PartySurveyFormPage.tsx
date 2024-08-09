@@ -1,42 +1,16 @@
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 import styles from './PartySurveyFormPage.module.scss'
-import { PartyTypeForm } from './components/PartyTypeForm.tsx'
 import { IndoorStep } from './components/Steps.tsx'
 import { ClimbingTypeKo, GenderKo } from '@/pages/PartySurveyForm/components/PartyConditionForm.tsx'
 import dayjs from 'dayjs'
 
 export function PartySurveyFormPage() {
   const { formData, updateFormData } = usePartySurveyForm()
-  const [isFirstStep, setIsFirstStep] = useState(true)
 
   return (
     <>
       <div className={styles.wrapper}>
-        {isFirstStep ? (
-          <PartyTypeForm
-            formData={formData}
-            updateFormData={updateFormData}
-            onNext={() => {
-              setIsFirstStep(false)
-            }}
-          />
-        ) : formData.isNatural ? (
-          <IndoorStep
-            goToFirstStep={() => {
-              setIsFirstStep(true)
-            }}
-            formData={formData}
-            updateFormData={updateFormData}
-          />
-        ) : (
-          <IndoorStep
-            goToFirstStep={() => {
-              setIsFirstStep(true)
-            }}
-            formData={formData}
-            updateFormData={updateFormData}
-          />
-        )}
+        <IndoorStep formData={formData} updateFormData={updateFormData} />
       </div>
     </>
   )

@@ -28,10 +28,9 @@ type EditStepName = (typeof editSteps)[number]
 type StepProps = {
   formData: PartySurveyFormData
   updateFormData: UpdateFormData
-  goToFirstStep?: () => void
 }
 
-export function IndoorStep({ formData, updateFormData, goToFirstStep }: StepProps) {
+export function IndoorStep({ formData, updateFormData }: StepProps) {
   const { Funnel, Step, setStep, step } = useFunnel<IndoorStepName>('암장')
   const navigate = useNavigate()
   const { id } = useParams<{ id: string }>()
@@ -55,7 +54,7 @@ export function IndoorStep({ formData, updateFormData, goToFirstStep }: StepProp
           back
           onClick={() => {
             const currentStepIndex = getCurrentStepIndex(indoorSteps, step)
-            if (currentStepIndex === 0) return goToFirstStep?.()
+            if (currentStepIndex === 0) return navigate(-1)
             const previousStep = getPreviousStep(indoorSteps, currentStepIndex)
             setStep(previousStep)
           }}
@@ -128,7 +127,7 @@ export function IndoorStep({ formData, updateFormData, goToFirstStep }: StepProp
   )
 }
 
-export function OutdoorStep({ formData, updateFormData, goToFirstStep }: StepProps) {
+export function OutdoorStep({ formData, updateFormData }: StepProps) {
   const { Funnel, Step, setStep, step } = useFunnel<OutdoorStepName>('소개')
   const navigate = useNavigate()
   const { id } = useParams<{ id: string }>()
@@ -151,7 +150,7 @@ export function OutdoorStep({ formData, updateFormData, goToFirstStep }: StepPro
           back
           onClick={() => {
             const currentStepIndex = getCurrentStepIndex(indoorSteps, step)
-            if (currentStepIndex === 0) return goToFirstStep?.()
+            if (currentStepIndex === 0) return navigate(-1)
             const previousStep = getPreviousStep(indoorSteps, currentStepIndex)
             setStep(previousStep)
           }}
@@ -259,14 +258,8 @@ export function PartyEditStep({
           <PartyPreview
             onNext={async () => {
               try {
-                const isPartyEdit = id !== undefined
-                if (isPartyEdit) {
-                  const req = new PutPartyReqAdapter(formData).adapt()
-                  await put_party_edit(id, req)
-                } else {
-                  const req = new PostPartyNewReqAdapter(formData).adapt()
-                  await post_party_new(req)
-                }
+                const req = new PutPartyReqAdapter(formData).adapt()
+                await put_party_edit(id, req)
                 navigate('/')
               } catch (e) {
                 console.log(e)

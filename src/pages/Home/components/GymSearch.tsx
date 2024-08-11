@@ -17,7 +17,7 @@ export default function GymSearch() {
 
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
-      <Dialog.Trigger>
+      <Dialog.Trigger className={styles.trigger}>
         <Search
           placeholder={
             searchResult.length === 0

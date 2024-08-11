@@ -47,6 +47,13 @@
   align-items: start;
 }
 
+.Sticky {
+  position: sticky;
+  top: 0;
+  background-color: $gray-100;
+  z-index: 10;
+}
+
 .Title {
   font-size: rem(20px);
   font-weight: 800;

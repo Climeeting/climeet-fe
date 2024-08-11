@@ -27,6 +27,7 @@ export type Party = {
   gymName: string
   natural: boolean
   joinStatus: 'AVAILABLE' | 'IMMINENT_FULL' | 'FULL'
+  partyImageUrl?: string
 }
 
 export type PageableObject = {

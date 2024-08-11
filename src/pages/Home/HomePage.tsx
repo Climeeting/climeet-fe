@@ -13,6 +13,7 @@ import GymSearch from '@/pages/Home/components/GymSearch.tsx'
 import { SearchContextProvider } from './hooks/useSearchContext'
 import RefreshButton from './components/RefreshButton'
 import RemoveFullButton from './components/RemoveFullButton'
+import classNames from 'classnames'
 
 export default function HomePage() {
   return (
@@ -30,7 +31,7 @@ export default function HomePage() {
                 <DatePickerContainer />
               </div>
 
-              <div className={styles.Contents}>
+              <div className={classNames(styles.Contents, styles.Sticky)}>
                 <div className={styles.ContentHeader}>
                   <h1 className={styles.Title}>오늘의 파티</h1>
                   <RemoveFullButton />

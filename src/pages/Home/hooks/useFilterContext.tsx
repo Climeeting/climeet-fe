@@ -7,7 +7,8 @@ import {
   constraintsFe2Be,
 } from '@/services/adaptor'
 import { GetPartyListParams } from '@/services/party'
-import { PropsWithChildren, createContext, useContext, useState } from 'react'
+import { useLocalStorage } from '@uidotdev/usehooks'
+import { PropsWithChildren, createContext, useContext } from 'react'
 
 export type FilterContextType = {
   addressList: (AddressOption | '')[]
@@ -36,15 +37,24 @@ export const initialFilter: FilterContextType = {
 const FilterContext = createContext<FilterContextType>(defaultFilter)
 
 export function useFilter() {
-  const [addressList, setAddressList] = useState<FilterContextType['addressList']>(
+  const [addressList, setAddressList] = useLocalStorage<FilterContextType['addressList']>(
+    'addressList',
     initialFilter.addressList
   )
-  const [clibing, setClibing] = useState<FilterContextType['clibing']>(initialFilter.clibing)
-  const [constraints, setconstraints] = useState<FilterContextType['constraints']>(
+  const [clibing, setClibing] = useLocalStorage<FilterContextType['clibing']>(
+    'clibing',
+    initialFilter.clibing
+  )
+  const [constraints, setconstraints] = useLocalStorage<FilterContextType['constraints']>(
+    'constraints',
     initialFilter.constraints
   )
-  const [status, setStatus] = useState<FilterContextType['status']>(initialFilter.status)
-  const [skillLevel, setSkillLevel] = useState<FilterContextType['skillLevel']>(
+  const [status, setStatus] = useLocalStorage<FilterContextType['status']>(
+    'status',
+    initialFilter.status
+  )
+  const [skillLevel, setSkillLevel] = useLocalStorage<FilterContextType['skillLevel']>(
+    'skillLevel',
     initialFilter.skillLevel
   )
 

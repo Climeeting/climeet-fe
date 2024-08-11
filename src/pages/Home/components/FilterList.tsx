@@ -16,7 +16,7 @@ export default function FilterList() {
 }
 
 function FilterTriggerList() {
-  const { addressList, clibing, constraints, status } = useFilterContext()
+  const { addressList, clibing, constraints, skillLevel } = useFilterContext()
   const actions = useFilterActions()
 
   const addressCount = addressList.includes('모든 지역')
@@ -42,8 +42,8 @@ function FilterTriggerList() {
       </BottomSheet.Trigger>
 
       <BottomSheet.Trigger>
-        <FilterButton remove={actions.status.init} active={!!status}>
-          {status || '신청 현황'}
+        <FilterButton remove={actions.skillLevel.init} active={!!skillLevel}>
+          {skillLevel || '실력'}
         </FilterButton>
       </BottomSheet.Trigger>
 

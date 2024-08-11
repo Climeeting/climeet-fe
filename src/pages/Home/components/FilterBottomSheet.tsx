@@ -7,13 +7,13 @@ import {
   clibingOptions,
   constraintsOptions,
   defaultFilter,
+  skillLevelOptions,
   useFilter,
   useFilterActions,
   useFilterContext,
 } from '../hooks/useFilterContext'
 import ToggleButton from '@/components/ToggleButton'
-import { useEffect, useState } from 'react'
-import { SkillRange } from './SkillRange'
+import { useEffect } from 'react'
 import classNames from 'classnames'
 import Checkbox from '@/components/CheckBox'
 
@@ -21,9 +21,6 @@ export default function FilterBottomSheet() {
   const { states: localFilter, actions: localActions } = useFilter()
   const filterContext = useFilterContext()
   const filterActions = useFilterActions()
-  const [minSkill, setMinSkill] = useState(0)
-  const [maxSkill, setMaxSkill] = useState(10)
-  const [isAllSkill, setIsAllSkill] = useState(true)
 
   useEffect(
     function syncFilterContext() {
@@ -82,26 +79,22 @@ export default function FilterBottomSheet() {
           <section className={styles.Section}>
             <div className={classNames(styles.SectionTitle, styles.FlexSpaceBetween)}>
               <h3>실력</h3>
-              <span className={styles.SkillDescription}>
-                V{minSkill}부터 V{maxSkill} 까지
-              </span>
+              <div className={styles.Checkbox}>
+                <Checkbox
+                  checked={localFilter.skillLevel === ''}
+                  onCheckedChange={localActions.skillLevel.init}
+                  id="skill"
+                >
+                  상관없음
+                </Checkbox>
+              </div>
             </div>
-            <SkillRange
-              defaultValue={[0, 10]}
-              value={[minSkill, maxSkill]}
-              min={0}
-              max={10}
-              step={1}
-              onValueChange={(value) => {
-                setMinSkill(value[0])
-                setMaxSkill(value[1])
-              }}
+            <OptionList
+              name="skillLevel"
+              selected={localFilter.skillLevel}
+              onClick={localActions.skillLevel.toggle}
+              options={skillLevelOptions}
             />
-            <div className={styles.Checkbox}>
-              <Checkbox checked={isAllSkill} onCheckedChange={setIsAllSkill} id="skill">
-                상관없음
-              </Checkbox>
-            </div>
           </section>
         </div>
 

@@ -1,4 +1,4 @@
-import { PageData, Party, PartyDetail } from '@/pages/types/api'
+import { PageData, Party, PartyDetail, SkillLevel } from '@/pages/types/api'
 import api from '../utils/api'
 import { stringify } from '@/utils/query'
 import { useQuery, useSuspenseInfiniteQuery, useSuspenseQuery } from '@tanstack/react-query'
@@ -25,6 +25,7 @@ export type GetPartyListParams = {
   climbingType?: 'BOULDERING' | 'LEAD' | 'ENDURANCE' | 'ANY'
   constraints?: 'BOTH' | 'MALE_ONLY' | 'FEMALE_ONLY'
   joinStatus?: 'AVAILABLE' | 'IMMINENT_FULL' | 'FULL' | null
+  skillLevel?: SkillLevel
   appointmentDate?: string
   address1List?: string[]
   locationId?: string

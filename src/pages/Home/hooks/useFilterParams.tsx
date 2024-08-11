@@ -11,7 +11,7 @@ export const useFilterParams = () => {
   const params = {
     ...new PartyListParams(filters).adapt(),
     ...(searchResult.length !== 0
-      ? { locationId: searchResult.map(({ id }) => id).join(',') }
+      ? { locationIds: searchResult.map(({ id }) => id).join(',') }
       : null),
     appointmentDate: dayjs(date).tz('Asia/Seoul').format('YYYY-MM-DD'),
   }

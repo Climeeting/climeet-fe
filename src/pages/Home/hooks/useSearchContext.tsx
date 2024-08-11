@@ -1,5 +1,6 @@
 import { ClimbSearchItem } from '@/pages/types/api'
-import { createContext, useContext, useState } from 'react'
+import { useLocalStorage } from '@uidotdev/usehooks'
+import { createContext, useContext } from 'react'
 
 type Actions = {
   add: (searchItem: ClimbSearchItem) => void
@@ -15,7 +16,7 @@ const SearchContext = createContext<ClimbSearchItem[]>([])
 const SearchActions = createContext<Actions>(defaultActions)
 
 export function SearchContextProvider({ children }: { children: React.ReactNode }) {
-  const [searchItem, setSearchItem] = useState<ClimbSearchItem[]>([])
+  const [searchItem, setSearchItem] = useLocalStorage<ClimbSearchItem[]>('searchItems', [])
 
   const actions = {
     add: (searchItem: ClimbSearchItem) => {

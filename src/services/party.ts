@@ -28,7 +28,7 @@ export type GetPartyListParams = {
   skillLevel?: SkillLevel
   appointmentDate?: string
   address1List?: string[]
-  locationId?: string
+  locationIds?: string
 }
 
 export const get_party_list = async (params?: GetPartyListParams) => {

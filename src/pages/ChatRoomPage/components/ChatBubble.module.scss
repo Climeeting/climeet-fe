@@ -1,0 +1,66 @@
+.OtherMessageContainer,
+.MyMessageContainer {
+  padding: 0 16px;
+  display: flex;
+  margin-bottom: 6px;
+
+  .SendTime {
+    font-size: 10px;
+    line-height: 1;
+    font-weight: 500;
+    color: $gray-400;
+    align-self: end;
+  }
+
+  .MessageItem {
+    background-color: $gray-100;
+    border-radius: 9999px;
+    padding: 7px 12px;
+    color: $gray-900;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.7;
+  }
+
+  .singleMessage {
+    margin-left: 40px;
+  }
+}
+
+.isStartMessage {
+  padding-top: 6px;
+}
+
+.OtherMessageContainer {
+  .MemberAvatar {
+    margin-right: 8px;
+  }
+
+  .MemberName {
+    font-size: 12px;
+    font-weight: 500;
+    color: $gray-600;
+    margin-bottom: 6px;
+  }
+}
+
+.MyMessageContainer {
+  gap: 8px;
+  justify-content: flex-end;
+
+  .MessageItem {
+    color: white;
+    background-color: $primary-500;
+  }
+
+  .SendTime {
+    margin-right: 4px;
+  }
+
+  .MyMessageList {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+  }
+}

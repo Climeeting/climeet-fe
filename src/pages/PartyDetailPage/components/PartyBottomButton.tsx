@@ -7,9 +7,9 @@ import { useCheckAdditionalInfo, useIsLogin } from '@/services/user'
 import { useState } from 'react'
 
 export default function PartyBottomButton({ id }: { id?: string }) {
-  const { data: isLogin } = useIsLogin()
+  const { data: isLogin, isLoading } = useIsLogin()
   const { data: partyData } = usePartyDetail(Number(id))
-  const { data: checkAdditionalInfo } = useCheckAdditionalInfo()
+  const { data: checkAdditionalInfo } = useCheckAdditionalInfo(!isLoading && isLogin)
 
   const [openAlertLogin, onOpenAlertLogin] = useState(false)
   const [openAlertAdditionalInfo, onOpenAlertAdditionalInfo] = useState(false)

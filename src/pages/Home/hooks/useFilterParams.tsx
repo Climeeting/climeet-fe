@@ -1,3 +1,4 @@
+import dayjs from 'dayjs'
 import { useDateContext } from './useDateContext'
 import { PartyListParams, useFilterContext } from './useFilterContext'
 import { useSearchContext } from './useSearchContext'
@@ -12,7 +13,7 @@ export const useFilterParams = () => {
     ...(searchResult.length !== 0
       ? { locationId: searchResult.map(({ id }) => id).join(',') }
       : null),
-    appointmentDate: date.tz('Asia/Seoul').format('YYYY-MM-DD'),
+    appointmentDate: dayjs(date).tz('Asia/Seoul').format('YYYY-MM-DD'),
   }
 
   return params

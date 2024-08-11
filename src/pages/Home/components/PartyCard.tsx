@@ -12,9 +12,20 @@ export default function PartyCard({ party }: { party: Party }) {
   return (
     <div className={styles.Container}>
       <section className={styles.Top}>
-        <span className={styles.Time}>{appointmentTime}</span>
-        <h3>{partyTitle}</h3>
-        <span className={styles.GymName}>{gymName}</span>
+        {party.partyImageUrl && (
+          <div className={styles.Image}>
+            <img src={party.partyImageUrl} alt={party.partyTitle} />
+            {/* <img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnDYav_Rs5aHeNlHWC0_QC9JLMwLa_7jzKTQ&s"
+              alt={party.partyTitle}
+            /> */}
+          </div>
+        )}
+        <div className={styles.Content}>
+          <span className={styles.Time}>{appointmentTime}</span>
+          <h3>{partyTitle}</h3>
+          <span className={styles.GymName}>{gymName}</span>
+        </div>
       </section>
 
       <div className={styles.Divider} />

@@ -3,6 +3,7 @@ import Profile from './components/Profile'
 import styles from './UserPage.module.scss'
 import useIsMine from './hook/useIsMine'
 import BottomBar from '@/components/NavBar/BottomBar'
+import { get_oauth_logout } from '@/services/oauth'
 
 export default function UserPage() {
   const isMine = useIsMine()
@@ -18,6 +19,14 @@ export default function UserPage() {
       <section className={styles.ProfileSection}>
         <Profile isMine={isMine} />
       </section>
+      <button
+        onClick={async () => {
+          await get_oauth_logout()
+          window.location.href = '/'
+        }}
+      >
+        로그아웃
+      </button>
       <BottomBar />
     </div>
   )

@@ -9,8 +9,10 @@ const REGION = import.meta.env.VITE_S3_REGION as string
 const ACCESS_KEY = import.meta.env.VITE_S3_ACCESS_KEY as string
 const SECRET_ACCESS_KEY = import.meta.env.VITE_S3_SECRET_ACCESS_KEY as string
 
+type Path = 'image' | 'party_thumbnail'
+
 // Function to upload file to s3
-export const uploadFileS3 = async (file: File) => {
+export const uploadFileS3 = async (file: File, path: Path = 'image') => {
   // S3 Credentials
   AWS.config.update({
     accessKeyId: ACCESS_KEY,
@@ -19,13 +21,13 @@ export const uploadFileS3 = async (file: File) => {
 
   const fileName = `${dayjs().unix()}-${file.name.replace(/ /g, '_')}`
   const s3 = new AWS.S3({
-    params: { Bucket: `${S3_BUCKET}/image` },
+    params: { Bucket: `${S3_BUCKET}/${path}` },
     region: REGION,
   })
 
   // Files Parameters
   const params = {
-    Bucket: `${S3_BUCKET}/image`,
+    Bucket: `${S3_BUCKET}/${path}`,
     Key: fileName,
     Body: file,
   }
@@ -42,5 +44,5 @@ export const uploadFileS3 = async (file: File) => {
   // Fille successfully uploaded
   await upload
 
-  return `${import.meta.env.VITE_S3_IMAGE_BASE_URL}/${fileName}`
+  return `${import.meta.env.VITE_S3_IMAGE_BASE_URL}/${path}/${fileName}`
 }

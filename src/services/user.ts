@@ -180,6 +180,8 @@ export type MyProfileInfo = {
   description: string
 }
 
+export type MyProfileInfoKeys = keyof MyProfileInfo
+
 export class MyProfileBe2FeAdpter {
   private value: MyProfile
 

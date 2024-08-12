@@ -8,12 +8,15 @@ import { useMyInfoFormContext } from '../hooks/useMyInfoForm'
 import styles from './SaveButton.module.scss'
 import { useFileContext } from '../hooks/useFileContext'
 import { uploadFileS3 } from '@/utils/s3'
+import { validationList } from '../utils/validation'
 
 export function SaveButton({ onClick }: { onClick: () => void }) {
   const info = useMyInfoFormContext()
   const file = useFileContext()
   const { data } = useMyProfile()
   const myData = data ? new MyProfileBe2FeAdpter(data).adapt() : {}
+
+  const isValid = validationList.every(([key, validation]) => !validation(info[key]))
 
   const getUserNewInfo = async () => {
     const newInfo = {
@@ -28,6 +31,7 @@ export function SaveButton({ onClick }: { onClick: () => void }) {
     <button
       onClick={async () => {
         onClick?.()
+        if (!isValid) return
 
         const userNewInfo = await getUserNewInfo()
         if (!isEmpty(userNewInfo)) await put_user_information(userNewInfo)

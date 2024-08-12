@@ -7,6 +7,7 @@ import { MyProfile } from '@/pages/types/api'
 import { useMyInfoFormActions, useMyInfoFormContext } from '../hooks/useMyInfoForm'
 import Select from '@/components/Select'
 import { useFileActions } from '../hooks/useFileContext'
+import { validations } from '../utils/validation'
 
 type MyUpdateFormProps = {
   checkValid: boolean
@@ -20,10 +21,10 @@ export function MyUpdateForm({ checkValid }: MyUpdateFormProps) {
 
   const updateProfileFile = useFileActions()
 
-  const warningName = checkValid && !nickname
-  const warningSex = checkValid && !sex
-  const warningSkillLevel = checkValid && !skillLevel
-  const warningDescription = checkValid && !description
+  const warningName = checkValid && validations.nickname(nickname)
+  const warningSex = checkValid && validations.sex(sex)
+  const warningSkillLevel = checkValid && validations.skillLevel(skillLevel)
+  const warningDescription = checkValid && validations.description(description)
 
   return (
     <>
@@ -43,7 +44,7 @@ export function MyUpdateForm({ checkValid }: MyUpdateFormProps) {
       <fieldset className={styles.Fileldset}>
         <div className={styles.LabelWrapper}>
           <h2 className={styles.Label}>이름</h2>
-          {warningName ? <p className={styles.Warning}>이름을 작성해주세요.</p> : null}
+          {warningName ? <p className={styles.Warning}>{warningName}</p> : null}
         </div>
         <input
           className={styles.Input}
@@ -56,7 +57,7 @@ export function MyUpdateForm({ checkValid }: MyUpdateFormProps) {
       <fieldset className={styles.Fileldset}>
         <div className={styles.LabelWrapper}>
           <h2 className={styles.Label}>성별</h2>
-          {warningSex ? <p className={styles.Warning}>성별을 선택해주세요.</p> : null}
+          {warningSex ? <p className={styles.Warning}>{warningSex}</p> : null}
         </div>
         <RadioSex sex={sex} setSex={setSex} />
       </fieldset>
@@ -64,7 +65,7 @@ export function MyUpdateForm({ checkValid }: MyUpdateFormProps) {
       <fieldset className={styles.Fileldset}>
         <div className={styles.LabelWrapper}>
           <h2 className={styles.Label}>실력</h2>
-          {warningSkillLevel ? <p className={styles.Warning}>실력을 선택해주세요.</p> : null}
+          {warningSkillLevel ? <p className={styles.Warning}>{warningSkillLevel}</p> : null}
         </div>
         <Select
           value={skillLevel || '실력 없음'}
@@ -88,7 +89,7 @@ export function MyUpdateForm({ checkValid }: MyUpdateFormProps) {
       <fieldset className={styles.Fileldset}>
         <div className={styles.LabelWrapper}>
           <h2 className={styles.Label}>자기소개</h2>
-          {warningDescription ? <p className={styles.Warning}>자기소개를 작성해주세요.</p> : null}
+          {warningDescription ? <p className={styles.Warning}>{warningDescription}</p> : null}
         </div>
         <textarea
           className={styles.Textarea}

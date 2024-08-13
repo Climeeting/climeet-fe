@@ -26,7 +26,7 @@ const router = createBrowserRouter(
         <Route path="login" element={<LoginPage />} />
       </Route>
       <Route element={<CheckIsLogin />}>
-        <Route path="/user/my" element={<UserPage />} />
+        <Route path="/user/my" element={<UserPage isMine={true} />} />
         <Route path="/user/my/new" element={<MyNewPage />} />
         <Route path="/user/my/update" element={<MyUpdatePage />} />
         <Route element={<CheckAdditionalInfo />}>

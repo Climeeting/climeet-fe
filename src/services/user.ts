@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useSuspenseQuery } from '@tanstack/react-query'
 import api from '../utils/api'
 import { MyProfile, SkillLevel } from '../pages/types/api'
 import { isAxiosError } from 'axios'
@@ -12,11 +12,32 @@ export const get_user_myProfile = async () => {
   return await api.get<MyProfile>('/v1/user/myProfile')
 }
 
-export const USER_KEY = ['user']
+export const USER_KEY = ['user-profile']
 
 export const useMyProfile = () => {
   return useQuery({
-    queryKey: USER_KEY,
+    queryKey: [...USER_KEY, 'my'],
+    queryFn: get_user_myProfile,
+    // 1시간마다 새로고침
+    refetchInterval: 60 * 60 * 1000,
+    // 마운트시에 요청 보내지 않음
+    retryOnMount: false,
+    // 윈도우 포커스시에 새로고침하지 않음
+    refetchOnWindowFocus: false,
+
+    // 인증 만료시 재시도하지 않음
+    retry: (failureCount, error) => {
+      if (isAxiosError(error) && error.response && error.response.status === 403) {
+        return false
+      }
+      return failureCount < 3
+    },
+  })
+}
+
+export const useMyProfileSuspense = () => {
+  return useSuspenseQuery({
+    queryKey: [...USER_KEY, 'my'],
     queryFn: get_user_myProfile,
     // 1시간마다 새로고침
     refetchInterval: 60 * 60 * 1000,
@@ -217,5 +238,27 @@ export const useCheckAdditionalInfo = (enabled: boolean = false) => {
     queryKey: ['checkAdditionalInfo'],
     queryFn: get_user_checkAdditionalInfo,
     enabled,
+  })
+}
+
+/*
+ * GET /v1/user/profile/{userId}
+ */
+export const get_user_profile_$userId = async (userId: number) => {
+  return await api.get<MyProfile>(`/v1/user/profile/${userId}`)
+}
+
+export const useUserProfile = (userId: number, enabled?: boolean) => {
+  return useQuery({
+    queryKey: [...USER_KEY, userId],
+    queryFn: () => get_user_profile_$userId(userId),
+    enabled,
+  })
+}
+
+export const useUserProfileSuspense = (userId: number) => {
+  return useSuspenseQuery({
+    queryKey: [...USER_KEY, userId],
+    queryFn: () => get_user_profile_$userId(userId),
   })
 }

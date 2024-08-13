@@ -2,6 +2,7 @@ import Icon, { IconType } from '@/components/Icon/Icon'
 import styles from './PartyMainInfo.module.scss'
 import { PartyDetailType } from '@/services/party'
 import Avatar from '@/components/Avatar'
+import { Link } from 'react-router-dom'
 
 export function PartyMainInfo({
   partyName,
@@ -13,6 +14,7 @@ export function PartyMainInfo({
   masterProfileImageUrl,
   masterName,
   partyDescription,
+  masterUserId,
 }: PartyDetailType) {
   return (
     <>
@@ -38,10 +40,10 @@ export function PartyMainInfo({
 
       <div>
         <div className={styles.UserInfo}>
-          <div className={styles.Profile}>
+          <Link to={`/user/${masterUserId}`} className={styles.Profile}>
             <Avatar src={masterProfileImageUrl} size="small" alt={masterName} />
             <span>{masterName}</span>
-          </div>
+          </Link>
           님이 진행하는 파티입니다.
         </div>
         <p className={styles.Description}>{partyDescription}</p>

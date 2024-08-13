@@ -7,9 +7,11 @@ import { Suspense } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import dayjs from 'dayjs'
 import Icon from '@/components/Icon/Icon'
+import useIsMine from './hook/useIsMine'
 
-export default function UserPage({ isMine = false }: { isMine?: boolean }) {
+export default function UserPage() {
   const { id } = useParams<{ id: string }>()
+  const isMine = useIsMine()
 
   return (
     <div className={styles.Container}>

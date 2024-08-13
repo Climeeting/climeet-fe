@@ -15,6 +15,7 @@ import CheckAdditionalInfo from '@/components/CheckAdditionalInfo'
 import ChatPage from '@/pages/ChatPage/ChatPage.tsx'
 import ChatRoomPage from '@/pages/ChatRoomPage/ChatRoomPage.tsx'
 import { PartyEditFormPage } from '@/pages/PartyEditFormPage/PartyEditFormPage.tsx'
+import RedirectUserPage from './UserPage/RedirectUserPage'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -26,7 +27,7 @@ const router = createBrowserRouter(
         <Route path="login" element={<LoginPage />} />
       </Route>
       <Route element={<CheckIsLogin />}>
-        <Route path="/user/my" element={<UserPage isMine={true} />} />
+        <Route path="/user/my" element={<RedirectUserPage />} />
         <Route path="/user/my/new" element={<MyNewPage />} />
         <Route path="/user/my/update" element={<MyUpdatePage />} />
         <Route element={<CheckAdditionalInfo />}>

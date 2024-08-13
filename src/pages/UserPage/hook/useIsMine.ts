@@ -1,6 +1,11 @@
-import { useLocation } from "react-router-dom";
+import { useMyProfile } from "@/services/user";
+import { useDeferredValue } from "react";
+import { useParams } from "react-router-dom";
 
 export default function useIsMine() {
-  const { pathname } = useLocation()
-  return pathname === '/user/my'
+  const { id } = useParams<{ id: string }>()
+  const { data } = useMyProfile()
+  const isMine = useDeferredValue(id === String(data?.userId));
+
+  return isMine
 }

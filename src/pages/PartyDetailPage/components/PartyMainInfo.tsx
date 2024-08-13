@@ -14,7 +14,7 @@ export function PartyMainInfo({
   masterProfileImageUrl,
   masterName,
   partyDescription,
-  masterUserId,
+  masterId,
 }: PartyDetailType) {
   return (
     <>
@@ -40,7 +40,7 @@ export function PartyMainInfo({
 
       <div>
         <div className={styles.UserInfo}>
-          <Link to={`/user/${masterUserId}`} className={styles.Profile}>
+          <Link to={`/user/${masterId}`} className={styles.Profile}>
             <Avatar src={masterProfileImageUrl} size="small" alt={masterName} />
             <span>{masterName}</span>
           </Link>

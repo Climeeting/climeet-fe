@@ -1,9 +1,10 @@
-import { useQuery, useSuspenseQuery } from '@tanstack/react-query'
+import { useQuery, useSuspenseInfiniteQuery, useSuspenseQuery } from '@tanstack/react-query'
 import api from '../utils/api'
-import { MyProfile, SkillLevel } from '../pages/types/api'
+import { MyProfile, PageData, SkillLevel } from '../pages/types/api'
 import { isAxiosError } from 'axios'
 import { queryClient } from '../utils/tanstack'
 import { sexBe2Fe, sexFe2Be } from './adaptor'
+import { stringify } from '@/utils/query'
 
 /**
  * GET /v1/user/myProfile
@@ -261,4 +262,68 @@ export const useUserProfileSuspense = (userId: number) => {
     queryKey: [...USER_KEY, userId],
     queryFn: () => get_user_profile_$userId(userId),
   })
+}
+
+/*
+ * GET /v1/user/{userId}/party
+ */
+export const get_user_$userId_party = async ({ userId, page }: GetPartyListParams) => {
+  const queryString = stringify({ page })
+
+  return await api.get<PageData<PartyListDto>>(`/v1/user/${userId}/party?${queryString}`)
+}
+
+type GetPartyListParams = {
+  userId: number
+  page?: number
+}
+
+export const USER_PARTY_LIST_KEY = ['user', 'party', 'list']
+
+export const useUserPartyList = (params: GetPartyListParams) => {
+  return useSuspenseInfiniteQuery({
+    queryKey: [...USER_PARTY_LIST_KEY, stringify(params)],
+    queryFn: ({ pageParam }) => get_user_$userId_party({ ...params, page: pageParam ?? 0 }),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage) =>
+      lastPage.totalPages <= lastPage.pageable.pageNumber ? null : lastPage.pageable.pageNumber + 1,
+    // 마운트시에 요청 보내지 않음
+    retryOnMount: false,
+    // 윈도우 포커스시에 새로고침하지 않음
+    refetchOnWindowFocus: false,
+  })
+}
+
+export const UserPartyListQuery = {
+  invalidate: async (params: GetPartyListParams) =>
+    await queryClient.invalidateQueries({
+      queryKey: [...USER_PARTY_LIST_KEY, stringify(params)],
+      refetchType: 'all',
+    }),
+
+  refetch: async (params: GetPartyListParams) =>
+    await queryClient.refetchQueries({
+      queryKey: [...USER_PARTY_LIST_KEY, stringify(params)],
+    }),
+}
+
+export type PartyListDto = {
+  id: number
+  constraints: 'BOTH' | 'MALE_ONLY' | 'FEMALE_ONLY'
+  minSkillLevel: number
+  maxSkillLevel: number
+  locationId: number
+  participationDeadline: string
+  description: string
+  userLimitCount: number
+  currentTotalMemberCount: number
+  approacheDescription: string
+  isNatural: boolean
+  appointmentTime: string
+  climbingType: 'BOULDERING' | 'LEAD' | 'ENDURANCE' | 'ANY'
+  masterId: number
+  partyTitle: string
+  gymName: string
+  joinStatus: 'AVAILABLE' | 'IMMINENT_FULL' | 'FULL'
+  partyImageUrl: string
 }

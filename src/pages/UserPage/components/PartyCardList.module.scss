@@ -1,0 +1,63 @@
+.PartyHistoryList {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 0 16px;
+  padding-bottom: 32px;
+}
+
+.Card {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 16px;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 19px 16px;
+  width: 100%;
+  position: relative;
+
+  .Image {
+    width: 82px;
+    height: 82px;
+    border-radius: 6px;
+    overflow: hidden;
+    img {
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .Time {
+    font-size: rem(14px);
+    color: $gray-700;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .Title {
+    font-size: rem(18px);
+    color: $gray-900;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+
+  .Address {
+    font-size: rem(14px);
+    color: $gray-500;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+  }
+
+  .ArrowIcon {
+    color: $gray-400;
+    position: absolute;
+    top: 50%;
+    right: 16px;
+    transform: translateY(-50%);
+  }
+}

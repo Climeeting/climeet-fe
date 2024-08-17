@@ -7,6 +7,7 @@ import { MyProfile } from '@/pages/types/api'
 import { useMyInfoFormActions, useMyInfoFormContext } from '../hooks/useMyInfoForm'
 import Select from '@/components/Select'
 import { useFileActions } from '../hooks/useFileContext'
+import { Link } from 'react-router-dom'
 
 type MyUpdateFormProps = {
   checkValid: boolean
@@ -96,6 +97,12 @@ export function MyUpdateForm({ checkValid }: MyUpdateFormProps) {
           onChange={(e) => setDescription(e.target.value)}
           maxLength={150}
         />
+      </fieldset>
+
+      <fieldset className={styles.Fileldset}>
+        <Link className={styles.Link} to={'/user/delete-account'}>
+          회원탈퇴
+        </Link>
       </fieldset>
     </>
   )

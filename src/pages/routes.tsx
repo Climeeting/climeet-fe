@@ -1,4 +1,4 @@
-import { createRoutesFromElements, createBrowserRouter, Route } from 'react-router-dom'
+import { createBrowserRouter, createRoutesFromElements, Route } from 'react-router-dom'
 import Layout from './Layout/Layout'
 import HomePage from './Home/HomePage'
 import LoginPage from './Login/LoginPage'
@@ -15,6 +15,7 @@ import CheckAdditionalInfo from '@/components/CheckAdditionalInfo'
 import ChatPage from '@/pages/ChatPage/ChatPage.tsx'
 import ChatRoomPage from '@/pages/ChatRoomPage/ChatRoomPage.tsx'
 import { PartyEditFormPage } from '@/pages/PartyEditFormPage/PartyEditFormPage.tsx'
+import DeleteAccountPage from '@/pages/DeleteAccountPage/DeleteAccountPage.tsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -29,6 +30,7 @@ const router = createBrowserRouter(
         <Route path="/user/my" element={<UserPage />} />
         <Route path="/user/my/new" element={<MyNewPage />} />
         <Route path="/user/my/update" element={<MyUpdatePage />} />
+        <Route path="/user/delete-account" element={<DeleteAccountPage />} />
         <Route element={<CheckAdditionalInfo />}>
           <Route path="party-suervey" element={<PartySurveyFormPage />} />
         </Route>

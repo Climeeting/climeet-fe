@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { Slot, SlotProps } from '@radix-ui/react-slot'
 import { Children, ReactNode, isValidElement } from 'react'
 import classNames from 'classnames'
+import Notification from '@/pages/Home/components/Notification.tsx'
 
 /**
  * Left
@@ -148,7 +149,7 @@ function TopBarRoot(props: TopBarProps) {
     return (
       <div className={styles.Main}>
         <img width={70} height={18} src={logo} alt="logo" />
-        <Icon icon="AlarmNew" />
+        <Notification />
       </div>
     )
 

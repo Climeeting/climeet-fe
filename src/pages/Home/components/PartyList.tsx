@@ -6,13 +6,20 @@ import { usePartyList } from '@/services/party'
 import { PartyListQuery } from '@/services/party'
 import { useLoadMore } from '@/utils/useLoadMore'
 import { useFilterParams } from '../hooks/useFilterParams'
+import EmptyParty from '@/assets/empty_party.png'
 
 export default function PartyList() {
   const params = useFilterParams()
   const { data, fetchNextPage } = usePartyList(params)
   const ref = useLoadMore(fetchNextPage)
 
-  if (data.pages[0].totalElements === 0) return <div>데이터가 없습니다.</div>
+  if (data.pages[0].totalElements === 0)
+    return (
+      <div className={styles.PartyEmpty}>
+        <img src={EmptyParty} />
+        <span>진행 중인 파티가 없습니다.</span>
+      </div>
+    )
 
   return (
     <ul className={styles.PartyUl}>

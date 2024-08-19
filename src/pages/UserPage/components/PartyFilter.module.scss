@@ -27,6 +27,7 @@
   border-radius: rem(16px);
   flex-shrink: 0;
   font-weight: 500;
+  position: relative;
 
   .Icon {
     color: $primary-400;
@@ -90,11 +91,21 @@
     top: 50%;
     transform: translateY(-50%);
   }
+
+  .Delete {
+    color: $gray-400;
+    position: absolute;
+    right: 16px;
+  }
 }
 .DateButton[data-active='true'] {
   background-color: $primary-100;
   border-color: $primary-300;
   color: $primary-500;
+
+  .Delete {
+    color: $primary-500;
+  }
 }
 
 .DateFilter {

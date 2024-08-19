@@ -5,6 +5,7 @@ import Icon from '@/components/Icon/Icon'
 import BottomSheet from '@/components/BottomSheet'
 import ScrollPicker from '@/components/ScrollPicker'
 import dayjs from 'dayjs'
+import { useDateRangeAction, useDateRangeContext } from '../hook/useDateRangeContext'
 
 export default function PartyFilter() {
   const [activeFilter, setActiveFilter] = useState<'전체' | '암장' | '자연'>('전체')
@@ -35,12 +36,9 @@ export default function PartyFilter() {
 }
 
 function DateFilterBottomSheet() {
-  const defaultDate = dayjs()
-  const [startDate, setStartDate] = useState(defaultDate)
-  const [endDate, setEndDate] = useState(defaultDate.add(1, 'day'))
-  const [currentTab, setCurrentTab] = useState<'start' | 'end'>('start')
-
-  console.log({ startDate, endDate })
+  const { startDate, endDate } = useDateRangeContext()
+  const actions = useDateRangeAction()
+  const [currentTab, setCurrentTab] = useState<'start' | 'end' | null>(null)
 
   return (
     <BottomSheet>
@@ -64,42 +62,62 @@ function DateFilterBottomSheet() {
             <button
               className={styles.DateButton}
               data-active={currentTab === 'start'}
-              onClick={() => setCurrentTab('start')}
+              onClick={() => {
+                setCurrentTab('start')
+                if (!startDate) actions.start.init()
+              }}
             >
               <Icon className={styles.Icon} icon="CalendarLine" size="16" />
-              {startDate.format('YYYY.MM.DD')}
+              {startDate ? startDate.format('YYYY.MM.DD') : '시작 날짜'}
+              {startDate && (
+                <button
+                  onClick={(e) => {
+                    e.preventDefault()
+                    e.stopPropagation()
+                    actions.start.reset()
+                    setCurrentTab(null)
+                  }}
+                  className={styles.Delete}
+                >
+                  <Icon icon="Close" size="16" />
+                </button>
+              )}
             </button>
+
             <span className={styles.Dash}>~</span>
+
             <button
               className={styles.DateButton}
               data-active={currentTab === 'end'}
-              onClick={() => setCurrentTab('end')}
+              onClick={() => {
+                setCurrentTab('end')
+                if (!endDate) actions.end.init()
+              }}
             >
               <Icon className={styles.Icon} icon="CalendarLine" size="16" />
-              {endDate.format('YYYY.MM.DD')}
+              {endDate ? endDate.format('YYYY.MM.DD') : '종료 날짜'}
+              {endDate && (
+                <button
+                  onClick={(e) => {
+                    e.preventDefault()
+                    e.stopPropagation()
+                    actions.end.reset()
+                    setCurrentTab(null)
+                  }}
+                  className={styles.Delete}
+                >
+                  <Icon icon="Close" size="16" />
+                </button>
+              )}
             </button>
           </section>
 
           <section className={styles.DateFilter}>
-            {currentTab === 'start' && (
-              <DatePicker
-                defaultDate={startDate}
-                date={startDate}
-                setDate={(date) => {
-                  setStartDate(date)
-                  if (date.isAfter(endDate)) setEndDate(date.add(1, 'day'))
-                }}
-              />
+            {currentTab === 'start' && startDate && (
+              <DatePicker defaultDate={startDate} date={startDate} setDate={actions.start.update} />
             )}
-            {currentTab === 'end' && (
-              <DatePicker
-                date={endDate}
-                defaultDate={endDate}
-                setDate={(date) => {
-                  setEndDate(date)
-                  if (date.isBefore(endDate)) setStartDate(date.subtract(1, 'day'))
-                }}
-              />
+            {currentTab === 'end' && endDate && (
+              <DatePicker defaultDate={endDate} date={endDate} setDate={actions.end.update} />
             )}
           </section>
         </div>

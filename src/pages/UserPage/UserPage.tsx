@@ -4,10 +4,10 @@ import styles from './UserPage.module.scss'
 import BottomBar from '@/components/NavBar/BottomBar'
 import { ErrorBoundary } from 'react-error-boundary'
 import { Suspense } from 'react'
-import { Link, useParams } from 'react-router-dom'
-import dayjs from 'dayjs'
-import Icon from '@/components/Icon/Icon'
+import { useParams } from 'react-router-dom'
 import useIsMine from './hook/useIsMine'
+import PartyCardList from './components/PartyCardList'
+import PartyFilter from './components/PartyFilter'
 
 export default function UserPage() {
   const { id } = useParams<{ id: string }>()
@@ -29,7 +29,7 @@ export default function UserPage() {
         </ErrorBoundary>
       </section>
 
-      <section className={styles.PartyHistoryInfo}>
+      <section className={styles.PartyHistoryInfoSection}>
         <h2 className={styles.Title}>파티 이력</h2>
         <div className={styles.Table}>
           <div className={styles.Box}>
@@ -41,100 +41,14 @@ export default function UserPage() {
             <span className={styles.Times}>4번</span>
           </div>
         </div>
+        <PartyFilter />
       </section>
 
-      <section className={styles.PartyHistoryList}>
-        {mockData.map((data) => (
-          <PartyCard key={data.partyId} {...data} />
-        ))}
+      <section className={styles.PartyHistorySection}>
+        <PartyCardList userId={Number(id)} />
       </section>
 
       <BottomBar />
     </div>
   )
 }
-
-function PartyCard({ thumbnail, partyId, time, title, address }: MockData) {
-  return (
-    <Link className={styles.Card} to={`/party/${partyId}`}>
-      {thumbnail && (
-        <div className={styles.Image}>
-          <img src={thumbnail} alt="thumbnail" />
-        </div>
-      )}
-      <div className={styles.Info}>
-        <div className={styles.Time}>{dayjs(time).format('YYYY.MM.DD')}</div>
-        <div className={styles.Title}>{title}</div>
-        <div className={styles.Address}>
-          <Icon icon="LocationFill" size={16} />
-          {address}
-        </div>
-      </div>
-      <Icon className={styles.ArrowIcon} icon="ArrowRight" size={16} />
-    </Link>
-  )
-}
-
-type MockData = {
-  thumbnail?: string
-  time: string
-  title: string
-  address: string
-  isClosed: boolean
-  masterId: number
-  partyId: number
-}
-const mockData: MockData[] = [
-  {
-    thumbnail: 'https://via.placeholder.com/150',
-    time: '2021-09-01',
-    title: '암장 파티',
-    address: '서울시 강남구',
-    isClosed: false,
-    masterId: 1,
-    partyId: 1,
-  },
-  {
-    time: '2021-09-04',
-    title: '암장 파티 123',
-    address: '서울시 강남구',
-    isClosed: false,
-    masterId: 1,
-    partyId: 2,
-  },
-  {
-    thumbnail: 'https://via.placeholder.com/150',
-    time: '2021-09-04',
-    title: '암장 파티',
-    address: '서울시 강남구',
-    isClosed: false,
-    masterId: 1,
-    partyId: 234,
-  },
-  {
-    thumbnail: 'https://via.placeholder.com/150',
-    time: '2021-09-04',
-    title: '암장 파티',
-    address: '서울시 강남구',
-    isClosed: false,
-    masterId: 1,
-    partyId: 24,
-  },
-  {
-    thumbnail: 'https://via.placeholder.com/150',
-    time: '2021-09-04',
-    title: '암장 파티',
-    address: '서울시 강남구',
-    isClosed: false,
-    masterId: 1,
-    partyId: 25,
-  },
-  {
-    time: '2021-10-01',
-    title: '암장 파티',
-    address: '서울시 강남구',
-    isClosed: false,
-    masterId: 1,
-    partyId: 3,
-  },
-] as const

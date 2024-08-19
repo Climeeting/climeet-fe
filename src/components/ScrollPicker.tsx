@@ -4,15 +4,24 @@ import styles from './ScrollPicker.module.scss'
 const SCROLL_DEBOUNCE_TIME = 100
 const ITEM_HEIGHT = 47
 
+type Option = { value: string | number; label: string } | null
+
 interface ScrollPickerProps {
-  list: (string | number)[]
-  onSelectedChange?: (selectedIndex: string | number) => void
-  defaultValue?: string | number
+  list: Option[]
+  onSelectedChange?: (selectedIndex: Option) => void
+  defaultValue?: Option
+}
+
+export const getScrollOption = (value: string | number) => {
+  return {
+    value,
+    label: String(value),
+  }
 }
 
 const ScrollPicker = ({ list, onSelectedChange, defaultValue }: ScrollPickerProps) => {
   const [selectedIndex, setSelectedIndex] = useState(1)
-  const newList = ['', ...list, '']
+  const newList = [null, ...list, null]
   const ref = useRef<HTMLUListElement>(null)
   const itemRefs = useRef<(HTMLLIElement | null)[]>([])
   const timerRef = useRef<number | null>(null)
@@ -34,8 +43,8 @@ const ScrollPicker = ({ list, onSelectedChange, defaultValue }: ScrollPickerProp
       }
       timerRef.current = setTimeout(() => {
         const index = Math.floor((ref.current!.scrollTop + ITEM_HEIGHT / 2) / ITEM_HEIGHT)
-        const isEmptyItem = list[index] !== ''
-        if (isEmptyItem) {
+        const isEmptyItem = list[index] === null
+        if (!isEmptyItem) {
           setSelectedIndex(index)
           moveScroll(index)
           onSelectedChange?.(newList[index])
@@ -44,8 +53,8 @@ const ScrollPicker = ({ list, onSelectedChange, defaultValue }: ScrollPickerProp
     }
   }
 
-  const findIndex = (value: string | number) => {
-    return newList.findIndex((item) => item === value)
+  const findIndex = (target: Option) => {
+    return newList.findIndex((item) => item?.value === target?.value)
   }
 
   useEffect(() => {
@@ -60,7 +69,7 @@ const ScrollPicker = ({ list, onSelectedChange, defaultValue }: ScrollPickerProp
     }
     const index = findIndex(defaultValue)
     setSelectedIndex(index)
-  }, [defaultValue])
+  }, [defaultValue?.value])
 
   return (
     <ul ref={ref} onScroll={handleScroll} className={styles.List}>
@@ -71,13 +80,13 @@ const ScrollPicker = ({ list, onSelectedChange, defaultValue }: ScrollPickerProp
           ref={(el) => (itemRefs.current[index] = el)}
           className={`${styles.ListItem} ${index === selectedIndex && styles.selected}`}
           onClick={() => {
-            if (item === '') return
+            if (item === null) return
             setSelectedIndex(index)
             moveScroll(index)
             onSelectedChange && onSelectedChange(item)
           }}
         >
-          {item}
+          {item?.label}
         </li>
       ))}
     </ul>

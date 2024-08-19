@@ -14,7 +14,7 @@ export function PartyDetailPage() {
     <>
       <TopBar>
         <TopBar.Left back />
-        {/* <TopBar.Center>{`파티 디테일 ${id}`}</TopBar.Center> */}
+        <TopBar.Center>파티 상세</TopBar.Center>
         <TopBar.Right asChild>
           <MoreMenu id={id} />
         </TopBar.Right>

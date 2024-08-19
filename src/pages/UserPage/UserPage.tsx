@@ -18,7 +18,7 @@ export default function UserPage() {
     <div className={styles.Container}>
       <TopBar>
         <TopBar.Left back />
-        <TopBar.Center>마이페이지</TopBar.Center>
+        <TopBar.Center>{isMine ? '마이페이지' : ''}</TopBar.Center>
         <TopBar.Right close />
       </TopBar>
 

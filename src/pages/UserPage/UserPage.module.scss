@@ -6,6 +6,13 @@
   min-height: 100vh;
 }
 
+.Error {
+  width: 100%;
+  background-color: #fff;
+  min-height: calc(100vh - 48px - 68px);
+  padding-top: 100px;
+}
+
 .ProfileSection {
   padding: 32px 16px;
   width: 100%;

@@ -4,13 +4,36 @@ import React from 'react'
 import styles from './PartyCardList.module.scss'
 import dayjs from 'dayjs'
 import Icon from '@/components/Icon/Icon'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import EmptyParty from '@/assets/empty_party.png'
+import { PageData } from '@/pages/types/api'
+import { InfiniteData } from '@tanstack/react-query'
+import NotFound from '@/components/NotFound'
 
-export default function PartyCardList({ userId }: { userId: number }) {
-  const { data, fetchNextPage } = useUserPartyList({ userId })
+export default function PartyCardList({
+  data,
+  fetchNextPage,
+}: {
+  data: InfiniteData<PageData<PartyListDto>>
+  fetchNextPage: () => void
+}) {
   const ref = useLoadMore(fetchNextPage)
+  const navigate = useNavigate()
 
-  if (data.pages[0].totalElements === 0) return <div>데이터가 없습니다.</div>
+  if (data.pages[0].totalElements === 0)
+    return (
+      <div className={styles.PartyEmpty}>
+        <img src={EmptyParty} />
+        <span>파티 이력이 없습니다.</span>
+        <button
+          onClick={() => {
+            navigate('/')
+          }}
+        >
+          파티 참가하기
+        </button>
+      </div>
+    )
 
   return (
     <ul className={styles.PartyList}>
@@ -30,6 +53,14 @@ export default function PartyCardList({ userId }: { userId: number }) {
   )
 }
 
+function PartyCardListQuery({ userId }: { userId: number }) {
+  const { data, fetchNextPage } = useUserPartyList({ userId })
+
+  return <PartyCardList data={data} fetchNextPage={fetchNextPage} />
+}
+
+PartyCardList.Query = PartyCardListQuery
+
 PartyCardList.Skeleton = () => (
   <ul className={styles.PartyUl}>
     {Array.from({ length: 5 }).map((_, index) => (
@@ -41,13 +72,8 @@ PartyCardList.Skeleton = () => (
   </ul>
 )
 
-PartyCardList.Retry = () => {
-  return (
-    <div>
-      <div>오류가 발생했습니다.</div>
-      <button onClick={() => UserPartyListQuery.refetch}>재시도</button>
-    </div>
-  )
+PartyCardList.Retry = ({ userId }: { userId: number }) => {
+  return <NotFound refresh={() => UserPartyListQuery.refetch({ userId })} />
 }
 
 function PartyCard({ party }: { party: PartyListDto }) {

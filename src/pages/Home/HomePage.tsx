@@ -31,24 +31,24 @@ export default function HomePage() {
                 <DatePickerContainer />
               </div>
 
-              <div className={classNames(styles.Contents, styles.Sticky)}>
-                <div className={styles.ContentHeader}>
-                  <h1 className={styles.Title}>오늘의 파티</h1>
-                  <RemoveFullButton />
-                </div>
-                <div className={styles.Buttons}>
-                  <RefreshButton />
-                  <FilterList />
-                </div>
-              </div>
-
-              {/* https://tanstack.com/query/latest/docs/framework/react/guides/suspense */}
               <ErrorBoundary fallback={<PartyList.Retry />}>
+                <div className={classNames(styles.Contents, styles.Sticky)}>
+                  <div className={styles.ContentHeader}>
+                    <h1 className={styles.Title}>오늘의 파티</h1>
+                    <RemoveFullButton />
+                  </div>
+                  <div className={styles.Buttons}>
+                    <RefreshButton />
+                    <FilterList />
+                  </div>
+                </div>
+
                 <Suspense fallback={<PartyList.Skeleton />}>
                   <PartyList />
                 </Suspense>
               </ErrorBoundary>
             </main>
+
             <BottomBar />
           </div>
         </DateProvider>

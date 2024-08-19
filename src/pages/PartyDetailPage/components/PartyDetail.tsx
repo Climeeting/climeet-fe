@@ -1,8 +1,9 @@
-import { PartyDetailType, usePartyDetailSuspense } from '@/services/party'
+import { PartyDetailQuery, PartyDetailType, usePartyDetailSuspense } from '@/services/party'
 import { PartyMainInfo } from './PartyMainInfo'
 import { PartyParticipants } from './PartyParticipants'
 import { PartyLocation } from './PartyLocation'
-// import { PartyClimbInfo } from './PartyClimbInfo'
+import NotFound from '@/components/NotFound'
+import styles from './PartyDetail.module.scss'
 
 export default function PartyDetail({ data }: { data: PartyDetailType }) {
   return (
@@ -31,11 +32,15 @@ PartyDetail.Query = function Container({ id }: { id: number }) {
   return <PartyDetail data={data} />
 }
 
-PartyDetail.Retry = () => {
+PartyDetail.Retry = ({ id }: { id: number }) => {
   return (
-    <div>
-      <h1>파티 정보를 불러오는데 실패했습니다.</h1>
-      <button onClick={() => window.location.reload()}>다시 시도</button>
+    <div className={styles.ErrorContainer}>
+      <NotFound
+        message="파티 정보를 불러오는데 실패했습니다."
+        refresh={() => {
+          PartyDetailQuery.refetch(id)
+        }}
+      />
     </div>
   )
 }

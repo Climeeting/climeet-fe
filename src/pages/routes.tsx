@@ -1,4 +1,4 @@
-import { createRoutesFromElements, createBrowserRouter, Route } from 'react-router-dom'
+import { createRoutesFromElements, createBrowserRouter, Route, Navigate } from 'react-router-dom'
 import Layout from './Layout/Layout'
 import HomePage from './Home/HomePage'
 import LoginPage from './Login/LoginPage'
@@ -22,7 +22,6 @@ const router = createBrowserRouter(
     <Route path="/" element={<Layout />}>
       <Route index element={<HomePage />} />
       <Route path="oauth" element={<OauthPage />} />
-      <Route path="404" element={<NotFoundPage />} />
       <Route element={<CheckIsLogout />}>
         <Route path="login" element={<LoginPage />} />
       </Route>
@@ -39,6 +38,9 @@ const router = createBrowserRouter(
       <Route path="/chat/:id" element={<ChatRoomPage />} />
       <Route path="/user/:id" element={<UserPage />} />
       <Route path="/party/:id" element={<PartyDetailPage />} />
+
+      <Route path="404" element={<NotFoundPage />} />
+      <Route path="*" element={<Navigate to="/404" />} />
     </Route>
   )
 )

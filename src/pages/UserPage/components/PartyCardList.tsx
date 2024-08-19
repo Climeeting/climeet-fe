@@ -63,7 +63,7 @@ function PartyCard({ party }: { party: PartyListDto }) {
         <div className={styles.Title}>{party.partyTitle}</div>
         <div className={styles.Address}>
           <Icon icon="LocationFill" size={16} />
-          {party.locationId}
+          {party.gymName}
         </div>
       </div>
       <Icon className={styles.ArrowIcon} icon="ArrowRight" size={16} />

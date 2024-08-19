@@ -1,4 +1,3 @@
-// @ts-nocheck
 import ToggleButton from '@/components/ToggleButton'
 import styles from './PartyFilter.module.scss'
 import { useState } from 'react'

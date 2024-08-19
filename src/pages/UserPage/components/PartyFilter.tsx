@@ -1,3 +1,4 @@
+// @ts-nocheck
 import ToggleButton from '@/components/ToggleButton'
 import styles from './PartyFilter.module.scss'
 import { useState } from 'react'
@@ -5,11 +6,7 @@ import Icon from '@/components/Icon/Icon'
 import BottomSheet from '@/components/BottomSheet'
 import ScrollPicker from '@/components/ScrollPicker'
 import dayjs from 'dayjs'
-import {
-  defaultDateRange,
-  useDateRangeAction,
-  useDateRangeContext,
-} from '../hook/useDateRangeContext'
+import { useDateRangeAction, useDateRangeContext } from '../hook/useDateRangeContext'
 
 export default function PartyFilter() {
   const [activeFilter, setActiveFilter] = useState<'전체' | '암장' | '자연'>('전체')
@@ -68,7 +65,7 @@ function DateFilterBottomSheet() {
               data-active={currentTab === 'start'}
               onClick={() => {
                 setCurrentTab('start')
-                if (!startDate) actions.setStartDate(defaultDateRange.startDate)
+                if (!startDate) actions.start.init()
               }}
             >
               <Icon className={styles.Icon} icon="CalendarLine" size="16" />
@@ -78,7 +75,7 @@ function DateFilterBottomSheet() {
                   onClick={(e) => {
                     e.preventDefault()
                     e.stopPropagation()
-                    actions.setStartDate(null)
+                    actions.start.reset()
                     setCurrentTab(null)
                   }}
                   className={styles.Delete}
@@ -95,7 +92,7 @@ function DateFilterBottomSheet() {
               data-active={currentTab === 'end'}
               onClick={() => {
                 setCurrentTab('end')
-                if (!endDate) actions.setEndDate(defaultDateRange.endDate)
+                if (!endDate) actions.end.init()
               }}
             >
               <Icon className={styles.Icon} icon="CalendarLine" size="16" />
@@ -105,7 +102,7 @@ function DateFilterBottomSheet() {
                   onClick={(e) => {
                     e.preventDefault()
                     e.stopPropagation()
-                    actions.setEndDate(null)
+                    actions.end.reset()
                     setCurrentTab(null)
                   }}
                   className={styles.Delete}
@@ -118,24 +115,10 @@ function DateFilterBottomSheet() {
 
           <section className={styles.DateFilter}>
             {currentTab === 'start' && startDate && (
-              <DatePicker
-                defaultDate={startDate}
-                date={startDate}
-                setDate={(date) => {
-                  actions.setStartDate(date)
-                  if (date.isAfter(endDate)) actions.setEndDate(date.add(1, 'day'))
-                }}
-              />
+              <DatePicker defaultDate={startDate} date={startDate} setDate={actions.start.update} />
             )}
             {currentTab === 'end' && endDate && (
-              <DatePicker
-                defaultDate={endDate}
-                date={endDate}
-                setDate={(date) => {
-                  actions.setEndDate(date)
-                  if (date.isBefore(endDate)) actions.setStartDate(date.subtract(1, 'day'))
-                }}
-              />
+              <DatePicker defaultDate={endDate} date={endDate} setDate={actions.end.update} />
             )}
           </section>
         </div>

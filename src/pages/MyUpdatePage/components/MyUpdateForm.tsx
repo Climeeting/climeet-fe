@@ -96,6 +96,10 @@ export function MyUpdateForm({ checkValid }: MyUpdateFormProps) {
           onChange={(e) => setDescription(e.target.value)}
           maxLength={150}
         />
+        <div className={styles.TextCount}>
+          <span className={styles.CurrentCount}>{description.length}자</span>
+          <span className={styles.MaxCount}>/ 최대 150자</span>
+        </div>
       </fieldset>
     </>
   )

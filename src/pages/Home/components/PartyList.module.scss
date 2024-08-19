@@ -27,3 +27,14 @@
     color: $gray-500;
   }
 }
+
+.PartyError {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  padding-top: 32px;
+  box-sizing: border-box;
+}

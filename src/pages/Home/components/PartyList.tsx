@@ -7,6 +7,7 @@ import { PartyListQuery } from '@/services/party'
 import { useLoadMore } from '@/utils/useLoadMore'
 import { useFilterParams } from '../hooks/useFilterParams'
 import EmptyParty from '@/assets/empty_party.png'
+import NotFound from '@/components/NotFound'
 
 export default function PartyList() {
   const params = useFilterParams()
@@ -51,9 +52,8 @@ PartyList.Skeleton = () => (
 
 PartyList.Retry = () => {
   return (
-    <div>
-      <div>오류가 발생했습니다.</div>
-      <button onClick={() => PartyListQuery.refetch}>재시도</button>
+    <div className={styles.PartyError}>
+      <NotFound message="파티 목록 로딩에 실패했습니다." refresh={PartyListQuery.refetch} />
     </div>
   )
 }

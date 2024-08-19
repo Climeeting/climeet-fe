@@ -7,6 +7,7 @@ import { Suspense } from 'react'
 import { useParams } from 'react-router-dom'
 import useIsMine from './hook/useIsMine'
 import PartyCardList from './components/PartyCardList'
+import PartyFilter from './components/PartyFilter'
 
 export default function UserPage() {
   const { id } = useParams<{ id: string }>()
@@ -40,6 +41,7 @@ export default function UserPage() {
             <span className={styles.Times}>4번</span>
           </div>
         </div>
+        <PartyFilter />
       </section>
 
       <section className={styles.PartyHistorySection}>

@@ -35,8 +35,9 @@ export default function PartyFilter() {
 }
 
 function DateFilterBottomSheet() {
-  const [startDate, setStartDate] = useState(dayjs())
-  const [endDate, setEndDate] = useState(dayjs())
+  const defaultDate = dayjs()
+  const [startDate, setStartDate] = useState(defaultDate)
+  const [endDate, setEndDate] = useState(defaultDate.add(1, 'day'))
   const [currentTab, setCurrentTab] = useState<'start' | 'end'>('start')
 
   console.log({ startDate, endDate })
@@ -81,9 +82,25 @@ function DateFilterBottomSheet() {
 
           <section className={styles.DateFilter}>
             {currentTab === 'start' && (
-              <DatePicker defaultDate={startDate} setDate={setStartDate} />
+              <DatePicker
+                defaultDate={startDate}
+                date={startDate}
+                setDate={(date) => {
+                  setStartDate(date)
+                  if (date.isAfter(endDate)) setEndDate(date.add(1, 'day'))
+                }}
+              />
             )}
-            {currentTab === 'end' && <DatePicker defaultDate={endDate} setDate={setEndDate} />}
+            {currentTab === 'end' && (
+              <DatePicker
+                date={endDate}
+                defaultDate={endDate}
+                setDate={(date) => {
+                  setEndDate(date)
+                  if (date.isBefore(endDate)) setStartDate(date.subtract(1, 'day'))
+                }}
+              />
+            )}
           </section>
         </div>
       </BottomSheet.Content>
@@ -93,10 +110,12 @@ function DateFilterBottomSheet() {
 
 function DatePicker({
   defaultDate,
+  date,
   setDate,
 }: {
   defaultDate: dayjs.Dayjs
-  setDate: React.Dispatch<React.SetStateAction<dayjs.Dayjs>>
+  date: dayjs.Dayjs
+  setDate: (date: dayjs.Dayjs) => void
 }) {
   const defaultYear = defaultDate.get('year')
   const defaultMonth = defaultDate.get('month') + 1
@@ -124,7 +143,7 @@ function DatePicker({
         }}
         list={YEARS}
         onSelectedChange={(option) => {
-          if (option) setDate((prev) => prev.set('year', Number(option.value)))
+          if (option) setDate(date.set('year', Number(option.value)))
         }}
       />
       <ScrollPicker
@@ -134,7 +153,7 @@ function DatePicker({
         }}
         list={MONTH}
         onSelectedChange={(option) => {
-          if (option) setDate((prev) => prev.set('month', Number(option.value) - 1))
+          if (option) setDate(date.set('month', Number(option.value) - 1))
         }}
       />
       <ScrollPicker
@@ -144,7 +163,7 @@ function DatePicker({
         }}
         list={DAYS}
         onSelectedChange={(option) => {
-          if (option) setDate((prev) => prev.set('date', Number(option.value)))
+          if (option) setDate(date.set('date', Number(option.value)))
         }}
       />
     </>

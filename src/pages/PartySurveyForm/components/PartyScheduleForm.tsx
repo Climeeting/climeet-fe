@@ -62,11 +62,15 @@ export function PartyScheduleForm({ onNext, formData, updateFormData }: PartySch
                   <div className={styles.ScrollPickerWrapper}>
                     <ScrollPicker
                       list={MERIDIEM}
-                      defaultValue={timePicker.meridiem}
-                      onSelectedChange={(value) => {
+                      defaultValue={{
+                        value: timePicker.meridiem,
+                        label: timePicker.meridiem,
+                      }}
+                      onSelectedChange={(option) => {
+                        if (!option) return
                         const nextValue = {
                           ...timePicker,
-                          meridiem: value as string,
+                          meridiem: option.value as string,
                         }
                         setTimePicker(nextValue)
                         const nextPartyTime = getNextTime(
@@ -78,12 +82,16 @@ export function PartyScheduleForm({ onNext, formData, updateFormData }: PartySch
                       }}
                     />
                     <ScrollPicker
-                      defaultValue={timePicker.hours}
+                      defaultValue={{
+                        value: timePicker.hours,
+                        label: timePicker.hours,
+                      }}
                       list={HOURS}
-                      onSelectedChange={(value) => {
+                      onSelectedChange={(option) => {
+                        if (!option) return
                         const nextValue = {
                           ...timePicker,
-                          hours: value as string,
+                          hours: option.value as string,
                         }
                         setTimePicker(nextValue)
                         const nextPartyTime = getNextTime(
@@ -95,12 +103,16 @@ export function PartyScheduleForm({ onNext, formData, updateFormData }: PartySch
                       }}
                     />
                     <ScrollPicker
-                      defaultValue={timePicker.minutes}
+                      defaultValue={{
+                        value: timePicker.minutes,
+                        label: timePicker.minutes,
+                      }}
                       list={MINUTES}
-                      onSelectedChange={(value) => {
+                      onSelectedChange={(option) => {
+                        if (!option) return
                         const nextValue = {
                           ...timePicker,
-                          minutes: value as string,
+                          minutes: option.value as string,
                         }
                         setTimePicker(nextValue)
                         const nextPartyTime = getNextTime(

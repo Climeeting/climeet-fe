@@ -9,6 +9,7 @@ import useIsMine from './hook/useIsMine'
 import PartyCardList from './components/PartyCardList'
 import PartyFilter from './components/PartyFilter'
 import NotFound from '@/components/NotFound'
+import { DateRangeProvider } from './hook/useDateRangeContext'
 
 export default function UserPage() {
   const { id } = useParams<{ id: string }>()
@@ -29,28 +30,30 @@ export default function UserPage() {
           </Suspense>
         </section>
 
-        <section className={styles.PartyHistoryInfoSection}>
-          <h2 className={styles.Title}>파티 이력</h2>
-          <div className={styles.Table}>
-            <div className={styles.Box}>
-              <h3 className={styles.Label}>암장 파티</h3>
-              <span className={styles.Times}>4번</span>
+        <DateRangeProvider>
+          <section className={styles.PartyHistoryInfoSection}>
+            <h2 className={styles.Title}>파티 이력</h2>
+            <div className={styles.Table}>
+              <div className={styles.Box}>
+                <h3 className={styles.Label}>암장 파티</h3>
+                <span className={styles.Times}>4번</span>
+              </div>
+              <div className={styles.Box}>
+                <h3 className={styles.Label}>자연 파티</h3>
+                <span className={styles.Times}>4번</span>
+              </div>
             </div>
-            <div className={styles.Box}>
-              <h3 className={styles.Label}>자연 파티</h3>
-              <span className={styles.Times}>4번</span>
-            </div>
-          </div>
-          <PartyFilter />
-        </section>
+            <PartyFilter />
+          </section>
 
-        <section className={styles.PartyHistorySection}>
-          <ErrorBoundary fallback={<PartyCardList.Retry userId={Number(id)} />}>
-            <Suspense fallback={<PartyCardList.Skeleton />}>
-              <PartyCardList.Query userId={Number(id)} />
-            </Suspense>
-          </ErrorBoundary>
-        </section>
+          <section className={styles.PartyHistorySection}>
+            <ErrorBoundary fallback={<PartyCardList.Retry userId={Number(id)} />}>
+              <Suspense fallback={<PartyCardList.Skeleton />}>
+                <PartyCardList.Query userId={Number(id)} />
+              </Suspense>
+            </ErrorBoundary>
+          </section>
+        </DateRangeProvider>
       </ErrorBoundary>
       <BottomBar />
     </div>

@@ -5,6 +5,7 @@ import Icon from '@/components/Icon/Icon'
 import BottomSheet from '@/components/BottomSheet'
 import ScrollPicker from '@/components/ScrollPicker'
 import dayjs from 'dayjs'
+import { useDateRangeAction, useDateRangeContext } from '../hook/useDateRangeContext'
 
 export default function PartyFilter() {
   const [activeFilter, setActiveFilter] = useState<'전체' | '암장' | '자연'>('전체')
@@ -35,12 +36,9 @@ export default function PartyFilter() {
 }
 
 function DateFilterBottomSheet() {
-  const defaultDate = dayjs()
-  const [startDate, setStartDate] = useState(defaultDate)
-  const [endDate, setEndDate] = useState(defaultDate.add(1, 'day'))
+  const { startDate, endDate } = useDateRangeContext()
+  const actions = useDateRangeAction()
   const [currentTab, setCurrentTab] = useState<'start' | 'end'>('start')
-
-  console.log({ startDate, endDate })
 
   return (
     <BottomSheet>
@@ -86,8 +84,8 @@ function DateFilterBottomSheet() {
                 defaultDate={startDate}
                 date={startDate}
                 setDate={(date) => {
-                  setStartDate(date)
-                  if (date.isAfter(endDate)) setEndDate(date.add(1, 'day'))
+                  actions.setStartDate(date)
+                  if (date.isAfter(endDate)) actions.setEndDate(date.add(1, 'day'))
                 }}
               />
             )}
@@ -96,8 +94,8 @@ function DateFilterBottomSheet() {
                 date={endDate}
                 defaultDate={endDate}
                 setDate={(date) => {
-                  setEndDate(date)
-                  if (date.isBefore(endDate)) setStartDate(date.subtract(1, 'day'))
+                  actions.setEndDate(date)
+                  if (date.isBefore(endDate)) actions.setStartDate(date.subtract(1, 'day'))
                 }}
               />
             )}

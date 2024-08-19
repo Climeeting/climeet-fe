@@ -35,29 +35,11 @@ export default function PartyFilter() {
 }
 
 function DateFilterBottomSheet() {
-  const defaultDate = dayjs()
-  const defaultYear = defaultDate.get('year')
-  const defaultMonth = defaultDate.get('month') + 1
-  const defaultDay = defaultDate.get('date')
+  const [startDate, setStartDate] = useState(dayjs())
+  const [endDate, setEndDate] = useState(dayjs())
+  const [currentTab, setCurrentTab] = useState<'start' | 'end'>('start')
 
-  const [year, setYear] = useState(2023)
-  const [month, setMonth] = useState(1)
-  const [day, setDay] = useState(1)
-
-  const YEARS = Array.from({ length: 2 }, (_, i) => 2023 + i).map((year) => ({
-    value: year,
-    label: `${year}년`,
-  }))
-  const MONTH = Array.from({ length: 12 }, (_, i) => i + 1).map((month) => ({
-    value: month,
-    label: `${month}월`,
-  }))
-  const DAYS = Array.from({ length: 31 }, (_, i) => i + 1).map((day) => ({
-    value: day,
-    label: `${day}일`,
-  }))
-
-  console.log({ year, month, day })
+  console.log({ startDate, endDate })
 
   return (
     <BottomSheet>
@@ -77,40 +59,94 @@ function DateFilterBottomSheet() {
             </BottomSheet.Close>
           </div>
 
+          <section className={styles.DateFilterHeader}>
+            <button
+              className={styles.DateButton}
+              data-active={currentTab === 'start'}
+              onClick={() => setCurrentTab('start')}
+            >
+              <Icon className={styles.Icon} icon="CalendarLine" size="16" />
+              {startDate.format('YYYY.MM.DD')}
+            </button>
+            <span className={styles.Dash}>~</span>
+            <button
+              className={styles.DateButton}
+              data-active={currentTab === 'end'}
+              onClick={() => setCurrentTab('end')}
+            >
+              <Icon className={styles.Icon} icon="CalendarLine" size="16" />
+              {endDate.format('YYYY.MM.DD')}
+            </button>
+          </section>
+
           <section className={styles.DateFilter}>
-            <ScrollPicker
-              defaultValue={{
-                value: defaultYear,
-                label: `${defaultYear}년`,
-              }}
-              list={YEARS}
-              onSelectedChange={(option) => {
-                if (option) setYear(Number(option.value))
-              }}
-            />
-            <ScrollPicker
-              defaultValue={{
-                value: defaultMonth,
-                label: `${defaultMonth}월`,
-              }}
-              list={MONTH}
-              onSelectedChange={(option) => {
-                if (option) setMonth(Number(option.value))
-              }}
-            />
-            <ScrollPicker
-              defaultValue={{
-                value: defaultDay,
-                label: `${defaultDay}일`,
-              }}
-              list={DAYS}
-              onSelectedChange={(option) => {
-                if (option) setDay(Number(option.value))
-              }}
-            />
+            {currentTab === 'start' && (
+              <DatePicker defaultDate={startDate} setDate={setStartDate} />
+            )}
+            {currentTab === 'end' && <DatePicker defaultDate={endDate} setDate={setEndDate} />}
           </section>
         </div>
       </BottomSheet.Content>
     </BottomSheet>
+  )
+}
+
+function DatePicker({
+  defaultDate,
+  setDate,
+}: {
+  defaultDate: dayjs.Dayjs
+  setDate: React.Dispatch<React.SetStateAction<dayjs.Dayjs>>
+}) {
+  const defaultYear = defaultDate.get('year')
+  const defaultMonth = defaultDate.get('month') + 1
+  const defaultDay = defaultDate.get('date')
+
+  const YEARS = Array.from({ length: 2 }, (_, i) => 2023 + i).map((year) => ({
+    value: year,
+    label: `${year}년`,
+  }))
+  const MONTH = Array.from({ length: 12 }, (_, i) => i + 1).map((month) => ({
+    value: month,
+    label: `${month}월`,
+  }))
+  const DAYS = Array.from({ length: 31 }, (_, i) => i + 1).map((day) => ({
+    value: day,
+    label: `${day}일`,
+  }))
+
+  return (
+    <>
+      <ScrollPicker
+        defaultValue={{
+          value: defaultYear,
+          label: `${defaultYear}년`,
+        }}
+        list={YEARS}
+        onSelectedChange={(option) => {
+          if (option) setDate((prev) => prev.set('year', Number(option.value)))
+        }}
+      />
+      <ScrollPicker
+        defaultValue={{
+          value: defaultMonth,
+          label: `${defaultMonth}월`,
+        }}
+        list={MONTH}
+        onSelectedChange={(option) => {
+          if (option) setDate((prev) => prev.set('month', Number(option.value) - 1))
+        }}
+      />
+      <ScrollPicker
+        defaultValue={{
+          value: defaultDay,
+          label: `${defaultDay}일`,
+        }}
+        list={DAYS}
+        onSelectedChange={(option) => {
+          if (option) setDate((prev) => prev.set('date', Number(option.value)))
+        }}
+      />
+    </>
   )
 }

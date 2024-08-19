@@ -22,8 +22,8 @@ const DateRangeAction = createContext<DateRangeAction>({
 })
 
 export function DateRangeProvider({ children }: { children: React.ReactNode }) {
-  const [startDate, setStartDate] = useState(dayjs())
-  const [endDate, setEndDate] = useState(dayjs().add(1, 'day'))
+  const [startDate, setStartDate] = useState(dayjs().subtract(1, 'year'))
+  const [endDate, setEndDate] = useState(dayjs().add(1, 'month'))
 
   return (
     <DateRangeContext.Provider value={{ startDate, endDate }}>

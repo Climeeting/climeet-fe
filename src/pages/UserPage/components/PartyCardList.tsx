@@ -9,6 +9,7 @@ import EmptyParty from '@/assets/empty_party.png'
 import { PageData } from '@/pages/types/api'
 import { InfiniteData } from '@tanstack/react-query'
 import NotFound from '@/components/NotFound'
+import { useDateRangeContext } from '../hook/useDateRangeContext'
 
 export default function PartyCardList({
   data,
@@ -54,7 +55,13 @@ export default function PartyCardList({
 }
 
 function PartyCardListQuery({ userId }: { userId: number }) {
-  const { data, fetchNextPage } = useUserPartyList({ userId })
+  const { startDate, endDate } = useDateRangeContext()
+  const params = {
+    userId,
+    ...(startDate ? { startDate: startDate.tz('Asia/Seoul').format('YYYY-MM-DD') } : null),
+    ...(endDate ? { endDate: endDate.tz('Asia/Seoul').format('YYYY-MM-DD') } : null),
+  }
+  const { data, fetchNextPage } = useUserPartyList(params)
 
   return <PartyCardList data={data} fetchNextPage={fetchNextPage} />
 }

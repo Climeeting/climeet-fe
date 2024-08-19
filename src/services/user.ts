@@ -267,8 +267,8 @@ export const useUserProfileSuspense = (userId: number) => {
 /*
  * GET /v1/user/{userId}/party
  */
-export const get_user_$userId_party = async ({ userId, page }: GetPartyListParams) => {
-  const queryString = stringify({ page })
+export const get_user_$userId_party = async ({ userId, ...params }: GetPartyListParams) => {
+  const queryString = stringify(params)
 
   return await api.get<PageData<PartyListDto>>(`/v1/user/${userId}/party?${queryString}`)
 }
@@ -276,6 +276,8 @@ export const get_user_$userId_party = async ({ userId, page }: GetPartyListParam
 type GetPartyListParams = {
   userId: number
   page?: number
+  startDate?: string
+  endDate?: string
 }
 
 export const USER_PARTY_LIST_KEY = ['user', 'party', 'list']

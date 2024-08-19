@@ -13,7 +13,7 @@ export default function PartyCardList({ userId }: { userId: number }) {
   if (data.pages[0].totalElements === 0) return <div>데이터가 없습니다.</div>
 
   return (
-    <ul>
+    <ul className={styles.PartyList}>
       {data.pages.map((parties, i) => (
         <React.Fragment key={i}>
           {parties.content.map((party) => (

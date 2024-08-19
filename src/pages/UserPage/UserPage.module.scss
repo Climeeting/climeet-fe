@@ -13,7 +13,7 @@
   border-radius: 0 0 32px 32px;
 }
 
-.PartyHistoryInfo {
+.PartyHistoryInfoSection {
   background-color: $gray-100;
   padding: 16px;
   position: sticky;
@@ -61,11 +61,8 @@
   }
 }
 
-.PartyHistoryList {
+.PartyHistorySection {
   box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
   padding: 0 16px;
   padding-bottom: 32px;
 }

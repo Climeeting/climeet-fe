@@ -28,7 +28,7 @@ export default function UserPage() {
         </ErrorBoundary>
       </section>
 
-      <section className={styles.PartyHistoryInfo}>
+      <section className={styles.PartyHistoryInfoSection}>
         <h2 className={styles.Title}>파티 이력</h2>
         <div className={styles.Table}>
           <div className={styles.Box}>
@@ -42,7 +42,7 @@ export default function UserPage() {
         </div>
       </section>
 
-      <section className={styles.PartyHistoryList}>
+      <section className={styles.PartyHistorySection}>
         <PartyCardList userId={Number(id)} />
       </section>
 

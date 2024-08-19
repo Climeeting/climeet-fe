@@ -5,7 +5,11 @@ import Icon from '@/components/Icon/Icon'
 import BottomSheet from '@/components/BottomSheet'
 import ScrollPicker from '@/components/ScrollPicker'
 import dayjs from 'dayjs'
-import { useDateRangeAction, useDateRangeContext } from '../hook/useDateRangeContext'
+import {
+  defaultDateRange,
+  useDateRangeAction,
+  useDateRangeContext,
+} from '../hook/useDateRangeContext'
 
 export default function PartyFilter() {
   const [activeFilter, setActiveFilter] = useState<'전체' | '암장' | '자연'>('전체')
@@ -38,7 +42,7 @@ export default function PartyFilter() {
 function DateFilterBottomSheet() {
   const { startDate, endDate } = useDateRangeContext()
   const actions = useDateRangeAction()
-  const [currentTab, setCurrentTab] = useState<'start' | 'end'>('start')
+  const [currentTab, setCurrentTab] = useState<'start' | 'end' | null>(null)
 
   return (
     <BottomSheet>
@@ -62,24 +66,58 @@ function DateFilterBottomSheet() {
             <button
               className={styles.DateButton}
               data-active={currentTab === 'start'}
-              onClick={() => setCurrentTab('start')}
+              onClick={() => {
+                setCurrentTab('start')
+                if (!startDate) actions.setStartDate(defaultDateRange.startDate)
+              }}
             >
               <Icon className={styles.Icon} icon="CalendarLine" size="16" />
-              {startDate.format('YYYY.MM.DD')}
+              {startDate ? startDate.format('YYYY.MM.DD') : '시작 날짜'}
+              {startDate && (
+                <button
+                  onClick={(e) => {
+                    e.preventDefault()
+                    e.stopPropagation()
+                    actions.setStartDate(null)
+                    setCurrentTab(null)
+                  }}
+                  className={styles.Delete}
+                >
+                  <Icon icon="Close" size="16" />
+                </button>
+              )}
             </button>
+
             <span className={styles.Dash}>~</span>
+
             <button
               className={styles.DateButton}
               data-active={currentTab === 'end'}
-              onClick={() => setCurrentTab('end')}
+              onClick={() => {
+                setCurrentTab('end')
+                if (!endDate) actions.setEndDate(defaultDateRange.endDate)
+              }}
             >
               <Icon className={styles.Icon} icon="CalendarLine" size="16" />
-              {endDate.format('YYYY.MM.DD')}
+              {endDate ? endDate.format('YYYY.MM.DD') : '종료 날짜'}
+              {endDate && (
+                <button
+                  onClick={(e) => {
+                    e.preventDefault()
+                    e.stopPropagation()
+                    actions.setEndDate(null)
+                    setCurrentTab(null)
+                  }}
+                  className={styles.Delete}
+                >
+                  <Icon icon="Close" size="16" />
+                </button>
+              )}
             </button>
           </section>
 
           <section className={styles.DateFilter}>
-            {currentTab === 'start' && (
+            {currentTab === 'start' && startDate && (
               <DatePicker
                 defaultDate={startDate}
                 date={startDate}
@@ -89,10 +127,10 @@ function DateFilterBottomSheet() {
                 }}
               />
             )}
-            {currentTab === 'end' && (
+            {currentTab === 'end' && endDate && (
               <DatePicker
-                date={endDate}
                 defaultDate={endDate}
+                date={endDate}
                 setDate={(date) => {
                   actions.setEndDate(date)
                   if (date.isBefore(endDate)) actions.setStartDate(date.subtract(1, 'day'))

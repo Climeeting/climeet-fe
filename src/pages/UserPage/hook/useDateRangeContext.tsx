@@ -2,19 +2,21 @@ import dayjs from 'dayjs'
 import { createContext, useContext, useState } from 'react'
 
 type DateRangeContextType = {
-  startDate: dayjs.Dayjs
-  endDate: dayjs.Dayjs
+  startDate: dayjs.Dayjs | null
+  endDate: dayjs.Dayjs | null
 }
 
 type DateRangeAction = {
-  setStartDate: (date: dayjs.Dayjs) => void
-  setEndDate: (date: dayjs.Dayjs) => void
+  setStartDate: (date: dayjs.Dayjs | null) => void
+  setEndDate: (date: dayjs.Dayjs | null) => void
 }
 
-const DateRangeContext = createContext<DateRangeContextType>({
+export const defaultDateRange = {
   startDate: dayjs(),
   endDate: dayjs().add(1, 'day'),
-})
+}
+
+const DateRangeContext = createContext<DateRangeContextType>(defaultDateRange)
 
 const DateRangeAction = createContext<DateRangeAction>({
   setStartDate: () => {},
@@ -22,8 +24,8 @@ const DateRangeAction = createContext<DateRangeAction>({
 })
 
 export function DateRangeProvider({ children }: { children: React.ReactNode }) {
-  const [startDate, setStartDate] = useState(dayjs().subtract(1, 'year'))
-  const [endDate, setEndDate] = useState(dayjs().add(1, 'month'))
+  const [startDate, setStartDate] = useState<dayjs.Dayjs | null>(null)
+  const [endDate, setEndDate] = useState<dayjs.Dayjs | null>(null)
 
   return (
     <DateRangeContext.Provider value={{ startDate, endDate }}>

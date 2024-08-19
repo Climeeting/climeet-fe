@@ -1,12 +1,11 @@
 import styles from './MyUpdateForm.module.scss'
-import { MyProfileInfo, skillLevelOptions } from '@/services/user'
 import { Root as VisuallyHidden } from '@radix-ui/react-visually-hidden'
 import PreviewImage from './PreviewImage'
 import RadioSex from './RadioSex'
 import { MyProfile } from '@/pages/types/api'
 import { useMyInfoFormActions, useMyInfoFormContext } from '../hooks/useMyInfoForm'
-import Select from '@/components/Select'
 import { useFileActions } from '../hooks/useFileContext'
+import SelectSkill from '@/components/SelectSkill'
 
 type MyUpdateFormProps = {
   checkValid: boolean
@@ -66,23 +65,7 @@ export function MyUpdateForm({ checkValid }: MyUpdateFormProps) {
           <h2 className={styles.Label}>실력</h2>
           {warningSkillLevel ? <p className={styles.Warning}>실력을 선택해주세요.</p> : null}
         </div>
-        <Select
-          value={skillLevel || '실력 없음'}
-          onValueChange={(newSkillLevel) =>
-            setSkillLevel(newSkillLevel as MyProfileInfo['skillLevel'])
-          }
-          name="skillLevel"
-          placeholder={'실력 없음'}
-        >
-          <Select.Item disabled value={'실력 없음'}>
-            실력 없음
-          </Select.Item>
-          {skillLevelOptions.map((skillLevel) => (
-            <Select.Item key={skillLevel} value={skillLevel}>
-              {skillLevel}
-            </Select.Item>
-          ))}
-        </Select>
+        <SelectSkill skillLevel={skillLevel} setSkillLevel={setSkillLevel} />
       </fieldset>
 
       <fieldset className={styles.Fileldset}>

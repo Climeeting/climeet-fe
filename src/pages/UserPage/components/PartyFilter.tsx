@@ -54,7 +54,7 @@ function DateFilterBottomSheet() {
       <BottomSheet.Content>
         <div className={styles.DateFilterContent}>
           <div className={styles.Header}>
-            <h2>필터</h2>
+            <h2>기간 선택</h2>
             <BottomSheet.Close className={styles.Close}>
               <Icon icon="Close" size="24" />
             </BottomSheet.Close>

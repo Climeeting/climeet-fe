@@ -50,8 +50,9 @@ export function PartyConditionForm({ onNext, formData, updateFormData }: PartyCo
                       label: String(condition.maximumParticipationNumber),
                     }}
                     list={MEMBERS}
-                    onSelectedChange={(value) => {
-                      updateConditionData('maximumParticipationNumber', Number(value))
+                    onSelectedChange={(option) => {
+                      if (!option) return
+                      updateConditionData('maximumParticipationNumber', Number(option.value))
                     }}
                   />
                 </div>

@@ -12,6 +12,7 @@ import {
 import dayjs from 'dayjs'
 import { JoinStatusBe2Fe, clibingBe2Fe, constraintsBe2Fe } from './adaptor'
 import { PartySurveyFormData } from '@/pages/PartySurveyForm/PartySurveyFormPage.tsx'
+import { AxiosError } from 'axios'
 
 /**
  * GET /v1/party/list?${queryString}
@@ -568,8 +569,11 @@ export const post_party_$partyId_participate = async (partyId: number) => {
     const result = await api.post(`/v1/party/${partyId}/participate`)
     return result
   } catch (e) {
-    console.error(e)
-    throw new Error(`파티 참가에 실패하였습니다. post v1/party/${partyId}/participate`)
+    if (e instanceof AxiosError) {
+      throw new Error(e.response?.data.message)
+    } else {
+      throw new Error('파티 참가에 실패하였습니다')
+    }
   }
 }
 
@@ -581,7 +585,10 @@ export const delete_party_$partyId = async (partyId: number) => {
     const result = await api.delete(`/v1/party/${partyId}`)
     return result
   } catch (e) {
-    console.error(e)
-    throw new Error(`파티 삭제에 실패하였습니다. delete v1/party/${partyId}`)
+    if (e instanceof AxiosError) {
+      throw new Error(e.response?.data.message)
+    } else {
+      throw new Error('파티 삭제에 실패하였습니다')
+    }
   }
 }

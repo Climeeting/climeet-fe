@@ -3,12 +3,12 @@ import styles from './Dialog.module.scss'
 import * as AlertDialog from '@radix-ui/react-alert-dialog'
 import classNames from 'classnames'
 
-function DialogContent({
+function DialogContent ({
   children,
   onClose,
   onAction,
   hasCancel = true,
-}: { onClose?: () => void; onAction?: () => void; hasCancel?: boolean } & PropsWithChildren) {
+}: { onClose?: () => void, onAction?: () => void, hasCancel?: boolean } & PropsWithChildren) {
   return (
     <AlertDialog.Portal>
       <AlertDialog.Overlay className={styles.Overlay} />

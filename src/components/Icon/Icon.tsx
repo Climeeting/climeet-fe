@@ -11,7 +11,7 @@ type IconProps = {
   size?: string | number
 }
 
-function Icon({ icon, size = 24, className, stroke }: IconProps) {
+function Icon ({ icon, size = 24, className, stroke }: IconProps) {
   const SVGIcon = icons[icon]
 
   const props = {

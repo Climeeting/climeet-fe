@@ -5,7 +5,7 @@ import FilterButton from './FilterButton'
 import styles from './FilterList.module.scss'
 import { useState } from 'react'
 
-export default function FilterList() {
+export default function FilterList () {
   const [open, setOpen] = useState(false)
   return (
     <BottomSheet open={open} onOpenChange={setOpen}>
@@ -15,7 +15,7 @@ export default function FilterList() {
   )
 }
 
-function FilterTriggerList() {
+function FilterTriggerList () {
   const { addressList, clibing, constraints, skillLevel } = useFilterContext()
   const actions = useFilterActions()
 

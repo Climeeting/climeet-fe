@@ -30,13 +30,13 @@ type StepProps = {
   updateFormData: UpdateFormData
 }
 
-export function IndoorStep({ formData, updateFormData }: StepProps) {
+export function IndoorStep ({ formData, updateFormData }: StepProps) {
   const { Funnel, Step, setStep, step } = useFunnel<IndoorStepName>('암장')
   const navigate = useNavigate()
   const { id } = useParams<{ id: string }>()
 
   const getCurrentStepIndex = (steps: readonly IndoorStepName[], step: IndoorStepName) => {
-    return steps.findIndex((el) => el === step)
+    return steps.findIndex(el => el === step)
   }
 
   const getPreviousStep = (steps: readonly IndoorStepName[], currentStepIndex: number) => {
@@ -65,7 +65,7 @@ export function IndoorStep({ formData, updateFormData }: StepProps) {
         <ProgressBar ratio={calcCurrentProgressValue(indoorSteps, step)} />
       </div>
       <Funnel>
-        <Step name="암장">
+        <Step name='암장'>
           <PartyPlaceForm
             onNext={() => {
               setStep('조건')
@@ -74,7 +74,7 @@ export function IndoorStep({ formData, updateFormData }: StepProps) {
             updateFormData={updateFormData}
           />
         </Step>
-        <Step name="조건">
+        <Step name='조건'>
           <PartyConditionForm
             onNext={() => {
               setStep('소개')
@@ -83,7 +83,7 @@ export function IndoorStep({ formData, updateFormData }: StepProps) {
             updateFormData={updateFormData}
           />
         </Step>
-        <Step name="소개">
+        <Step name='소개'>
           <PartyIntroduceForm
             onNext={() => {
               setStep('일정')
@@ -92,7 +92,7 @@ export function IndoorStep({ formData, updateFormData }: StepProps) {
             updateFormData={updateFormData}
           />
         </Step>
-        <Step name="일정">
+        <Step name='일정'>
           <PartyScheduleForm
             onNext={async () => {
               setStep('미리보기')
@@ -101,7 +101,7 @@ export function IndoorStep({ formData, updateFormData }: StepProps) {
             updateFormData={updateFormData}
           />
         </Step>
-        <Step name="미리보기">
+        <Step name='미리보기'>
           <PartyPreview
             onNext={async () => {
               try {
@@ -127,12 +127,12 @@ export function IndoorStep({ formData, updateFormData }: StepProps) {
   )
 }
 
-export function OutdoorStep({ formData, updateFormData }: StepProps) {
+export function OutdoorStep ({ formData, updateFormData }: StepProps) {
   const { Funnel, Step, setStep, step } = useFunnel<OutdoorStepName>('소개')
   const navigate = useNavigate()
   const { id } = useParams<{ id: string }>()
   const getCurrentStepIndex = (steps: readonly OutdoorStepName[], step: OutdoorStepName) => {
-    return steps.findIndex((el) => el === step)
+    return steps.findIndex(el => el === step)
   }
 
   const getPreviousStep = (steps: readonly OutdoorStepName[], currentStepIndex: number) => {
@@ -159,7 +159,7 @@ export function OutdoorStep({ formData, updateFormData }: StepProps) {
       </TopBar>
       <ProgressBar ratio={calcCurrentProgressValue(outdoorSteps, step)} />
       <Funnel>
-        <Step name="소개">
+        <Step name='소개'>
           <PartyIntroduceForm
             onNext={() => {
               setStep('일정')
@@ -168,7 +168,7 @@ export function OutdoorStep({ formData, updateFormData }: StepProps) {
             updateFormData={updateFormData}
           />
         </Step>
-        <Step name="일정">
+        <Step name='일정'>
           <PartyScheduleForm
             onNext={() => {
               setStep('미리보기')
@@ -177,7 +177,7 @@ export function OutdoorStep({ formData, updateFormData }: StepProps) {
             updateFormData={updateFormData}
           />
         </Step>
-        <Step name="미리보기">
+        <Step name='미리보기'>
           <PartyPreview
             onNext={async () => {
               try {
@@ -203,7 +203,7 @@ export function OutdoorStep({ formData, updateFormData }: StepProps) {
   )
 }
 
-export function PartyEditStep({
+export function PartyEditStep ({
   formData,
   updateFormData,
   id,
@@ -216,7 +216,7 @@ export function PartyEditStep({
   const navigate = useNavigate()
 
   const getCurrentStepIndex = (steps: readonly EditStepName[], step: EditStepName) => {
-    return steps.findIndex((el) => el === step)
+    return steps.findIndex(el => el === step)
   }
 
   const getPreviousStep = (steps: readonly EditStepName[], currentStepIndex: number) => {
@@ -245,7 +245,7 @@ export function PartyEditStep({
         <ProgressBar ratio={calcCurrentProgressValue(editSteps, step)} />
       </div>
       <Funnel>
-        <Step name="소개">
+        <Step name='소개'>
           <PartyIntroduceForm
             onNext={() => {
               setStep('미리보기')
@@ -254,7 +254,7 @@ export function PartyEditStep({
             updateFormData={updateFormData}
           />
         </Step>
-        <Step name="미리보기">
+        <Step name='미리보기'>
           <PartyPreview
             onNext={async () => {
               try {
@@ -274,11 +274,11 @@ export function PartyEditStep({
   )
 }
 
-function calcCurrentProgressValue(steps: typeof indoorSteps, currentStep: IndoorStepName): number
-function calcCurrentProgressValue(steps: typeof outdoorSteps, currentStep: OutdoorStepName): number
-function calcCurrentProgressValue(steps: typeof editSteps, currentStep: EditStepName): number
+function calcCurrentProgressValue (steps: typeof indoorSteps, currentStep: IndoorStepName): number
+function calcCurrentProgressValue (steps: typeof outdoorSteps, currentStep: OutdoorStepName): number
+function calcCurrentProgressValue (steps: typeof editSteps, currentStep: EditStepName): number
 
-function calcCurrentProgressValue(steps: any, currentStep: any): number {
+function calcCurrentProgressValue (steps: any, currentStep: any): number {
   const index = steps.findIndex((el: any) => el === currentStep)
 
   return Math.round(((index + 1) / steps.length) * 100)

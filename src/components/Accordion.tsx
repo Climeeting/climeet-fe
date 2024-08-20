@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import React from 'react'
 import * as Accordion from '@radix-ui/react-accordion'
 import classNames from 'classnames'
@@ -14,11 +15,11 @@ export const AccordionTrigger = React.forwardRef<any, any>(
       >
         {children}
         <div className={styles.AccordionChevron}>
-          <Icon icon={'ArrowDown'} size={'12'} />
+          <Icon icon='ArrowDown' size='12' />
         </div>
       </Accordion.Trigger>
     </Accordion.Header>
-  )
+  ),
 )
 
 export const AccordionContent = React.forwardRef<any, any>(
@@ -28,7 +29,7 @@ export const AccordionContent = React.forwardRef<any, any>(
       {...props}
       ref={forwardedRef}
     >
-      <div className="AccordionContentText">{children}</div>
+      <div className='AccordionContentText'>{children}</div>
     </Accordion.Content>
-  )
+  ),
 )

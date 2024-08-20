@@ -9,7 +9,7 @@ type PartyIntroduceFormProps = {
   updateFormData: UpdateFormData
 }
 
-export function PartyIntroduceForm({ onNext, formData, updateFormData }: PartyIntroduceFormProps) {
+export function PartyIntroduceForm ({ onNext, formData, updateFormData }: PartyIntroduceFormProps) {
   const [partyName, setPartyName] = useState(formData.partyName)
   const [partyIntroduce, setPartyIntroduce] = useState(formData.partyDescription)
 
@@ -18,12 +18,12 @@ export function PartyIntroduceForm({ onNext, formData, updateFormData }: PartyIn
   const PARTY_INTRODUCE_MIN_LIMIT = 10
   const PARTY_INTRODUCE_MAX_LIMIT = 300
 
-  const isPartyNameValid =
-    partyName.length >= PARTY_NAME_MIN_LIMIT && partyName.length <= PARTY_NAME_MAX_LIMIT
+  const isPartyNameValid
+    = partyName.length >= PARTY_NAME_MIN_LIMIT && partyName.length <= PARTY_NAME_MAX_LIMIT
 
-  const isPartyIntroduceValid =
-    partyIntroduce.length >= PARTY_INTRODUCE_MIN_LIMIT &&
-    partyIntroduce.length <= PARTY_INTRODUCE_MAX_LIMIT
+  const isPartyIntroduceValid
+    = partyIntroduce.length >= PARTY_INTRODUCE_MIN_LIMIT
+    && partyIntroduce.length <= PARTY_INTRODUCE_MAX_LIMIT
 
   const isFormValid = isPartyNameValid && isPartyIntroduceValid
 
@@ -36,21 +36,23 @@ export function PartyIntroduceForm({ onNext, formData, updateFormData }: PartyIn
           <div className={styles.content}>
             <input
               className={styles.input}
-              placeholder={'파티 제목을 입력해주세요.'}
+              placeholder='파티 제목을 입력해주세요.'
               value={partyName}
               onChange={(e) => {
                 setPartyName(e.target.value)
               }}
             />
-            {partyName === '' ? (
-              <div className={styles.minMax}>
-                최소 {PARTY_NAME_MIN_LIMIT}자 / 최대 {PARTY_NAME_MAX_LIMIT}자
-              </div>
-            ) : (
-              <div className={styles.minMax}>
-                <strong>{partyName.length}자</strong> / 최대 {PARTY_NAME_MAX_LIMIT}자
-              </div>
-            )}
+            {partyName === ''
+              ? (
+                  <div className={styles.minMax}>
+                    최소 {PARTY_NAME_MIN_LIMIT}자 / 최대 {PARTY_NAME_MAX_LIMIT}자
+                  </div>
+                )
+              : (
+                  <div className={styles.minMax}>
+                    <strong>{partyName.length}자</strong> / 최대 {PARTY_NAME_MAX_LIMIT}자
+                  </div>
+                )}
           </div>
         </div>
         <div className={styles.question}>
@@ -58,21 +60,23 @@ export function PartyIntroduceForm({ onNext, formData, updateFormData }: PartyIn
           <div className={styles.content}>
             <textarea
               className={styles.textarea}
-              placeholder={'내용을 입력해주세요.'}
+              placeholder='내용을 입력해주세요.'
               value={partyIntroduce}
               onChange={(e) => {
                 setPartyIntroduce(e.target.value)
               }}
             />
-            {partyIntroduce === '' ? (
-              <div className={styles.minMax}>
-                최소 {PARTY_INTRODUCE_MIN_LIMIT}자 / 최대 {PARTY_INTRODUCE_MAX_LIMIT}자
-              </div>
-            ) : (
-              <div className={styles.minMax}>
-                <strong>{partyIntroduce.length}자</strong> / 최대 {PARTY_INTRODUCE_MAX_LIMIT}자
-              </div>
-            )}
+            {partyIntroduce === ''
+              ? (
+                  <div className={styles.minMax}>
+                    최소 {PARTY_INTRODUCE_MIN_LIMIT}자 / 최대 {PARTY_INTRODUCE_MAX_LIMIT}자
+                  </div>
+                )
+              : (
+                  <div className={styles.minMax}>
+                    <strong>{partyIntroduce.length}자</strong> / 최대 {PARTY_INTRODUCE_MAX_LIMIT}자
+                  </div>
+                )}
           </div>
         </div>
       </div>

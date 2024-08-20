@@ -5,7 +5,7 @@ import { createContext, useContext, useEffect } from 'react'
 const DateContext = createContext<dayjs.Dayjs>(dayjs())
 const DateActions = createContext<(date: dayjs.Dayjs) => void>(() => {})
 
-export function DateProvider({ children }: { children: React.ReactNode }) {
+export function DateProvider ({ children }: { children: React.ReactNode }) {
   const [date, setDate] = useLocalStorage('date', dayjs())
 
   useEffect(() => {

@@ -6,7 +6,7 @@ import { PartyDetailQuery, post_party_$partyId_participate, usePartyDetail } fro
 import { useCheckAdditionalInfo, useIsLogin } from '@/services/user'
 import { useState } from 'react'
 
-export default function PartyBottomButton({ id }: { id?: string }) {
+export default function PartyBottomButton ({ id }: { id?: string }) {
   const { data: isLogin, isLoading } = useIsLogin()
   const { data: partyData } = usePartyDetail(Number(id))
   const { data: checkAdditionalInfo } = useCheckAdditionalInfo(!isLoading && isLogin)
@@ -16,27 +16,29 @@ export default function PartyBottomButton({ id }: { id?: string }) {
 
   return (
     <>
-      <Chip className={styles.Button} variable="primary" asChild>
-        {partyData?.isParticipation ? (
-          <button>채팅방으로 가기!</button>
-        ) : (
-          <button
-            onClick={async () => {
-              if (!isLogin) {
-                onOpenAlertLogin(true)
-                return
-              }
-              if (checkAdditionalInfo?.isTrue) {
-                onOpenAlertAdditionalInfo(true)
-                return
-              }
-              await post_party_$partyId_participate(Number(id))
-              PartyDetailQuery.refetch(Number(id))
-            }}
-          >
-            지금 파티 참가하기!
-          </button>
-        )}
+      <Chip className={styles.Button} variable='primary' asChild>
+        {partyData?.isParticipation
+          ? (
+              <button>채팅방으로 가기!</button>
+            )
+          : (
+              <button
+                onClick={async () => {
+                  if (!isLogin) {
+                    onOpenAlertLogin(true)
+                    return
+                  }
+                  if (checkAdditionalInfo?.isTrue) {
+                    onOpenAlertAdditionalInfo(true)
+                    return
+                  }
+                  await post_party_$partyId_participate(Number(id))
+                  PartyDetailQuery.refetch(Number(id))
+                }}
+              >
+                지금 파티 참가하기!
+              </button>
+            )}
       </Chip>
 
       <LoginDialog open={openAlertLogin} onOpenChange={onOpenAlertLogin} />

@@ -12,10 +12,14 @@ type MyUpdateFormProps = {
   data?: MyProfile
 }
 
-export function MyUpdateForm({ checkValid }: MyUpdateFormProps) {
-  const { nickname, sex, skillLevel, description, profileImageUrl } = useMyInfoFormContext()
-  const { setNickName, setSex, setSkillLevel, setDescription, setProfileImageUrl } =
-    useMyInfoFormActions()
+export function MyUpdateForm ({ checkValid }: MyUpdateFormProps) {
+  const {
+    nickname, sex, skillLevel, description, profileImageUrl,
+  } = useMyInfoFormContext()
+  const {
+    setNickName, setSex, setSkillLevel, setDescription, setProfileImageUrl,
+  }
+    = useMyInfoFormActions()
 
   const updateProfileFile = useFileActions()
 
@@ -46,9 +50,9 @@ export function MyUpdateForm({ checkValid }: MyUpdateFormProps) {
         </div>
         <input
           className={styles.Input}
-          type="text"
+          type='text'
           value={nickname}
-          onChange={(e) => setNickName(e.target.value)}
+          onChange={e => setNickName(e.target.value)}
         />
       </fieldset>
 
@@ -76,7 +80,7 @@ export function MyUpdateForm({ checkValid }: MyUpdateFormProps) {
         <textarea
           className={styles.Textarea}
           value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          onChange={e => setDescription(e.target.value)}
           maxLength={150}
         />
         <div className={styles.TextCount}>

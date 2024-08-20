@@ -9,13 +9,13 @@ type Props = {
   setSkillLevel: (skill: SkillLevel) => void
 }
 
-export default function SelectSkill({ skillLevel, setSkillLevel }: Props) {
+export default function SelectSkill ({ skillLevel, setSkillLevel }: Props) {
   return (
     <BottomSheet>
       <BottomSheet.Trigger asChild>
         <button className={styles.Trigger} data-active={Boolean(skillLevel)}>
           {skillLevel === '' ? '실력을 선택해 주세요.' : `${skillLevel} 클라이머`}
-          <Icon className={styles.Icon} icon="ArrowDown" size="12" />
+          <Icon className={styles.Icon} icon='ArrowDown' size='12' />
         </button>
       </BottomSheet.Trigger>
       <BottomSheet.Content>
@@ -23,11 +23,11 @@ export default function SelectSkill({ skillLevel, setSkillLevel }: Props) {
           <div className={styles.Header}>
             <h2>실력</h2>
             <BottomSheet.Close className={styles.Close}>
-              <Icon icon="Close" size="24" />
+              <Icon icon='Close' size='24' />
             </BottomSheet.Close>
           </div>
           <ul className={styles.SkillList}>
-            {skillLevelOptions.map((skillLevelOption) => (
+            {skillLevelOptions.map(skillLevelOption => (
               <li key={skillLevelOption}>
                 <button
                   className={styles.SkillLevelOptionButton}
@@ -36,7 +36,7 @@ export default function SelectSkill({ skillLevel, setSkillLevel }: Props) {
                 >
                   {skillLevelOption} 클라이머
                   {skillLevelOption === skillLevel && (
-                    <Icon className={styles.Icon} icon="Check" size="20" />
+                    <Icon className={styles.Icon} icon='Check' size='20' />
                   )}
                 </button>
               </li>

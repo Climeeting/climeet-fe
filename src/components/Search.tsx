@@ -5,12 +5,12 @@ type Props = {
   onDelete?: () => void
 } & React.InputHTMLAttributes<HTMLInputElement>
 
-export function Search({ value, placeholder = '암장을 검색해 보세요.', onDelete, ...rest }: Props) {
+export function Search ({ value, placeholder = '암장을 검색해 보세요.', onDelete, ...rest }: Props) {
   return (
     <div className={styles.container}>
-      <input value={value} {...rest} placeholder={placeholder} type="text" />
+      <input value={value} {...rest} placeholder={placeholder} type='text' />
       <div className={styles.icon}>
-        <Icon icon="Search" />
+        <Icon icon='Search' />
       </div>
       {value && onDelete && (
         <button
@@ -22,7 +22,7 @@ export function Search({ value, placeholder = '암장을 검색해 보세요.', 
             e.currentTarget.blur()
           }}
         >
-          <Icon icon="DeleteCircle" size="15" />
+          <Icon icon='DeleteCircle' size='15' />
         </button>
       )}
     </div>

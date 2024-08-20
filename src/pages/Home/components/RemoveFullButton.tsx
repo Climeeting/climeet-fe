@@ -3,7 +3,7 @@ import styles from './RemoveFullButton.module.scss'
 import { useState } from 'react'
 import { useFilterActions } from '../hooks/useFilterContext'
 
-export default function RemoveFullButton() {
+export default function RemoveFullButton () {
   const actions = useFilterActions()
   const [checked, setChecked] = useState(false)
 
@@ -16,7 +16,7 @@ export default function RemoveFullButton() {
         setChecked(!checked)
       }}
     >
-      <Icon className={styles.Icon} icon="checkCircle" size="24" />
+      <Icon className={styles.Icon} icon='checkCircle' size='24' />
       마감 제거
     </button>
   )

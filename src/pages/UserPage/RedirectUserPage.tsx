@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useMyProfile } from '@/services/user'
 import { useNavigate } from 'react-router-dom'
 
-export default function RedirectUserPage() {
+export default function RedirectUserPage () {
   const { data } = useMyProfile()
   const navigate = useNavigate()
 

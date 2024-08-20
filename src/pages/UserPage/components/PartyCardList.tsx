@@ -11,7 +11,7 @@ import { InfiniteData } from '@tanstack/react-query'
 import NotFound from '@/components/NotFound'
 import { useDateRangeContext } from '../hook/useDateRangeContext'
 
-export default function PartyCardList({
+export default function PartyCardList ({
   data,
   fetchNextPage,
 }: {
@@ -40,7 +40,7 @@ export default function PartyCardList({
     <ul className={styles.PartyList}>
       {data.pages.map((parties, i) => (
         <React.Fragment key={i}>
-          {parties.content.map((party) => (
+          {parties.content.map(party => (
             <li key={party.id}>
               <Link to={`/party/${party.id}`}>
                 <PartyCard party={party} />
@@ -54,7 +54,7 @@ export default function PartyCardList({
   )
 }
 
-function PartyCardListQuery({ userId }: { userId: number }) {
+PartyCardList.Query = function PartyCardListQuery ({ userId }: { userId: number }) {
   const { startDate, endDate } = useDateRangeContext()
   const params = {
     userId,
@@ -66,40 +66,40 @@ function PartyCardListQuery({ userId }: { userId: number }) {
   return <PartyCardList data={data} fetchNextPage={fetchNextPage} />
 }
 
-PartyCardList.Query = PartyCardListQuery
+PartyCardList.Skeleton = function Skeleton () {
+  return (
+    <ul className={styles.PartyUl}>
+      {Array.from({ length: 5 }).map((_, index) => (
+        <li key={index}>
+          로딩중
+          {/* <PartyCard.Skeleton key={index} /> */}
+        </li>
+      ))}
+    </ul>
+  )
+}
 
-PartyCardList.Skeleton = () => (
-  <ul className={styles.PartyUl}>
-    {Array.from({ length: 5 }).map((_, index) => (
-      <li key={index}>
-        로딩중
-        {/* <PartyCard.Skeleton key={index} /> */}
-      </li>
-    ))}
-  </ul>
-)
-
-PartyCardList.Retry = ({ userId }: { userId: number }) => {
+PartyCardList.Retry = function Retry ({ userId }: { userId: number }) {
   return <NotFound refresh={() => UserPartyListQuery.refetch({ userId })} />
 }
 
-function PartyCard({ party }: { party: PartyListDto }) {
+function PartyCard ({ party }: { party: PartyListDto }) {
   return (
     <div className={styles.Card}>
       {party.partyImageUrl && (
         <div className={styles.Image}>
-          <img src={party.partyImageUrl} alt="thumbnail" />
+          <img src={party.partyImageUrl} alt='thumbnail' />
         </div>
       )}
       <div className={styles.Info}>
         <div className={styles.Time}>{dayjs(party.appointmentTime).format('YYYY.MM.DD')}</div>
         <div className={styles.Title}>{party.partyTitle}</div>
         <div className={styles.Address}>
-          <Icon icon="LocationFill" size={16} />
+          <Icon icon='LocationFill' size={16} />
           {party.gymName}
         </div>
       </div>
-      <Icon className={styles.ArrowIcon} icon="ArrowRight" size={16} />
+      <Icon className={styles.ArrowIcon} icon='ArrowRight' size={16} />
     </div>
   )
 }

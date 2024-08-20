@@ -5,7 +5,7 @@ import { PartyLocation } from './PartyLocation'
 import NotFound from '@/components/NotFound'
 import styles from './PartyDetail.module.scss'
 
-export default function PartyDetail({ data }: { data: PartyDetailType }) {
+export default function PartyDetail ({ data }: { data: PartyDetailType }) {
   return (
     <>
       <section>
@@ -27,16 +27,16 @@ export default function PartyDetail({ data }: { data: PartyDetailType }) {
   )
 }
 
-PartyDetail.Query = function Container({ id }: { id: number }) {
+PartyDetail.Query = function Container ({ id }: { id: number }) {
   const { data } = usePartyDetailSuspense(id)
   return <PartyDetail data={data} />
 }
 
-PartyDetail.Retry = ({ id }: { id: number }) => {
+PartyDetail.Retry = function Retry ({ id }: { id: number }) {
   return (
     <div className={styles.ErrorContainer}>
       <NotFound
-        message="파티 정보를 불러오는데 실패했습니다."
+        message='파티 정보를 불러오는데 실패했습니다.'
         refresh={() => {
           PartyDetailQuery.refetch(id)
         }}
@@ -45,7 +45,7 @@ PartyDetail.Retry = ({ id }: { id: number }) => {
   )
 }
 
-PartyDetail.Skeleton = () => {
+PartyDetail.Skeleton = function Skeleton () {
   return (
     <div>
       <h1>로딩중!~~</h1>

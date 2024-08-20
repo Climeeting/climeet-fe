@@ -6,12 +6,12 @@ type RadioButtonGroupProps = {
   list: string[]
 } & RadioGroupProps
 
-export function RadioButtonGroup({ list, ...rest }: RadioButtonGroupProps) {
+export function RadioButtonGroup ({ list, ...rest }: RadioButtonGroupProps) {
   return (
     <form>
       <RadioGroup.Root {...rest} className={styles.RadioGroupRoot}>
-        {list.map((el) => (
-          <RadioGroup.Item className={styles.RadioGroupItem} value={el}>
+        {list.map(el => (
+          <RadioGroup.Item key={el} className={styles.RadioGroupItem} value={el}>
             {el}
           </RadioGroup.Item>
         ))}

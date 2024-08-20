@@ -10,7 +10,7 @@ type CheckboxProps = {
   onCheckedChange: (checked: boolean) => void
 }
 
-export default function Checkbox({
+export default function Checkbox ({
   children,
   id,
   checked,
@@ -27,11 +27,13 @@ export default function Checkbox({
         id={id}
       >
         <CheckboxUi.Indicator className={styles.CheckboxIndicator}>
-          {checked ? (
-            <Icon icon={'CheckboxChecked'} size={16} />
-          ) : (
-            <Icon icon={'CheckboxEmpty'} size={16} />
-          )}
+          {checked
+            ? (
+                <Icon icon='CheckboxChecked' size={16} />
+              )
+            : (
+                <Icon icon='CheckboxEmpty' size={16} />
+              )}
         </CheckboxUi.Indicator>
       </CheckboxUi.Root>
       <label className={styles.Label} htmlFor={id}>

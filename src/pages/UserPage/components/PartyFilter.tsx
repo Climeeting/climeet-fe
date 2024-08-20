@@ -7,7 +7,7 @@ import ScrollPicker from '@/components/ScrollPicker'
 import dayjs from 'dayjs'
 import { useDateRangeAction, useDateRangeContext } from '../hook/useDateRangeContext'
 
-export default function PartyFilter() {
+export default function PartyFilter () {
   const [activeFilter, setActiveFilter] = useState<'전체' | '암장' | '자연'>('전체')
 
   return (
@@ -35,7 +35,7 @@ export default function PartyFilter() {
   )
 }
 
-function DateFilterBottomSheet() {
+function DateFilterBottomSheet () {
   const { startDate, endDate } = useDateRangeContext()
   const actions = useDateRangeAction()
   const [currentTab, setCurrentTab] = useState<'start' | 'end' | null>(null)
@@ -44,7 +44,7 @@ function DateFilterBottomSheet() {
     <BottomSheet>
       <BottomSheet.Trigger asChild>
         <button className={styles.DateFilterTrigger}>
-          <Icon className={styles.Icon} icon="CalendarLine" size="16" />
+          <Icon className={styles.Icon} icon='CalendarLine' size='16' />
           기간 선택
         </button>
       </BottomSheet.Trigger>
@@ -54,7 +54,7 @@ function DateFilterBottomSheet() {
           <div className={styles.Header}>
             <h2>기간 선택</h2>
             <BottomSheet.Close className={styles.Close}>
-              <Icon icon="Close" size="24" />
+              <Icon icon='Close' size='24' />
             </BottomSheet.Close>
           </div>
 
@@ -67,7 +67,7 @@ function DateFilterBottomSheet() {
                 if (!startDate) actions.start.init()
               }}
             >
-              <Icon className={styles.Icon} icon="CalendarLine" size="16" />
+              <Icon className={styles.Icon} icon='CalendarLine' size='16' />
               {startDate ? startDate.format('YYYY.MM.DD') : '시작 날짜'}
               {startDate && (
                 <button
@@ -79,7 +79,7 @@ function DateFilterBottomSheet() {
                   }}
                   className={styles.Delete}
                 >
-                  <Icon icon="Close" size="16" />
+                  <Icon icon='Close' size='16' />
                 </button>
               )}
             </button>
@@ -94,7 +94,7 @@ function DateFilterBottomSheet() {
                 if (!endDate) actions.end.init()
               }}
             >
-              <Icon className={styles.Icon} icon="CalendarLine" size="16" />
+              <Icon className={styles.Icon} icon='CalendarLine' size='16' />
               {endDate ? endDate.format('YYYY.MM.DD') : '종료 날짜'}
               {endDate && (
                 <button
@@ -106,7 +106,7 @@ function DateFilterBottomSheet() {
                   }}
                   className={styles.Delete}
                 >
-                  <Icon icon="Close" size="16" />
+                  <Icon icon='Close' size='16' />
                 </button>
               )}
             </button>
@@ -126,7 +126,7 @@ function DateFilterBottomSheet() {
   )
 }
 
-function DatePicker({
+function DatePicker ({
   defaultDate,
   date,
   setDate,
@@ -139,15 +139,15 @@ function DatePicker({
   const defaultMonth = defaultDate.get('month') + 1
   const defaultDay = defaultDate.get('date')
 
-  const YEARS = Array.from({ length: 2 }, (_, i) => 2023 + i).map((year) => ({
+  const YEARS = Array.from({ length: 2 }, (_, i) => 2023 + i).map(year => ({
     value: year,
     label: `${year}년`,
   }))
-  const MONTH = Array.from({ length: 12 }, (_, i) => i + 1).map((month) => ({
+  const MONTH = Array.from({ length: 12 }, (_, i) => i + 1).map(month => ({
     value: month,
     label: `${month}월`,
   }))
-  const DAYS = Array.from({ length: 31 }, (_, i) => i + 1).map((day) => ({
+  const DAYS = Array.from({ length: 31 }, (_, i) => i + 1).map(day => ({
     value: day,
     label: `${day}일`,
   }))

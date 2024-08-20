@@ -5,7 +5,7 @@ import Logo from '@/assets/logo_text.png'
 import TopBar from '@/components/NavBar/TopBar'
 import { useEffect } from 'react'
 
-export default function LoginPage() {
+export default function LoginPage () {
   const location = useLocation()
   const redirect = new URLSearchParams(location.search).get('redirect')
 
@@ -21,7 +21,7 @@ export default function LoginPage() {
         <TopBar.Left back />
       </TopBar>
       <div>
-        <img src={Logo} width={114} alt="logo" />
+        <img src={Logo} width={114} alt='logo' />
         <div className={styles.Bottom}>
           <KakaoLogin />
         </div>

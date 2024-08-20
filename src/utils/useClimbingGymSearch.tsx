@@ -14,7 +14,7 @@ export const useClimbingGymSearch = (value: string) => {
       setGymList(res.content)
     },
     500,
-    [value]
+    [value],
   )
 
   return {

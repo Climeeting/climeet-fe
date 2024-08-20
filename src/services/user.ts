@@ -61,7 +61,7 @@ export const useIsLogin = () => {
   return useQuery({
     queryKey: USER_KEY,
     queryFn: get_user_myProfile,
-    select: (data) => !!data,
+    select: data => !!data,
     // 1시간마다 새로고침
     refetchInterval: 60 * 60 * 1000,
     // 마운트시에 요청 보내지 않음
@@ -128,19 +128,19 @@ export const skillLevelOptions: MyInfo['skillLevel'][] = [
 export class AdditionalInfoAddapter {
   private value: MyInfo
 
-  constructor(value: MyInfo) {
+  constructor (value: MyInfo) {
     this.value = value
   }
 
-  get sex(): PostAdditonalInfoParams['sex'] {
+  get sex (): PostAdditonalInfoParams['sex'] {
     return sexFe2Be(this.value.sex)
   }
 
-  get skillLevel(): PostAdditonalInfoParams['skillLevel'] {
+  get skillLevel (): PostAdditonalInfoParams['skillLevel'] {
     return this.value.skillLevel
   }
 
-  adapt() {
+  adapt () {
     return {
       ...this.value,
       sex: this.sex,
@@ -167,23 +167,23 @@ type PutUserInformationBody = {
 export class PutUserInfomationAdapter {
   private value: MyProfileInfo
 
-  constructor(value: MyProfileInfo) {
+  constructor (value: MyProfileInfo) {
     this.value = value
   }
 
-  get userName() {
+  get userName () {
     return this.value.nickname
   }
 
-  get sex(): PutUserInformationBody['sex'] {
+  get sex (): PutUserInformationBody['sex'] {
     return sexFe2Be(this.value.sex)
   }
 
-  get skillLevel() {
+  get skillLevel () {
     return this.value.skillLevel
   }
 
-  adapt(): PutUserInformationBody {
+  adapt (): PutUserInformationBody {
     return {
       userName: this.userName,
       profileImageUrl: this.value.profileImageUrl,
@@ -205,20 +205,20 @@ export type MyProfileInfo = {
 export class MyProfileBe2FeAdpter {
   private value: MyProfile
 
-  constructor(value: MyProfile) {
+  constructor (value: MyProfile) {
     this.value = value
   }
 
-  get sex() {
+  get sex () {
     if (!this.value.sex) return this.value.sex
     return sexBe2Fe(this.value.sex)
   }
 
-  get skillLevel(): MyProfileInfo['skillLevel'] {
+  get skillLevel (): MyProfileInfo['skillLevel'] {
     return this.value.skillLevel as MyProfileInfo['skillLevel']
   }
 
-  adapt() {
+  adapt () {
     return {
       ...this.value,
       sex: this.sex,
@@ -287,7 +287,7 @@ export const useUserPartyList = (params: GetPartyListParams) => {
     queryKey: [...USER_PARTY_LIST_KEY, stringify(params)],
     queryFn: ({ pageParam }) => get_user_$userId_party({ ...params, page: pageParam ?? 0 }),
     initialPageParam: 0,
-    getNextPageParam: (lastPage) =>
+    getNextPageParam: lastPage =>
       lastPage.totalPages <= lastPage.pageable.pageNumber ? null : lastPage.pageable.pageNumber + 1,
     // 마운트시에 요청 보내지 않음
     retryOnMount: false,

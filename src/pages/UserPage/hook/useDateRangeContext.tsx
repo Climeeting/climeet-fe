@@ -39,7 +39,7 @@ const DateRangeAction = createContext<DateRangeAction>({
   },
 })
 
-export function DateRangeProvider({ children }: { children: React.ReactNode }) {
+export function DateRangeProvider ({ children }: { children: React.ReactNode }) {
   const [startDate, setStartDate] = useState<dayjs.Dayjs | null>(null)
   const [endDate, setEndDate] = useState<dayjs.Dayjs | null>(null)
 
@@ -91,10 +91,10 @@ export function DateRangeProvider({ children }: { children: React.ReactNode }) {
   )
 }
 
-export function useDateRangeContext() {
+export function useDateRangeContext () {
   return useContext(DateRangeContext)
 }
 
-export function useDateRangeAction() {
+export function useDateRangeAction () {
   return useContext(DateRangeAction)
 }

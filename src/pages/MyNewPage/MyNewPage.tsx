@@ -6,7 +6,7 @@ import { AdditionalInfoAddapter, MyInfo, post_user_additionalInfo } from '@/serv
 import { useLocation, useNavigate } from 'react-router-dom'
 import SelectSkill from '../../components/SelectSkill'
 
-export default function MyNewPage() {
+export default function MyNewPage () {
   const navigate = useNavigate()
   const { search } = useLocation()
   const redirect = new URLSearchParams(search).get('redirect')
@@ -69,7 +69,7 @@ export default function MyNewPage() {
                   new AdditionalInfoAddapter({
                     sex,
                     skillLevel,
-                  }).adapt()
+                  }).adapt(),
                 )
                 if (redirect) navigate(redirect, { replace: true })
                 else navigate('/', { replace: true })

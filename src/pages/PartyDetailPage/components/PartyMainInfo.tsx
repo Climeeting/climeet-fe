@@ -4,7 +4,7 @@ import { PartyDetailType } from '@/services/party'
 import Avatar from '@/components/Avatar'
 import { Link } from 'react-router-dom'
 
-export function PartyMainInfo({
+export function PartyMainInfo ({
   partyName,
   appointmentTime,
   climbingType,
@@ -22,15 +22,15 @@ export function PartyMainInfo({
 
       <ul className={styles.Ul}>
         <li className={styles.Li}>
-          <InfoItem icon={'CalendarLine'} title={'파티 일정'} content={appointmentTime} />
+          <InfoItem icon='CalendarLine' title='파티 일정' content={appointmentTime} />
         </li>
         <li className={styles.Li}>
-          <InfoItem icon={'TypeLine'} title={'파티 종목'} content={climbingType} />
+          <InfoItem icon='TypeLine' title='파티 종목' content={climbingType} />
         </li>
         <li className={styles.Li}>
           <InfoItem
-            icon={'PersonLine'}
-            title={'참여 인원'}
+            icon='PersonLine'
+            title='참여 인원'
             content={`${constraints} | ${currentParticipants}/${maxParticipants}명`}
           />
         </li>
@@ -41,7 +41,7 @@ export function PartyMainInfo({
       <div>
         <div className={styles.UserInfo}>
           <Link to={`/user/${masterId}`} className={styles.Profile}>
-            <Avatar src={masterProfileImageUrl} size="small" alt={masterName} />
+            <Avatar src={masterProfileImageUrl} size='small' alt={masterName} />
             <span>{masterName}</span>
           </Link>
           님이 진행하는 파티입니다.
@@ -52,11 +52,11 @@ export function PartyMainInfo({
   )
 }
 
-function InfoItem({ icon, title, content }: { icon: IconType; title: string; content: string }) {
+function InfoItem ({ icon, title, content }: { icon: IconType, title: string, content: string }) {
   return (
     <>
       <div className={styles.InfoTitle}>
-        <Icon icon={icon} size="16" />
+        <Icon icon={icon} size='16' />
         {title}
       </div>
       <div className={styles.InfoContent}>{content}</div>

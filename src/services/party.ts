@@ -50,7 +50,7 @@ export const usePartyList = (params?: GetPartyListParams) => {
     queryKey: [PARTY_LIST_KEY, params && stringify(params)],
     queryFn: ({ pageParam }) => get_party_list({ ...params, page: pageParam ?? 0 }),
     initialPageParam: 0,
-    getNextPageParam: (lastPage) =>
+    getNextPageParam: lastPage =>
       lastPage.totalPages <= lastPage.pageable.pageNumber ? null : lastPage.pageable.pageNumber + 1,
     // 마운트시에 요청 보내지 않음
     retryOnMount: false,
@@ -75,31 +75,31 @@ export const PartyListQuery = {
 export class PartyItem {
   private value: Party
 
-  constructor(value: Party) {
+  constructor (value: Party) {
     this.value = value
   }
 
-  get appointmentTime() {
+  get appointmentTime () {
     return dayjs(this.value.appointmentTime).format('A h:mm')
   }
 
-  get constraints() {
+  get constraints () {
     return constraintsBe2Fe(this.value.constraints)
   }
 
-  get climbingType() {
+  get climbingType () {
     return clibingBe2Fe(this.value.climbingType)
   }
 
-  get joinStatus() {
+  get joinStatus () {
     return JoinStatusBe2Fe(this.value.joinStatus)
   }
 
-  get levelRange() {
+  get levelRange () {
     return `V${this.value.minSkillLevel}부터 V${this.value.maxSkillLevel}까지`
   }
 
-  adapt() {
+  adapt () {
     return {
       ...this.value,
       constraints: this.constraints,
@@ -122,7 +122,7 @@ export type GetPartyDetailRes = {
   gymName: string
   partyDescription: string
   masterName: string
-  skillDistributions: { skillLevel: string; count: number }[]
+  skillDistributions: { skillLevel: string, count: number }[]
   approachDescription: string
   locationId: number
   minimumSkillLevel: number
@@ -131,21 +131,21 @@ export type GetPartyDetailRes = {
 }
 
 export class SurveyFormAdapter {
-  constructor(private value: GetPartyDetailRes) {}
+  constructor (private value: GetPartyDetailRes) {}
 
-  get cragName() {
+  get cragName () {
     return this.value.gymName
   }
 
-  get locationId() {
+  get locationId () {
     return this.value.locationId
   }
 
-  get maximumParticipationNumber() {
+  get maximumParticipationNumber () {
     return this.value.maxParticipants
   }
 
-  get gender(): GenderKo {
+  get gender (): GenderKo {
     switch (this.value.constraints) {
       case 'MALE_ONLY':
         return '남자만'
@@ -158,7 +158,7 @@ export class SurveyFormAdapter {
     }
   }
 
-  get climbingType(): ClimbingTypeKo {
+  get climbingType (): ClimbingTypeKo {
     switch (this.value.climbingType) {
       case 'BOULDERING':
         return '볼더링'
@@ -173,42 +173,42 @@ export class SurveyFormAdapter {
     }
   }
 
-  get partyName() {
+  get partyName () {
     return this.value.partyName
   }
 
-  get partyDescription() {
+  get partyDescription () {
     return this.value.partyDescription
   }
 
-  get partyDate() {
+  get partyDate () {
     return dayjs(this.value.appointmentTime)
   }
 
-  get partyTime() {
+  get partyTime () {
     /**
      * @desc "2024-06-17T18:00:00.000Z" -> "18:00"
      */
     return this.value.appointmentTime.substring(11, 16)
   }
 
-  get minSkillLevel() {
+  get minSkillLevel () {
     return this.value.minimumSkillLevel
   }
 
-  get maxSkillLevel() {
+  get maxSkillLevel () {
     return this.value.maximumSkillLevel
   }
 
-  get isNatural() {
+  get isNatural () {
     return this.value.isNatural
   }
 
-  get approachDescription() {
+  get approachDescription () {
     return this.value.approachDescription
   }
 
-  adapt(): PartySurveyFormData {
+  adapt (): PartySurveyFormData {
     return {
       cragName: this.cragName,
       locationId: this.locationId,
@@ -280,7 +280,7 @@ export const usePartyDetail = (partyId?: number) => {
     queryFn: () => get_party_$partyId_detail(partyId!),
     retryOnMount: false,
     refetchOnWindowFocus: false,
-    select: (data) => new PartyDetailAdapter(data).adapt(),
+    select: data => new PartyDetailAdapter(data).adapt(),
     enabled: !!partyId,
   })
 }
@@ -304,7 +304,7 @@ export const usePartyDetailSuspense = (partyId: number) => {
     queryFn: () => get_party_$partyId_detail(partyId),
     retryOnMount: false,
     refetchOnWindowFocus: false,
-    select: (data) => new PartyDetailAdapter(data).adapt(),
+    select: data => new PartyDetailAdapter(data).adapt(),
   })
 }
 
@@ -313,23 +313,23 @@ export type PartyDetailType = ReturnType<PartyDetailAdapter['adapt']>
 export class PartyDetailAdapter {
   private value: PartyDetail
 
-  constructor(value: PartyDetail) {
+  constructor (value: PartyDetail) {
     this.value = value
   }
 
-  get appointmentTime() {
+  get appointmentTime () {
     return dayjs(this.value.appointmentTime).format('M월 DD일 (dd) A h:mm')
   }
 
-  get climbingType() {
+  get climbingType () {
     return clibingBe2Fe(this.value.climbingType)
   }
 
-  get constraints() {
+  get constraints () {
     return constraintsBe2Fe(this.value.constraints)
   }
 
-  adapt() {
+  adapt () {
     return {
       ...this.value,
       appointmentTime: this.appointmentTime,
@@ -341,11 +341,11 @@ export class PartyDetailAdapter {
 export class PostPartyNewReqAdapter {
   private value: PartySurveyFormData
 
-  constructor(value: PartySurveyFormData) {
+  constructor (value: PartySurveyFormData) {
     this.value = value
   }
 
-  get constraints(): GenderEn {
+  get constraints (): GenderEn {
     switch (this.value.gender) {
       case '남녀 모두':
         return 'BOTH'
@@ -358,7 +358,7 @@ export class PostPartyNewReqAdapter {
     }
   }
 
-  get climbingType(): ClimbingTypeEn {
+  get climbingType (): ClimbingTypeEn {
     switch (this.value.climbingType) {
       case '볼더링':
         return 'BOULDERING'
@@ -373,44 +373,44 @@ export class PostPartyNewReqAdapter {
     }
   }
 
-  get maximumParticipationNumber(): number {
+  get maximumParticipationNumber (): number {
     return this.value.maximumParticipationNumber
   }
 
-  get partyTitle(): string {
+  get partyTitle (): string {
     return this.value.partyName
   }
 
-  get isNatural(): boolean {
+  get isNatural (): boolean {
     return this.value.isNatural
   }
 
-  get minSkillLevel(): number {
+  get minSkillLevel (): number {
     return this.value.minSkillLevel
   }
 
-  get maxSkillLevel(): number {
+  get maxSkillLevel (): number {
     return this.value.maxSkillLevel
   }
 
-  get locationId(): number {
+  get locationId (): number {
     return this.value.locationId
   }
 
   // @todo 임시로 설정
-  get participationDeadline(): string {
+  get participationDeadline (): string {
     return this.appointmentTime
   }
 
-  get approachDescription(): string {
+  get approachDescription (): string {
     return this.value.approachDescription
   }
 
-  get partyDescription(): string {
+  get partyDescription (): string {
     return this.value.partyDescription
   }
 
-  get appointmentTime(): string {
+  get appointmentTime (): string {
     const date = dayjs(this.value.partyDate).format('YYYY-MM-DD')
     const time = this.value.partyTime
     // @desc ss, ms는 입력받을 수 없으니 임의로 설정
@@ -419,7 +419,7 @@ export class PostPartyNewReqAdapter {
     return `${date}T${time}${dummyTime}`
   }
 
-  adapt(): PostPartyNewReq {
+  adapt (): PostPartyNewReq {
     return {
       constraints: this.constraints,
       climbingType: this.climbingType,
@@ -437,7 +437,7 @@ export class PostPartyNewReqAdapter {
   }
 }
 
-/************* PUT Party New **************/
+/** *********** PUT Party New **************/
 export type PutPartyEditReq = {
   constraints: GenderEn
   minSkillLevel: number
@@ -466,11 +466,11 @@ export const put_party_edit = async (partyId: number | string, reqBody: PutParty
 export class PutPartyReqAdapter {
   private value: PartySurveyFormData
 
-  constructor(value: PartySurveyFormData) {
+  constructor (value: PartySurveyFormData) {
     this.value = value
   }
 
-  get constraints(): GenderEn {
+  get constraints (): GenderEn {
     switch (this.value.gender) {
       case '남녀 모두':
         return 'BOTH'
@@ -483,7 +483,7 @@ export class PutPartyReqAdapter {
     }
   }
 
-  get climbingType(): ClimbingTypeEn {
+  get climbingType (): ClimbingTypeEn {
     switch (this.value.climbingType) {
       case '볼더링':
         return 'BOULDERING'
@@ -498,43 +498,43 @@ export class PutPartyReqAdapter {
     }
   }
 
-  get maximumParticipationNumber(): number {
+  get maximumParticipationNumber (): number {
     return this.value.maximumParticipationNumber
   }
 
-  get partyTitle(): string {
+  get partyTitle (): string {
     return this.value.partyName
   }
 
-  get isNatural(): boolean {
+  get isNatural (): boolean {
     return this.value.isNatural
   }
 
-  get minSkillLevel(): number {
+  get minSkillLevel (): number {
     return this.value.minSkillLevel
   }
 
-  get maxSkillLevel(): number {
+  get maxSkillLevel (): number {
     return this.value.maxSkillLevel
   }
 
-  get locationId(): number {
+  get locationId (): number {
     return this.value.locationId
   }
 
-  get participationDeadline(): string {
+  get participationDeadline (): string {
     return this.appointmentTime
   }
 
-  get approachDescription(): string {
+  get approachDescription (): string {
     return this.value.approachDescription
   }
 
-  get partyDescription(): string {
+  get partyDescription (): string {
     return this.value.partyDescription
   }
 
-  get appointmentTime(): string {
+  get appointmentTime (): string {
     const date = dayjs(this.value.partyDate).format('YYYY-MM-DD')
     const time = this.value.partyTime
     const dummyTime = ':00.000Z'
@@ -542,7 +542,7 @@ export class PutPartyReqAdapter {
     return `${date}T${time}${dummyTime}`
   }
 
-  adapt(): PutPartyEditReq {
+  adapt (): PutPartyEditReq {
     return {
       constraints: this.constraints,
       climbingType: this.climbingType,

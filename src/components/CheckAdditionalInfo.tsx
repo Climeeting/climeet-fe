@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import AdditionalInfoDialog from './Dialog/AdditionalInfoDialog'
 
-export default function CheckAdditionalInfo() {
+export default function CheckAdditionalInfo () {
   const { data: checkAdditionalInfo } = useCheckAdditionalInfo()
   const [open, onOpenChange] = useState(false)
 

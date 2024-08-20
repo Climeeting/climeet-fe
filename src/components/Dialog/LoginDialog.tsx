@@ -1,7 +1,7 @@
 import Dialog from '@/components/Dialog/Dialog'
 import { useNavigate } from 'react-router-dom'
 
-export default function LoginDialog({
+export default function LoginDialog ({
   open,
   onOpenChange,
 }: {

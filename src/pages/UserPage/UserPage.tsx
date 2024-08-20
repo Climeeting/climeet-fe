@@ -11,7 +11,7 @@ import PartyFilter from './components/PartyFilter'
 import NotFound from '@/components/NotFound'
 import { DateRangeProvider } from './hook/useDateRangeContext'
 
-export default function UserPage() {
+export default function UserPage () {
   const { id } = useParams<{ id: string }>()
   const isMine = useIsMine()
 
@@ -60,7 +60,7 @@ export default function UserPage() {
   )
 }
 
-function UserPageError() {
+function UserPageError () {
   return (
     <div className={styles.Error}>
       <NotFound />

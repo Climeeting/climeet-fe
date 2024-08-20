@@ -13,5 +13,5 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       {/* <Stack /> */}
       <RouterProvider router={router} />
     </QueryClientProvider>
-  </React.StrictMode>
+  </React.StrictMode>,
 )

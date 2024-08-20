@@ -9,7 +9,7 @@ type Props = {
   refresh?: () => void
 }
 
-export default function NotFound({ message, refresh, hasRefresh = true }: Props) {
+export default function NotFound ({ message, refresh, hasRefresh = true }: Props) {
   const navigate = useNavigate()
 
   return (
@@ -23,7 +23,7 @@ export default function NotFound({ message, refresh, hasRefresh = true }: Props)
             else navigate(0)
           }}
         >
-          <Icon className={styles.Icon} icon="Refresh" size={12} />
+          <Icon className={styles.Icon} icon='Refresh' size={12} />
           새로고침
         </button>
       )}

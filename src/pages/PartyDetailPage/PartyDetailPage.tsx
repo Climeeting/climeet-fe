@@ -7,7 +7,7 @@ import { ErrorBoundary } from 'react-error-boundary'
 import MoreMenu from './components/MoreMenu'
 import PartyBottomButton from './components/PartyBottomButton'
 
-export function PartyDetailPage() {
+export function PartyDetailPage () {
   const { id } = useParams<{ id: string }>()
 
   return (

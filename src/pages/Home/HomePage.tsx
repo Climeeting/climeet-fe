@@ -15,13 +15,13 @@ import RefreshButton from './components/RefreshButton'
 import RemoveFullButton from './components/RemoveFullButton'
 import classNames from 'classnames'
 
-export default function HomePage() {
+export default function HomePage () {
   return (
     <SearchContextProvider>
       <FilterProvider>
         <DateProvider>
           <div className={styles.container}>
-            <TopBar type="main" />
+            <TopBar type='main' />
             <main className={styles.main}>
               <div className={styles.SearchForm}>
                 {/* <Tabs tabs={['암장', '자연']} /> */}

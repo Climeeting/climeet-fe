@@ -8,7 +8,7 @@ import { MyInfoFormProvider } from './hooks/useMyInfoForm'
 import { SaveButton } from './components/SaveButton'
 import { FileProvider } from './hooks/useFileContext'
 
-export default function MyUpdatePage() {
+export default function MyUpdatePage () {
   const [checkValid, setCheckValid] = useState(false)
 
   const { data } = useMyProfile()

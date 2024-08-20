@@ -34,7 +34,7 @@ export const post_kakao_oauth_token = async (code: string) => {
         redirect_uri: import.meta.env.VITE_KAKAO_REDIRECT,
         code,
         client_secret: import.meta.env.VITE_KAKAO_CLIENT_SECRET,
-      })
+      }),
     )
 
     return res.data.access_token

@@ -5,9 +5,11 @@ import classNames from 'classnames'
 import { PartyItem } from '@/services/party'
 import { Party } from '@/pages/types/api'
 
-export default function PartyCard({ party }: { party: Party }) {
-  const { appointmentTime, partyTitle, gymName, constraints, joinStatus, levelRange } =
-    new PartyItem(party).adapt()
+export default function PartyCard ({ party }: { party: Party }) {
+  const {
+    appointmentTime, partyTitle, gymName, constraints, joinStatus, levelRange,
+  }
+    = new PartyItem(party).adapt()
 
   return (
     <div className={styles.Container}>
@@ -33,15 +35,15 @@ export default function PartyCard({ party }: { party: Party }) {
       <section className={styles.Section}>
         <div>
           <div className={styles.Info}>
-            <Icon icon={'Star'} size="14" />
+            <Icon icon='Star' size='14' />
             {levelRange}
           </div>
           <div className={styles.Info}>
-            <Icon icon={'PersonFill'} size="14" />
+            <Icon icon='PersonFill' size='14' />
             {constraints}
           </div>
         </div>
-        <Chip className={styles.Chip} variable={'primary'}>
+        <Chip className={styles.Chip} variable='primary'>
           {joinStatus}
         </Chip>
       </section>

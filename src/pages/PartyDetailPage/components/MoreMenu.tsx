@@ -6,7 +6,7 @@ import Icon from '@/components/Icon/Icon'
 import Dialog from '@/components/Dialog/Dialog'
 import Dropdown from '@/components/Dropdown'
 
-export default function MoreMenu({ id }: { id?: string }) {
+export default function MoreMenu ({ id }: { id?: string }) {
   const navigate = useNavigate()
   const { data: isLogin } = useIsLogin()
   const [openDropdown, onOpenDropdown] = useState(false)
@@ -21,12 +21,12 @@ export default function MoreMenu({ id }: { id?: string }) {
     <>
       <Dropdown open={openDropdown} onOpenChange={onOpenDropdown}>
         <Dropdown.Trigger>
-          <Icon icon="More" />
+          <Icon icon='More' />
         </Dropdown.Trigger>
         <Dropdown.Content>
           <Dropdown.Item>
             <p>파티 수정하기</p>
-            <Icon size="16" icon="Pencil" />
+            <Icon size='16' icon='Pencil' />
           </Dropdown.Item>
 
           <Dropdown.Item
@@ -37,7 +37,7 @@ export default function MoreMenu({ id }: { id?: string }) {
             }}
           >
             <p>파티 삭제하기</p>
-            <Icon size="16" icon="Remove" />
+            <Icon size='16' icon='Remove' />
           </Dropdown.Item>
         </Dropdown.Content>
       </Dropdown>

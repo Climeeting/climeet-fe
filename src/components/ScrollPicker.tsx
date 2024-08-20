@@ -4,7 +4,7 @@ import styles from './ScrollPicker.module.scss'
 const SCROLL_DEBOUNCE_TIME = 100
 const ITEM_HEIGHT = 47
 
-type Option = { value: string | number; label: string } | null
+type Option = { value: string | number, label: string } | null
 
 interface ScrollPickerProps {
   list: Option[]
@@ -54,7 +54,7 @@ const ScrollPicker = ({ list, onSelectedChange, defaultValue }: ScrollPickerProp
   }
 
   const findIndex = (target: Option) => {
-    return newList.findIndex((item) => item?.value === target?.value)
+    return newList.findIndex(item => item?.value === target?.value)
   }
 
   useEffect(() => {
@@ -77,13 +77,13 @@ const ScrollPicker = ({ list, onSelectedChange, defaultValue }: ScrollPickerProp
       {newList.map((item, index) => (
         <li
           key={index}
-          ref={(el) => (itemRefs.current[index] = el)}
+          ref={el => (itemRefs.current[index] = el)}
           className={`${styles.ListItem} ${index === selectedIndex && styles.selected}`}
           onClick={() => {
             if (item === null) return
             setSelectedIndex(index)
             moveScroll(index)
-            onSelectedChange && onSelectedChange(item)
+            onSelectedChange?.(item)
           }}
         >
           {item?.label}

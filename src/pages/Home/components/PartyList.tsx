@@ -9,7 +9,7 @@ import { useFilterParams } from '../hooks/useFilterParams'
 import EmptyParty from '@/assets/empty_party.png'
 import NotFound from '@/components/NotFound'
 
-export default function PartyList() {
+export default function PartyList () {
   const params = useFilterParams()
   const { data, fetchNextPage } = usePartyList(params)
   const ref = useLoadMore(fetchNextPage)
@@ -26,7 +26,7 @@ export default function PartyList() {
     <ul className={styles.PartyUl}>
       {data.pages.map((parties, i) => (
         <React.Fragment key={i}>
-          {parties.content.map((party) => (
+          {parties.content.map(party => (
             <li key={party.id}>
               <Link to={`/party/${party.id}`}>
                 <PartyCard party={party} />
@@ -53,7 +53,7 @@ PartyList.Skeleton = () => (
 PartyList.Retry = () => {
   return (
     <div className={styles.PartyError}>
-      <NotFound message="파티 목록 로딩에 실패했습니다." refresh={PartyListQuery.refetch} />
+      <NotFound message='파티 목록 로딩에 실패했습니다.' refresh={PartyListQuery.refetch} />
     </div>
   )
 }

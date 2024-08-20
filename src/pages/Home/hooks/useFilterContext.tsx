@@ -36,26 +36,26 @@ export const initialFilter: FilterContextType = {
 
 const FilterContext = createContext<FilterContextType>(defaultFilter)
 
-export function useFilter() {
+export function useFilter () {
   const [addressList, setAddressList] = useLocalStorage<FilterContextType['addressList']>(
     'addressList',
-    initialFilter.addressList
+    initialFilter.addressList,
   )
   const [clibing, setClibing] = useLocalStorage<FilterContextType['clibing']>(
     'clibing',
-    initialFilter.clibing
+    initialFilter.clibing,
   )
   const [constraints, setconstraints] = useLocalStorage<FilterContextType['constraints']>(
     'constraints',
-    initialFilter.constraints
+    initialFilter.constraints,
   )
   const [status, setStatus] = useLocalStorage<FilterContextType['status']>(
     'status',
-    initialFilter.status
+    initialFilter.status,
   )
   const [skillLevel, setSkillLevel] = useLocalStorage<FilterContextType['skillLevel']>(
     'skillLevel',
-    initialFilter.skillLevel
+    initialFilter.skillLevel,
   )
 
   const toggleAddressList = (addressList: AddressOption | '') => {
@@ -64,7 +64,7 @@ export function useFilter() {
       const newAddressList = toggleDuplicates(prev, addressList)
       if (addressList === '모든 지역' || newAddressList.length >= addressOptions.length - 1)
         return ['모든 지역']
-      return newAddressList.filter((item) => item !== '모든 지역')
+      return newAddressList.filter(item => item !== '모든 지역')
     })
   }
 
@@ -140,31 +140,31 @@ const ActionsContext = createContext<{
   init: () => void
   update: (filters?: FilterContextType) => void
 }>({
-  addressList: {
-    toggle: () => {},
-    init: () => {},
-  },
-  clibing: {
-    toggle: () => {},
-    init: () => {},
-  },
-  constraints: {
-    toggle: () => {},
-    init: () => {},
-  },
-  status: {
-    toggle: () => {},
-    init: () => {},
-  },
-  skillLevel: {
-    toggle: () => {},
-    init: () => {},
-  },
-  init: () => {},
-  update: () => {},
-})
+        addressList: {
+          toggle: () => {},
+          init: () => {},
+        },
+        clibing: {
+          toggle: () => {},
+          init: () => {},
+        },
+        constraints: {
+          toggle: () => {},
+          init: () => {},
+        },
+        status: {
+          toggle: () => {},
+          init: () => {},
+        },
+        skillLevel: {
+          toggle: () => {},
+          init: () => {},
+        },
+        init: () => {},
+        update: () => {},
+      })
 
-export function FilterProvider({ children }: PropsWithChildren) {
+export function FilterProvider ({ children }: PropsWithChildren) {
   const { states, actions } = useFilter()
 
   return (
@@ -178,7 +178,7 @@ const toggleDuplicates = <T,>(prev: T[], item: T) => {
   // 최소 1개는 선택해야함
   if (prev.length === 1 && prev.includes(item)) return prev
   if (prev.includes(item)) {
-    return prev.filter((curItem) => curItem !== item)
+    return prev.filter(curItem => curItem !== item)
   }
   return [...prev, item]
 }
@@ -249,27 +249,27 @@ export const skillLevelOptions: SkillLevel[] = [
 export class PartyListParams {
   private value: FilterContextType
 
-  constructor(value: FilterContextType) {
+  constructor (value: FilterContextType) {
     this.value = value
   }
 
-  get constraints(): GetPartyListParams['constraints'] {
+  get constraints (): GetPartyListParams['constraints'] {
     return constraintsFe2Be(this.value.constraints)
   }
 
-  get climbingType(): GetPartyListParams['climbingType'] {
+  get climbingType (): GetPartyListParams['climbingType'] {
     return clibingFe2Be(this.value.clibing)
   }
 
-  get address1List(): GetPartyListParams['address1List'] {
-    return this.value.addressList.map((address) => address as string)
+  get address1List (): GetPartyListParams['address1List'] {
+    return this.value.addressList.map(address => address as string)
   }
 
-  get skillLevel(): GetPartyListParams['skillLevel'] {
+  get skillLevel (): GetPartyListParams['skillLevel'] {
     return this.value.skillLevel as SkillLevel
   }
 
-  adapt(): GetPartyListParams {
+  adapt (): GetPartyListParams {
     return {
       constraints: this.constraints,
       climbingType: this.climbingType,

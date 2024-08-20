@@ -4,19 +4,19 @@ import { RefObject, useEffect, useRef, useState } from 'react'
 /**
  * 카카오맵 스크립트 삽입하기
  */
-export function useKakaoMap() {
+export function useKakaoMap () {
   return useScript(
     `//dapi.kakao.com/v2/maps/sdk.js?appkey=${import.meta.env.VITE_KAKAO_JAVASCRIPT_KEY}&libraries=services&autoload=false`,
     {
       removeOnUnmount: false,
-    }
+    },
   )
 }
 
 /**
  * 카카오맵 등록 여부 확인하기
  */
-export function useKakaoMapReady() {
+export function useKakaoMapReady () {
   const [ready, setReady] = useState(false)
   useEffect(() => {
     window.kakao.maps.load(() => {
@@ -30,21 +30,21 @@ export function useKakaoMapReady() {
 /**
  * 카카오맵 초기 설정하기
  */
-export function useKakaoMapInit() {
+export function useKakaoMapInit () {
   const ready = useKakaoMapReady()
   const mapRef = useRef<HTMLDivElement>(null)
   const map = useRef<kakao.maps.Map | null>(null)
 
   useEffect(
-    function createMap() {
+    function createMap () {
       if (!mapRef.current || !ready) return
       const options = {
-        center: new kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
-        level: 4, //지도의 레벨(확대, 축소 정도)
+        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표.
+        level: 4, // 지도의 레벨(확대, 축소 정도)
       } as kakao.maps.MapOptions
-      map.current = new kakao.maps.Map(mapRef.current!, options) //지도 생성 및 객체 리턴
+      map.current = new kakao.maps.Map(mapRef.current!, options) // 지도 생성 및 객체 리턴
     },
-    [ready, mapRef.current]
+    [ready, mapRef.current],
   )
 
   return { mapRef, map }
@@ -54,13 +54,13 @@ export function useKakaoMapInit() {
  * 주소로 마커와 텍스트 표시하기 (정적 이미지맵)
  * https://apis.map.kakao.com/web/sample/staticMapWithMarkerText/
  */
-export function useKakaoStaticMap({ name, address }: { name: string; address: string }) {
+export function useKakaoStaticMap ({ name, address }: { name: string, address: string }) {
   const ready = useKakaoMapReady()
   const mapRef = useRef<HTMLDivElement>(null)
   const map = useRef<kakao.maps.StaticMap | null>(null)
 
   useEffect(
-    function address2coord() {
+    function address2coord () {
       if (!ready || !name || !address) return
       const geocoder = new kakao.maps.services.Geocoder()
 
@@ -73,7 +73,7 @@ export function useKakaoStaticMap({ name, address }: { name: string; address: st
         }
       })
     },
-    [mapRef.current, name, address, ready]
+    [mapRef.current, name, address, ready],
   )
 
   const drawMap = (position: kakao.maps.LatLng) => {
@@ -86,7 +86,7 @@ export function useKakaoStaticMap({ name, address }: { name: string; address: st
       }, // 이미지 지도에 표시할 마커
     }
 
-    map.current = new kakao.maps.StaticMap(mapRef.current!, staticMapOption) //지도 생성 및 객체 리턴
+    map.current = new kakao.maps.StaticMap(mapRef.current!, staticMapOption) // 지도 생성 및 객체 리턴
   }
 
   return { mapRef, map }
@@ -96,7 +96,7 @@ export function useKakaoStaticMap({ name, address }: { name: string; address: st
  * 주소로 장소 커스텀하게 표시하기
  * https://apis.map.kakao.com/web/sample/addr2coord/
  */
-export function useKakaoGeocoder({
+export function useKakaoGeocoder ({
   map,
   address,
   name,
@@ -108,7 +108,7 @@ export function useKakaoGeocoder({
   const ready = useKakaoMapReady()
 
   useEffect(
-    function address2coord() {
+    function address2coord () {
       if (!map.current || !ready) return
       const geocoder = new kakao.maps.services.Geocoder()
 
@@ -134,7 +134,7 @@ export function useKakaoGeocoder({
         }
       })
     },
-    [ready, map.current]
+    [ready, map.current],
   )
 }
 

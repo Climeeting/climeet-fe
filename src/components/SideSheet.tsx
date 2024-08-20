@@ -3,7 +3,7 @@ import styles from './SideSheet.module.scss'
 import * as Dialog from '@radix-ui/react-dialog'
 
 type Props = { onClickOverlay?: () => void } & PropsWithChildren
-function SideSheetContent({ children, onClickOverlay }: Props) {
+function SideSheetContent ({ children, onClickOverlay }: Props) {
   return (
     <Dialog.Portal>
       <Dialog.Overlay onClick={onClickOverlay} className={styles.Overlay} />

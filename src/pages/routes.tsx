@@ -20,31 +20,31 @@ import DeleteAccountPage from '@/pages/DeleteAccountPage/DeleteAccountPage.tsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<Layout />}>
+    <Route path='/' element={<Layout />}>
       <Route index element={<HomePage />} />
-      <Route path="oauth" element={<OauthPage />} />
+      <Route path='oauth' element={<OauthPage />} />
       <Route element={<CheckIsLogout />}>
-        <Route path="login" element={<LoginPage />} />
+        <Route path='login' element={<LoginPage />} />
       </Route>
       <Route element={<CheckIsLogin />}>
-        <Route path="/user/my" element={<RedirectUserPage />} />
-        <Route path="/user/my/new" element={<MyNewPage />} />
-        <Route path="/user/my/update" element={<MyUpdatePage />} />
-        <Route path="/user/delete-account" element={<DeleteAccountPage />} />
+        <Route path='/user/my' element={<RedirectUserPage />} />
+        <Route path='/user/my/new' element={<MyNewPage />} />
+        <Route path='/user/my/update' element={<MyUpdatePage />} />
+        <Route path='/user/delete-account' element={<DeleteAccountPage />} />
         <Route element={<CheckAdditionalInfo />}>
-          <Route path="party-suervey" element={<PartySurveyFormPage />} />
+          <Route path='party-suervey' element={<PartySurveyFormPage />} />
         </Route>
-        <Route path="party-suervey/:id" element={<PartyEditFormPage />} />
+        <Route path='party-suervey/:id' element={<PartyEditFormPage />} />
       </Route>
-      <Route path="/chat" element={<ChatPage />} />
-      <Route path="/chat/:id" element={<ChatRoomPage />} />
-      <Route path="/user/:id" element={<UserPage />} />
-      <Route path="/party/:id" element={<PartyDetailPage />} />
+      <Route path='/chat' element={<ChatPage />} />
+      <Route path='/chat/:id' element={<ChatRoomPage />} />
+      <Route path='/user/:id' element={<UserPage />} />
+      <Route path='/party/:id' element={<PartyDetailPage />} />
 
-      <Route path="404" element={<NotFoundPage />} />
-      <Route path="*" element={<Navigate to="/404" />} />
-    </Route>
-  )
+      <Route path='404' element={<NotFoundPage />} />
+      <Route path='*' element={<Navigate to='/404' />} />
+    </Route>,
+  ),
 )
 
 export default router

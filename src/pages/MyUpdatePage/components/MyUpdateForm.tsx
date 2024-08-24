@@ -91,7 +91,7 @@ export function MyUpdateForm ({ checkValid }: MyUpdateFormProps) {
       </fieldset>
 
       <fieldset className={styles.Fileldset}>
-        <Link className={styles.Link} to={'/user/delete-account'}>
+        <Link className={styles.Link} to='/user/delete-account'>
           회원탈퇴
         </Link>
       </fieldset>

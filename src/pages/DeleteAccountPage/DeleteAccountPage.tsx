@@ -5,7 +5,7 @@ import Chip from '@/components/Chip.tsx'
 import TopBar from '@/components/NavBar/TopBar.tsx'
 import DeleteAccountImg from '@/assets/delete-account.png'
 
-export default function DeleteAccountPage() {
+export default function DeleteAccountPage () {
   const [isAgree, setIsAgree] = useState(false)
   const [reason, setReason] = useState('')
   const disabled = !isAgree
@@ -13,7 +13,7 @@ export default function DeleteAccountPage() {
   return (
     <div className={styles.Container}>
       <TopBar>
-        <TopBar.Center title="회원탈퇴" />
+        <TopBar.Center title='회원탈퇴' />
         <TopBar.Left back />
       </TopBar>
       <div className={styles.Main}>
@@ -35,7 +35,7 @@ export default function DeleteAccountPage() {
             }}
             value={reason}
             className={styles.Textarea}
-            placeholder="탈퇴 사유를 입력해 주세요."
+            placeholder='탈퇴 사유를 입력해 주세요.'
             maxLength={500}
           />
           <div className={styles.MinMax}>{`${reason.length}자/최대500자`}</div>
@@ -55,7 +55,7 @@ export default function DeleteAccountPage() {
         </div>
       </div>
       <div className={styles.Bottom}>
-        <Checkbox id="agree" checked={isAgree} onCheckedChange={setIsAgree}>
+        <Checkbox id='agree' checked={isAgree} onCheckedChange={setIsAgree}>
           <span className={styles.Text}>안내 사항을 확인했으며, 이에 동의합니다.</span>
         </Checkbox>
         <Chip className={styles.Button} variable={disabled ? 'default' : 'primary'} asChild>

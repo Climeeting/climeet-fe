@@ -4,7 +4,7 @@ import { IndoorStep } from './components/Steps.tsx'
 import { ClimbingTypeKo, GenderKo } from '@/pages/PartySurveyForm/components/PartyConditionForm.tsx'
 import dayjs from 'dayjs'
 
-export function PartySurveyFormPage() {
+export function PartySurveyFormPage () {
   const { formData, updateFormData } = usePartySurveyForm()
 
   return (

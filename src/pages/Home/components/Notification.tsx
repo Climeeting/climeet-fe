@@ -13,10 +13,10 @@ import {
 import { useNavigate } from 'react-router-dom'
 import dayjs from 'dayjs'
 
-export default function Notification() {
+export default function Notification () {
   const [open, onOpenChange] = useState(false)
   const { data } = useNotification()
-  const isAlarmsExist = !!data?.some((el) => !el.isRead)
+  const isAlarmsExist = !!data?.some(el => !el.isRead)
 
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
@@ -31,7 +31,7 @@ export default function Notification() {
   )
 }
 
-function Content({ data }: { data: GetNotificationResDTO }) {
+function Content ({ data }: { data: GetNotificationResDTO }) {
   useEffect(() => {
     return () => {
       post_notification_mark_as_read_all()
@@ -45,19 +45,19 @@ function Content({ data }: { data: GetNotificationResDTO }) {
           <TopBar.Left asChild>
             <Dialog.Close asChild>
               <button className={styles.Left}>
-                <Icon icon="ArrowLeft" size={24} />
+                <Icon icon='ArrowLeft' size={24} />
               </button>
             </Dialog.Close>
           </TopBar.Left>
-          <TopBar.Center title="알림" />
+          <TopBar.Center title='알림' />
         </TopBar>
       </div>
-      {data?.map((el) => <NotificationCard notification={el} />)}
+      {data?.map(el => <NotificationCard notification={el} />)}
     </Dialog.Content>
   )
 }
 
-function NotificationCard({ notification }: { notification: GetNotificationResDTO[number] }) {
+function NotificationCard ({ notification }: { notification: GetNotificationResDTO[number] }) {
   const navigate = useNavigate()
 
   const getRelativeTime = (dateString: string) => {
@@ -96,7 +96,7 @@ function NotificationCard({ notification }: { notification: GetNotificationResDT
     >
       <div className={styles.Left}>
         <div>
-          <Avatar src={notification.thumbnail} alt={'썸네일 이미지'} className={styles.Avatar} />
+          <Avatar src={notification.thumbnail} alt='썸네일 이미지' className={styles.Avatar} />
         </div>
         <div>
           <div className={styles.PartyName}>{notification.notificationTitle}</div>

@@ -41,6 +41,7 @@ export function PartyIntroduceForm ({ onNext, formData, updateFormData }: PartyI
               onChange={(e) => {
                 setPartyName(e.target.value)
               }}
+              maxLength={20}
             />
             {partyName === ''
               ? (
@@ -65,6 +66,7 @@ export function PartyIntroduceForm ({ onNext, formData, updateFormData }: PartyI
               onChange={(e) => {
                 setPartyIntroduce(e.target.value)
               }}
+              maxLength={300}
             />
             {partyIntroduce === ''
               ? (

@@ -2,16 +2,11 @@ import Chip from '@/components/Chip'
 import styles from './MyNewPage.module.scss'
 import RadioSex from './components/RadioSex'
 import { useState } from 'react'
-import {
-  AdditionalInfoAddapter,
-  MyInfo,
-  post_user_additionalInfo,
-  skillLevelOptions,
-} from '@/services/user'
-import Select from '@/components/Select'
+import { AdditionalInfoAddapter, MyInfo, post_user_additionalInfo } from '@/services/user'
 import { useLocation, useNavigate } from 'react-router-dom'
+import SelectSkill from '../../components/SelectSkill'
 
-export default function MyNewPage() {
+export default function MyNewPage () {
   const navigate = useNavigate()
   const { search } = useLocation()
   const redirect = new URLSearchParams(search).get('redirect')
@@ -55,21 +50,7 @@ export default function MyNewPage() {
             {warningSkillLevel ? <p className={styles.Warning}>실력을 선택해주세요.</p> : null}
           </div>
 
-          <Select
-            value={skillLevel || '실력 없음'}
-            onValueChange={(newSkillLevel) => setSkillLevel(newSkillLevel as MyInfo['skillLevel'])}
-            name="skillLevel"
-            placeholder={'실력 없음'}
-          >
-            <Select.Item disabled value={'실력 없음'}>
-              실력 없음
-            </Select.Item>
-            {skillLevelOptions.map((skillLevel) => (
-              <Select.Item key={skillLevel} value={skillLevel}>
-                {skillLevel}
-              </Select.Item>
-            ))}
-          </Select>
+          <SelectSkill skillLevel={skillLevel} setSkillLevel={setSkillLevel} />
         </fieldset>
       </div>
 
@@ -88,7 +69,7 @@ export default function MyNewPage() {
                   new AdditionalInfoAddapter({
                     sex,
                     skillLevel,
-                  }).adapt()
+                  }).adapt(),
                 )
                 if (redirect) navigate(redirect, { replace: true })
                 else navigate('/', { replace: true })

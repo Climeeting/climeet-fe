@@ -6,19 +6,27 @@ import { usePartyList } from '@/services/party'
 import { PartyListQuery } from '@/services/party'
 import { useLoadMore } from '@/utils/useLoadMore'
 import { useFilterParams } from '../hooks/useFilterParams'
+import EmptyParty from '@/assets/empty_party.png'
+import NotFound from '@/components/NotFound'
 
-export default function PartyList() {
+export default function PartyList () {
   const params = useFilterParams()
   const { data, fetchNextPage } = usePartyList(params)
   const ref = useLoadMore(fetchNextPage)
 
-  if (data.pages[0].totalElements === 0) return <div>데이터가 없습니다.</div>
+  if (data.pages[0].totalElements === 0)
+    return (
+      <div className={styles.PartyEmpty}>
+        <img src={EmptyParty} />
+        <span>진행 중인 파티가 없습니다.</span>
+      </div>
+    )
 
   return (
     <ul className={styles.PartyUl}>
       {data.pages.map((parties, i) => (
         <React.Fragment key={i}>
-          {parties.content.map((party) => (
+          {parties.content.map(party => (
             <li key={party.id}>
               <Link to={`/party/${party.id}`}>
                 <PartyCard party={party} />
@@ -44,9 +52,8 @@ PartyList.Skeleton = () => (
 
 PartyList.Retry = () => {
   return (
-    <div>
-      <div>오류가 발생했습니다.</div>
-      <button onClick={() => PartyListQuery.refetch}>재시도</button>
+    <div className={styles.PartyError}>
+      <NotFound message='파티 목록 로딩에 실패했습니다.' refresh={PartyListQuery.refetch} />
     </div>
   )
 }

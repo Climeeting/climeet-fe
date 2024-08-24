@@ -4,7 +4,7 @@ import Spinner from '@/components/Spinner'
 import styles from './OauthPage.module.scss'
 import { useNavigate } from 'react-router-dom'
 
-export default function OauthPage() {
+export default function OauthPage () {
   const code = useSearchParam('code')
   const navigate = useNavigate()
 

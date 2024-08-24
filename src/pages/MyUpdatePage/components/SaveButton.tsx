@@ -9,7 +9,7 @@ import styles from './SaveButton.module.scss'
 import { useFileContext } from '../hooks/useFileContext'
 import { uploadFileS3 } from '@/utils/s3'
 
-export function SaveButton({ onClick }: { onClick: () => void }) {
+export function SaveButton ({ onClick }: { onClick: () => void }) {
   const info = useMyInfoFormContext()
   const file = useFileContext()
   const { data } = useMyProfile()

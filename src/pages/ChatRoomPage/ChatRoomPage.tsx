@@ -7,7 +7,7 @@ import ChatSidebar from '@/pages/ChatRoomPage/components/ChatSidebar.tsx'
 import Avatar from '@/components/Avatar.tsx'
 import { useVisualViewport } from '@/pages/ChatRoomPage/hooks/useVisualViewport.tsx'
 
-function ChatRoomPage() {
+function ChatRoomPage () {
   const { wrapperRef, containerRef } = useVisualViewport()
 
   return (
@@ -30,12 +30,12 @@ function ChatRoomPage() {
           <div className={styles.MemberEnter}>이성진 님이 들어왔습니다.</div>
         </div>
         <div className={styles.OtherMessageContainer}>
-          <Avatar src={''} alt={'아바타'} size={'small'} className={styles.MemberAvatar} />
+          <Avatar src='' alt='아바타' size='small' className={styles.MemberAvatar} />
           <div>
             <div className={styles.MemberName}>양혜윤</div>
             <div className={styles.OtherMessageList}>
-              {Array.from({ length: 20 }).map(() => (
-                <div className={styles.MessageItem}>안녕하세요 친해져요~</div>
+              {Array.from({ length: 20 }).map((_, index) => (
+                <div key={index} className={styles.MessageItem}>안녕하세요 친해져요~</div>
               ))}
             </div>
           </div>
@@ -44,16 +44,16 @@ function ChatRoomPage() {
         <div className={styles.MyMessageContainer}>
           <div className={styles.SendTime}>오전 10:42</div>
           <div className={styles.MyMessageList}>
-            {Array.from({ length: 4 }).map(() => (
-              <div className={styles.MessageItem}>안녕하세요 친해져요~</div>
+            {Array.from({ length: 4 }).map((_, index) => (
+              <div key={index} className={styles.MessageItem}>안녕하세요 친해져요~</div>
             ))}
           </div>
         </div>
       </div>
       <div className={styles.Bottom}>
-        <Icon icon={'PlusLine'} size={24} className={styles.Plus} />
-        <input className={styles.Input} placeholder={'메시지 보내기'} />
-        <Icon icon={'Upload'} size={28} className={styles.Send} />
+        <Icon icon='PlusLine' size={24} className={styles.Plus} />
+        <input className={styles.Input} placeholder='메시지 보내기' />
+        <Icon icon='Upload' size={28} className={styles.Send} />
       </div>
     </div>
   )
@@ -61,12 +61,12 @@ function ChatRoomPage() {
 
 export default ChatRoomPage
 
-function ChatRoomInfo() {
+function ChatRoomInfo () {
   const [open, setOpen] = useState(false)
   return (
     <SideSheet open={open} onOpenChange={setOpen}>
       <SideSheet.Trigger className={styles.Trigger} style={{ display: 'flex' }}>
-        <Icon icon={'Hamburger'} size={32} />
+        <Icon icon='Hamburger' size={32} />
       </SideSheet.Trigger>
       {open && <ChatSidebar />}
     </SideSheet>

@@ -15,7 +15,7 @@ type PartyIntroduceFormProps = {
   updateFormData: UpdateFormData
 }
 
-export function PartyPreview({ onNext, formData }: PartyIntroduceFormProps) {
+export function PartyPreview ({ onNext, formData }: PartyIntroduceFormProps) {
   const { data, isError } = useMyProfile()
 
   if (!data || isError) return null
@@ -23,7 +23,7 @@ export function PartyPreview({ onNext, formData }: PartyIntroduceFormProps) {
   const partyDetailData: PartyDetailType = {
     partyName: formData.partyName,
     appointmentTime: appointmentTimeToFormatTime(
-      appointmentTime(formData.partyDate.format('YYYY-MM-DD'), formData.partyTime)
+      appointmentTime(formData.partyDate.format('YYYY-MM-DD'), formData.partyTime),
     ),
     climbingType: formData.climbingType,
     // @ts-expect-error TODO: 고쳐야함

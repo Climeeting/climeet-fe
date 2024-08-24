@@ -1,0 +1,117 @@
+.Container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 24px;
+}
+
+.FilterList {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 8px;
+}
+
+.DateFilterTrigger {
+  flex-shrink: 0;
+  color: $gray-900;
+  background-color: white;
+  border: rem(1px) solid #e9e9e9;
+  padding: 0 rem(12px);
+  font-size: rem(14px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: rem(6px);
+  height: rem(32px);
+  border-radius: rem(16px);
+  flex-shrink: 0;
+  font-weight: 500;
+  position: relative;
+
+  .Icon {
+    color: $primary-400;
+  }
+}
+
+.DateFilterContent {
+  position: relative;
+
+  .Close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: rem(16px);
+  }
+
+  .Header {
+    height: rem(58px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: rem(1px) solid $gray-200;
+
+    h2 {
+      font-size: rem(20px);
+      font-weight: 700;
+    }
+  }
+}
+
+.DateFilterHeader {
+  padding: 24px 16px;
+  padding-bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: $gray-600;
+}
+
+.Dash {
+  padding: 0 6px;
+}
+
+.DateButton {
+  padding: 12px 36px;
+  min-width: 160px;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid $gray-200;
+  border-radius: 8px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 8px;
+  font-weight: 600;
+
+  .Icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .Delete {
+    color: $gray-400;
+    position: absolute;
+    right: 16px;
+  }
+}
+.DateButton[data-active='true'] {
+  background-color: $primary-100;
+  border-color: $primary-300;
+  color: $primary-500;
+
+  .Delete {
+    color: $primary-500;
+  }
+}
+
+.DateFilter {
+  padding: 40px 16px 40px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}

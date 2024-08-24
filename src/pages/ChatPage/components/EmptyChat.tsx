@@ -1,10 +1,10 @@
 import styles from './EmptyChat.module.scss'
 import emptyChat from '@/assets/empty_chat.png'
 
-export default function EmptyChat() {
+export default function EmptyChat () {
   return (
     <div className={styles.EmptyChat}>
-      <img src={emptyChat} alt={'empty-chat-img'} />
+      <img src={emptyChat} alt='empty-chat-img' />
       <div className={styles.EmptyChatText}>
         참여중인 채팅이 없습니다.
         <br />

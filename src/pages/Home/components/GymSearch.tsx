@@ -8,7 +8,7 @@ import { useClimbingGymRecentSearches } from '@/services/gymSearch.ts'
 import { ErrorBoundary } from 'react-error-boundary'
 import { useSearchActions, useSearchContext } from '../hooks/useSearchContext'
 
-export default function GymSearch() {
+export default function GymSearch () {
   const [open, onOpenChange] = useState(false)
   const [query, setQuery] = useState('')
   const { gymList } = useClimbingGymSearch(query)
@@ -17,7 +17,7 @@ export default function GymSearch() {
 
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
-      <Dialog.Trigger>
+      <Dialog.Trigger className={styles.trigger}>
         <Search
           placeholder={
             searchResult.length === 0
@@ -33,11 +33,11 @@ export default function GymSearch() {
           <div className={styles.top}>
             <Dialog.Close asChild>
               <button className={styles.Left}>
-                <Icon icon="ArrowLeft" size={24} />
+                <Icon icon='ArrowLeft' size={24} />
               </button>
             </Dialog.Close>
             <Search
-              placeholder="암장을 검색해 보세요."
+              placeholder='암장을 검색해 보세요.'
               value={query}
               onDelete={() => setQuery('')}
               onChange={(e) => {
@@ -60,7 +60,7 @@ export default function GymSearch() {
           <div className={styles.searchContainer}>
             <h3 className={styles.title}>암장 정보</h3>
             <div className={styles.searchList}>
-              {gymList.map((el) => (
+              {gymList.map(el => (
                 <div
                   key={el.id}
                   className={styles.searchItem}
@@ -70,7 +70,7 @@ export default function GymSearch() {
                     onOpenChange(false)
                   }}
                 >
-                  <Icon icon={'Search'} size={16} />
+                  <Icon icon='Search' size={16} />
                   <span className={styles.searchItemText}>{el.name}</span>
                 </div>
               ))}
@@ -86,7 +86,7 @@ type RecentSearchesProps = {
   onClick: (gymName: string) => void
 }
 
-function RecentSearches({ onClick }: RecentSearchesProps) {
+function RecentSearches ({ onClick }: RecentSearchesProps) {
   const { data } = useClimbingGymRecentSearches()
 
   if (data.content.length === 0) return <div>최근 검색어 없음</div>
@@ -94,7 +94,7 @@ function RecentSearches({ onClick }: RecentSearchesProps) {
   return (
     <div>
       <div className={styles.recentSearchList}>
-        {data.content.map((el) => (
+        {data.content.map(el => (
           <div
             onClick={() => onClick(el.gymName)}
             key={el.searchedAt}
@@ -108,12 +108,12 @@ function RecentSearches({ onClick }: RecentSearchesProps) {
   )
 }
 
-function SearchChips() {
+function SearchChips () {
   const searchResult = useSearchContext()
   const searchActions = useSearchActions()
   return (
-    <div onClick={(e) => e.stopPropagation()} className={styles.ChipList}>
-      {searchResult.map((item) => (
+    <div onClick={e => e.stopPropagation()} className={styles.ChipList}>
+      {searchResult.map(item => (
         <div key={item.id} className={styles.Chip}>
           {item.name}
           <button
@@ -122,7 +122,7 @@ function SearchChips() {
               searchActions.remove(item)
             }}
           >
-            <Icon icon="Delete" size={12} />
+            <Icon icon='Delete' size={12} />
           </button>
         </div>
       ))}

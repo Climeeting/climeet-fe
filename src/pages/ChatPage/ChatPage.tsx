@@ -8,7 +8,7 @@ import EmptyChat from '@/pages/ChatPage/components/EmptyChat.tsx'
 
 type ChatType = 'party' | 'personal'
 
-function ChatPage() {
+function ChatPage () {
   const [chatType, setChatType] = useState<ChatType>('party')
 
   return (

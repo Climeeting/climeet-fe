@@ -18,7 +18,7 @@ type PartyScheduleFormProps = {
   updateFormData: UpdateFormData
 }
 
-export function PartyScheduleForm({ onNext, formData, updateFormData }: PartyScheduleFormProps) {
+export function PartyScheduleForm ({ onNext, formData, updateFormData }: PartyScheduleFormProps) {
   const { setTimePicker, timePicker, getNextTime } = useTimePicker(formData.partyTime)
   const [schedule, setSchedule] = useState<Schedule>({
     partyDate: formData.partyDate,
@@ -26,7 +26,7 @@ export function PartyScheduleForm({ onNext, formData, updateFormData }: PartySch
   })
 
   const updateScheduleData = (key: keyof Schedule, value: Schedule[keyof Schedule]) => {
-    setSchedule((prev) => ({ ...prev, [key]: value }))
+    setSchedule(prev => ({ ...prev, [key]: value }))
   }
 
   return (
@@ -38,10 +38,10 @@ export function PartyScheduleForm({ onNext, formData, updateFormData }: PartySch
           파티 일정을 입력해주세요.
         </h2>
         <div>
-          <Accordion.Root className="AccordionRoot" type="multiple" defaultValue={['item-1']}>
+          <Accordion.Root className='AccordionRoot' type='multiple' defaultValue={['item-1']}>
             <div className={styles.question}>
               <h3 className={styles.questionTitle}>파티 날짜</h3>
-              <Accordion.Item className="AccordionItem" value={`partyDate`}>
+              <Accordion.Item className='AccordionItem' value='partyDate'>
                 <AccordionTrigger>{schedule.partyDate.format('YYYY-MM-DD')}</AccordionTrigger>
                 <AccordionContent>
                   <DatePicker
@@ -55,58 +55,70 @@ export function PartyScheduleForm({ onNext, formData, updateFormData }: PartySch
             </div>
             <div className={styles.question}>
               <h3 className={styles.questionTitle}>파티 시간</h3>
-              <Accordion.Item className="AccordionItem" value={`partyTime`}>
-                {/*아래 값이 이상함 */}
+              <Accordion.Item className='AccordionItem' value='partyTime'>
+                {/* 아래 값이 이상함 */}
                 <AccordionTrigger>{schedule.partyTime}</AccordionTrigger>
                 <AccordionContent>
                   <div className={styles.ScrollPickerWrapper}>
                     <ScrollPicker
                       list={MERIDIEM}
-                      defaultValue={timePicker.meridiem}
-                      onSelectedChange={(value) => {
+                      defaultValue={{
+                        value: timePicker.meridiem,
+                        label: timePicker.meridiem,
+                      }}
+                      onSelectedChange={(option) => {
+                        if (!option) return
                         const nextValue = {
                           ...timePicker,
-                          meridiem: value as string,
+                          meridiem: option.value as string,
                         }
                         setTimePicker(nextValue)
                         const nextPartyTime = getNextTime(
                           nextValue.meridiem,
                           nextValue.hours,
-                          nextValue.minutes
+                          nextValue.minutes,
                         )
                         updateScheduleData('partyTime', nextPartyTime)
                       }}
                     />
                     <ScrollPicker
-                      defaultValue={timePicker.hours}
+                      defaultValue={{
+                        value: timePicker.hours,
+                        label: timePicker.hours,
+                      }}
                       list={HOURS}
-                      onSelectedChange={(value) => {
+                      onSelectedChange={(option) => {
+                        if (!option) return
                         const nextValue = {
                           ...timePicker,
-                          hours: value as string,
+                          hours: option.value as string,
                         }
                         setTimePicker(nextValue)
                         const nextPartyTime = getNextTime(
                           nextValue.meridiem,
                           nextValue.hours,
-                          nextValue.minutes
+                          nextValue.minutes,
                         )
                         updateScheduleData('partyTime', nextPartyTime)
                       }}
                     />
                     <ScrollPicker
-                      defaultValue={timePicker.minutes}
+                      defaultValue={{
+                        value: timePicker.minutes,
+                        label: timePicker.minutes,
+                      }}
                       list={MINUTES}
-                      onSelectedChange={(value) => {
+                      onSelectedChange={(option) => {
+                        if (!option) return
                         const nextValue = {
                           ...timePicker,
-                          minutes: value as string,
+                          minutes: option.value as string,
                         }
                         setTimePicker(nextValue)
                         const nextPartyTime = getNextTime(
                           nextValue.meridiem,
                           nextValue.hours,
-                          nextValue.minutes
+                          nextValue.minutes,
                         )
                         updateScheduleData('partyTime', nextPartyTime)
                       }}

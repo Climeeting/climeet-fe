@@ -10,7 +10,7 @@ type Props = {
   onChangeSrc: (src: string) => void
 }
 
-export default function PreviewImage({ src, onChange, onChangeSrc }: Props) {
+export default function PreviewImage ({ src, onChange, onChangeSrc }: Props) {
   const ref = useRef<HTMLInputElement>(null)
   usePreviewImage(ref, onChangeSrc)
 
@@ -18,7 +18,7 @@ export default function PreviewImage({ src, onChange, onChangeSrc }: Props) {
     <div className={styles.Container}>
       <input
         className={styles.Hidden}
-        type="file"
+        type='file'
         ref={ref}
         onChange={(e) => {
           if (e.target.files) onChange(e.target.files[0])
@@ -32,12 +32,12 @@ export default function PreviewImage({ src, onChange, onChangeSrc }: Props) {
       >
         {!src && (
           <div className={styles.Default}>
-            <Icon icon="PersonFill" size="40" />
+            <Icon icon='PersonFill' size='40' />
           </div>
         )}
-        {src && <Avatar size="xl" src={src} alt="preview-img" />}
+        {src && <Avatar size='xl' src={src} alt='preview-img' />}
         <div className={styles.Icon}>
-          <Icon size="16" icon="Camera" />
+          <Icon size='16' icon='Camera' />
         </div>
       </button>
     </div>

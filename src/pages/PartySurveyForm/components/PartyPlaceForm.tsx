@@ -11,7 +11,7 @@ type PartyPlaceFormProps = {
   updateFormData: UpdateFormData
 }
 
-export function PartyPlaceForm({ onNext, formData, updateFormData }: PartyPlaceFormProps) {
+export function PartyPlaceForm ({ onNext, formData, updateFormData }: PartyPlaceFormProps) {
   const [locationId, setLocationId] = useState<number>(formData.locationId)
   const [value, setValue] = useState(formData.cragName)
   const [lastSelectedCragName, setLastSelectedCragName] = useState<string>(formData.cragName)
@@ -34,18 +34,20 @@ export function PartyPlaceForm({ onNext, formData, updateFormData }: PartyPlaceF
               setValue(e.target.value)
             }}
             className={styles.input}
-            placeholder={'암장 이름을 입력해주세요.'}
+            placeholder='암장 이름을 입력해주세요.'
           />
-          {value.length === 0 ? (
-            <Icon icon="Search" size={20} className={styles.SearchIcon} />
-          ) : (
-            <button onClick={() => setValue('')} className={styles.DeleteBtn} aria-label="지우기">
-              <Icon icon="DeleteCircle" size={18} />
-            </button>
-          )}
+          {value.length === 0
+            ? (
+                <Icon icon='Search' size={20} className={styles.SearchIcon} />
+              )
+            : (
+                <button onClick={() => setValue('')} className={styles.DeleteBtn} aria-label='지우기'>
+                  <Icon icon='DeleteCircle' size={18} />
+                </button>
+              )}
         </div>
         <div className={styles.searchList}>
-          {gymList.map((el) => (
+          {gymList.map(el => (
             <div
               key={el.id}
               className={styles.searchItem}
@@ -55,7 +57,7 @@ export function PartyPlaceForm({ onNext, formData, updateFormData }: PartyPlaceF
                 setLocationId(el.id)
               }}
             >
-              <Icon icon={'Search'} size={16} />
+              <Icon icon='Search' size={16} />
               <span className={styles.searchItemText}>{el.name}</span>
             </div>
           ))}

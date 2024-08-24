@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 
-export function usePreviewImage(
+export function usePreviewImage (
   inputRef: React.RefObject<HTMLInputElement>,
-  onChange?: (src: string) => void
+  onChange?: (src: string) => void,
 ) {
   const [imageSrc, setImageSrc] = useState('')
 

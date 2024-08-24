@@ -1,13 +1,16 @@
 import { useKakaoMap } from '@/utils/useKakaoMap'
+import { Toasts } from '@/utils/useToast'
 import { Outlet, ScrollRestoration } from 'react-router-dom'
 
-export default function Layout() {
+export default function Layout () {
   const status = useKakaoMap()
 
   return (
     <>
-      <ScrollRestoration />
-      {status && <Outlet />}
+      <Toasts>
+        <ScrollRestoration />
+        {status && <Outlet />}
+      </Toasts>
     </>
   )
 }

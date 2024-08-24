@@ -6,19 +6,19 @@ type Props = {
   redirect?: '/login' | '/home'
 } & PropsWithChildren
 
-export default function CheckIsLogin({ redirect = '/login' }: Props) {
+export default function CheckIsLogin ({ redirect = '/login' }: Props) {
   const navigate = useNavigate()
   const location = useLocation()
 
   const { data: isLogin, isLoading } = useIsLogin()
 
   useEffect(
-    function GoLogin() {
+    function GoLogin () {
       if (isLoading) return
       if (!isLogin && redirect)
         navigate(`${redirect}?redirect=${location.pathname}`, { replace: true })
     },
-    [isLoading, isLogin, redirect]
+    [isLoading, isLogin, redirect],
   )
 
   return (

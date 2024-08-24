@@ -9,7 +9,7 @@ type props = {
   remove?: () => void
 } & React.RefAttributes<HTMLButtonElement>
 
-export default function FilterButton({
+export default function FilterButton ({
   children,
   active,
   onClick,
@@ -33,11 +33,11 @@ export default function FilterButton({
             remove?.()
           }}
         >
-          <Icon icon="Delete" size="12" />
+          <Icon icon='Delete' size='12' />
         </div>
       )}
 
-      {!active && <Icon icon="ArrowDown" size="12" />}
+      {!active && <Icon icon='ArrowDown' size='12' />}
     </button>
   )
 }

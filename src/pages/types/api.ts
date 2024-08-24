@@ -27,6 +27,7 @@ export type Party = {
   gymName: string
   natural: boolean
   joinStatus: 'AVAILABLE' | 'IMMINENT_FULL' | 'FULL'
+  partyImageUrl?: string
 }
 
 export type PageableObject = {
@@ -89,6 +90,7 @@ export type PartyDetail = {
   masterProfileImageUrl: string
   isMaster: boolean
   isParticipation: boolean
+  masterId: number
 }
 
 export type SkillDistribution = {

@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import styles from './ChatItem.module.scss'
 import Avatar from '@/components/Avatar.tsx'
 
-export default function ChatItem() {
+export default function ChatItem () {
   const navigate = useNavigate()
 
   return (
@@ -13,7 +13,7 @@ export default function ChatItem() {
       }}
     >
       <div className={styles.Left}>
-        <Avatar src={''} alt={'아바타'} className={styles.Avatar} />
+        <Avatar src='' alt='아바타' className={styles.Avatar} />
         <div className={styles.RoomInfo}>
           <div className={styles.RoomTitle}>
             <div className={styles.RoomName}>친해지실 분 구해유</div>

@@ -5,12 +5,12 @@ const HANGUL_START = 0xac00 // '가'의 유니코드
 const HANGUL_END = 0xd7a3 // '힣'의 유니코드
 
 export const Hangul = {
-  isComplete(str: string): boolean {
+  isComplete (str: string): boolean {
     if (str === ' ') return true
     const code = str.charCodeAt(0)
     return code >= HANGUL_START && code <= HANGUL_END
   },
-  isCompleteAll(str: string): boolean {
+  isCompleteAll (str: string): boolean {
     return str.split('').every(this.isComplete)
   },
 }

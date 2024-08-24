@@ -2,7 +2,7 @@ import { PartyDetailType } from '@/services/party'
 import styles from './PartyParticipants.module.scss'
 import { SkillDistribution } from '@/pages/types/api'
 
-export function PartyParticipants({
+export function PartyParticipants ({
   minimumSkillLevel,
   maximumSkillLevel,
   skillDistributions,
@@ -16,11 +16,12 @@ export function PartyParticipants({
         <span className={styles.NotiTitle}>파티 레벨 :</span>
         <span
           className={styles.NotiDescription}
-        >{` V${minimumSkillLevel}부터 V${maximumSkillLevel}까지`}</span>
+        >{` V${minimumSkillLevel}부터 V${maximumSkillLevel}까지`}
+        </span>
       </div>
 
       <div className={styles.GraphContainer}>
-        {skillDistributions.map((skillDistribution) => (
+        {skillDistributions.map(skillDistribution => (
           <SkillGraph
             key={skillDistribution.skillLevel}
             skillDistribution={skillDistribution}
@@ -32,7 +33,7 @@ export function PartyParticipants({
   )
 }
 
-function SkillGraph({
+function SkillGraph ({
   skillDistribution,
   currentParticipants,
 }: {

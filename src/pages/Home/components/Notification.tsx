@@ -62,7 +62,7 @@ function NotificationCard({ notification }: { notification: GetNotificationResDT
   return (
     <div
       className={classNames(styles.NotificationCard, {
-        [styles.IsRead]: notification.read,
+        [styles.IsRead]: notification.isRead,
       })}
       onClick={() => {
         if (notification.notificationType === 'PARTY') {

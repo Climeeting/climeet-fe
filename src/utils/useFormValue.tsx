@@ -11,7 +11,7 @@ type Return<T> = [
     onReset: () => void
   },
 ]
-export default function useFormValue<T>(initValue: T): Return<T> {
+export default function useFormValue<T> (initValue: T): Return<T> {
   const [draft, setDraft] = useState<T>()
 
   const value = draft ?? initValue

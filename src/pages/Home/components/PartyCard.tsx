@@ -5,16 +5,29 @@ import classNames from 'classnames'
 import { PartyItem } from '@/services/party'
 import { Party } from '@/pages/types/api'
 
-export default function PartyCard({ party }: { party: Party }) {
-  const { appointmentTime, partyTitle, gymName, constraints, joinStatus, levelRange } =
-    new PartyItem(party).adapt()
+export default function PartyCard ({ party }: { party: Party }) {
+  const {
+    appointmentTime, partyTitle, gymName, constraints, joinStatus, levelRange,
+  }
+    = new PartyItem(party).adapt()
 
   return (
     <div className={styles.Container}>
       <section className={styles.Top}>
-        <span className={styles.Time}>{appointmentTime}</span>
-        <h3>{partyTitle}</h3>
-        <span className={styles.GymName}>{gymName}</span>
+        {party.partyImageUrl && (
+          <div className={styles.Image}>
+            <img src={party.partyImageUrl} alt={party.partyTitle} />
+            {/* <img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnDYav_Rs5aHeNlHWC0_QC9JLMwLa_7jzKTQ&s"
+              alt={party.partyTitle}
+            /> */}
+          </div>
+        )}
+        <div className={styles.Content}>
+          <span className={styles.Time}>{appointmentTime}</span>
+          <h3>{partyTitle}</h3>
+          <span className={styles.GymName}>{gymName}</span>
+        </div>
       </section>
 
       <div className={styles.Divider} />
@@ -22,15 +35,15 @@ export default function PartyCard({ party }: { party: Party }) {
       <section className={styles.Section}>
         <div>
           <div className={styles.Info}>
-            <Icon icon={'Star'} size="14" />
+            <Icon icon='Star' size='14' />
             {levelRange}
           </div>
           <div className={styles.Info}>
-            <Icon icon={'PersonFill'} size="14" />
+            <Icon icon='PersonFill' size='14' />
             {constraints}
           </div>
         </div>
-        <Chip className={styles.Chip} variable={'primary'}>
+        <Chip className={styles.Chip} variable='primary'>
           {joinStatus}
         </Chip>
       </section>

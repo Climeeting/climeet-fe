@@ -12,7 +12,7 @@ type PartyTypeFormProps = {
   updateFormData: UpdateFormData
 }
 
-export function PartyTypeForm({ onNext, formData, updateFormData }: PartyTypeFormProps) {
+export function PartyTypeForm ({ onNext, formData, updateFormData }: PartyTypeFormProps) {
   const [isNatural, setIsNatural] = useState(formData.isNatural)
 
   return (
@@ -40,11 +40,13 @@ export function PartyTypeForm({ onNext, formData, updateFormData }: PartyTypeFor
                 <span className={styles.desc}>볼더링, 리드, 지구력을 함께 즐겨요!</span>
               </div>
               <div className={styles.radioItemRight}>
-                {isNatural ? (
-                  <Icon icon={'RadioEmpty'} size={20} />
-                ) : (
-                  <Icon icon={'RadioChecked'} size={20} />
-                )}
+                {isNatural
+                  ? (
+                      <Icon icon='RadioEmpty' size={20} />
+                    )
+                  : (
+                      <Icon icon='RadioChecked' size={20} />
+                    )}
               </div>
             </div>
             <div
@@ -58,11 +60,13 @@ export function PartyTypeForm({ onNext, formData, updateFormData }: PartyTypeFor
                 <span className={styles.desc}>자연 암장에서 함께 즐겨요!</span>
               </div>
               <div className={styles.radioItemRight}>
-                {isNatural ? (
-                  <Icon icon={'RadioChecked'} size={20} />
-                ) : (
-                  <Icon icon={'RadioEmpty'} size={20} />
-                )}
+                {isNatural
+                  ? (
+                      <Icon icon='RadioChecked' size={20} />
+                    )
+                  : (
+                      <Icon icon='RadioEmpty' size={20} />
+                    )}
               </div>
             </div>
           </div>

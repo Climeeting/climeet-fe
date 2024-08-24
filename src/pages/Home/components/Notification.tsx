@@ -11,11 +11,12 @@ import {
   useNotification,
 } from '@/services/notification.ts'
 import { useNavigate } from 'react-router-dom'
+import dayjs from 'dayjs'
 
 export default function Notification() {
   const [open, onOpenChange] = useState(false)
   const { data } = useNotification()
-  const isAlarmsExist = data === undefined || data.length >= 1
+  const isAlarmsExist = !!data?.some((el) => !el.isRead)
 
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
@@ -59,10 +60,30 @@ function Content({ data }: { data: GetNotificationResDTO }) {
 function NotificationCard({ notification }: { notification: GetNotificationResDTO[number] }) {
   const navigate = useNavigate()
 
+  const getRelativeTime = (dateString: string) => {
+    const now = dayjs()
+    const date = dayjs(dateString)
+    const diffSeconds = now.diff(date, 'second')
+    const diffMinutes = now.diff(date, 'minute')
+    const diffHours = now.diff(date, 'hour')
+    const diffDays = now.diff(date, 'day')
+
+    if (diffSeconds < 60) {
+      return `${diffSeconds}초 전`
+    }
+    if (diffMinutes < 60) {
+      return `${diffMinutes}분 전`
+    }
+    if (diffHours < 24) {
+      return `${diffHours}시간 전`
+    }
+    return `${diffDays}일 전`
+  }
+
   return (
     <div
       className={classNames(styles.NotificationCard, {
-        [styles.IsRead]: notification.read,
+        [styles.IsRead]: notification.isRead,
       })}
       onClick={() => {
         if (notification.notificationType === 'PARTY') {
@@ -83,7 +104,7 @@ function NotificationCard({ notification }: { notification: GetNotificationResDT
         </div>
       </div>
       <div className={styles.Right}>
-        <div className={styles.NoticeTime}>{notification.createdAt}</div>
+        <div className={styles.NoticeTime}>{getRelativeTime(notification.createdAt)}</div>
       </div>
     </div>
   )

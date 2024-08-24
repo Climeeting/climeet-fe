@@ -1,7 +1,7 @@
 import Dialog from '@/components/Dialog/Dialog'
 import { useNavigate } from 'react-router-dom'
 
-export default function AdditionalInfoDialog({
+export default function AdditionalInfoDialog ({
   open,
   onOpenChange,
   hasCancel = true,

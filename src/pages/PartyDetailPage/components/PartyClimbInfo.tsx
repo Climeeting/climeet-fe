@@ -1,6 +1,6 @@
 import styles from './PartyClimbInfo.module.scss'
 
-export function PartyClimbInfo() {
+export function PartyClimbInfo () {
   return (
     <>
       <h2 className={styles.Title}>암장 정보</h2>

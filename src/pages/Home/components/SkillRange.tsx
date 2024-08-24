@@ -2,7 +2,7 @@ import * as SliderUi from '@radix-ui/react-slider'
 import { SliderProps as SliderUiProps } from '@radix-ui/react-slider'
 import styles from './SkillRange.module.scss'
 
-export function SkillRange(props: SliderUiProps) {
+export function SkillRange (props: SliderUiProps) {
   return (
     <div className={styles.Container}>
       <SliderUi.Root {...props} className={styles.SliderRoot}>

@@ -14,7 +14,7 @@ export type GetNotificationResDTO = {
   thumbnail: string
   notificationTitle: string
   referenceId: number
-  read: boolean
+  isRead: boolean
 }[]
 
 /**

@@ -5,7 +5,7 @@ import LoginPage from './Login/LoginPage'
 import HomePage from './Home/HomePage'
 import { historySyncPlugin } from '@stackflow/plugin-history-sync'
 import OauthPage from './Oauth/OauthPage'
-import NotFoundPage from './NotFoundPage'
+import NotFoundPage from './NotFoundPage/NotFoundPage.tsx'
 import { PartyDetailPage } from './PartyDetailPage/PartyDetailPage'
 import { PartySurveyFormPage } from './PartySurveyForm/PartySurveyFormPage.tsx'
 

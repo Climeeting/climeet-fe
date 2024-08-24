@@ -7,29 +7,26 @@ import {
   clibingOptions,
   constraintsOptions,
   defaultFilter,
+  skillLevelOptions,
   useFilter,
   useFilterActions,
   useFilterContext,
 } from '../hooks/useFilterContext'
 import ToggleButton from '@/components/ToggleButton'
-import { useEffect, useState } from 'react'
-import { SkillRange } from './SkillRange'
+import { useEffect } from 'react'
 import classNames from 'classnames'
 import Checkbox from '@/components/CheckBox'
 
-export default function FilterBottomSheet() {
+export default function FilterBottomSheet () {
   const { states: localFilter, actions: localActions } = useFilter()
   const filterContext = useFilterContext()
   const filterActions = useFilterActions()
-  const [minSkill, setMinSkill] = useState(0)
-  const [maxSkill, setMaxSkill] = useState(10)
-  const [isAllSkill, setIsAllSkill] = useState(true)
 
   useEffect(
-    function syncFilterContext() {
+    function syncFilterContext () {
       localActions.update(filterContext)
     },
-    [filterContext]
+    [filterContext],
   )
 
   return (
@@ -38,7 +35,7 @@ export default function FilterBottomSheet() {
         <div className={styles.Header}>
           <h2>필터</h2>
           <BottomSheet.Close className={styles.Close}>
-            <Icon icon="Close" size="24" />
+            <Icon icon='Close' size='24' />
           </BottomSheet.Close>
         </div>
 
@@ -49,7 +46,7 @@ export default function FilterBottomSheet() {
               <span>(중복 선택 가능)</span>
             </div>
             <OptionList
-              name="addressList"
+              name='addressList'
               selected={localFilter.addressList}
               onClick={localActions.addressList.toggle}
               options={addressOptions}
@@ -60,7 +57,7 @@ export default function FilterBottomSheet() {
               <h3>성별</h3>
             </div>
             <OptionList
-              name="constraints"
+              name='constraints'
               selected={localFilter.constraints}
               onClick={localActions.constraints.toggle}
               options={constraintsOptions}
@@ -72,7 +69,7 @@ export default function FilterBottomSheet() {
               <h3>종목</h3>
             </div>
             <OptionList
-              name="clibing"
+              name='clibing'
               selected={localFilter.clibing}
               onClick={localActions.clibing.toggle}
               options={clibingOptions}
@@ -82,26 +79,22 @@ export default function FilterBottomSheet() {
           <section className={styles.Section}>
             <div className={classNames(styles.SectionTitle, styles.FlexSpaceBetween)}>
               <h3>실력</h3>
-              <span className={styles.SkillDescription}>
-                V{minSkill}부터 V{maxSkill} 까지
-              </span>
+              <div className={styles.Checkbox}>
+                <Checkbox
+                  checked={localFilter.skillLevel === ''}
+                  onCheckedChange={localActions.skillLevel.init}
+                  id='skill'
+                >
+                  상관없음
+                </Checkbox>
+              </div>
             </div>
-            <SkillRange
-              defaultValue={[0, 10]}
-              value={[minSkill, maxSkill]}
-              min={0}
-              max={10}
-              step={1}
-              onValueChange={(value) => {
-                setMinSkill(value[0])
-                setMaxSkill(value[1])
-              }}
+            <OptionList
+              name='skillLevel'
+              selected={localFilter.skillLevel}
+              onClick={localActions.skillLevel.toggle}
+              options={skillLevelOptions}
             />
-            <div className={styles.Checkbox}>
-              <Checkbox checked={isAllSkill} onCheckedChange={setIsAllSkill} id="skill">
-                상관없음
-              </Checkbox>
-            </div>
           </section>
         </div>
 
@@ -128,7 +121,7 @@ type OptionListProps<T> = {
   onClick: (option: T) => void
 }
 
-function OptionList<T extends string>({ name, selected, options, onClick }: OptionListProps<T>) {
+function OptionList<T extends string> ({ name, selected, options, onClick }: OptionListProps<T>) {
   const defaultOption = defaultFilter[name]
 
   const pressed = (option: T) => {
@@ -141,7 +134,7 @@ function OptionList<T extends string>({ name, selected, options, onClick }: Opti
 
   return (
     <ul className={styles.OptionList}>
-      {options.map((option) => (
+      {options.map(option => (
         <ToggleButton pressed={pressed(option)} onClick={() => onClick(option)} key={option}>
           {option}
         </ToggleButton>

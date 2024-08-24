@@ -1,3 +1,4 @@
+import { SkillLevel } from '@/pages/types/api'
 import {
   ClibingFe,
   ConstraintsFe,
@@ -6,13 +7,15 @@ import {
   constraintsFe2Be,
 } from '@/services/adaptor'
 import { GetPartyListParams } from '@/services/party'
-import { PropsWithChildren, createContext, useContext, useState } from 'react'
+import { useLocalStorage } from '@uidotdev/usehooks'
+import { PropsWithChildren, createContext, useContext } from 'react'
 
 export type FilterContextType = {
   addressList: (AddressOption | '')[]
   clibing: ClibingFe | ''
   constraints: ConstraintsFe | ''
   status: JoinStatusFe | ''
+  skillLevel: SkillLevel | ''
 }
 
 export const defaultFilter: FilterContextType = {
@@ -20,6 +23,7 @@ export const defaultFilter: FilterContextType = {
   clibing: '볼더링',
   constraints: '남녀 모두',
   status: '전체',
+  skillLevel: '',
 }
 
 export const initialFilter: FilterContextType = {
@@ -27,19 +31,32 @@ export const initialFilter: FilterContextType = {
   clibing: '',
   constraints: '',
   status: '',
+  skillLevel: '',
 }
 
 const FilterContext = createContext<FilterContextType>(defaultFilter)
 
-export function useFilter() {
-  const [addressList, setAddressList] = useState<FilterContextType['addressList']>(
-    initialFilter.addressList
+export function useFilter () {
+  const [addressList, setAddressList] = useLocalStorage<FilterContextType['addressList']>(
+    'addressList',
+    initialFilter.addressList,
   )
-  const [clibing, setClibing] = useState<FilterContextType['clibing']>(initialFilter.clibing)
-  const [constraints, setconstraints] = useState<FilterContextType['constraints']>(
-    initialFilter.constraints
+  const [clibing, setClibing] = useLocalStorage<FilterContextType['clibing']>(
+    'clibing',
+    initialFilter.clibing,
   )
-  const [status, setStatus] = useState<FilterContextType['status']>(initialFilter.status)
+  const [constraints, setconstraints] = useLocalStorage<FilterContextType['constraints']>(
+    'constraints',
+    initialFilter.constraints,
+  )
+  const [status, setStatus] = useLocalStorage<FilterContextType['status']>(
+    'status',
+    initialFilter.status,
+  )
+  const [skillLevel, setSkillLevel] = useLocalStorage<FilterContextType['skillLevel']>(
+    'skillLevel',
+    initialFilter.skillLevel,
+  )
 
   const toggleAddressList = (addressList: AddressOption | '') => {
     if (!addressList) return
@@ -47,7 +64,7 @@ export function useFilter() {
       const newAddressList = toggleDuplicates(prev, addressList)
       if (addressList === '모든 지역' || newAddressList.length >= addressOptions.length - 1)
         return ['모든 지역']
-      return newAddressList.filter((item) => item !== '모든 지역')
+      return newAddressList.filter(item => item !== '모든 지역')
     })
   }
 
@@ -56,6 +73,7 @@ export function useFilter() {
     clibing,
     constraints,
     status,
+    skillLevel,
   }
 
   const actions = {
@@ -75,17 +93,23 @@ export function useFilter() {
       toggle: setStatus,
       init: () => setStatus(initialFilter.status),
     },
+    skillLevel: {
+      toggle: setSkillLevel,
+      init: () => setSkillLevel(initialFilter.skillLevel),
+    },
     update: (filters = defaultFilter) => {
       setAddressList(filters.addressList)
       setClibing(filters.clibing)
       setconstraints(filters.constraints)
       setStatus(filters.status)
+      setSkillLevel(filters.skillLevel)
     },
     init: () => {
       setAddressList(initialFilter.addressList)
       setClibing(initialFilter.clibing)
       setconstraints(initialFilter.constraints)
       setStatus(initialFilter.status)
+      setSkillLevel(initialFilter.skillLevel)
     },
   }
 
@@ -109,30 +133,38 @@ const ActionsContext = createContext<{
     toggle: (option: JoinStatusFe) => void
     init: () => void
   }
+  skillLevel: {
+    toggle: (option: SkillLevel) => void
+    init: () => void
+  }
   init: () => void
   update: (filters?: FilterContextType) => void
 }>({
-  addressList: {
-    toggle: () => {},
-    init: () => {},
-  },
-  clibing: {
-    toggle: () => {},
-    init: () => {},
-  },
-  constraints: {
-    toggle: () => {},
-    init: () => {},
-  },
-  status: {
-    toggle: () => {},
-    init: () => {},
-  },
-  init: () => {},
-  update: () => {},
-})
+        addressList: {
+          toggle: () => {},
+          init: () => {},
+        },
+        clibing: {
+          toggle: () => {},
+          init: () => {},
+        },
+        constraints: {
+          toggle: () => {},
+          init: () => {},
+        },
+        status: {
+          toggle: () => {},
+          init: () => {},
+        },
+        skillLevel: {
+          toggle: () => {},
+          init: () => {},
+        },
+        init: () => {},
+        update: () => {},
+      })
 
-export function FilterProvider({ children }: PropsWithChildren) {
+export function FilterProvider ({ children }: PropsWithChildren) {
   const { states, actions } = useFilter()
 
   return (
@@ -146,7 +178,7 @@ const toggleDuplicates = <T,>(prev: T[], item: T) => {
   // 최소 1개는 선택해야함
   if (prev.length === 1 && prev.includes(item)) return prev
   if (prev.includes(item)) {
-    return prev.filter((curItem) => curItem !== item)
+    return prev.filter(curItem => curItem !== item)
   }
   return [...prev, item]
 }
@@ -201,32 +233,48 @@ export const addressOptions: AddressOption[] = [
 export const clibingOptions: ClibingFe[] = ['볼더링', '리드', '지구력', '상관없음']
 export const constraintsOptions: ConstraintsFe[] = ['남녀 모두', '남자', '여자']
 export const statusOptions: JoinStatusFe[] = ['전체', '신청하기', '마감임박', '마감']
-
+export const skillLevelOptions: SkillLevel[] = [
+  'V0',
+  'V1',
+  'V2',
+  'V3',
+  'V4',
+  'V5',
+  'V6',
+  'V7',
+  'V8',
+  'V9',
+  'V10',
+]
 export class PartyListParams {
   private value: FilterContextType
 
-  constructor(value: FilterContextType) {
+  constructor (value: FilterContextType) {
     this.value = value
   }
 
-  get constraints(): GetPartyListParams['constraints'] {
+  get constraints (): GetPartyListParams['constraints'] {
     return constraintsFe2Be(this.value.constraints)
   }
 
-  get climbingType(): GetPartyListParams['climbingType'] {
+  get climbingType (): GetPartyListParams['climbingType'] {
     return clibingFe2Be(this.value.clibing)
   }
 
-  get address1List(): GetPartyListParams['address1List'] {
-    return this.value.addressList.map((address) => address as string)
+  get address1List (): GetPartyListParams['address1List'] {
+    return this.value.addressList.map(address => address as string)
   }
 
-  adapt(): GetPartyListParams {
+  get skillLevel (): GetPartyListParams['skillLevel'] {
+    return this.value.skillLevel as SkillLevel
+  }
+
+  adapt (): GetPartyListParams {
     return {
       constraints: this.constraints,
       climbingType: this.climbingType,
       address1List: this.address1List,
-      // locationId: this.locationId,
+      skillLevel: this.skillLevel,
     }
   }
 }

@@ -6,7 +6,7 @@ import { IndoorStep, PartyEditStep } from '@/pages/PartySurveyForm/components/St
 import styles from '@/pages/PartySurveyForm/PartySurveyFormPage.module.scss'
 import { usePartySurveyForm } from '@/pages/PartySurveyForm/PartySurveyFormPage.tsx'
 
-export function PartyEditFormPage() {
+export function PartyEditFormPage () {
   const { formData, updateFormData, setFormData } = usePartySurveyForm()
   const [isExistParticipant, setIsExistParticipant] = useState(false)
   const { id } = useParams<{ id: string }>()

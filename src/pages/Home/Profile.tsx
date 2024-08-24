@@ -1,6 +1,6 @@
 import { useMyProfile } from '@/services/user'
 
-export default function Profile() {
+export default function Profile () {
   const { data, isError } = useMyProfile()
 
   if (!data || isError) return null
@@ -9,7 +9,7 @@ export default function Profile() {
     <div>
       <div>{data.nickname}</div>
       <div>{data.userId}</div>
-      <img src={data.profileImageUrl} alt="profile" />
+      <img src={data.profileImageUrl} alt='profile' />
     </div>
   )
 }

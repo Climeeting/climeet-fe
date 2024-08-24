@@ -149,7 +149,6 @@ function TopBarRoot (props: TopBarProps) {
     return (
       <div className={styles.Main}>
         <img width={70} height={18} src={logo} alt='logo' />
-        <Icon icon='AlarmNew' />
         <Notification />
       </div>
     )

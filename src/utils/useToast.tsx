@@ -1,5 +1,5 @@
 import * as ToastUi from '@radix-ui/react-toast'
-import styles from './Toast.module.scss'
+import styles from '@/components/Toast.module.scss'
 import { createContext, useContext, useEffect, useState } from 'react'
 
 const MILLI_SECONDS = 2000

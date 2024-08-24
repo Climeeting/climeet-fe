@@ -15,7 +15,7 @@ import { useNavigate } from 'react-router-dom'
 export default function Notification() {
   const [open, onOpenChange] = useState(false)
   const { data } = useNotification()
-  const isAlarmsExist = data === undefined || data.length >= 1
+  const isAlarmsExist = !!data?.some((el) => !el.isRead)
 
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>

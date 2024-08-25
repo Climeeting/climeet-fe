@@ -9,7 +9,7 @@ type Props = {
   className?: string
 }
 
-export default function Avatar({ src, alt, size = 'middle', className }: Props) {
+export default function Avatar ({ src, alt, size = 'middle', className }: Props) {
   return (
     <AvatarUi.Root className={classNames(styles.AvatarRoot, styles[size], className)}>
       <AvatarUi.Image className={styles.AvatarImage} src={src} alt={alt} />

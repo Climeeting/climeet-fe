@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react'
 
-export function useOnScreen(ref: React.RefObject<HTMLElement>) {
+export function useOnScreen (ref: React.RefObject<HTMLElement>) {
   const [isOnScreen, setIsOnScreen] = useState(false)
   const observerRef = useRef<IntersectionObserver>()
 
@@ -20,7 +20,7 @@ export function useOnScreen(ref: React.RefObject<HTMLElement>) {
   return isOnScreen
 }
 
-export function useLoadMore(fetch: () => void) {
+export function useLoadMore (fetch: () => void) {
   const ref = useRef(null)
   const isVisible = useOnScreen(ref)
 

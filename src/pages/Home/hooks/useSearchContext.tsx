@@ -15,15 +15,15 @@ const defaultActions: Actions = {
 const SearchContext = createContext<ClimbSearchItem[]>([])
 const SearchActions = createContext<Actions>(defaultActions)
 
-export function SearchContextProvider({ children }: { children: React.ReactNode }) {
+export function SearchContextProvider ({ children }: { children: React.ReactNode }) {
   const [searchItem, setSearchItem] = useLocalStorage<ClimbSearchItem[]>('searchItems', [])
 
   const actions = {
     add: (searchItem: ClimbSearchItem) => {
-      setSearchItem((prev) => [...prev, searchItem])
+      setSearchItem(prev => [...prev, searchItem])
     },
     remove: (searchItem: ClimbSearchItem) => {
-      setSearchItem((prev) => prev.filter((item) => item.id !== searchItem.id))
+      setSearchItem(prev => prev.filter(item => item.id !== searchItem.id))
     },
   }
 

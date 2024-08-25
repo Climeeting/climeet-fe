@@ -3,16 +3,16 @@ import { MyProfileBe2FeAdpter, MyProfileInfo, skillLevelOptions } from '@/servic
 import useFormValue from '@/utils/useFormValue'
 import { PropsWithChildren, createContext, useContext } from 'react'
 
-function useMyInfoForm(data?: MyProfile) {
+function useMyInfoForm (data?: MyProfile) {
   const myData = data ? new MyProfileBe2FeAdpter(data).adapt() : null
 
   const [nickname, setNickName] = useFormValue<string>(myData?.nickname ?? '')
   const [sex, setSex] = useFormValue<MyProfileInfo['sex']>(myData?.sex ?? '남자')
   const [skillLevel, setSkillLevel] = useFormValue<MyProfileInfo['skillLevel']>(
-    myData?.skillLevel ?? skillLevelOptions[0]
+    myData?.skillLevel ?? skillLevelOptions[0],
   )
   const [description, setDescription] = useFormValue<MyProfileInfo['description'] | ''>(
-    myData?.description ?? ''
+    myData?.description ?? '',
   )
   const [profileImageUrl, setProfileImageUrl] = useFormValue<string>(myData?.profileImageUrl ?? '')
 
@@ -50,14 +50,14 @@ const ActionsContext = createContext<{
   setDescription: (description: MyProfileInfo['description']) => void
   setProfileImageUrl: (url: string) => void
 }>({
-  setNickName: () => {},
-  setSex: () => {},
-  setSkillLevel: () => {},
-  setDescription: () => {},
-  setProfileImageUrl: () => {},
-})
+      setNickName: () => {},
+      setSex: () => {},
+      setSkillLevel: () => {},
+      setDescription: () => {},
+      setProfileImageUrl: () => {},
+    })
 
-export function MyInfoFormProvider({ data, children }: { data?: MyProfile } & PropsWithChildren) {
+export function MyInfoFormProvider ({ data, children }: { data?: MyProfile } & PropsWithChildren) {
   const { states, actions } = useMyInfoForm(data)
 
   return (

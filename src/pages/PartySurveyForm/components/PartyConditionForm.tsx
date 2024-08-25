@@ -5,10 +5,10 @@ import { AccordionContent, AccordionTrigger } from '../../../components/Accordio
 import * as Accordion from '@radix-ui/react-accordion'
 import { useState } from 'react'
 import Icon from '@/components/Icon/Icon.tsx'
-import ScrollPicker from '@/components/ScrollPicker.tsx'
+import ScrollPicker, { getScrollOption } from '@/components/ScrollPicker.tsx'
 import { SkillRange } from '@/pages/Home/components/SkillRange.tsx'
 
-const MEMBERS = Array.from({ length: 11 }, (_, i) => i + 2)
+const MEMBERS = Array.from({ length: 11 }, (_, i) => i + 2).map(getScrollOption)
 
 type PartyConditionFormProps = {
   onNext: () => void
@@ -16,7 +16,7 @@ type PartyConditionFormProps = {
   updateFormData: UpdateFormData
 }
 
-export function PartyConditionForm({ onNext, formData, updateFormData }: PartyConditionFormProps) {
+export function PartyConditionForm ({ onNext, formData, updateFormData }: PartyConditionFormProps) {
   const genderList: GenderKo[] = ['남녀 모두', '남자만', '여자만']
   const subjectList: ClimbingTypeKo[] = ['볼더링', '리드', '지구력', '상관없음']
   const [condition, setCondition] = useState<Condition>({
@@ -28,7 +28,7 @@ export function PartyConditionForm({ onNext, formData, updateFormData }: PartyCo
   })
 
   const updateConditionData = (key: keyof Condition, value: Condition[keyof Condition]) => {
-    setCondition((prev) => ({ ...prev, [key]: value }))
+    setCondition(prev => ({ ...prev, [key]: value }))
   }
 
   const isAllSkillLevel = condition.minSkillLevel === 0 && condition.maxSkillLevel === 10
@@ -37,18 +37,22 @@ export function PartyConditionForm({ onNext, formData, updateFormData }: PartyCo
     <div className={styles.container}>
       <div>
         <h2 className={styles.title}>파티 조건을 선택해주세요.</h2>
-        <Accordion.Root className="AccordionRoot" type="multiple" defaultValue={['item-1']}>
+        <Accordion.Root className='AccordionRoot' type='multiple' defaultValue={['item-1']}>
           <div className={styles.question}>
             <h3 className={styles.questionTitle}>파티 인원 (본인 포함)</h3>
-            <Accordion.Item className="AccordionItem" value={`members`}>
+            <Accordion.Item className='AccordionItem' value='members'>
               <AccordionTrigger>{condition.maximumParticipationNumber}</AccordionTrigger>
               <AccordionContent>
                 <div className={styles.ScrollPickerWrapper}>
                   <ScrollPicker
-                    defaultValue={condition.maximumParticipationNumber}
+                    defaultValue={{
+                      value: condition.maximumParticipationNumber,
+                      label: String(condition.maximumParticipationNumber),
+                    }}
                     list={MEMBERS}
-                    onSelectedChange={(value) => {
-                      updateConditionData('maximumParticipationNumber', Number(value))
+                    onSelectedChange={(option) => {
+                      if (!option) return
+                      updateConditionData('maximumParticipationNumber', Number(option.value))
                     }}
                   />
                 </div>
@@ -57,12 +61,12 @@ export function PartyConditionForm({ onNext, formData, updateFormData }: PartyCo
           </div>
           <div className={styles.question}>
             <h3 className={styles.questionTitle}>성별</h3>
-            <Accordion.Item className="AccordionItem" value={`gender`}>
+            <Accordion.Item className='AccordionItem' value='gender'>
               <AccordionTrigger>{condition.gender}</AccordionTrigger>
               <AccordionContent>
                 <RadioButtonGroup
                   list={genderList}
-                  onValueChange={(value) => updateConditionData('gender', value as GenderKo)}
+                  onValueChange={value => updateConditionData('gender', value as GenderKo)}
                   defaultValue={condition.gender}
                 />
               </AccordionContent>
@@ -70,14 +74,13 @@ export function PartyConditionForm({ onNext, formData, updateFormData }: PartyCo
           </div>
           <div className={styles.question}>
             <h3 className={styles.questionTitle}>종목</h3>
-            <Accordion.Item className="AccordionItem" value={`subject`}>
+            <Accordion.Item className='AccordionItem' value='subject'>
               <AccordionTrigger>{condition.climbingType}</AccordionTrigger>
               <AccordionContent>
                 <RadioButtonGroup
                   list={subjectList}
-                  onValueChange={(value) =>
-                    updateConditionData('climbingType', value as ClimbingTypeKo)
-                  }
+                  onValueChange={value =>
+                    updateConditionData('climbingType', value as ClimbingTypeKo)}
                   defaultValue={condition.climbingType}
                 />
               </AccordionContent>
@@ -85,7 +88,7 @@ export function PartyConditionForm({ onNext, formData, updateFormData }: PartyCo
           </div>
           <div className={styles.question}>
             <h3 className={styles.questionTitle}>실력</h3>
-            <Accordion.Item className="AccordionItem" value={`level`}>
+            <Accordion.Item className='AccordionItem' value='level'>
               <AccordionTrigger>
                 {isAllSkillLevel
                   ? '상관없음'
@@ -110,11 +113,13 @@ export function PartyConditionForm({ onNext, formData, updateFormData }: PartyCo
                     updateConditionData('maxSkillLevel', 10)
                   }}
                 >
-                  {isAllSkillLevel ? (
-                    <Icon icon={'CheckboxChecked'} size={16} />
-                  ) : (
-                    <Icon icon={'CheckboxEmpty'} size={16} />
-                  )}
+                  {isAllSkillLevel
+                    ? (
+                        <Icon icon='CheckboxChecked' size={16} />
+                      )
+                    : (
+                        <Icon icon='CheckboxEmpty' size={16} />
+                      )}
                   <span className={styles.checkboxLabel}>상관없음</span>
                 </div>
               </AccordionContent>
@@ -149,6 +154,7 @@ export const Gender = {
 export type GenderEn = keyof typeof Gender
 export type GenderKo = (typeof Gender)[GenderEn]
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const ClimbingType = {
   BOULDERING: '볼더링',
   LEAD: '리드',

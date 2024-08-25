@@ -1,22 +1,26 @@
 import styles from './MyUpdateForm.module.scss'
-import { MyProfileInfo, skillLevelOptions } from '@/services/user'
 import { Root as VisuallyHidden } from '@radix-ui/react-visually-hidden'
 import PreviewImage from './PreviewImage'
 import RadioSex from './RadioSex'
 import { MyProfile } from '@/pages/types/api'
 import { useMyInfoFormActions, useMyInfoFormContext } from '../hooks/useMyInfoForm'
-import Select from '@/components/Select'
 import { useFileActions } from '../hooks/useFileContext'
+import SelectSkill from '@/components/SelectSkill'
+import { Link } from 'react-router-dom'
 
 type MyUpdateFormProps = {
   checkValid: boolean
   data?: MyProfile
 }
 
-export function MyUpdateForm({ checkValid }: MyUpdateFormProps) {
-  const { nickname, sex, skillLevel, description, profileImageUrl } = useMyInfoFormContext()
-  const { setNickName, setSex, setSkillLevel, setDescription, setProfileImageUrl } =
-    useMyInfoFormActions()
+export function MyUpdateForm ({ checkValid }: MyUpdateFormProps) {
+  const {
+    nickname, sex, skillLevel, description, profileImageUrl,
+  } = useMyInfoFormContext()
+  const {
+    setNickName, setSex, setSkillLevel, setDescription, setProfileImageUrl,
+  }
+    = useMyInfoFormActions()
 
   const updateProfileFile = useFileActions()
 
@@ -47,9 +51,9 @@ export function MyUpdateForm({ checkValid }: MyUpdateFormProps) {
         </div>
         <input
           className={styles.Input}
-          type="text"
+          type='text'
           value={nickname}
-          onChange={(e) => setNickName(e.target.value)}
+          onChange={e => setNickName(e.target.value)}
         />
       </fieldset>
 
@@ -66,23 +70,7 @@ export function MyUpdateForm({ checkValid }: MyUpdateFormProps) {
           <h2 className={styles.Label}>실력</h2>
           {warningSkillLevel ? <p className={styles.Warning}>실력을 선택해주세요.</p> : null}
         </div>
-        <Select
-          value={skillLevel || '실력 없음'}
-          onValueChange={(newSkillLevel) =>
-            setSkillLevel(newSkillLevel as MyProfileInfo['skillLevel'])
-          }
-          name="skillLevel"
-          placeholder={'실력 없음'}
-        >
-          <Select.Item disabled value={'실력 없음'}>
-            실력 없음
-          </Select.Item>
-          {skillLevelOptions.map((skillLevel) => (
-            <Select.Item key={skillLevel} value={skillLevel}>
-              {skillLevel}
-            </Select.Item>
-          ))}
-        </Select>
+        <SelectSkill skillLevel={skillLevel} setSkillLevel={setSkillLevel} />
       </fieldset>
 
       <fieldset className={styles.Fileldset}>
@@ -93,9 +81,19 @@ export function MyUpdateForm({ checkValid }: MyUpdateFormProps) {
         <textarea
           className={styles.Textarea}
           value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          onChange={e => setDescription(e.target.value)}
           maxLength={150}
         />
+        <div className={styles.TextCount}>
+          <span className={styles.CurrentCount}>{description.length}자</span>
+          <span className={styles.MaxCount}>/ 최대 150자</span>
+        </div>
+      </fieldset>
+
+      <fieldset className={styles.Fileldset}>
+        <Link className={styles.Link} to='/user/delete-account'>
+          회원탈퇴
+        </Link>
       </fieldset>
     </>
   )

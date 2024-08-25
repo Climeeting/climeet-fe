@@ -15,13 +15,13 @@ import RefreshButton from './components/RefreshButton'
 import RemoveFullButton from './components/RemoveFullButton'
 import classNames from 'classnames'
 
-export default function HomePage() {
+export default function HomePage () {
   return (
     <SearchContextProvider>
       <FilterProvider>
         <DateProvider>
           <div className={styles.container}>
-            <TopBar type="main" />
+            <TopBar type='main' />
             <main className={styles.main}>
               <div className={styles.SearchForm}>
                 {/* <Tabs tabs={['암장', '자연']} /> */}
@@ -31,24 +31,24 @@ export default function HomePage() {
                 <DatePickerContainer />
               </div>
 
-              <div className={classNames(styles.Contents, styles.Sticky)}>
-                <div className={styles.ContentHeader}>
-                  <h1 className={styles.Title}>오늘의 파티</h1>
-                  <RemoveFullButton />
-                </div>
-                <div className={styles.Buttons}>
-                  <RefreshButton />
-                  <FilterList />
-                </div>
-              </div>
-
-              {/* https://tanstack.com/query/latest/docs/framework/react/guides/suspense */}
               <ErrorBoundary fallback={<PartyList.Retry />}>
+                <div className={classNames(styles.Contents, styles.Sticky)}>
+                  <div className={styles.ContentHeader}>
+                    <h1 className={styles.Title}>오늘의 파티</h1>
+                    <RemoveFullButton />
+                  </div>
+                  <div className={styles.Buttons}>
+                    <RefreshButton />
+                    <FilterList />
+                  </div>
+                </div>
+
                 <Suspense fallback={<PartyList.Skeleton />}>
                   <PartyList />
                 </Suspense>
               </ErrorBoundary>
             </main>
+
             <BottomBar />
           </div>
         </DateProvider>

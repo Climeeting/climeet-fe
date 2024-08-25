@@ -47,8 +47,26 @@
   padding: 16px;
   color: $gray-900;
   border: 1px solid $gray-200;
+  border-radius: 8px;
   resize: none;
   height: 194px;
+}
+
+.TextCount {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
+  font-size: rem(14px);
+  color: $gray-800;
+
+  .CurrentCount {
+    color: $gray-800;
+    padding-right: 4px;
+  }
+
+  .MaxCount {
+    color: $gray-600;
+  }
 }
 
 .Input,
@@ -63,4 +81,12 @@
   color: $gray-800;
   font-weight: 600;
   font-size: rem(16px);
+}
+
+.Link {
+  font-size: 14px;
+  line-height: 27px;
+  color: $gray-500;
+  font-weight: 400;
+  text-decoration: underline;
 }

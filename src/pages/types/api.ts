@@ -90,6 +90,7 @@ export type PartyDetail = {
   masterProfileImageUrl: string
   isMaster: boolean
   isParticipation: boolean
+  masterId: number
 }
 
 export type SkillDistribution = {

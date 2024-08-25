@@ -5,24 +5,25 @@ import { useNavigate } from 'react-router-dom'
 import { Slot, SlotProps } from '@radix-ui/react-slot'
 import { Children, ReactNode, isValidElement } from 'react'
 import classNames from 'classnames'
+import Notification from '@/pages/Home/components/Notification.tsx'
 
 /**
  * Left
  */
 type LeftContentProps =
   | {
-      back: true
-      onClick?: () => void
-      onBeforeBack?: () => void
-    }
+    back: true
+    onClick?: () => void
+    onBeforeBack?: () => void
+  }
   | ({
-      back?: false
-      asChild?: boolean
-      children: React.ReactNode
-      className?: string
-    } & SlotProps)
+    back?: false
+    asChild?: boolean
+    children: React.ReactNode
+    className?: string
+  } & SlotProps)
 
-function LeftContent(props: LeftContentProps) {
+function LeftContent (props: LeftContentProps) {
   const navigate = useNavigate()
 
   if (props.back) {
@@ -36,7 +37,7 @@ function LeftContent(props: LeftContentProps) {
           navigate(-1)
         }}
       >
-        <Icon icon="ArrowLeft" />
+        <Icon icon='ArrowLeft' />
       </button>
     )
   }
@@ -52,9 +53,9 @@ function LeftContent(props: LeftContentProps) {
 
 // @ts-expect-error - type 추론을 위해 사용
 const LeftContentType = (<LeftContent />).type
-function getLeftContent(children: ReactNode) {
+function getLeftContent (children: ReactNode) {
   const childrenArray = Children.toArray(children)
-  return childrenArray.filter((child) => isValidElement(child) && child.type === LeftContentType)
+  return childrenArray.filter(child => isValidElement(child) && child.type === LeftContentType)
 }
 
 /**
@@ -62,23 +63,23 @@ function getLeftContent(children: ReactNode) {
  */
 type RightContentProps =
   | {
-      close: true
-      onClick?: () => void
-      className?: string
-    }
+    close: true
+    onClick?: () => void
+    className?: string
+  }
   | ({
-      close?: false
-      asChild?: boolean
-      children: React.ReactNode
-      className?: string
-    } & SlotProps)
+    close?: false
+    asChild?: boolean
+    children: React.ReactNode
+    className?: string
+  } & SlotProps)
 
-function RightContent(props: RightContentProps) {
+function RightContent (props: RightContentProps) {
   if (props.close) {
     const { onClick, className } = props
     return (
       <button className={classNames(styles.Right, className)} onClick={onClick}>
-        <Icon icon="Close" />
+        <Icon icon='Close' />
       </button>
     )
   }
@@ -94,9 +95,9 @@ function RightContent(props: RightContentProps) {
 
 // @ts-expect-error - type 추론을 위해 사용
 const RightContentType = (<RightContent />).type
-function getRightContent(children: ReactNode) {
+function getRightContent (children: ReactNode) {
   const childrenArray = Children.toArray(children)
-  return childrenArray.filter((child) => isValidElement(child) && child.type === RightContentType)
+  return childrenArray.filter(child => isValidElement(child) && child.type === RightContentType)
 }
 
 /**
@@ -104,16 +105,16 @@ function getRightContent(children: ReactNode) {
  */
 type CenterContentProps =
   | {
-      title: string
-    }
+    title: string
+  }
   | ({
-      title?: false
-      asChild?: boolean
-      children: React.ReactNode
-      className?: string
-    } & SlotProps)
+    title?: false
+    asChild?: boolean
+    children: React.ReactNode
+    className?: string
+  } & SlotProps)
 
-function CenterContent(props: CenterContentProps) {
+function CenterContent (props: CenterContentProps) {
   if (typeof props.title === 'string') return <h1 className={styles.Center}>{props.title}</h1>
 
   const { asChild, ...rest } = props
@@ -127,9 +128,9 @@ function CenterContent(props: CenterContentProps) {
 
 // @ts-expect-error - type 추론을 위해 사용
 const CenterContentType = (<CenterContent />).type
-function getCenterContent(children: ReactNode) {
+function getCenterContent (children: ReactNode) {
   const childrenArray = Children.toArray(children)
-  return childrenArray.filter((child) => isValidElement(child) && child.type === CenterContentType)
+  return childrenArray.filter(child => isValidElement(child) && child.type === CenterContentType)
 }
 
 /**
@@ -137,18 +138,18 @@ function getCenterContent(children: ReactNode) {
  */
 type TopBarProps =
   | {
-      type: 'main'
-    }
+    type: 'main'
+  }
   | {
-      type?: 'default'
-      children: ReactNode
-    }
-function TopBarRoot(props: TopBarProps) {
+    type?: 'default'
+    children: ReactNode
+  }
+function TopBarRoot (props: TopBarProps) {
   if (props.type === 'main')
     return (
       <div className={styles.Main}>
-        <img width={70} height={18} src={logo} alt="logo" />
-        <Icon icon="AlarmNew" />
+        <img width={70} height={18} src={logo} alt='logo' />
+        <Notification />
       </div>
     )
 

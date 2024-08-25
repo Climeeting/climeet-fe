@@ -7,12 +7,12 @@ type TabsProps = {
   onClick?: <T extends string>(tab: T) => void
 }
 
-export default function Tabs({ tabs, onClick }: TabsProps) {
+export default function Tabs ({ tabs, onClick }: TabsProps) {
   const [activeTab, setActiveTab] = useState(tabs[0])
 
   return (
     <div className={styles.container}>
-      {tabs.map((tab) => (
+      {tabs.map(tab => (
         <button
           key={tab}
           onClick={() => {

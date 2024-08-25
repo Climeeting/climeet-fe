@@ -3,19 +3,19 @@ import Icon, { IconType } from '../Icon/Icon'
 import classNames from 'classnames'
 import { Link, useLocation } from 'react-router-dom'
 
-export default function BottomBar() {
+export default function BottomBar () {
   return (
     <div className={styles.container}>
-      <NavLink icon="HomeFilled" title="홈" to="/" />
-      <NavLink icon="LocationLine" title="탐색" to="/location" />
-      <NavLink icon="Plus" title="만들기" to="/party-suervey" />
-      <NavLink icon="ChatLine" title="채팅" to="/chat" />
-      <NavLink icon="MyPage" title="My" to="/user/my" />
+      <NavLink icon='HomeFilled' title='홈' to='/' />
+      <NavLink icon='LocationLine' title='탐색' to='/location' />
+      <NavLink icon='Plus' title='만들기' to='/party-suervey' />
+      <NavLink icon='ChatLine' title='채팅' to='/chat' />
+      <NavLink icon='MyPage' title='My' to='/user/my' />
     </div>
   )
 }
 
-function NavLink({ icon, title, to }: { icon: string; title: string; to: string }) {
+function NavLink ({ icon, title, to }: { icon: string, title: string, to: string }) {
   const { pathname } = useLocation()
 
   return (

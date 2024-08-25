@@ -1,0 +1,36 @@
+.Container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  padding-top: 32px;
+  box-sizing: border-box;
+
+  span {
+    color: $gray-500;
+    padding-bottom: 20px;
+    padding-top: 16px;
+  }
+
+  button {
+    height: 44px;
+    font-size: rem(14px);
+    color: $gray-800;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 11px 16px;
+    background-color: #fff;
+    border: 1px solid $gray-200;
+    color: $gray-800;
+    border-radius: 22px;
+
+    .Icon {
+      color: $gray-600;
+      margin-right: 6px;
+    }
+  }
+}

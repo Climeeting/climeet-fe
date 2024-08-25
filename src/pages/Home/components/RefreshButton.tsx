@@ -4,7 +4,7 @@ import { Root as VisuallyHidden } from '@radix-ui/react-visually-hidden'
 import styles from './RefreshButton.module.scss'
 import { useFilterParams } from '../hooks/useFilterParams'
 
-export default function RefreshButton() {
+export default function RefreshButton () {
   const params = useFilterParams()
 
   return (
@@ -15,7 +15,7 @@ export default function RefreshButton() {
       }}
     >
       <VisuallyHidden>새로고침</VisuallyHidden>
-      <Icon icon="Refresh" size="14" />
+      <Icon icon='Refresh' size='14' />
     </button>
   )
 }

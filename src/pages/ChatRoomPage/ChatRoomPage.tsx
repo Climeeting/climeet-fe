@@ -73,7 +73,7 @@ const mockChatList = [
   },
 ]
 
-function ChatRoomPage() {
+function ChatRoomPage () {
   const { wrapperRef, containerRef } = useVisualViewport()
 
   return (
@@ -101,9 +101,9 @@ function ChatRoomPage() {
         <ChatBubbleList chatList={mockChatList} />
       </div>
       <div className={styles.Bottom}>
-        <Icon icon={'PlusLine'} size={24} className={styles.Plus} />
-        <input className={styles.Input} placeholder={'메시지 보내기'} />
-        <Icon icon={'Upload'} size={28} className={styles.Send} />
+        <Icon icon='PlusLine' size={24} className={styles.Plus} />
+        <input className={styles.Input} placeholder='메시지 보내기' />
+        <Icon icon='Upload' size={28} className={styles.Send} />
       </div>
     </div>
   )
@@ -111,12 +111,12 @@ function ChatRoomPage() {
 
 export default ChatRoomPage
 
-function ChatRoomInfo() {
+function ChatRoomInfo () {
   const [open, setOpen] = useState(false)
   return (
     <SideSheet open={open} onOpenChange={setOpen}>
       <SideSheet.Trigger className={styles.Trigger} style={{ display: 'flex' }}>
-        <Icon icon={'Hamburger'} size={32} />
+        <Icon icon='Hamburger' size={32} />
       </SideSheet.Trigger>
       {open && <ChatSidebar />}
     </SideSheet>

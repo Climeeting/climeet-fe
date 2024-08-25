@@ -1,3 +1,4 @@
+import { getScrollOption } from '@/components/ScrollPicker'
 import { useState } from 'react'
 
 interface TimePickerState {
@@ -6,9 +7,9 @@ interface TimePickerState {
   minutes: string
 }
 
-export const MERIDIEM = ['오전', '오후']
-export const HOURS = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
-export const MINUTES = ['00', '10', '20', '30', '40', '50']
+export const MERIDIEM = ['오전', '오후'].map(getScrollOption)
+export const HOURS = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'].map(getScrollOption)
+export const MINUTES = ['00', '10', '20', '30', '40', '50'].map(getScrollOption)
 
 const parseTime = (time: string): TimePickerState => {
   const [hh, mm] = time.split(':').map(Number)

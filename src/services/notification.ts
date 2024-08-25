@@ -21,13 +21,8 @@ export type GetNotificationResDTO = {
  * GET /v1/notification
  */
 export const get_notification = async () => {
-  try {
-    const result = await api.get<GetNotificationResDTO>(`/v1/notification`)
-    return result
-  } catch (e) {
-    console.error(e)
-    throw new Error('알림 조회에 실패하였습니다. get v1/notification')
-  }
+  const result = await api.get<GetNotificationResDTO>(`/v1/notification`)
+  return result
 }
 
 export const NOTIFICATION_KEY = ['notification']

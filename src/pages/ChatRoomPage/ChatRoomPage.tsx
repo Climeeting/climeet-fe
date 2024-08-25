@@ -6,6 +6,7 @@ import SideSheet from '@/components/SideSheet.tsx'
 import ChatSidebar from '@/pages/ChatRoomPage/components/ChatSidebar.tsx'
 import { useVisualViewport } from '@/pages/ChatRoomPage/hooks/useVisualViewport.tsx'
 import ChatBubbleList from './components/ChatBubbleList'
+import { SocketProvider } from '@/utils/useSocket'
 
 const mockChatList = [
   {
@@ -109,7 +110,13 @@ function ChatRoomPage () {
   )
 }
 
-export default ChatRoomPage
+export default function ChatRoomPageSocket () {
+  return (
+    <SocketProvider>
+      <ChatRoomPage />
+    </SocketProvider>
+  )
+}
 
 function ChatRoomInfo () {
   const [open, setOpen] = useState(false)

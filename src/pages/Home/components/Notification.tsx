@@ -1,7 +1,7 @@
 import styles from './Notification.module.scss'
 import * as Dialog from '@radix-ui/react-dialog'
 import Icon from '@/components/Icon/Icon.tsx'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import TopBar from '@/components/NavBar/TopBar.tsx'
 import Avatar from '@/components/Avatar.tsx'
 import classNames from 'classnames'
@@ -12,11 +12,18 @@ import {
 } from '@/services/notification.ts'
 import { useNavigate } from 'react-router-dom'
 import dayjs from 'dayjs'
+import { useLoadMore } from '@/utils/useLoadMore.tsx'
 
 export default function Notification () {
   const [open, onOpenChange] = useState(false)
-  const { data } = useNotification()
-  const isAlarmsExist = !!data?.some(el => !el.isRead)
+  const { data, fetchNextPage } = useNotification()
+  const ref = useLoadMore(fetchNextPage)
+
+  const isAlarmsExist = data.pages.some(notificationList => (
+    notificationList.content.some((notification) => {
+      return !notification.isRead
+    })
+  ))
 
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
@@ -25,13 +32,21 @@ export default function Notification () {
       </Dialog.Trigger>
       <Dialog.Overlay />
       <Dialog.Portal>
-        <Content data={data ?? []} />
+        {
+          data.pages.map((notificationList, i) => {
+            return (
+              <React.Fragment key={i}>
+                <Content data={notificationList.content ?? []} ref={ref} />
+              </React.Fragment>
+            )
+          })
+        }
       </Dialog.Portal>
     </Dialog.Root>
   )
 }
 
-function Content ({ data }: { data: GetNotificationResDTO }) {
+function Content ({ data, ref }: { data: GetNotificationResDTO[], ref: React.MutableRefObject<null> }) {
   useEffect(() => {
     return () => {
       post_notification_mark_as_read_all()
@@ -52,12 +67,18 @@ function Content ({ data }: { data: GetNotificationResDTO }) {
           <TopBar.Center title='알림' />
         </TopBar>
       </div>
-      {data?.map(el => <NotificationCard notification={el} />)}
+      {data?.map((notification, i) => (
+        <React.Fragment key={i}>
+          <NotificationCard notification={notification} />
+        </React.Fragment>
+      ),
+      )}
+      <div className='1234' ref={ref} />
     </Dialog.Content>
   )
 }
 
-function NotificationCard ({ notification }: { notification: GetNotificationResDTO[number] }) {
+function NotificationCard ({ notification }: { notification: GetNotificationResDTO }) {
   const navigate = useNavigate()
 
   const getRelativeTime = (dateString: string) => {

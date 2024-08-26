@@ -6,7 +6,6 @@ import SideSheet from '@/components/SideSheet.tsx'
 import ChatSidebar from '@/pages/ChatRoomPage/components/ChatSidebar.tsx'
 import { useVisualViewport } from '@/pages/ChatRoomPage/hooks/useVisualViewport.tsx'
 import ChatBubbleList from './components/ChatBubbleList'
-import { SocketProvider } from '@/utils/useSocket'
 
 const mockChatList = [
   {
@@ -74,7 +73,7 @@ const mockChatList = [
   },
 ]
 
-function ChatRoomPage () {
+export default function ChatRoomPage () {
   const { wrapperRef, containerRef } = useVisualViewport()
 
   return (
@@ -107,14 +106,6 @@ function ChatRoomPage () {
         <Icon icon='Upload' size={28} className={styles.Send} />
       </div>
     </div>
-  )
-}
-
-export default function ChatRoomPageSocket () {
-  return (
-    <SocketProvider>
-      <ChatRoomPage />
-    </SocketProvider>
   )
 }
 

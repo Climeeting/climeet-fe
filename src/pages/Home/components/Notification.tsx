@@ -17,8 +17,6 @@ import { useLoadMore } from '@/utils/useLoadMore.tsx'
 export default function Notification () {
   const [open, onOpenChange] = useState(false)
   const { data, fetchNextPage } = useNotification()
-  const ref = useLoadMore(fetchNextPage)
-
   const isAlarmsExist = data.pages.some(notificationList => (
     notificationList.content.some((notification) => {
       return !notification.isRead
@@ -32,55 +30,37 @@ export default function Notification () {
       </Dialog.Trigger>
       <Dialog.Overlay />
       <Dialog.Portal>
-        {
-          data.pages.map((notificationList, i) => {
-            return (
-              <React.Fragment key={i}>
-                <Content data={notificationList.content ?? []} ref={ref} />
-              </React.Fragment>
-            )
-          })
-        }
+        <Dialog.Content className={styles.Container}>
+          <div className={styles.top}>
+            <TopBar>
+              <TopBar.Left asChild>
+                <Dialog.Close asChild>
+                  <button className={styles.Left}>
+                    <Icon icon='ArrowLeft' size={24} />
+                  </button>
+                </Dialog.Close>
+              </TopBar.Left>
+              <TopBar.Center title='알림' />
+            </TopBar>
+          </div>
+          {
+            data.pages.map((notificationList, i) => {
+              return (
+                <React.Fragment key={i}>
+                  <Content data={notificationList.content ?? []} fetchNextPage={fetchNextPage} />
+                </React.Fragment>
+              )
+            })
+          }
+        </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>
   )
 }
 
-function Content ({ data, ref }: { data: GetNotificationResDTO[], ref: React.MutableRefObject<null> }) {
-  useEffect(() => {
-    return () => {
-      post_notification_mark_as_read_all()
-    }
-  }, [])
-
-  return (
-    <Dialog.Content className={styles.Container}>
-      <div className={styles.top}>
-        <TopBar>
-          <TopBar.Left asChild>
-            <Dialog.Close asChild>
-              <button className={styles.Left}>
-                <Icon icon='ArrowLeft' size={24} />
-              </button>
-            </Dialog.Close>
-          </TopBar.Left>
-          <TopBar.Center title='알림' />
-        </TopBar>
-      </div>
-      {data?.map((notification, i) => (
-        <React.Fragment key={i}>
-          <NotificationCard notification={notification} />
-        </React.Fragment>
-      ),
-      )}
-      <div className='1234' ref={ref} />
-    </Dialog.Content>
-  )
-}
-
-function NotificationCard ({ notification }: { notification: GetNotificationResDTO }) {
+function Content ({ data, fetchNextPage }: { data: GetNotificationResDTO[], fetchNextPage: () => void }) {
+  const ref = useLoadMore(fetchNextPage)
   const navigate = useNavigate()
-
   const getRelativeTime = (dateString: string) => {
     const now = dayjs()
     const date = dayjs(dateString)
@@ -101,32 +81,45 @@ function NotificationCard ({ notification }: { notification: GetNotificationResD
     return `${diffDays}일 전`
   }
 
-  return (
-    <div
-      className={classNames(styles.NotificationCard, {
-        [styles.IsRead]: notification.isRead,
-      })}
-      onClick={() => {
-        if (notification.notificationType === 'PARTY') {
-          navigate(`/party/${notification.referenceId}`)
-          return
-        }
+  useEffect(() => {
+    return () => {
+      post_notification_mark_as_read_all()
+    }
+  }, [])
 
-        navigate(`/chat/${notification.referenceId}`)
-      }}
-    >
-      <div className={styles.Left}>
-        <div>
-          <Avatar src={notification.thumbnail} alt='썸네일 이미지' className={styles.Avatar} />
+  return (
+    <>
+      {data?.map(notification => (
+        <div
+          key={notification.createdAt}
+          className={classNames(styles.NotificationCard, {
+            [styles.IsRead]: notification.isRead,
+          })}
+          onClick={() => {
+            if (notification.notificationType === 'PARTY') {
+              navigate(`/party/${notification.referenceId}`)
+              return
+            }
+
+            navigate(`/chat/${notification.referenceId}`)
+          }}
+        >
+          <div className={styles.Left}>
+            <div>
+              <Avatar src={notification.thumbnail} alt='썸네일 이미지' className={styles.Avatar} />
+            </div>
+            <div>
+              <div className={styles.PartyName}>{notification.notificationTitle}</div>
+              <div className={styles.Message}>{notification.message}</div>
+            </div>
+          </div>
+          <div className={styles.Right}>
+            <div className={styles.NoticeTime}>{getRelativeTime(notification.createdAt)}</div>
+          </div>
         </div>
-        <div>
-          <div className={styles.PartyName}>{notification.notificationTitle}</div>
-          <div className={styles.Message}>{notification.message}</div>
-        </div>
-      </div>
-      <div className={styles.Right}>
-        <div className={styles.NoticeTime}>{getRelativeTime(notification.createdAt)}</div>
-      </div>
-    </div>
+      ),
+      )}
+      <div ref={ref}></div>
+    </>
   )
 }

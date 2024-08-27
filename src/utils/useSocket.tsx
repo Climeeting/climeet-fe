@@ -5,7 +5,7 @@ import { chatSocket } from './socket'
 import { Socket } from 'socket.io-client'
 import { useMyProfile } from '@/services/user'
 
-type Chat = {
+export type Chat = {
   id: number
   messages: unknown[]
   isConnected: boolean
@@ -26,7 +26,7 @@ const SocketsActions = createContext<Actions>({
   remove: () => {},
 })
 
-export function useSocket (id?: number) {
+export function useChat (id?: number) {
   const sockets = useContext(SocketsContext)
 
   if (sockets === undefined) {
@@ -34,7 +34,7 @@ export function useSocket (id?: number) {
   }
 
   if (id) {
-    return sockets[id]
+    return sockets[id] || { id, messages: [], isConnected: false }
   }
   return sockets
 }
@@ -88,6 +88,8 @@ export function ChatsSocketProvider ({ children }: { children: React.ReactNode }
 export function ChatSocket ({ id, children }: { id: number, children: React.ReactNode }) {
   const { add, update } = useSocketActions()
   const { socket, isConnected, messages } = useChatSocket(id)
+
+  console.log({ id, messages, isConnected })
 
   useEffect(() => {
     add({ id, messages, isConnected })

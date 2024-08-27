@@ -16,7 +16,7 @@ import dayjs from 'dayjs'
 export default function Notification () {
   const [open, onOpenChange] = useState(false)
   const { data } = useNotification()
-  const isAlarmsExist = !!data?.some(el => !el.isRead)
+  const isAlarmsExist = false
 
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>

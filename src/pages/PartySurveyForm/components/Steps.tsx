@@ -15,6 +15,7 @@ import ProgressBar from '@/components/ProgressBar.tsx'
 import TopBar from '@/components/NavBar/TopBar.tsx'
 import { PartyPreview } from '@/pages/PartySurveyForm/components/PartyPreview.tsx'
 import styles from './Steps.module.scss'
+import useToast from '@/utils/useToast.tsx'
 
 const indoorSteps = ['암장', '조건', '소개', '일정', '미리보기'] as const
 type IndoorStepName = (typeof indoorSteps)[number]
@@ -34,6 +35,7 @@ export function IndoorStep ({ formData, updateFormData }: StepProps) {
   const { Funnel, Step, setStep, step } = useFunnel<IndoorStepName>('암장')
   const navigate = useNavigate()
   const { id } = useParams<{ id: string }>()
+  const toast = useToast()
 
   const getCurrentStepIndex = (steps: readonly IndoorStepName[], step: IndoorStepName) => {
     return steps.findIndex(el => el === step)
@@ -115,7 +117,12 @@ export function IndoorStep ({ formData, updateFormData }: StepProps) {
                 }
                 navigate('/')
               } catch (e) {
-                console.log(e)
+                if (e instanceof Error) {
+                  console.log({ e })
+                  toast.add({
+                    message: e.message,
+                  })
+                }
               }
             }}
             formData={formData}
@@ -134,6 +141,7 @@ export function OutdoorStep ({ formData, updateFormData }: StepProps) {
   const getCurrentStepIndex = (steps: readonly OutdoorStepName[], step: OutdoorStepName) => {
     return steps.findIndex(el => el === step)
   }
+  const toast = useToast()
 
   const getPreviousStep = (steps: readonly OutdoorStepName[], currentStepIndex: number) => {
     if (currentStepIndex <= 0) {
@@ -191,7 +199,12 @@ export function OutdoorStep ({ formData, updateFormData }: StepProps) {
                 }
                 navigate('/')
               } catch (e) {
-                console.log(e)
+                if (e instanceof Error) {
+                  console.log({ e })
+                  toast.add({
+                    message: e.message,
+                  })
+                }
               }
             }}
             formData={formData}
@@ -214,6 +227,7 @@ export function PartyEditStep ({
 }) {
   const { Funnel, Step, setStep, step } = useFunnel<EditStepName>('소개')
   const navigate = useNavigate()
+  const toast = useToast()
 
   const getCurrentStepIndex = (steps: readonly EditStepName[], step: EditStepName) => {
     return steps.findIndex(el => el === step)
@@ -262,7 +276,12 @@ export function PartyEditStep ({
                 await put_party_edit(id, req)
                 navigate('/')
               } catch (e) {
-                console.log(e)
+                if (e instanceof Error) {
+                  console.log({ e })
+                  toast.add({
+                    message: e.message,
+                  })
+                }
               }
             }}
             formData={formData}

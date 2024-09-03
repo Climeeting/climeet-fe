@@ -7,12 +7,14 @@ import ChatSidebar from '@/pages/ChatRoomPage/components/ChatSidebar.tsx'
 import { useVisualViewport } from '@/pages/ChatRoomPage/hooks/useVisualViewport.tsx'
 // import ChatBubbleList from './components/ChatBubbleList'
 import { useNavigate, useParams } from 'react-router-dom'
-import { Chat, ChatSocket, useChat } from '@/utils/useSocket'
+import useChatSocket, { ChatSocket } from '@/utils/useChatSocket'
+import { useMyProfile } from '@/services/user'
+import { sendChatMessage } from '@/utils/socket'
 
-export function ChatRoomPage ({ id }: { id: number }) {
+export function ChatRoomPage ({ id, userId }: { id: number, userId: number }) {
   const { wrapperRef, containerRef } = useVisualViewport()
-  const { messages } = useChat(id) as Chat
-
+  const { socket, messages } = useChatSocket({ room: id, senderId: userId }) as ChatSocket
+  const [message, setMessage] = useState('')
   console.log({ messages })
 
   return (
@@ -40,11 +42,23 @@ export function ChatRoomPage ({ id }: { id: number }) {
         {JSON.stringify(messages, null, 2)}
         {/* <ChatBubbleList chatList={mockChatList} /> */}
       </div>
-      <div className={styles.Bottom}>
+
+      <form
+        onSubmit={(e) => {
+          e.preventDefault()
+          if (socket) {
+            sendChatMessage({ socket, room: id, senderId: userId, message })
+            setMessage('')
+          }
+        }}
+        className={styles.Bottom}
+      >
         <Icon icon='PlusLine' size={24} className={styles.Plus} />
-        <input className={styles.Input} placeholder='메시지 보내기' />
-        <Icon icon='Upload' size={28} className={styles.Send} />
-      </div>
+        <input type='text' value={message} onChange={e => setMessage(e.target.value)} className={styles.Input} placeholder='메시지 보내기' />
+        <button type='submit'>
+          <Icon icon='Upload' size={28} className={styles.Send} />
+        </button>
+      </form>
     </div>
   )
 }
@@ -52,16 +66,24 @@ export function ChatRoomPage ({ id }: { id: number }) {
 export default function ChatRoomPageSocket () {
   const navigate = useNavigate()
   const { id } = useParams<{ id: string }>()
+  const { data: myData, isLoading } = useMyProfile()
 
   if (!id) {
     navigate('/404', { replace: true })
     return <>404</>
   }
 
+  if (!isLoading && !myData) {
+    navigate('/login', { replace: true })
+    return <>로그인이 필요합니다.</>
+  }
+
+  if (isLoading && !myData) {
+    return <>로딩중...</>
+  }
+
   return (
-    <ChatSocket id={Number(id)}>
-      <ChatRoomPage id={Number(id)} />
-    </ChatSocket>
+    <ChatRoomPage id={Number(id)} userId={myData!.userId} />
   )
 }
 

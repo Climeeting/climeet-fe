@@ -3,39 +3,76 @@ import {
 } from 'react'
 import { chatSocket } from './socket'
 import { Socket } from 'socket.io-client'
-import { useMyProfile } from '@/services/user'
 
-export type Chat = {
-  id: number
-  messages: unknown[]
+export type SocketItem = {
+  room: number
+  socket: Socket
   isConnected: boolean
 }
 type Sockets = {
-  [key: number]: Chat
+  [key: number]: SocketItem
 }
 const SocketsContext = createContext<Sockets>({})
 
 type Actions = {
-  add: (chat: Chat) => void
-  update: (chat: Partial<Chat> & { id: number }) => void
-  remove: (id: number) => void
+  add: (chat: SocketItem) => void
+  remove: (room: number) => void
 }
 const SocketsActions = createContext<Actions>({
   add: () => {},
-  update: () => {},
   remove: () => {},
 })
 
-export function useChat (id?: number) {
+export type ChatSocket = {
+  room: number
+  socket?: Socket
+  isConnected: boolean
+  messages: unknown[]
+}
+
+export default function useChatSocket ({ room, senderId }: { room: number, senderId: number }): ChatSocket {
+  const sockets = useSockets()
+  const [socket, setSocket] = useState<Socket>()
+  const { add, remove } = useSocketActions()
+
+  useEffect(() => {
+    if (sockets[room]) {
+      setSocket(sockets[room].socket)
+      return
+    }
+
+    if (room && senderId) {
+      const newSocket = chatSocket(room, String(senderId))
+      setSocket(newSocket)
+      add({ room, socket: newSocket, isConnected })
+    }
+
+    return () => {
+      if (socket) {
+        socket.disconnect()
+        remove(room)
+      }
+    }
+  }, [room, senderId])
+
+  const isConnected = useChatConnect(socket)
+  const messages = useChatMessage(socket)
+
+  return {
+    room,
+    socket,
+    isConnected,
+    messages,
+  }
+}
+
+function useSockets () {
   const sockets = useContext(SocketsContext)
 
   if (sockets === undefined) {
     throw new Error('useSocket must be used within a ChatsSocketProvider')
   }
 
-  if (id) {
-    return sockets[id] || { id, messages: [], isConnected: false }
-  }
   return sockets
 }
 
@@ -50,23 +87,16 @@ export function useSocketActions () {
 export function ChatsSocketProvider ({ children }: { children: React.ReactNode }) {
   const [sockets, setSockets] = useState<Sockets>({})
 
-  const add = useCallback((chat: Chat) => {
+  const add = useCallback((socketItem: SocketItem) => {
     setSockets((previous) => {
-      previous[chat.id] = chat
+      previous[socketItem.room] = socketItem
       return previous
     })
   }, [])
 
-  const remove = useCallback((id: number) => {
+  const remove = useCallback((room: number) => {
     setSockets((previous) => {
-      delete previous[id]
-      return previous
-    })
-  }, [])
-
-  const update = useCallback((chat: Partial<Chat> & { id: number }) => {
-    setSockets((previous) => {
-      previous[chat.id] = { ...previous[chat.id], ...chat }
+      delete previous[room]
       return previous
     })
   }, [])
@@ -76,48 +106,12 @@ export function ChatsSocketProvider ({ children }: { children: React.ReactNode }
       <SocketsActions.Provider value={{
         add,
         remove,
-        update,
       }}
       >
         {children}
       </SocketsActions.Provider>
     </SocketsContext.Provider>
   )
-}
-
-export function ChatSocket ({ id, children }: { id: number, children: React.ReactNode }) {
-  const { add, update } = useSocketActions()
-  const { socket, isConnected, messages } = useChatSocket(id)
-
-  console.log({ id, messages, isConnected })
-
-  useEffect(() => {
-    add({ id, messages, isConnected })
-  }, [socket])
-
-  useEffect(() => {
-    update({ id, messages, isConnected })
-  }, [id, messages, isConnected])
-
-  return children
-}
-
-function useChatSocket (id: number) {
-  const [socket, setSocket] = useState<Socket>()
-  const { data } = useMyProfile()
-
-  useEffect(() => {
-    if (id && data?.userId) setSocket(chatSocket(id, data.nickname))
-  }, [id, data?.userId])
-
-  const isConnected = useChatConnect(socket)
-  const messages = useChatMessage(socket)
-
-  return {
-    socket,
-    isConnected,
-    messages,
-  }
 }
 
 function useChatConnect (socket?: Socket) {

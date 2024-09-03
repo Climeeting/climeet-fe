@@ -1,5 +1,5 @@
 import { useKakaoMap } from '@/utils/useKakaoMap'
-import { ChatsSocketProvider } from '@/utils/useSocket'
+import { ChatsSocketProvider } from '@/utils/useChatSocket'
 import { Toasts } from '@/utils/useToast'
 import { Outlet, ScrollRestoration } from 'react-router-dom'
 

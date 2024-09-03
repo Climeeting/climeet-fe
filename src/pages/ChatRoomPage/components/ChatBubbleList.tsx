@@ -6,6 +6,7 @@ import { PageData } from '@/pages/types/api'
 import { InfiniteData } from '@tanstack/react-query'
 import { useLoadMore } from '@/utils/useLoadMore'
 import styles from './ChatBubbleList.module.scss'
+import { useEffect, useLayoutEffect, useRef } from 'react'
 
 type ChatBubbleListProps = {
   data: InfiniteData<PageData<ChatMessage>, unknown>
@@ -14,11 +15,33 @@ type ChatBubbleListProps = {
 
 export default function ChatBubbleList ({ data, fetchNextPage }: ChatBubbleListProps) {
   const chatList = data.pages.map(page => page.content).flat()
-  const ref = useLoadMore(fetchNextPage)
+  const loadMoreRef = useLoadMore(fetchNextPage)
+  const scrollContainerRef = useRef<HTMLUListElement>(null)
+  const snapshot = useRef({
+    clientHeight: 0,
+    scrollTop: 0,
+  })
+
+  useEffect(function getSnapshotBeforeUpdate () {
+    if (!scrollContainerRef.current) return
+    snapshot.current.clientHeight = scrollContainerRef.current.clientHeight
+    snapshot.current.scrollTop = scrollContainerRef.current.scrollTop
+  })
+
+  useLayoutEffect(() => {
+    if (!scrollContainerRef.current) return
+    const { clientHeight, scrollTop } = snapshot.current
+    const deltaY
+    = scrollContainerRef.current.clientHeight - clientHeight
+
+    if (deltaY > 0) {
+      scrollContainerRef.current?.scrollTo(0, scrollTop + deltaY)
+    }
+  }, [data.pages[data.pages.length - 1].number])
 
   const { data: myData } = useMyProfile()
   return (
-    <ul className={styles.ChatBubbleList}>
+    <ul ref={scrollContainerRef} className={styles.ChatBubbleList}>
       {chatList.map((chat, index) => {
         const isStartMessage
           = index === 0 // 1. 첫 번째 메시지
@@ -31,7 +54,7 @@ export default function ChatBubbleList ({ data, fetchNextPage }: ChatBubbleListP
           || dayjs(chatList[index + 1].createdAt).diff(dayjs(chat.createdAt), 'minute') > 1 // 3. 다음 메시지와 1분 이상 차이
 
         return (
-          <li key={chat.id}>
+          <li key={`${chat.id}-${index}`}>
             <ChatBubble
               {...chat}
               isStartMessage={isStartMessage}
@@ -41,7 +64,7 @@ export default function ChatBubbleList ({ data, fetchNextPage }: ChatBubbleListP
           </li>
         )
       })}
-      <li ref={ref} />
+      <li ref={loadMoreRef} />
     </ul>
   )
 }

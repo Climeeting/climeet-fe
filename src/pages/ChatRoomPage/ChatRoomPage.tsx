@@ -1,15 +1,16 @@
 import styles from './ChatRoomPage.module.scss'
 import TopBar from '@/components/NavBar/TopBar.tsx'
 import Icon from '@/components/Icon/Icon.tsx'
-import { useState } from 'react'
+import { Suspense, useState } from 'react'
 import SideSheet from '@/components/SideSheet.tsx'
 import ChatSidebar from '@/pages/ChatRoomPage/components/ChatSidebar.tsx'
 import { useVisualViewport } from '@/pages/ChatRoomPage/hooks/useVisualViewport.tsx'
-// import ChatBubbleList from './components/ChatBubbleList'
+import ChatBubbleList from './components/ChatBubbleList'
 import { useNavigate, useParams } from 'react-router-dom'
 import useChatSocket, { ChatSocket } from '@/utils/useChatSocket'
 import { useMyProfile } from '@/services/user'
 import { sendChatMessage } from '@/utils/socket'
+import { ErrorBoundary } from 'react-error-boundary'
 
 export function ChatRoomPage ({ id, userId }: { id: number, userId: number }) {
   const { wrapperRef, containerRef } = useVisualViewport()
@@ -39,8 +40,12 @@ export function ChatRoomPage ({ id, userId }: { id: number, userId: number }) {
           <div className={styles.MemberEnter}>이성진 님이 들어왔습니다.</div>
         </div> */}
 
-        {JSON.stringify(messages, null, 2)}
-        {/* <ChatBubbleList chatList={mockChatList} /> */}
+        {/* {JSON.stringify(messages, null, 2)} */}
+        <ErrorBoundary fallback={<ChatBubbleList.Retry room={Number(id)} />}>
+          <Suspense fallback={<ChatBubbleList.Skeleton />}>
+            <ChatBubbleList.Query room={Number(id)} />
+          </Suspense>
+        </ErrorBoundary>
       </div>
 
       <form

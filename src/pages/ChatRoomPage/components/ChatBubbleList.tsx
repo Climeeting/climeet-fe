@@ -1,36 +1,61 @@
 import dayjs from 'dayjs'
-import ChatBubble, { ChatInfo } from './ChatBubble'
+import ChatBubble from './ChatBubble'
 import { useMyProfile } from '@/services/user'
+import { ChatMessage, ChatRoomQuery, useChatRoomSuspense } from '@/services/chat'
+import { PageData } from '@/pages/types/api'
+import { InfiniteData } from '@tanstack/react-query'
+import { useLoadMore } from '@/utils/useLoadMore'
 
 type ChatBubbleListProps = {
-  chatList: ChatInfo[]
+  data: InfiniteData<PageData<ChatMessage>, unknown>
+  fetchNextPage: () => void
 }
 
-export default function ChatBubbleList ({ chatList }: ChatBubbleListProps) {
-  const { data } = useMyProfile()
+export default function ChatBubbleList ({ data, fetchNextPage }: ChatBubbleListProps) {
+  const chatList = data.pages.map(page => page.content).flat()
+  const ref = useLoadMore(fetchNextPage)
+
+  const { data: myData } = useMyProfile()
   return (
     <ul>
+      <div ref={ref} />
       {chatList.map((chat, index) => {
         const isStartMessage
           = index === 0 // 1. 첫 번째 메시지
-          || chat.user.id !== chatList[index - 1].user.id // 2. 이전 메시지와 다른 사용자
-          || dayjs(chatList[index - 1].time).diff(dayjs(chat.time), 'minute') > 1 // 3. 이전 메시지와 1분 이상 차이
+          || chat.senderId !== chatList[index - 1].senderId // 2. 이전 메시지와 다른 사용자
+          || dayjs(chatList[index - 1].createdAt).diff(dayjs(chat.createdAt), 'minute') > 1 // 3. 이전 메시지와 1분 이상 차이
 
         const isLastMessage
           = index === chatList.length - 1 // 1. 마지막 메시지
-          || chat.user.id !== chatList[index + 1].user.id // 2. 다음 메시지와 다른 사용자
-          || dayjs(chatList[index + 1].time).diff(dayjs(chat.time), 'minute') > 1 // 3. 다음 메시지와 1분 이상 차이
+          || chat.senderId !== chatList[index + 1].senderId // 2. 다음 메시지와 다른 사용자
+          || dayjs(chatList[index + 1].createdAt).diff(dayjs(chat.createdAt), 'minute') > 1 // 3. 다음 메시지와 1분 이상 차이
 
         return (
           <ChatBubble
-            key={chat.time}
+            key={chat.id}
             {...chat}
             isStartMessage={isStartMessage}
             isLastMessage={isLastMessage}
-            isMyMessage={data?.userId ? data.userId === chat.user.id : false}
+            isMyMessage={myData?.userId ? myData.userId === chat.senderId : false}
           />
         )
       })}
     </ul>
   )
+}
+
+ChatBubbleList.Query = function ChatBubbleListQuery ({ room }: { room: number }) {
+  const { data, fetchNextPage } = useChatRoomSuspense({ room })
+
+  return <ChatBubbleList data={data} fetchNextPage={fetchNextPage} />
+}
+
+ChatBubbleList.Skeleton = function ChatBubbleListSkeleton () {
+  return (
+    <div>로딩중</div>
+  )
+}
+
+ChatBubbleList.Retry = function ChatBubbleListRetry ({ room }: { room: number }) {
+  return <button onClick={() => ChatRoomQuery.refetch({ room })}>다시 시도하기</button>
 }

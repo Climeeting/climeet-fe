@@ -64,3 +64,23 @@
     gap: 6px;
   }
 }
+
+.SystemMessageLayout {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.SystemMessage {
+  padding: 8px 10px;
+  font-size: 12px;
+  font-weight: 400;
+  color: $gray-600;
+  border: 1px solid $gray-100;
+  border-radius: 999px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}

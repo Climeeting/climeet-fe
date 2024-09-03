@@ -1,0 +1,6 @@
+.ChatBubbleList {
+  display: flex;
+  flex-direction: column-reverse;
+  overflow-y: scroll;
+  overscroll-behavior: contain;
+}

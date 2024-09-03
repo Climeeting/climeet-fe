@@ -1,7 +1,11 @@
 .Container {
-  padding-top: 48px;
-  overflow-y: auto;
-  padding-bottom: 71px;
+  position: fixed;
+  width: 100%;
+  top: 48px;
+  left: 0;
+  height: calc(100vh - (48px + 64px));
+  overflow: auto;
+  overscroll-behavior: contain;
 
   .Alert {
     height: 80px;
@@ -115,6 +119,9 @@
 }
 
 .Bottom {
+  position: fixed;
+  bottom: 0;
+  left: 0;
   display: flex;
   align-items: center;
   width: 100%;

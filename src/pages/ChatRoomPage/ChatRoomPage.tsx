@@ -4,7 +4,7 @@ import Icon from '@/components/Icon/Icon.tsx'
 import { Suspense, useState } from 'react'
 import SideSheet from '@/components/SideSheet.tsx'
 import ChatSidebar from '@/pages/ChatRoomPage/components/ChatSidebar.tsx'
-import { useVisualViewport } from '@/pages/ChatRoomPage/hooks/useVisualViewport.tsx'
+// import { useVisualViewport } from '@/pages/ChatRoomPage/hooks/useVisualViewport.tsx'
 import ChatBubbleList from './components/ChatBubbleList'
 import { useNavigate, useParams } from 'react-router-dom'
 import useChatSocket, { ChatSocket } from '@/utils/useChatSocket'
@@ -13,14 +13,14 @@ import { sendChatMessage } from '@/utils/socket'
 import { ErrorBoundary } from 'react-error-boundary'
 
 export function ChatRoomPage ({ id, userId }: { id: number, userId: number }) {
-  const { wrapperRef, containerRef } = useVisualViewport()
+  // const { wrapperRef, containerRef } = useVisualViewport()
   const { socket, messages } = useChatSocket({ room: id, senderId: userId }) as ChatSocket
   const [message, setMessage] = useState('')
   console.log({ messages })
 
   return (
-    <div ref={wrapperRef}>
-      <div className={styles.Container} ref={containerRef}>
+    <div>
+      <div className={styles.Container}>
         <TopBar>
           <TopBar.Left back />
           <TopBar.Center>친해지실 분 구해유</TopBar.Center>

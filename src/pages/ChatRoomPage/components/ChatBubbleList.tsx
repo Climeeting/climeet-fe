@@ -5,6 +5,7 @@ import { ChatMessage, ChatRoomQuery, useChatRoomSuspense } from '@/services/chat
 import { PageData } from '@/pages/types/api'
 import { InfiniteData } from '@tanstack/react-query'
 import { useLoadMore } from '@/utils/useLoadMore'
+import styles from './ChatBubbleList.module.scss'
 
 type ChatBubbleListProps = {
   data: InfiniteData<PageData<ChatMessage>, unknown>
@@ -17,8 +18,7 @@ export default function ChatBubbleList ({ data, fetchNextPage }: ChatBubbleListP
 
   const { data: myData } = useMyProfile()
   return (
-    <ul>
-      <div ref={ref} />
+    <ul className={styles.ChatBubbleList}>
       {chatList.map((chat, index) => {
         const isStartMessage
           = index === 0 // 1. 첫 번째 메시지
@@ -31,15 +31,17 @@ export default function ChatBubbleList ({ data, fetchNextPage }: ChatBubbleListP
           || dayjs(chatList[index + 1].createdAt).diff(dayjs(chat.createdAt), 'minute') > 1 // 3. 다음 메시지와 1분 이상 차이
 
         return (
-          <ChatBubble
-            key={chat.id}
-            {...chat}
-            isStartMessage={isStartMessage}
-            isLastMessage={isLastMessage}
-            isMyMessage={myData?.userId ? myData.userId === chat.senderId : false}
-          />
+          <li key={chat.id}>
+            <ChatBubble
+              {...chat}
+              isStartMessage={isStartMessage}
+              isLastMessage={isLastMessage}
+              isMyMessage={myData?.userId ? myData.userId === chat.senderId : false}
+            />
+          </li>
         )
       })}
+      <li ref={ref} />
     </ul>
   )
 }

@@ -1,5 +1,6 @@
 import { useIsLogin } from '@/services/user'
 import { PropsWithChildren, useEffect } from 'react'
+import { ErrorBoundary } from 'react-error-boundary'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 
 type Props = {
@@ -22,8 +23,8 @@ export default function CheckIsLogin ({ redirect = '/login' }: Props) {
   )
 
   return (
-    <>
+    <ErrorBoundary fallback={<>로그인 확인중 ...</>}>
       <Outlet />
-    </>
+    </ErrorBoundary>
   )
 }

@@ -16,6 +16,8 @@ import TopBar from '@/components/NavBar/TopBar.tsx'
 import { PartyPreview } from '@/pages/PartySurveyForm/components/PartyPreview.tsx'
 import styles from './Steps.module.scss'
 import useToast from '@/utils/useToast.tsx'
+import { uploadFileS3 } from '@/utils/s3.ts'
+import { useFileContext } from '@/pages/PartySurveyForm/hooks/useFileContext.tsx'
 
 const indoorSteps = ['암장', '조건', '소개', '일정', '미리보기'] as const
 type IndoorStepName = (typeof indoorSteps)[number]
@@ -36,6 +38,7 @@ export function IndoorStep ({ formData, updateFormData }: StepProps) {
   const navigate = useNavigate()
   const { id } = useParams<{ id: string }>()
   const toast = useToast()
+  const file = useFileContext()
 
   const getCurrentStepIndex = (steps: readonly IndoorStepName[], step: IndoorStepName) => {
     return steps.findIndex(el => el === step)
@@ -113,7 +116,11 @@ export function IndoorStep ({ formData, updateFormData }: StepProps) {
                   await put_party_edit(id, req)
                 } else {
                   const req = new PostPartyNewReqAdapter(formData).adapt()
-                  await post_party_new(req)
+                  const newPartyInfo = {
+                    ...req,
+                    partyImageUrl: file ? await uploadFileS3(file) : formData.partyImageUrl,
+                  }
+                  await post_party_new(newPartyInfo)
                 }
                 navigate('/')
               } catch (e) {

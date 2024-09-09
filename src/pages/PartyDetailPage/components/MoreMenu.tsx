@@ -12,6 +12,7 @@ export default function MoreMenu ({ id }: { id?: string }) {
   const [openDropdown, onOpenDropdown] = useState(false)
   const [openAlertLogin, onOpenAlertLogin] = useState(false)
   const [openAlertDelete, onOpenAlertDelete] = useState(false)
+  const [openAlertEdit, onOpenAlertEdit] = useState(false)
 
   const { data: partyData } = usePartyDetail(Number(id))
 
@@ -24,7 +25,19 @@ export default function MoreMenu ({ id }: { id?: string }) {
           <Icon icon='More' />
         </Dropdown.Trigger>
         <Dropdown.Content>
-          <Dropdown.Item>
+          <Dropdown.Item
+            onSelect={() => {
+              onOpenDropdown(false)
+              if (!isLogin) {
+                return onOpenAlertLogin(true)
+              }
+              const isExistParticipant = partyData.currentParticipants > 1
+              if (isExistParticipant) {
+                return onOpenAlertEdit(true)
+              }
+              navigate(`/party-suervey/${id}`)
+            }}
+          >
             <p>파티 수정하기</p>
             <Icon size='16' icon='Pencil' />
           </Dropdown.Item>
@@ -62,6 +75,16 @@ export default function MoreMenu ({ id }: { id?: string }) {
           }}
         >
           정말 삭제하시겠습니까?
+        </Dialog.Content>
+      </Dialog>
+
+      <Dialog open={openAlertEdit} onOpenChange={onOpenAlertEdit}>
+        <Dialog.Content
+          onAction={() => {
+            navigate(`/party-suervey/${id}`)
+          }}
+        >
+          참가자가 있는 경우에<br />제한된 정보만 수정 가능합니다.
         </Dialog.Content>
       </Dialog>
     </>

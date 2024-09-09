@@ -3,9 +3,10 @@ import styles from './TopBar.module.scss'
 import Icon from '../Icon/Icon'
 import { useNavigate } from 'react-router-dom'
 import { Slot, SlotProps } from '@radix-ui/react-slot'
-import { Children, ReactNode, isValidElement } from 'react'
+import { Children, ReactNode, isValidElement, Suspense } from 'react'
 import classNames from 'classnames'
 import Notification from '@/pages/Home/components/Notification.tsx'
+import { useIsLogin } from '@/services/user.ts'
 
 /**
  * Left
@@ -145,11 +146,19 @@ type TopBarProps =
     children: ReactNode
   }
 function TopBarRoot (props: TopBarProps) {
+  const { data: isLogin } = useIsLogin()
+
   if (props.type === 'main')
     return (
       <div className={styles.Main}>
         <img width={70} height={18} src={logo} alt='logo' />
-        <Notification />
+        {
+          isLogin && (
+            <Suspense fallback={<div></div>}>
+              <Notification />
+            </Suspense>
+          )
+        }
       </div>
     )
 

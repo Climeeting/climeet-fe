@@ -7,7 +7,10 @@
     "dev": "vite --host",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "aws:deploy": "aws s3 sync ./dist s3://climeet-fe --profile=climeet-fe",
+    "aws:invalidate": "aws cloudfront create-invalidation --profile=climeet-fe --distribution-id E3M42F5BBE9VLJ --paths / /*",
+    "deploy": "pnpm run build && pnpm run aws:deploy && pnpm run aws:invalidate"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.1.2",

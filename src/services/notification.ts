@@ -1,6 +1,7 @@
-import { useQuery } from '@tanstack/react-query'
+import { useSuspenseInfiniteQuery } from '@tanstack/react-query'
 import { isAxiosError } from 'axios'
 import api from '@/utils/api.ts'
+import { PageData } from '@/pages/types/api.ts'
 
 export type NotificationType = 'CHAT' | 'PARTY'
 
@@ -15,25 +16,27 @@ export type GetNotificationResDTO = {
   notificationTitle: string
   referenceId: number
   isRead: boolean
-}[]
+}
 
 /**
  * GET /v1/notification
  */
-export const get_notification = async () => {
-  const result = await api.get<GetNotificationResDTO>(`/v1/notification`)
+export const get_notification = async ({ page }: { page: number }) => {
+  const result = await api.get<PageData<GetNotificationResDTO>>(`/v1/notification?page=${page}&size=10`)
   return result
 }
 
 export const NOTIFICATION_KEY = ['notification']
 
 export const useNotification = () => {
-  return useQuery({
+  return useSuspenseInfiniteQuery({
     queryKey: NOTIFICATION_KEY,
-    queryFn: get_notification,
+    queryFn: ({ pageParam }) => get_notification({ page: pageParam ?? 0 }),
+    initialPageParam: 0,
+    getNextPageParam: lastPage =>
+      lastPage.totalPages <= lastPage.pageable.pageNumber ? null : lastPage.pageable.pageNumber + 1,
     retryOnMount: false,
     refetchOnWindowFocus: false,
-    // 30초마다 새로고침
     refetchInterval: 30 * 1000,
     retry: (failureCount, error) => {
       if (isAxiosError(error) && error.response && error.response.status === 403) {

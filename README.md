@@ -5,7 +5,23 @@
 - pnpm
 - React, TS
 - SCSS
-- Tanstack Query, Zustand
+- Tanstack Query
+
+## How To Deploy
+
+1. [AWS Command interface 를 설치한다.](https://docs.aws.amazon.com/ko_kr/cli/latest/userguide/cli-chap-getting-started.html)
+2. 다음 CLI 를 입력한다.
+
+VITE_S3_ACCESS_KEY, VITE_S3_SECRET_ACCESS_KEY는 `.env` 에 있는 값을 사용하면 된다.
+```zsh
+$ aws configure --profile climeet-fe
+AWS Access Key ID [None]: ${VITE_S3_ACCESS_KEY}
+AWS Secret Access Key [None]: ${VITE_S3_SECRET_ACCESS_KEY}
+Default region name [None]: ap-northeast-2
+Default output format [None]: json
+```
+
+3. `pnpm run deploy` 입력하면 S3에 배포 완료된다.
 
 ## How to start
 
@@ -23,7 +39,6 @@ pnpm run build
 ## How to track issue
 
 1. 깃허브에서 이슈를 생성한다.
-   ![](https://private-user-images.githubusercontent.com/76723666/326839823-e824e444-e8c9-4322-be7f-fbe1f62416b8.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MTQ0ODYyODQsIm5iZiI6MTcxNDQ4NTk4NCwicGF0aCI6Ii83NjcyMzY2Ni8zMjY4Mzk4MjMtZTgyNGU0NDQtZThjOS00MzIyLWJlN2YtZmJlMWY2MjQxNmI4LnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDA0MzAlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQwNDMwVDE0MDYyNFomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPWRkYjFmZjhlMjhhYTgxNTA5MWY5YzMyYzNlMzM1YmFjMGY0MTMyM2MzYWUzZjBkYjE1N2JlMjQ5ZDY3N2JiMTcmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JmFjdG9yX2lkPTAma2V5X2lkPTAmcmVwb19pZD0wIn0.1RaB54s2FT66hpb6NH9qwoyDJyYtEXIerB2LRNXrgkM)
 
 2. 이슈 번호를 딴 브랜치를 생성한다.
    ex) `feature/1-first-start`

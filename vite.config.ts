@@ -49,6 +49,9 @@ export default defineConfig(({ mode }) => {
           },
         }
       : undefined,
+    preview: {
+      port: 5173,
+    },
     define: {
       // By default, Vite doesn't include shims for NodeJS/
       // necessary for segment analytics lib to work

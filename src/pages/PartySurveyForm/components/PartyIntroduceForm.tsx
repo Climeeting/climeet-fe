@@ -5,6 +5,7 @@ import classNames from 'classnames'
 import Icon from '@/components/Icon/Icon.tsx'
 import { usePreviewImage } from '@/utils/usePreviewImage.tsx'
 import { useFileActions } from '@/pages/PartySurveyForm/hooks/useFileContext.tsx'
+import { useParams } from 'react-router-dom'
 
 // @desc onChange 참고바랍니다.
 let file: File | undefined = undefined
@@ -22,6 +23,8 @@ export function PartyIntroduceForm ({ onNext, formData, updateFormData }: PartyI
   const ref = useRef<HTMLInputElement>(null)
   const updateProfileFile = useFileActions()
   usePreviewImage(ref, setSrc)
+  const { id } = useParams<{ id: string }>()
+  const isPartyEdit = id !== undefined
 
   const PARTY_NAME_MIN_LIMIT = 5
   const PARTY_NAME_MAX_LIMIT = 20
@@ -41,39 +44,41 @@ export function PartyIntroduceForm ({ onNext, formData, updateFormData }: PartyI
     <div className={styles.container}>
       <div>
         <h2 className={styles.title}>파티를 소개해주세요.</h2>
-        <div className={styles.question}>
-          <h3 className={styles.questionTitle}>사진 등록</h3>
-          <div className={styles.content}>
-            <input
-              className={styles.Hidden}
-              type='file'
-              ref={ref}
-              onChange={(e) => {
+        {!isPartyEdit && (
+          <div className={styles.question}>
+            <h3 className={styles.questionTitle}>사진 등록</h3>
+            <div className={styles.content}>
+              <input
+                className={styles.Hidden}
+                type='file'
+                ref={ref}
+                onChange={(e) => {
                 // @desc updateProfileFile 사용시 file context 재렌더링 발생하여 이 페이지 모든 데이터 날아가기 때문에 아래의 방식으로 구현하였습니다.
-                if (e.target.files) {
-                  file = (e.target.files[0])
+                  if (e.target.files) {
+                    file = (e.target.files[0])
+                  }
+                }}
+              />
+              <button
+                className={styles.Button}
+                onClick={() => {
+                  if (ref.current) ref.current.click()
+                }}
+              >
+                {
+                  src
+                    ? <img src={src} className={styles.PreviewImage} />
+                    : (
+                        <div className={styles.Default}>
+                          <Icon icon='AddImage' size='40' />
+                          <div>대표사진을 등록하시면<br />파티 참여율이 올라갑니다.</div>
+                        </div>
+                      )
                 }
-              }}
-            />
-            <button
-              className={styles.Button}
-              onClick={() => {
-                if (ref.current) ref.current.click()
-              }}
-            >
-              {
-                src
-                  ? <img src={src} className={styles.PreviewImage} />
-                  : (
-                      <div className={styles.Default}>
-                        <Icon icon='AddImage' size='40' />
-                        <div>대표사진을 등록하시면<br />파티 참여율이 올라갑니다.</div>
-                      </div>
-                    )
-              }
-            </button>
+              </button>
+            </div>
           </div>
-        </div>
+        )}
         <div className={styles.question}>
           <h3 className={styles.questionTitle}>제목</h3>
           <div className={styles.content}>

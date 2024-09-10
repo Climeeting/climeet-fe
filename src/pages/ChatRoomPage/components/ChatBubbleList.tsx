@@ -28,11 +28,18 @@ export default function ChatBubbleList ({ data, fetchNextPage, hasNextPage }: Ch
     estimateSize: () => 35,
     overscan: 5,
     scrollMargin: getOffsetTop(parentRef.current),
-    paddingStart: 8,
-    paddingEnd: 8,
+    paddingStart: 50,
+    paddingEnd: 50,
   })
 
-  // for scrolling
+  useEffect(function firstScrollBottom () {
+    if (chatList.length) {
+      rowVirtualizer.scrollToIndex(chatList.length - 1, {
+        align: 'start',
+      })
+    }
+  }, [chatList.length])
+
   useEffect(function scrollTo () {
     if (chatList.length && scrollRef.current) {
       const { index, align } = scrollRef.current
@@ -78,15 +85,6 @@ export default function ChatBubbleList ({ data, fetchNextPage, hasNextPage }: Ch
               = index === chatList.length - 1 // 1. 마지막 메시지
               || chat.senderId !== chatList[index + 1].senderId // 2. 다음 메시지와 다른 사용자
               || dayjs(chatList[index + 1].createdAt).diff(dayjs(chat.createdAt), 'minute') > 1 // 3. 다음 메시지와 1분 이상 차이
-
-          // const isStartMessage
-          // = index === chatList.length - 1 // 1. 첫 번째 메시지
-          // || chat.senderId !== chatList[index - 1].senderId // 2. 이전 메시지와 다른 사용자
-          // || dayjs(chatList[index - 1].createdAt).diff(dayjs(chat.createdAt), 'minute') > 1 // 3. 이전 메시지와 1분 이상 차이
-          // const isLastMessage
-          //   = index === chatList.length - 1 // 1. 마지막 메시지
-          //   || chat.senderId !== chatList[index + 1].senderId // 2. 다음 메시지와 다른 사용자
-          //   || dayjs(chatList[index + 1].createdAt).diff(dayjs(chat.createdAt), 'minute') > 1 // 3. 다음 메시지와 1분 이상 차이
 
           return (
             <li

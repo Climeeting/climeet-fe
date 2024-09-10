@@ -29,7 +29,7 @@ export default function ChatBubbleList ({ data, fetchNextPage, hasNextPage }: Ch
     overscan: 5,
     scrollMargin: getOffsetTop(parentRef.current),
     paddingStart: 50,
-    paddingEnd: 50,
+    paddingEnd: 64,
   })
 
   useEffect(function firstScrollBottom () {

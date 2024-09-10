@@ -4,75 +4,124 @@ import { useMyProfile } from '@/services/user'
 import { ChatMessage, ChatRoomQuery, useChatRoomSuspense } from '@/services/chat'
 import { PageData } from '@/pages/types/api'
 import { InfiniteData } from '@tanstack/react-query'
-import { useLoadMore } from '@/utils/useLoadMore'
 import styles from './ChatBubbleList.module.scss'
-import { useEffect, useLayoutEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
+import { useWindowVirtualizer } from '@tanstack/react-virtual'
+import getOffsetTop from '@/utils/getOffsetTop'
 
 type ChatBubbleListProps = {
   data: InfiniteData<PageData<ChatMessage>, unknown>
   fetchNextPage: () => void
+  hasNextPage: boolean
 }
 
-export default function ChatBubbleList ({ data, fetchNextPage }: ChatBubbleListProps) {
-  const chatList = data.pages.map(page => page.content).flat()
-  const loadMoreRef = useLoadMore(fetchNextPage)
-  const scrollContainerRef = useRef<HTMLUListElement>(null)
-  const snapshot = useRef({
-    clientHeight: 0,
-    scrollTop: 0,
-  })
-
-  useEffect(function getSnapshotBeforeUpdate () {
-    if (!scrollContainerRef.current) return
-    snapshot.current.clientHeight = scrollContainerRef.current.clientHeight
-    snapshot.current.scrollTop = scrollContainerRef.current.scrollTop
-  })
-
-  useLayoutEffect(() => {
-    if (!scrollContainerRef.current) return
-    const { clientHeight, scrollTop } = snapshot.current
-    const deltaY
-    = scrollContainerRef.current.clientHeight - clientHeight
-
-    if (deltaY > 0) {
-      scrollContainerRef.current?.scrollTo(0, scrollTop + deltaY)
-    }
-  }, [data.pages[data.pages.length - 1].number])
-
+export default function ChatBubbleList ({ data, fetchNextPage, hasNextPage }: ChatBubbleListProps) {
+  const chatList = data.pages.map(page => page.content).flat().reverse()
   const { data: myData } = useMyProfile()
+
+  const scrollRef = useRef(null)
+  const parentRef = useRef(null)
+  const scrollLocked = useRef(false)
+
+  const rowVirtualizer = useWindowVirtualizer({
+    count: hasNextPage ? chatList.length + 1 : chatList.length,
+    estimateSize: () => 35,
+    overscan: 5,
+    scrollMargin: getOffsetTop(parentRef.current),
+    paddingStart: 8,
+    paddingEnd: 8,
+  })
+
+  // for scrolling
+  useEffect(function scrollTo () {
+    if (chatList.length && scrollRef.current) {
+      const { index, align } = scrollRef.current
+      rowVirtualizer.scrollToIndex(index, { align })
+    }
+  }, [chatList.length])
+
+  useEffect(function fetchMore () {
+    const [firstItem] = [...rowVirtualizer.getVirtualItems()]
+
+    if (scrollLocked.current) return
+    if (!firstItem) return
+
+    if (firstItem.index <= 0 && hasNextPage) {
+      fetchNextPage()
+    }
+  }, [
+    hasNextPage,
+    chatList.length,
+    rowVirtualizer.getVirtualItems(),
+  ])
+
   return (
-    <ul ref={scrollContainerRef} className={styles.ChatBubbleList}>
-      {chatList.map((chat, index) => {
-        const isStartMessage
-          = index === 0 // 1. 첫 번째 메시지
-          || chat.senderId !== chatList[index - 1].senderId // 2. 이전 메시지와 다른 사용자
-          || dayjs(chatList[index - 1].createdAt).diff(dayjs(chat.createdAt), 'minute') > 1 // 3. 이전 메시지와 1분 이상 차이
+    <div ref={parentRef} className={styles.ChatBubbleContainer}>
+      <ul
+        className={styles.ChatBubbleList}
+        style={{
+          height: `${rowVirtualizer.getTotalSize()}px`,
+          width: '100%',
+          position: 'relative',
+        }}
+      >
+        {rowVirtualizer.getVirtualItems().map((virtualRow) => {
+          const index = virtualRow.index
+          const chat = chatList[virtualRow.index]
+          if (!chat) return null
 
-        const isLastMessage
-          = index === chatList.length - 1 // 1. 마지막 메시지
-          || chat.senderId !== chatList[index + 1].senderId // 2. 다음 메시지와 다른 사용자
-          || dayjs(chatList[index + 1].createdAt).diff(dayjs(chat.createdAt), 'minute') > 1 // 3. 다음 메시지와 1분 이상 차이
+          const isStartMessage
+            = index === 0 // 1. 첫 번째 메시지
+            || chat.senderId !== chatList[index - 1].senderId // 2. 이전 메시지와 다른 사용자
+            || dayjs(chatList[index - 1].createdAt).diff(dayjs(chat.createdAt), 'minute') > 1 // 3. 이전 메시지와 1분 이상 차이
+          const isLastMessage
+              = index === chatList.length - 1 // 1. 마지막 메시지
+              || chat.senderId !== chatList[index + 1].senderId // 2. 다음 메시지와 다른 사용자
+              || dayjs(chatList[index + 1].createdAt).diff(dayjs(chat.createdAt), 'minute') > 1 // 3. 다음 메시지와 1분 이상 차이
 
-        return (
-          <li key={`${chat.id}-${index}`}>
-            <ChatBubble
-              {...chat}
-              isStartMessage={isStartMessage}
-              isLastMessage={isLastMessage}
-              isMyMessage={myData?.userId ? myData.userId === chat.senderId : false}
-            />
-          </li>
-        )
-      })}
-      <li ref={loadMoreRef} />
-    </ul>
+          // const isStartMessage
+          // = index === chatList.length - 1 // 1. 첫 번째 메시지
+          // || chat.senderId !== chatList[index - 1].senderId // 2. 이전 메시지와 다른 사용자
+          // || dayjs(chatList[index - 1].createdAt).diff(dayjs(chat.createdAt), 'minute') > 1 // 3. 이전 메시지와 1분 이상 차이
+          // const isLastMessage
+          //   = index === chatList.length - 1 // 1. 마지막 메시지
+          //   || chat.senderId !== chatList[index + 1].senderId // 2. 다음 메시지와 다른 사용자
+          //   || dayjs(chatList[index + 1].createdAt).diff(dayjs(chat.createdAt), 'minute') > 1 // 3. 다음 메시지와 1분 이상 차이
+
+          return (
+            <li
+              id={`item-${virtualRow.index}`}
+              key={virtualRow.index}
+              ref={rowVirtualizer.measureElement}
+              data-index={index}
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                transform: `translateY(${virtualRow.start - rowVirtualizer.options.scrollMargin}px)`,
+                width: '100%',
+              }}
+            >
+              <ChatBubble
+                {...chat}
+                isStartMessage={isStartMessage}
+                isLastMessage={isLastMessage}
+                isMyMessage={myData?.userId ? myData.userId === chat.senderId : false}
+              />
+            </li>
+          )
+        })}
+      </ul>
+    </div>
   )
 }
 
 ChatBubbleList.Query = function ChatBubbleListQuery ({ room }: { room: number }) {
-  const { data, fetchNextPage } = useChatRoomSuspense({ room })
+  const { data, fetchNextPage, hasNextPage, isFetching } = useChatRoomSuspense({ room })
 
-  return <ChatBubbleList data={data} fetchNextPage={fetchNextPage} />
+  console.log({ isFetching })
+
+  return <ChatBubbleList data={data} fetchNextPage={fetchNextPage} hasNextPage={hasNextPage} />
 }
 
 ChatBubbleList.Skeleton = function ChatBubbleListSkeleton () {

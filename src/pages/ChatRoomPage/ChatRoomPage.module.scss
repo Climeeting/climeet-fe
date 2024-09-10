@@ -1,11 +1,5 @@
 .Container {
-  position: fixed;
   width: 100%;
-  top: 48px;
-  left: 0;
-  height: calc(100vh - (48px + 64px));
-  overflow: auto;
-  overscroll-behavior: contain;
 
   .Alert {
     height: 80px;

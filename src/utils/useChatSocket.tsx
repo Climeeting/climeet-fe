@@ -151,12 +151,33 @@ function useChatMessage (socket?: Socket) {
   }, [])
 
   useEffect(function message () {
+    const ping = () => {
+      console.log('Ping received')
+    }
+    if (socket) socket.on('ping', ping)
+
+    return () => {
+      if (socket) socket.off('ping', ping)
+    }
+  }, [socket])
+
+  useEffect(function message () {
     if (socket) socket.on('message', onMessage)
 
     return () => {
       if (socket) socket.off('message', onMessage)
     }
-  }, [])
+  }, [socket])
+
+  useEffect(function message () {
+    if (socket) {
+      socket.on('read_message', onMessage)
+    }
+
+    return () => {
+      if (socket) socket.off('read_message', onMessage)
+    }
+  }, [socket])
 
   return messages
 }

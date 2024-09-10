@@ -68,6 +68,9 @@ dependencies:
   '@tanstack/react-query':
     specifier: ^5.32.1
     version: 5.37.1(react@18.3.1)
+  '@tanstack/react-virtual':
+    specifier: ^3.10.7
+    version: 3.10.7(react-dom@18.3.1)(react@18.3.1)
   '@uidotdev/usehooks':
     specifier: ^2.4.1
     version: 2.4.1(react-dom@18.3.1)(react@18.3.1)
@@ -3500,6 +3503,21 @@ packages:
     dependencies:
       '@tanstack/query-core': 5.36.1
       react: 18.3.1
+    dev: false
+
+  /@tanstack/react-virtual@3.10.7(react-dom@18.3.1)(react@18.3.1):
+    resolution: {integrity: sha512-yeP+M0G8D+15ZFPivpuQ5hoM4Fa/PzERBx8P8EGcfEsXX3JOb9G9UUrqc47ZXAxvK+YqzM9T5qlJUYUFOwCZJw==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      '@tanstack/virtual-core': 3.10.7
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+    dev: false
+
+  /@tanstack/virtual-core@3.10.7:
+    resolution: {integrity: sha512-ND5dfsU0n9F4gROzwNNDJmg6y8n9pI8YWxtgbfJ5UcNn7Hx+MxEXtXcQ189tS7sh8pmCObgz2qSiyRKTZxT4dg==}
     dev: false
 
   /@types/babel__core@7.20.5:

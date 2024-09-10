@@ -1,6 +1,12 @@
+.ChatBubbleContainer {
+  overflow-y: scroll;
+  overscroll-behavior: contain;
+  padding-top: 48px;
+  padding-bottom: 64px;
+}
 .ChatBubbleList {
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
   overflow-y: scroll;
   overscroll-behavior: contain;
 }

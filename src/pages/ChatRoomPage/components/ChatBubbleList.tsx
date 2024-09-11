@@ -5,78 +5,38 @@ import { ChatMessage, ChatRoomQuery, useChatRoomSuspense } from '@/services/chat
 import { PageData } from '@/pages/types/api'
 import { InfiniteData } from '@tanstack/react-query'
 import styles from './ChatBubbleList.module.scss'
-import { useEffect, useRef } from 'react'
-import { useWindowVirtualizer } from '@tanstack/react-virtual'
-import getOffsetTop from '@/utils/getOffsetTop'
+import { useEffect, useRef, useState } from 'react'
+import { useLoadMore } from '@/utils/useLoadMore'
+import Icon from '@/components/Icon/Icon'
 
 type ChatBubbleListProps = {
   data: InfiniteData<PageData<ChatMessage>, unknown>
   fetchNextPage: () => void
-  hasNextPage: boolean
 }
 
-export default function ChatBubbleList ({ data, fetchNextPage, hasNextPage }: ChatBubbleListProps) {
+export default function ChatBubbleList ({ data, fetchNextPage }: ChatBubbleListProps) {
   const chatList = data.pages.map(page => page.content).flat().reverse()
   const { data: myData } = useMyProfile()
 
-  const scrollRef = useRef(null)
-  const parentRef = useRef(null)
-  const scrollLocked = useRef(false)
+  const [isScrolled, setIsScrolled] = useState(false)
+  const loadMoreRef = useLoadMore(fetchNextPage)
+  const chatListRef = useChatScroll(chatList, isScrolled)
 
-  const rowVirtualizer = useWindowVirtualizer({
-    count: hasNextPage ? chatList.length + 1 : chatList.length,
-    estimateSize: () => 35,
-    overscan: 5,
-    scrollMargin: getOffsetTop(parentRef.current),
-    paddingStart: 50,
-    paddingEnd: 64,
-  })
-
-  useEffect(function firstScrollBottom () {
-    if (chatList.length) {
-      rowVirtualizer.scrollToIndex(chatList.length - 1, {
-        align: 'start',
-      })
-    }
-  }, [chatList.length])
-
-  useEffect(function scrollTo () {
-    if (chatList.length && scrollRef.current) {
-      const { index, align } = scrollRef.current
-      rowVirtualizer.scrollToIndex(index, { align })
-    }
-  }, [chatList.length])
-
-  useEffect(function fetchMore () {
-    const [firstItem] = [...rowVirtualizer.getVirtualItems()]
-
-    if (scrollLocked.current) return
-    if (!firstItem) return
-
-    if (firstItem.index <= 0 && hasNextPage) {
-      fetchNextPage()
-    }
-  }, [
-    hasNextPage,
-    chatList.length,
-    rowVirtualizer.getVirtualItems(),
-  ])
+  const hasNewMessage = true
 
   return (
-    <div ref={parentRef} className={styles.ChatBubbleContainer}>
+    <div className={styles.ChatBubbleContainer}>
       <ul
+        ref={chatListRef}
         className={styles.ChatBubbleList}
-        style={{
-          height: `${rowVirtualizer.getTotalSize()}px`,
-          width: '100%',
-          position: 'relative',
+        onScroll={() => {
+          if (chatListRef.current) {
+            setIsScrolled(chatListRef.current.scrollTop + chatListRef.current.clientHeight < chatListRef.current.scrollHeight)
+          }
         }}
       >
-        {rowVirtualizer.getVirtualItems().map((virtualRow) => {
-          const index = virtualRow.index
-          const chat = chatList[virtualRow.index]
-          if (!chat) return null
-
+        <li ref={loadMoreRef} />
+        {chatList.map((chat, index) => {
           const isStartMessage
             = index === 0 // 1. 첫 번째 메시지
             || chat.senderId !== chatList[index - 1].senderId // 2. 이전 메시지와 다른 사용자
@@ -87,19 +47,7 @@ export default function ChatBubbleList ({ data, fetchNextPage, hasNextPage }: Ch
               || dayjs(chatList[index + 1].createdAt).diff(dayjs(chat.createdAt), 'minute') > 1 // 3. 다음 메시지와 1분 이상 차이
 
           return (
-            <li
-              id={`item-${virtualRow.index}`}
-              key={virtualRow.index}
-              ref={rowVirtualizer.measureElement}
-              data-index={index}
-              style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                transform: `translateY(${virtualRow.start - rowVirtualizer.options.scrollMargin}px)`,
-                width: '100%',
-              }}
-            >
+            <li key={`chat-${chat.id}-${chat.createdAt}`}>
               <ChatBubble
                 {...chat}
                 isStartMessage={isStartMessage}
@@ -110,16 +58,45 @@ export default function ChatBubbleList ({ data, fetchNextPage, hasNextPage }: Ch
           )
         })}
       </ul>
+      {isScrolled && hasNewMessage && (
+        <button
+          onClick={() => {
+            setIsScrolled(false)
+            scrollToBottom(chatListRef.current!)
+          }}
+          className={styles.ChatNewMssage}
+        >
+          <span>새로운 메세지 확인하기</span>
+          <Icon icon='ArrowDown' size={16} />
+        </button>
+      )}
     </div>
   )
 }
 
+const scrollToBottom = (element: HTMLUListElement) => {
+  element.scrollTo({
+    top: element.scrollHeight,
+    left: 0,
+    behavior: 'instant',
+  })
+}
+
+function useChatScroll<T> (dep: T, disabled: boolean) {
+  const ref = useRef<HTMLUListElement>(null)
+  useEffect(() => {
+    if (disabled) return
+    if (ref.current) {
+      scrollToBottom(ref.current)
+    }
+  }, [dep, disabled])
+  return ref as React.RefObject<HTMLUListElement>
+}
+
 ChatBubbleList.Query = function ChatBubbleListQuery ({ room }: { room: number }) {
-  const { data, fetchNextPage, hasNextPage, isFetching } = useChatRoomSuspense({ room })
+  const { data, fetchNextPage } = useChatRoomSuspense({ room })
 
-  console.log({ isFetching })
-
-  return <ChatBubbleList data={data} fetchNextPage={fetchNextPage} hasNextPage={hasNextPage} />
+  return <ChatBubbleList data={data} fetchNextPage={fetchNextPage} />
 }
 
 ChatBubbleList.Skeleton = function ChatBubbleListSkeleton () {

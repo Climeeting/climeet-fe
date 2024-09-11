@@ -22,7 +22,7 @@ type GetChatRoomParams = {
 /**
  * GET /v1/chat/${room}
  */
-export const get_chat_$room = async ({ room, page = 0, size = 30 }: GetChatRoomParams) => {
+export const get_chat_$room = async ({ room, page = 0, size = 20 }: GetChatRoomParams) => {
   return await api.get<PageData<ChatMessage>>(`/v1/chat/${room}?${stringify({ page, size })}`)
 }
 

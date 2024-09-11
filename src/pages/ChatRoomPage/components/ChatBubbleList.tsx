@@ -5,22 +5,47 @@ import { ChatMessage, ChatRoomQuery, useChatRoomSuspense } from '@/services/chat
 import { PageData } from '@/pages/types/api'
 import { InfiniteData } from '@tanstack/react-query'
 import styles from './ChatBubbleList.module.scss'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { useLoadMore } from '@/utils/useLoadMore'
 import Icon from '@/components/Icon/Icon'
 
 type ChatBubbleListProps = {
   data: InfiniteData<PageData<ChatMessage>, unknown>
-  fetchNextPage: () => void
+  fetchNextPage: () => Promise<unknown>
+  isFetched: boolean
+  hasNextPage: boolean
 }
 
-export default function ChatBubbleList ({ data, fetchNextPage }: ChatBubbleListProps) {
+export default function ChatBubbleList ({ data, fetchNextPage, isFetched, hasNextPage }: ChatBubbleListProps) {
   const chatList = data.pages.map(page => page.content).flat().reverse()
+  const showLoadMore = isFetched && hasNextPage
   const { data: myData } = useMyProfile()
 
   const [isScrolled, setIsScrolled] = useState(false)
-  const loadMoreRef = useLoadMore(fetchNextPage)
   const chatListRef = useChatScroll(chatList, isScrolled)
+  const snapshotRef = useRef<{ scrollHeight: number, scrollTop: number } | null>(null)
+
+  const loadMoreRef = useLoadMore(async () => {
+    if (chatListRef.current) {
+      snapshotRef.current = {
+        scrollHeight: chatListRef.current.scrollHeight,
+        scrollTop: chatListRef.current.scrollTop,
+      }
+      await fetchNextPage()
+    }
+  })
+
+  useLayoutEffect(() => {
+    if (snapshotRef.current && chatListRef.current) {
+      const { scrollHeight, scrollTop } = snapshotRef.current
+      chatListRef.current.scrollTo({
+        top: chatListRef.current.scrollHeight - scrollHeight + scrollTop,
+        left: 0,
+        behavior: 'instant',
+      })
+      snapshotRef.current = null
+    }
+  }, [data.pages])
 
   const hasNewMessage = true
 
@@ -35,7 +60,7 @@ export default function ChatBubbleList ({ data, fetchNextPage }: ChatBubbleListP
           }
         }}
       >
-        <li ref={loadMoreRef} />
+        {showLoadMore && <li ref={loadMoreRef} />}
         {chatList.map((chat, index) => {
           const isStartMessage
             = index === 0 // 1. 첫 번째 메시지
@@ -94,9 +119,9 @@ function useChatScroll<T> (dep: T, disabled: boolean) {
 }
 
 ChatBubbleList.Query = function ChatBubbleListQuery ({ room }: { room: number }) {
-  const { data, fetchNextPage } = useChatRoomSuspense({ room })
+  const { data, fetchNextPage, isFetched, hasNextPage } = useChatRoomSuspense({ room })
 
-  return <ChatBubbleList data={data} fetchNextPage={fetchNextPage} />
+  return <ChatBubbleList data={data} fetchNextPage={fetchNextPage} isFetched={isFetched} hasNextPage={hasNextPage} />
 }
 
 ChatBubbleList.Skeleton = function ChatBubbleListSkeleton () {

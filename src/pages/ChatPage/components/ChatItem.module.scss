@@ -1,77 +1,74 @@
 .ChatItem {
   display: flex;
-  justify-content: space-between;
-  border-bottom: 1px solid #e0e0e0;
-  padding: 16px 0;
-  gap: 10px;
+  gap: 16px;
+  border-bottom: 1px solid $gray-100;
+  padding: 16px;
   cursor: pointer;
 
-  .Left {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 16px;
-
-    .RoomTitle {
-      margin-bottom: 10px;
-      flex-shrink: 0;
-      flex-grow: 0;
-      display: flex;
-      line-height: 1;
-    }
-
-    .RoomName {
-      display: inline-block;
-      margin-right: 4px;
-      flex-shrink: 0;
-      font-size: 16px;
-      font-weight: 600;
-      color: $gray-800;
-      line-height: 1;
-    }
-
-    .Members {
-      font-size: 16px;
-      font-weight: 500;
-      color: $gray-500;
-    }
-
-    .Avatar {
-      flex-shrink: 0;
-      width: 52px;
-      height: 52px;
-    }
-
-    .LastMessage {
-      font-size: 14px;
-      font-weight: 400;
-      color: $gray-600;
-      line-height: 1;
-    }
+  .RoomInfo {
+    padding-top: 8px;
+    width: 100%;
   }
 
-  .Right {
-    flex-shrink: 0;
+  .Row {
     display: flex;
-    flex-direction: column;
-    gap: 4px;
-    align-items: flex-end;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+  }
 
-    .LastChatTime {
-      font-size: 12px;
-      line-height: 1.7;
-      font-weight: 500;
-      color: $gray-400;
-    }
+  .Row:first-of-type {
+    margin-bottom: 10px;
+  }
 
-    .Chip {
-      display: inline;
-      font-size: 12px;
-      line-height: 1;
-      padding: 4px 6px;
-      border-radius: 999px;
-      background-color: $primary-500;
-      color: #ffffff;
-    }
+  .RoomTitle {
+    flex-shrink: 0;
+    flex-grow: 0;
+    display: flex;
+    line-height: 1;
+  }
+
+  .RoomName {
+    display: inline-block;
+    margin-right: 4px;
+    flex-shrink: 0;
+    font-size: rem(16px);
+    font-weight: 600;
+    color: $gray-800;
+    line-height: 1;
+  }
+
+  .Members {
+    font-size: rem(16px);
+    font-weight: 500;
+    color: $gray-500;
+  }
+
+  .Avatar {
+    flex-shrink: 0;
+    width: 52px;
+    height: 52px;
+  }
+
+  .LastMessage {
+    font-size: rem(14px);
+    font-weight: 400;
+    color: $gray-600;
+    line-height: 1;
+  }
+
+  .LastChatTime {
+    font-size: rem(12px);
+    line-height: 1.7;
+    font-weight: 500;
+    color: $gray-400;
+  }
+
+  .NewChat {
+    display: inline;
+    width: 8px;
+    height: 8px;
+    border-radius: 100%;
+    background-color: $primary-500;
   }
 }

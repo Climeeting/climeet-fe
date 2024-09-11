@@ -10,19 +10,19 @@ export default function ChatItem ({
 }) {
   return (
     <div className={styles.ChatItem}>
-      <div className={styles.Left}>
-        <Avatar src={data.chatThumbnail} alt='아바타' className={styles.Avatar} />
-        <div className={styles.RoomInfo}>
+      <Avatar src={data.chatThumbnail} alt='아바타' className={styles.Avatar} />
+      <div className={styles.RoomInfo}>
+        <div className={styles.Row}>
           <div className={styles.RoomTitle}>
-            <div className={styles.RoomName}>파티 이름 (작업 필요)</div>
-            <div className={styles.Members}>{data.memberCount}</div>
+            <h2 className={styles.RoomName}>파티 이름 (작업 필요)</h2>
+            <span className={styles.Members}>{data.memberCount}</span>
           </div>
-          <div className={styles.LastMessage}>{data.lastMessage}</div>
+          {data.hasUnreadMessages && <div className={styles.NewChat} />}
         </div>
-      </div>
-      <div className={styles.Right}>
-        {data.lastMessageTime && <div className={styles.LastChatTime}>{dayjs(data.lastMessageTime).format('A hh:mm')}</div>}
-        {data.hasUnreadMessages && <div className={styles.Chip}>1</div>}
+        <div className={styles.Row}>
+          <div className={styles.LastMessage}>{data.lastMessage}</div>
+          {data.lastMessageTime && <div className={styles.LastChatTime}>{dayjs(data.lastMessageTime).format('A hh:mm')}</div>}
+        </div>
       </div>
     </div>
   )

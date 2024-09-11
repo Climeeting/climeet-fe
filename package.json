@@ -34,6 +34,7 @@
     "@stackflow/plugin-renderer-basic": "^1.1.8",
     "@stackflow/react": "^1.1.9",
     "@tanstack/react-query": "^5.32.1",
+    "@tanstack/react-virtual": "^3.10.7",
     "@uidotdev/usehooks": "^2.4.1",
     "aws-sdk": "^2.1560.0",
     "axios": "^1.6.8",
@@ -45,6 +46,8 @@
     "react-router-dom": "^6.23.0",
     "react-use": "^17.5.0",
     "sass": "^1.77.2",
+    "socket.io": "^4.7.5",
+    "socket.io-client": "^4.7.5",
     "vite-plugin-svgr": "^4.2.0",
     "zustand": "^4.5.2"
   },

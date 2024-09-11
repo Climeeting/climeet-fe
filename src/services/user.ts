@@ -329,3 +329,53 @@ export type PartyListDto = {
   joinStatus: 'AVAILABLE' | 'IMMINENT_FULL' | 'FULL'
   partyImageUrl: string
 }
+
+/**
+ * GET /v1/user/chat-rooms
+ */
+export const get_user_chatRooms = async (params: GetUserChatRoomsParams) => {
+  const queryString = stringify(params)
+
+  return await api.get<PageData<ChatRoomDto>>(`/v1/user/chat-rooms?${queryString}`)
+}
+
+export type ChatRoomDto = {
+  roomId: number
+  lastMessage: string
+  lastMessageTime: string
+  memberCount: number
+  hasUnreadMessages: boolean
+  chatThumbnail: string
+}
+
+type GetUserChatRoomsParams = {
+  page?: number
+  size?: number
+}
+
+export const USER_CHAT_ROOS_KEY = ['chat', 'rooms']
+
+export const useUserChatRooms = () => {
+  return useSuspenseInfiniteQuery({
+    queryKey: USER_CHAT_ROOS_KEY,
+    queryFn: ({ pageParam }) => get_user_chatRooms({ page: pageParam ?? 0 }),
+    initialPageParam: 0,
+    getNextPageParam: lastPage =>
+      lastPage.totalPages <= lastPage.pageable.pageNumber ? null : lastPage.pageable.pageNumber + 1,
+    // 마운트시에 요청 보내지 않음
+    retryOnMount: false,
+  })
+}
+
+export const UserChatRoomsQuery = {
+  invalidate: async () =>
+    await queryClient.invalidateQueries({
+      queryKey: USER_PARTY_LIST_KEY,
+      refetchType: 'all',
+    }),
+
+  refetch: async () =>
+    await queryClient.refetchQueries({
+      queryKey: USER_PARTY_LIST_KEY,
+    }),
+}

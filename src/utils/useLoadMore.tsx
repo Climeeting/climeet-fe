@@ -26,6 +26,7 @@ export function useLoadMore (fetch: () => void) {
 
   useEffect(() => {
     if (isVisible) {
+      console.log('isVisible')
       fetch()
     }
   }, [isVisible])

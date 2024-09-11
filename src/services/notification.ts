@@ -22,13 +22,8 @@ export type GetNotificationResDTO = {
  * GET /v1/notification
  */
 export const get_notification = async ({ page }: { page: number }) => {
-  try {
-    const result = await api.get<PageData<GetNotificationResDTO>>(`/v1/notification?page=${page}&size=10`)
-    return result
-  } catch (e) {
-    console.error(e)
-    throw new Error('알림 조회에 실패하였습니다. get v1/notification')
-  }
+  const result = await api.get<PageData<GetNotificationResDTO>>(`/v1/notification?page=${page}&size=10`)
+  return result
 }
 
 export const NOTIFICATION_KEY = ['notification']

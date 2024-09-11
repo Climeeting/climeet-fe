@@ -6,12 +6,10 @@ import { Suspense, useState } from 'react'
 import EmptyChat from '@/pages/ChatPage/components/EmptyChat.tsx'
 import PartyChatList from './components/PartyChatList'
 import { ErrorBoundary } from 'react-error-boundary'
-import { useMyProfileSuspense } from '@/services/user'
 
 type ChatType = 'party' | 'personal'
 
 function ChatPage () {
-  const { data: { userId } } = useMyProfileSuspense()
   const [chatType, setChatType] = useState<ChatType>('party')
 
   return (
@@ -28,9 +26,9 @@ function ChatPage () {
       />
       {chatType === 'party'
         ? (
-            <ErrorBoundary fallback={<PartyChatList.Retry userId={userId} />}>
+            <ErrorBoundary fallback={<PartyChatList.Retry />}>
               <Suspense fallback={<PartyChatList.Skeleton />}>
-                <PartyChatList.Query userId={userId} />
+                <PartyChatList.Query />
               </Suspense>
             </ErrorBoundary>
           )

@@ -1,4 +1,4 @@
-import { PartyListDto, UserPartyListQuery, useUserPartyList } from '@/services/user'
+import { ChatRoomDto, UserChatRoomsQuery, useUserChatRooms } from '@/services/user'
 import { InfiniteData } from '@tanstack/react-query'
 import { PageData } from '@/pages/types/api'
 import { Link } from 'react-router-dom'
@@ -12,7 +12,7 @@ export default function PartyChatList ({
   data,
   fetchNextPage,
 }: {
-  data: InfiniteData<PageData<PartyListDto>>
+  data: InfiniteData<PageData<ChatRoomDto>>
   fetchNextPage: () => void
 }) {
   const ref = useLoadMore(fetchNextPage)
@@ -27,8 +27,8 @@ export default function PartyChatList ({
       {data.pages.map((parties, i) => (
         <Fragment key={i}>
           {parties.content.map(party => (
-            <li key={party.id}>
-              <Link to={`/chat/${party.id}`}>
+            <li key={party.roomId}>
+              <Link to={`/chat/${party.roomId}`}>
                 <ChatItem data={party} />
               </Link>
             </li>
@@ -40,10 +40,8 @@ export default function PartyChatList ({
   )
 }
 
-PartyChatList.Query = function PartyChatListQuery ({ userId }: { userId: number }) {
-  const { data, fetchNextPage } = useUserPartyList({
-    userId,
-  })
+PartyChatList.Query = function PartyChatListQuery () {
+  const { data, fetchNextPage } = useUserChatRooms()
 
   return <PartyChatList data={data} fetchNextPage={fetchNextPage} />
 }
@@ -61,6 +59,6 @@ PartyChatList.Skeleton = function Skeleton () {
   )
 }
 
-PartyChatList.Retry = function Retry ({ userId }: { userId: number }) {
-  return <NotFound refresh={() => UserPartyListQuery.refetch({ userId })} />
+PartyChatList.Retry = function Retry () {
+  return <NotFound refresh={() => UserChatRoomsQuery.refetch()} />
 }

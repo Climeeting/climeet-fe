@@ -7,16 +7,12 @@ import ChatSidebar from '@/pages/ChatRoomPage/components/ChatSidebar.tsx'
 // import { useVisualViewport } from '@/pages/ChatRoomPage/hooks/useVisualViewport.tsx'
 import ChatBubbleList from './components/ChatBubbleList'
 import { useNavigate, useParams } from 'react-router-dom'
-import useChatSocket, { ChatSocket } from '@/utils/useChatSocket'
 import { useMyProfile } from '@/services/user'
-import { sendChatMessage } from '@/utils/socket'
 import { ErrorBoundary } from 'react-error-boundary'
 
-export function ChatRoomPage ({ id, userId }: { id: number, userId: number }) {
+export function ChatRoomPage ({ id }: { id: number, userId: number }) {
   // const { wrapperRef, containerRef } = useVisualViewport()
-  const { socket, messages } = useChatSocket({ room: id, senderId: userId }) as ChatSocket
   const [message, setMessage] = useState('')
-  console.log({ messages })
 
   return (
     <div>
@@ -51,10 +47,7 @@ export function ChatRoomPage ({ id, userId }: { id: number, userId: number }) {
       <form
         onSubmit={(e) => {
           e.preventDefault()
-          if (socket) {
-            sendChatMessage({ socket, room: id, senderId: userId, message })
-            setMessage('')
-          }
+          setMessage('')
         }}
         className={styles.Bottom}
       >

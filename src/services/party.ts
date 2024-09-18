@@ -342,7 +342,7 @@ export class PartyDetailAdapter {
       ...this.value,
       appointmentTime: this.appointmentTime,
       climbingType: this.climbingType,
-      constraints: this.climbingType,
+      constraints: this.constraints,
     }
   }
 }

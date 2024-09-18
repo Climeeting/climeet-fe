@@ -346,6 +346,7 @@ export type ChatRoomDto = {
   memberCount: number
   hasUnreadMessages: boolean
   chatThumbnail: string
+  roomTitle: string
 }
 
 type GetUserChatRoomsParams = {

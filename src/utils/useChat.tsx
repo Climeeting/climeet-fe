@@ -2,17 +2,10 @@ import { Client } from '@stomp/stompjs'
 import {
   createContext, PropsWithChildren, useContext, useEffect, useRef, useState,
 } from 'react'
-
-export type ChatMessage = {
-  messageType: 'SERVER' | 'CLIENT' // 메시지 타입
-  room: number // 방 ID
-  senderId: number // 발신자 ID
-  message: string // 메시지 내용
-  createdAt?: string // 생성 시간 (서버에서 자동 설정)
-}
+import { ReceiveMessage, SendMessage } from './chat'
 
 type Chat = {
-  messages: ChatMessage[]
+  messages: ReceiveMessage[]
 }
 
 const ChatContext = createContext<Chat>({
@@ -20,7 +13,7 @@ const ChatContext = createContext<Chat>({
 })
 
 type Actions = {
-  send: (message: ChatMessage) => void
+  send: (message: SendMessage) => void
 }
 
 const ChatActions = createContext<Actions>({
@@ -36,7 +29,7 @@ export function useChatActions () {
 }
 
 export function ChatProvider ({ id, children }: { id: number } & PropsWithChildren) {
-  const [messages, setMessages] = useState<ChatMessage[]>([])
+  const [messages, setMessages] = useState<ReceiveMessage[]>([])
   const client = useRef<Client | null>(null)
 
   const connect = () => {
@@ -81,7 +74,7 @@ export function ChatProvider ({ id, children }: { id: number } & PropsWithChildr
   }, [])
 
   // 4. 메세지 전송
-  const send = (message: ChatMessage) => {
+  const send = (message: SendMessage) => {
     if (!client.current) return
     client.current.publish({
       destination: `/app/chat/sendMessage/${id}`,

@@ -1,23 +1,22 @@
 import dayjs from 'dayjs'
 import ChatBubble from './ChatBubble'
 import { useMyProfile } from '@/services/user'
-import { ChatMessage, ChatRoomQuery, useChatRoomSuspense } from '@/services/chat'
-import { PageData } from '@/pages/types/api'
-import { InfiniteData } from '@tanstack/react-query'
+import { ChatRoomQuery, useChatRoomSuspense } from '@/services/chat'
 import styles from './ChatBubbleList.module.scss'
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { useLoadMore } from '@/utils/useLoadMore'
 import Icon from '@/components/Icon/Icon'
+import { ReceiveMessage } from '@/utils/chat'
+import { useChat } from '@/utils/useChat'
 
 type ChatBubbleListProps = {
-  data: InfiniteData<PageData<ChatMessage>, unknown>
+  chatList: ReceiveMessage[]
   fetchNextPage: () => Promise<unknown>
   isFetched: boolean
   hasNextPage: boolean
 }
 
-export default function ChatBubbleList ({ data, fetchNextPage, isFetched, hasNextPage }: ChatBubbleListProps) {
-  const chatList = data.pages.map(page => page.content).flat().reverse()
+export default function ChatBubbleList ({ chatList, fetchNextPage, isFetched, hasNextPage }: ChatBubbleListProps) {
   const showLoadMore = isFetched && hasNextPage
   const { data: myData } = useMyProfile()
 
@@ -45,7 +44,7 @@ export default function ChatBubbleList ({ data, fetchNextPage, isFetched, hasNex
       })
       snapshotRef.current = null
     }
-  }, [data.pages])
+  }, [chatList])
 
   const hasNewMessage = true
 
@@ -72,7 +71,7 @@ export default function ChatBubbleList ({ data, fetchNextPage, isFetched, hasNex
               || dayjs(chatList[index + 1].createdAt).diff(dayjs(chat.createdAt), 'minute') > 1 // 3. 다음 메시지와 1분 이상 차이
 
           return (
-            <li key={`chat-${chat.id}-${chat.createdAt}`}>
+            <li key={`chat-${chat.messageId}-${chat.createdAt}`}>
               <ChatBubble
                 {...chat}
                 isStartMessage={isStartMessage}
@@ -120,8 +119,22 @@ function useChatScroll<T> (dep: T, disabled: boolean) {
 
 ChatBubbleList.Query = function ChatBubbleListQuery ({ room }: { room: number }) {
   const { data, fetchNextPage, isFetched, hasNextPage } = useChatRoomSuspense({ room })
+  const { messages } = useChat()
+  const chatList = data.pages.map(page => page.content).flat().reverse()
+  console.log({ messages })
 
-  return <ChatBubbleList data={data} fetchNextPage={fetchNextPage} isFetched={isFetched} hasNextPage={hasNextPage} />
+  return (
+    <ChatBubbleList
+      chatList={[
+        ...chatList,
+        ...messages.reverse(),
+      ]}
+      // chatList={chatList}
+      fetchNextPage={fetchNextPage}
+      isFetched={isFetched}
+      hasNextPage={hasNextPage}
+    />
+  )
 }
 
 ChatBubbleList.Skeleton = function ChatBubbleListSkeleton () {

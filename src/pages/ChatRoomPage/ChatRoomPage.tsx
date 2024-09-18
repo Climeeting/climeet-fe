@@ -9,10 +9,12 @@ import ChatBubbleList from './components/ChatBubbleList'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useMyProfile } from '@/services/user'
 import { ErrorBoundary } from 'react-error-boundary'
+import { ChatProvider, useChatActions } from '@/utils/useChat'
 
-export function ChatRoomPage ({ id }: { id: number, userId: number }) {
+export function ChatRoomPage ({ id, userId }: { id: number, userId: number }) {
   // const { wrapperRef, containerRef } = useVisualViewport()
   const [message, setMessage] = useState('')
+  const { send } = useChatActions()
 
   return (
     <div>
@@ -47,6 +49,14 @@ export function ChatRoomPage ({ id }: { id: number, userId: number }) {
       <form
         onSubmit={(e) => {
           e.preventDefault()
+
+          if (!message.trim()) return
+          send({
+            messageType: 'CLIENT',
+            room: id,
+            senderId: userId,
+            message: message.trim(),
+          })
           setMessage('')
         }}
         className={styles.Bottom}
@@ -81,7 +91,9 @@ export default function ChatRoomPageSocket () {
   }
 
   return (
-    <ChatRoomPage id={Number(id)} userId={myData!.userId} />
+    <ChatProvider id={Number(id)}>
+      <ChatRoomPage id={Number(id)} userId={myData!.userId} />
+    </ChatProvider>
   )
 }
 
@@ -96,69 +108,3 @@ function ChatRoomInfo () {
     </SideSheet>
   )
 }
-
-// const mockChatList = [
-//   {
-//     user: {
-//       avatar: '',
-//       name: '양혜윤',
-//       id: 1,
-//     },
-//     message: '안녕하세요 친해져요~',
-//     time: '2024-08-14T11:23:34.050Z',
-//   },
-//   {
-//     user: {
-//       avatar: '',
-//       name: '양혜윤',
-//       id: 1,
-//     },
-//     message: '반갑습니다!',
-//     time: '2024-08-14T11:23:34.050Z',
-//   },
-//   {
-//     user: {
-//       avatar: '',
-//       name: '이성진',
-//       id: 2,
-//     },
-//     message: '안녕하세요 친해져요~',
-//     time: '2024-08-14T11:23:34.050Z',
-//   },
-//   {
-//     user: {
-//       avatar: '',
-//       name: '양혜윤',
-//       id: 1,
-//     },
-//     message: '안녕하세요 친해져요~',
-//     time: '2024-08-14T11:23:35.050Z',
-//   },
-//   {
-//     user: {
-//       avatar: '',
-//       name: '이성진',
-//       id: 2,
-//     },
-//     message: '안녕하세요 친해져요~',
-//     time: '2024-08-14T11:23:35.050Z',
-//   },
-//   {
-//     user: {
-//       avatar: '',
-//       name: '강희',
-//       id: 3469435165,
-//     },
-//     message: '내 메세지',
-//     time: '2024-08-14T11:23:36.050Z',
-//   },
-//   {
-//     user: {
-//       avatar: '',
-//       name: '강희',
-//       id: 3469435165,
-//     },
-//     message: '내 메세지2',
-//     time: '2024-08-14T11:23:36.050Z',
-//   },
-// ]

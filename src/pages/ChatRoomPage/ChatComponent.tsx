@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { ChatMessage, ChatProvider, useChat, useChatActions } from '@/utils/useChat'
+import { ChatProvider, useChat, useChatActions } from '@/utils/useChat'
+import { SendMessage } from '@/utils/chat'
 
 const senderId = new Date().getSeconds()
 
@@ -26,7 +27,7 @@ const ChatComponent = () => {
       />
       <button onClick={() => {
         if (message.trim()) {
-          const chatMessage: ChatMessage = {
+          const chatMessage: SendMessage = {
             messageType: 'CLIENT',
             room: 2, // 실제 방 ID
             senderId, // 발신자 ID

@@ -3,15 +3,7 @@ import api from '../utils/api'
 import { PageData } from '@/pages/types/api'
 import { stringify } from '@/utils/query'
 import { queryClient } from '@/utils/tanstack'
-
-export type ChatMessage = {
-  messageType: 'CLIENT' | 'SERVER'
-  id: number
-  room: number
-  senderId: number
-  message: string
-  createdAt: string
-}
+import { ReceiveMessage } from '@/utils/chat'
 
 type GetChatRoomParams = {
   room: number
@@ -23,7 +15,7 @@ type GetChatRoomParams = {
  * GET /v1/chat/${room}
  */
 export const get_chat_$room = async ({ room, page = 0, size = 20 }: GetChatRoomParams) => {
-  return await api.get<PageData<ChatMessage>>(`/v1/chat/${room}?${stringify({ page, size })}`)
+  return await api.get<PageData<ReceiveMessage>>(`/v1/chat/${room}?${stringify({ page, size })}`)
 }
 
 export const CHAT_ROOM_KEY = ['chat', 'room']

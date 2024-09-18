@@ -13,11 +13,10 @@ import MyUpdatePage from './MyUpdatePage/MyUpdatePage'
 import CheckIsLogout from '@/components/CheckIsLogout'
 import CheckAdditionalInfo from '@/components/CheckAdditionalInfo'
 import ChatPage from '@/pages/ChatPage/ChatPage.tsx'
-// import ChatRoomPage from '@/pages/ChatRoomPage/ChatRoomPage.tsx'
+import ChatRoomPage from '@/pages/ChatRoomPage/ChatRoomPage.tsx'
 import { PartyEditFormPage } from '@/pages/PartyEditFormPage/PartyEditFormPage.tsx'
 import RedirectUserPage from './UserPage/RedirectUserPage'
 import DeleteAccountPage from '@/pages/DeleteAccountPage/DeleteAccountPage.tsx'
-import ChatComponent from './ChatRoomPage/ChatComponent'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -37,7 +36,7 @@ const router = createBrowserRouter(
         </Route>
         <Route path='party-suervey/:id' element={<PartyEditFormPage />} />
         <Route path='/chat' element={<ChatPage />} />
-        <Route path='/chat/:id' element={<ChatComponent />} />
+        <Route path='/chat/:id' element={<ChatRoomPage />} />
       </Route>
       <Route path='/user/:id' element={<UserPage />} />
       <Route path='/party/:id' element={<PartyDetailPage />} />

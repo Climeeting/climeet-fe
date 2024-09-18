@@ -14,7 +14,7 @@ export default function ChatItem ({
       <div className={styles.RoomInfo}>
         <div className={styles.Row}>
           <div className={styles.RoomTitle}>
-            <h2 className={styles.RoomName}>파티 이름 (작업 필요)</h2>
+            <h2 className={styles.RoomName}>{data.roomTitle}</h2>
             <span className={styles.Members}>{data.memberCount}</span>
           </div>
           {data.hasUnreadMessages && <div className={styles.NewChat} />}

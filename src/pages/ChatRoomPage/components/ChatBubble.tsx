@@ -2,9 +2,9 @@ import dayjs from 'dayjs'
 import styles from './ChatBubble.module.scss'
 import Avatar from '@/components/Avatar.tsx'
 import classNames from 'classnames'
-import { ChatMessage } from '@/services/chat'
+import { ReceiveMessage } from '@/utils/chat'
 
-export type ChatBubbleProps = ChatMessage & {
+export type ChatBubbleProps = ReceiveMessage & {
   isStartMessage: boolean
   isMyMessage: boolean
   isLastMessage: boolean

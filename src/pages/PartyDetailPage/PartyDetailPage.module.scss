@@ -3,9 +3,9 @@
   position: relative;
   flex-direction: column;
   margin-top: 48px;
-  padding-bottom: 100px;
+  padding-bottom: 85px;
   min-height: calc(100vh - 48px - 68px);
-  overflow-y: scroll;
+  overflow-y: auto;
   background-color: $gray-100;
 
   section {

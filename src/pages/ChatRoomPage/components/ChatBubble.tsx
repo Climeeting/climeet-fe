@@ -12,19 +12,14 @@ export type ChatBubbleProps = ReceiveMessage & {
 
 export default function ChatBubble ({
   messageType,
-  senderId,
+  name,
+  thumbnailImageUrl,
   message,
   createdAt,
   isStartMessage,
   isMyMessage,
   isLastMessage,
 }: ChatBubbleProps) {
-  const user = {
-    id: senderId,
-    name: '테스트',
-    avatar: 'https://avatars.githubusercontent.com/u/44080404?v=4',
-  }
-
   if (messageType === 'SERVER') {
     return (
       <div className={styles.SystemMessageLayout}>
@@ -51,10 +46,10 @@ export default function ChatBubble ({
       })}
     >
       {isStartMessage && (
-        <Avatar src={user.avatar} alt={user.name} size='small' className={styles.MemberAvatar} />
+        <Avatar src={thumbnailImageUrl} alt={name} size='small' className={styles.MemberAvatar} />
       )}
       <div>
-        {isStartMessage && <div className={styles.MemberName}>{user.name}</div>}
+        {isStartMessage && <div className={styles.MemberName}>{name}</div>}
         <div
           className={classNames(styles.MessageItem, {
             [styles.singleMessage]: !isStartMessage,

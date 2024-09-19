@@ -7,7 +7,11 @@ type props = {
 export default function PartyBanner ({ src }: props) {
   return (
     <>
-      {src && <img src={src} className={styles.Banner} />}
+      {src && (
+        <div className={styles.Banner}>
+          <img src={src} />
+        </div>
+      )}
     </>
   )
 }

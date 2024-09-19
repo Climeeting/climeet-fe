@@ -3,6 +3,7 @@ import {
   createContext, PropsWithChildren, useContext, useEffect, useRef, useState,
 } from 'react'
 import { ReceiveMessage, SendMessage } from './chat'
+import { useGetUserToken } from '@/services/oauth'
 
 type Chat = {
   messages: ReceiveMessage[]
@@ -31,6 +32,7 @@ export function useChatActions () {
 export function ChatProvider ({ id, children }: { id: number } & PropsWithChildren) {
   const [messages, setMessages] = useState<ReceiveMessage[]>([])
   const client = useRef<Client | null>(null)
+  const { data: token, isLoading } = useGetUserToken()
 
   const connect = () => {
     // 1. 소켓 클라이언트 연결
@@ -38,7 +40,7 @@ export function ChatProvider ({ id, children }: { id: number } & PropsWithChildr
       // brokerURL: 'ws://172.30.1.54:8080/ws',
       brokerURL: import.meta.env.VITE_SOCKET_URL,
       connectHeaders: {
-        // withCredential: 'true',
+        Authorization: `Bearer ${token}`,
       },
       debug: function (str) {
         console.log(str)
@@ -69,9 +71,10 @@ export function ChatProvider ({ id, children }: { id: number } & PropsWithChildr
   }
 
   useEffect(() => {
+    if (isLoading) return
     connect()
     return disconnect
-  }, [])
+  }, [isLoading])
 
   // 4. 메세지 전송
   const send = (message: SendMessage) => {

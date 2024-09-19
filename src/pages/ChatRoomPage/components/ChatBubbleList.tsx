@@ -127,7 +127,7 @@ ChatBubbleList.Query = function ChatBubbleListQuery ({ room }: { room: number })
     <ChatBubbleList
       chatList={[
         ...chatList,
-        ...messages.reverse(),
+        ...messages,
       ]}
       // chatList={chatList}
       fetchNextPage={fetchNextPage}

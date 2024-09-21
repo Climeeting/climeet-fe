@@ -8,7 +8,6 @@ import {
   useState,
 } from 'react'
 import { useLoadMore, useOnScreen } from '@/utils/useLoadMore'
-import Icon from '@/components/Icon/Icon'
 import { ReceiveMessage } from '@/utils/chat'
 import { useChat } from '@/utils/useChat'
 import ScrollDownButton from './ScrollDownButton'
@@ -105,7 +104,7 @@ const ChatBubbleListUi = forwardRef(function ChatBubbleList ({ chatList, fetchNe
         })}
         <li ref={bottomRef} />
       </ul>
-      {isScrolled && !isBottom && hasNewMessage && (
+      {/* {isScrolled && !isBottom && hasNewMessage && (
         <button
           onClick={() => {
             scrollToBottom(chatListRef.current!)
@@ -115,7 +114,7 @@ const ChatBubbleListUi = forwardRef(function ChatBubbleList ({ chatList, fetchNe
           <span>새로운 메세지 확인하기</span>
           <Icon icon='ArrowDown' size={16} />
         </button>
-      )}
+      )} */}
       {isScrolled && !isBottom && (
         <ScrollDownButton
           scrollBottom={scrollToBottom.bind(null, chatListRef.current!)}
@@ -156,7 +155,6 @@ const ChatBubbleListQuery = forwardRef(function ChatBubbleListQuery ({ room }: {
         ...chatList,
         ...messages,
       ]}
-      // chatList={chatList}
       fetchNextPage={fetchNextPage}
       isFetched={isFetched}
       hasNextPage={hasNextPage}

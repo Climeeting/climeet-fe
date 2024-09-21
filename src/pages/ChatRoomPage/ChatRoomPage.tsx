@@ -11,6 +11,8 @@ import { useMyProfile } from '@/services/user'
 import { ErrorBoundary } from 'react-error-boundary'
 import { ChatProvider, useChatActions } from '@/utils/useChat'
 
+const MAX_MESSAGE_LENGTH = 300
+
 export function ChatRoomPage ({ id, userId }: { id: number, userId: number }) {
   // const { wrapperRef, containerRef } = useVisualViewport()
   const [message, setMessage] = useState('')
@@ -64,7 +66,17 @@ export function ChatRoomPage ({ id, userId }: { id: number, userId: number }) {
         className={styles.Bottom}
       >
         <Icon icon='PlusLine' size={24} className={styles.Plus} />
-        <input type='text' value={message} onChange={e => setMessage(e.target.value)} className={styles.Input} placeholder='메시지 보내기' />
+        <input
+          maxLength={MAX_MESSAGE_LENGTH}
+          type='text'
+          value={message}
+          onChange={(e) => {
+            if (e.target.value.length > MAX_MESSAGE_LENGTH) return
+            setMessage(e.target.value)
+          }}
+          className={styles.Input}
+          placeholder='메시지 보내기'
+        />
         <button type='submit'>
           <Icon icon='Upload' size={28} className={styles.Send} />
         </button>

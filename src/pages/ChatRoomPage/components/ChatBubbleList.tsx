@@ -66,8 +66,6 @@ const ChatBubbleListUi = forwardRef(function ChatBubbleList ({ chatList, fetchNe
     }
   }, [chatList])
 
-  const hasNewMessage = true
-
   return (
     <div className={styles.ChatBubbleContainer}>
       <ul

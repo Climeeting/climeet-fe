@@ -40,6 +40,7 @@ export function PartyPreview ({ onNext, formData }: PartyIntroduceFormProps) {
     maximumSkillLevel: formData.maxSkillLevel,
     isNatural: formData.isNatural,
     masterProfileImageUrl: data.profileImageUrl,
+    partyImageUrl: formData.partyImageUrl,
   }
 
   return (

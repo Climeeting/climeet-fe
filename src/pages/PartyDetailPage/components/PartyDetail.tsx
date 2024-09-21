@@ -4,10 +4,13 @@ import { PartyParticipants } from './PartyParticipants'
 import { PartyLocation } from './PartyLocation'
 import NotFound from '@/components/NotFound'
 import styles from './PartyDetail.module.scss'
+import PartyBanner from '@/pages/PartyDetailPage/components/PartyBanner.tsx'
 
 export default function PartyDetail ({ data }: { data: PartyDetailType }) {
   return (
     <>
+      <PartyBanner src={data.partyImageUrl} />
+
       <section>
         <PartyMainInfo {...data} />
       </section>

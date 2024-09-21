@@ -3,15 +3,19 @@
   position: relative;
   flex-direction: column;
   margin-top: 48px;
-  padding-bottom: 100px;
+  padding-bottom: 85px;
   min-height: calc(100vh - 48px - 68px);
-  overflow-y: scroll;
-  gap: 12px;
+  overflow-y: auto;
   background-color: $gray-100;
 
   section {
     background-color: white;
     padding: 28px 16px;
+    margin-bottom: 12px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
 }
 

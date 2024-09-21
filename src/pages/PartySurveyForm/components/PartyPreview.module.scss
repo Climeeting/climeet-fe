@@ -38,12 +38,16 @@
   display: flex;
   position: relative;
   flex-direction: column;
-  overflow-y: scroll;
-  gap: rem(12px);
+  overflow-y: auto;
   background-color: $gray-100;
 
   section {
     background-color: white;
     padding: rem(28px) rem(16px);
+    margin-bottom: 12px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
 }

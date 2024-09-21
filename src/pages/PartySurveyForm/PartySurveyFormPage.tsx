@@ -3,6 +3,7 @@ import styles from './PartySurveyFormPage.module.scss'
 import { IndoorStep } from './components/Steps.tsx'
 import { ClimbingTypeKo, GenderKo } from '@/pages/PartySurveyForm/components/PartyConditionForm.tsx'
 import dayjs from 'dayjs'
+import { FileProvider } from '@/pages/PartySurveyForm/hooks/useFileContext.tsx'
 
 export function PartySurveyFormPage () {
   const { formData, updateFormData } = usePartySurveyForm()
@@ -10,7 +11,9 @@ export function PartySurveyFormPage () {
   return (
     <>
       <div className={styles.wrapper}>
-        <IndoorStep formData={formData} updateFormData={updateFormData} />
+        <FileProvider>
+          <IndoorStep formData={formData} updateFormData={updateFormData} />
+        </FileProvider>
       </div>
     </>
   )
@@ -30,6 +33,7 @@ export type PartySurveyFormData = {
   maxSkillLevel: number
   isNatural: boolean
   approachDescription: string
+  partyImageUrl: string
 }
 export type Condition = Pick<
   PartySurveyFormData,
@@ -58,6 +62,7 @@ export const usePartySurveyForm = () => {
     maxSkillLevel: 5,
     isNatural: false,
     approachDescription: '',
+    partyImageUrl: '',
   })
 
   const updateFormData: UpdateFormData = (key, value) => {

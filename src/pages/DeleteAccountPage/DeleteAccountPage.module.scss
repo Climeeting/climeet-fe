@@ -5,8 +5,13 @@
 
 .Main {
   .Header {
-    background: linear-gradient(180deg, rgba(236, 240, 255, 1) 0%, rgba(255, 255, 255, 1) 100%);
+    background: linear-gradient(
+      180deg,
+      rgba(236, 240, 255, 1) 0%,
+      rgba(255, 255, 255, 1) 100%
+    );
     padding-top: 20px;
+    padding-bottom: 32px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -22,6 +27,53 @@
       font-size: 20px;
       line-height: 29px;
       color: $gray-900;
+    }
+  }
+
+  .Notification {
+    margin: 0 16px;
+    background: $gray-100;
+    padding: 24px 20px 24px 20px;
+    border-radius: 8px;
+
+    .NotificationTitle {
+      font-size: 18px;
+      line-height: 18px;
+      font-weight: 600;
+      color: $gray-800;
+    }
+
+    .List {
+      margin-top: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .ListItem {
+      display: list-item;
+      font-size: 14px;
+      line-height: 24px;
+      font-weight: 400;
+      color: $gray-700;
+      margin-left: 16px;
+
+      strong {
+        color: #da0000;
+        font-weight: 400;
+      }
+    }
+  }
+
+  .ReasonContainer {
+    padding: 0 16px;
+    margin-top: 40px;
+
+    .Label {
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 20px;
+      color: $gray-700;
     }
   }
 
@@ -60,39 +112,6 @@
       line-height: 27px;
       font-weight: 400;
       color: $gray-600;
-    }
-  }
-
-  .Notification {
-    background: $gray-100;
-    padding: 32px 24px 28px 24px;
-
-    .NotificationTitle {
-      font-size: 18px;
-      line-height: 18px;
-      font-weight: 600;
-      color: $gray-800;
-    }
-
-    .List {
-      margin-top: 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .ListItem {
-      display: list-item;
-      font-size: 14px;
-      line-height: 24px;
-      font-weight: 400;
-      color: $gray-700;
-      margin-left: 16px;
-
-      strong {
-        color: #da0000;
-        font-weight: 400;
-      }
     }
   }
 }

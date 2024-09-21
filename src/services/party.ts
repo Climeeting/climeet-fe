@@ -129,6 +129,7 @@ export type GetPartyDetailRes = {
   minimumSkillLevel: number
   maximumSkillLevel: number
   isNatural: boolean
+  partyImageUrl: string
 }
 
 export class SurveyFormAdapter {
@@ -209,6 +210,10 @@ export class SurveyFormAdapter {
     return this.value.approachDescription
   }
 
+  get partyImageUrl () {
+    return this.value.partyImageUrl
+  }
+
   adapt (): PartySurveyFormData {
     return {
       cragName: this.cragName,
@@ -224,6 +229,7 @@ export class SurveyFormAdapter {
       maxSkillLevel: this.maxSkillLevel,
       isNatural: this.isNatural,
       approachDescription: this.approachDescription,
+      partyImageUrl: this.partyImageUrl,
     }
   }
 }
@@ -244,6 +250,7 @@ export type PostPartyNewReq = {
   approacheDescription: string
   partyDescription: string
   appointmentTime: string
+  partyImageUrl: string
 }
 
 export type PostPartyNewRes = {
@@ -335,7 +342,7 @@ export class PartyDetailAdapter {
       ...this.value,
       appointmentTime: this.appointmentTime,
       climbingType: this.climbingType,
-      constraints: this.climbingType,
+      constraints: this.constraints,
     }
   }
 }
@@ -420,6 +427,10 @@ export class PostPartyNewReqAdapter {
     return `${date}T${time}${dummyTime}`
   }
 
+  get partyImageUrl (): string {
+    return this.value.partyImageUrl
+  }
+
   adapt (): PostPartyNewReq {
     return {
       constraints: this.constraints,
@@ -434,6 +445,7 @@ export class PostPartyNewReqAdapter {
       approacheDescription: this.approachDescription,
       partyDescription: this.partyDescription,
       appointmentTime: this.appointmentTime,
+      partyImageUrl: this.partyImageUrl,
     }
   }
 }

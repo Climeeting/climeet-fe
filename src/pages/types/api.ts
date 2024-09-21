@@ -91,6 +91,7 @@ export type PartyDetail = {
   isMaster: boolean
   isParticipation: boolean
   masterId: number
+  partyImageUrl: string
 }
 
 export type SkillDistribution = {

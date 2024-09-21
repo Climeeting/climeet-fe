@@ -4,9 +4,10 @@ import { useMyProfile } from '@/services/user'
 import { ChatRoomQuery, useChatRoomSuspense } from '@/services/chat'
 import styles from './ChatBubbleList.module.scss'
 import {
-  forwardRef, useEffect, useImperativeHandle, useLayoutEffect, useRef, useState,
+  forwardRef, useEffect, useImperativeHandle, useLayoutEffect, useRef,
+  useState,
 } from 'react'
-import { useLoadMore } from '@/utils/useLoadMore'
+import { useLoadMore, useOnScreen } from '@/utils/useLoadMore'
 import Icon from '@/components/Icon/Icon'
 import { ReceiveMessage } from '@/utils/chat'
 import { useChat } from '@/utils/useChat'
@@ -27,8 +28,11 @@ const ChatBubbleListUi = forwardRef(function ChatBubbleList ({ chatList, fetchNe
   const showLoadMore = isFetched && hasNextPage
   const { data: myData } = useMyProfile()
 
+  const bottomRef = useRef<HTMLLIElement>(null)
+  const isBottom = useOnScreen(bottomRef)
+
   const [isScrolled, setIsScrolled] = useState(false)
-  const chatListRef = useChatScroll(chatList, isScrolled)
+  const chatListRef = useChatScroll(chatList, (chatList.length === 0) || isScrolled)
   const snapshotRef = useRef<{ scrollHeight: number, scrollTop: number } | null>(null)
 
   useImperativeHandle(forwardRef, () => {
@@ -72,7 +76,8 @@ const ChatBubbleListUi = forwardRef(function ChatBubbleList ({ chatList, fetchNe
         className={styles.ChatBubbleList}
         onScroll={() => {
           if (chatListRef.current) {
-            setIsScrolled(chatListRef.current.scrollTop + chatListRef.current.clientHeight < chatListRef.current.scrollHeight)
+            if (isBottom) setIsScrolled(false)
+            else setIsScrolled(chatListRef.current.scrollTop + chatListRef.current.clientHeight < chatListRef.current.scrollHeight)
           }
         }}
       >
@@ -98,11 +103,11 @@ const ChatBubbleListUi = forwardRef(function ChatBubbleList ({ chatList, fetchNe
             </li>
           )
         })}
+        <li ref={bottomRef} />
       </ul>
-      {isScrolled && hasNewMessage && (
+      {isScrolled && !isBottom && hasNewMessage && (
         <button
           onClick={() => {
-            setIsScrolled(false)
             scrollToBottom(chatListRef.current!)
           }}
           className={styles.ChatNewMssage}
@@ -111,7 +116,7 @@ const ChatBubbleListUi = forwardRef(function ChatBubbleList ({ chatList, fetchNe
           <Icon icon='ArrowDown' size={16} />
         </button>
       )}
-      {isScrolled && (
+      {isScrolled && !isBottom && (
         <ScrollDownButton
           scrollBottom={scrollToBottom.bind(null, chatListRef.current!)}
         />

@@ -1,11 +1,11 @@
 import styles from './ChatRoomPage.module.scss'
 import TopBar from '@/components/NavBar/TopBar.tsx'
 import Icon from '@/components/Icon/Icon.tsx'
-import { Suspense, useState } from 'react'
+import { Suspense, useRef, useState } from 'react'
 import SideSheet from '@/components/SideSheet.tsx'
 import ChatSidebar from '@/pages/ChatRoomPage/components/ChatSidebar.tsx'
 // import { useVisualViewport } from '@/pages/ChatRoomPage/hooks/useVisualViewport.tsx'
-import ChatBubbleList from './components/ChatBubbleList'
+import ChatBubbleList, { ChatListHandle } from './components/ChatBubbleList'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useMyProfile } from '@/services/user'
 import { ErrorBoundary } from 'react-error-boundary'
@@ -15,6 +15,7 @@ export function ChatRoomPage ({ id, userId }: { id: number, userId: number }) {
   // const { wrapperRef, containerRef } = useVisualViewport()
   const [message, setMessage] = useState('')
   const { send } = useChatActions()
+  const chatListRef = useRef<ChatListHandle>(null)
 
   return (
     <div>
@@ -41,7 +42,7 @@ export function ChatRoomPage ({ id, userId }: { id: number, userId: number }) {
         {/* {JSON.stringify(messages, null, 2)} */}
         <ErrorBoundary fallback={<ChatBubbleList.Retry room={Number(id)} />}>
           <Suspense fallback={<ChatBubbleList.Skeleton />}>
-            <ChatBubbleList.Query room={Number(id)} />
+            <ChatBubbleList.Query ref={chatListRef} room={Number(id)} />
           </Suspense>
         </ErrorBoundary>
       </div>
@@ -58,6 +59,7 @@ export function ChatRoomPage ({ id, userId }: { id: number, userId: number }) {
             message: message.trim(),
           })
           setMessage('')
+          chatListRef.current?.scrollToBottom()
         }}
         className={styles.Bottom}
       >

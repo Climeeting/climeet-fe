@@ -3,7 +3,9 @@ import ChatBubble from './ChatBubble'
 import { useMyProfile } from '@/services/user'
 import { ChatRoomQuery, useChatRoomSuspense } from '@/services/chat'
 import styles from './ChatBubbleList.module.scss'
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import {
+  forwardRef, useEffect, useImperativeHandle, useLayoutEffect, useRef, useState,
+} from 'react'
 import { useLoadMore } from '@/utils/useLoadMore'
 import Icon from '@/components/Icon/Icon'
 import { ReceiveMessage } from '@/utils/chat'
@@ -16,13 +18,27 @@ type ChatBubbleListProps = {
   hasNextPage: boolean
 }
 
-export default function ChatBubbleList ({ chatList, fetchNextPage, isFetched, hasNextPage }: ChatBubbleListProps) {
+export type ChatListHandle = {
+  scrollToBottom: () => void
+}
+
+const ChatBubbleListUi = forwardRef(function ChatBubbleList ({ chatList, fetchNextPage, isFetched, hasNextPage }: ChatBubbleListProps, forwardRef) {
   const showLoadMore = isFetched && hasNextPage
   const { data: myData } = useMyProfile()
 
   const [isScrolled, setIsScrolled] = useState(false)
   const chatListRef = useChatScroll(chatList, isScrolled)
   const snapshotRef = useRef<{ scrollHeight: number, scrollTop: number } | null>(null)
+
+  useImperativeHandle(forwardRef, () => {
+    return {
+      scrollToBottom: () => {
+        if (chatListRef.current) {
+          scrollToBottom(chatListRef.current)
+        }
+      },
+    }
+  }, [])
 
   const loadMoreRef = useLoadMore(async () => {
     if (chatListRef.current) {
@@ -96,7 +112,7 @@ export default function ChatBubbleList ({ chatList, fetchNextPage, isFetched, ha
       )}
     </div>
   )
-}
+})
 
 const scrollToBottom = (element: HTMLUListElement) => {
   element.scrollTo({
@@ -117,14 +133,14 @@ function useChatScroll<T> (dep: T, disabled: boolean) {
   return ref as React.RefObject<HTMLUListElement>
 }
 
-ChatBubbleList.Query = function ChatBubbleListQuery ({ room }: { room: number }) {
+const ChatBubbleListQuery = forwardRef(function ChatBubbleListQuery ({ room }: { room: number }, forwardRef) {
   const { data, fetchNextPage, isFetched, hasNextPage } = useChatRoomSuspense({ room })
   const { messages } = useChat()
   const chatList = data.pages.map(page => page.content).flat().reverse()
-  console.log({ messages })
 
   return (
-    <ChatBubbleList
+    <ChatBubbleListUi
+      ref={forwardRef}
       chatList={[
         ...chatList,
         ...messages,
@@ -135,14 +151,23 @@ ChatBubbleList.Query = function ChatBubbleListQuery ({ room }: { room: number })
       hasNextPage={hasNextPage}
     />
   )
-}
+})
 
-ChatBubbleList.Skeleton = function ChatBubbleListSkeleton () {
+function ChatBubbleListSkeleton () {
   return (
     <div>로딩중</div>
   )
 }
 
-ChatBubbleList.Retry = function ChatBubbleListRetry ({ room }: { room: number }) {
+function ChatBubbleListRetry ({ room }: { room: number }) {
   return <button onClick={() => ChatRoomQuery.refetch({ room })}>다시 시도하기</button>
 }
+
+const ChatBubbleList = {
+  Ui: ChatBubbleListUi,
+  Query: ChatBubbleListQuery,
+  Skeleton: ChatBubbleListSkeleton,
+  Retry: ChatBubbleListRetry,
+}
+
+export default ChatBubbleList

@@ -16,7 +16,7 @@ import { useLoadMore } from '@/utils/useLoadMore.tsx'
 
 export default function Notification () {
   const [open, onOpenChange] = useState(false)
-  const { data, fetchNextPage } = useNotification()
+  const { data, fetchNextPage, refetch } = useNotification()
   const isAlarmsExist = data.pages.some(notificationList => (
     notificationList.content.some((notification) => {
       return !notification.isRead
@@ -47,7 +47,7 @@ export default function Notification () {
             data.pages.map((notificationList, i) => {
               return (
                 <React.Fragment key={i}>
-                  <Content data={notificationList.content ?? []} fetchNextPage={fetchNextPage} />
+                  <Content data={notificationList.content ?? []} fetchNextPage={fetchNextPage} refetch={refetch} />
                 </React.Fragment>
               )
             })
@@ -58,7 +58,11 @@ export default function Notification () {
   )
 }
 
-function Content ({ data, fetchNextPage }: { data: GetNotificationResDTO[], fetchNextPage: () => void }) {
+function Content ({ data, fetchNextPage, refetch }: {
+  data: GetNotificationResDTO[]
+  fetchNextPage: () => void
+  refetch: () => void
+}) {
   const ref = useLoadMore(fetchNextPage)
   const navigate = useNavigate()
   const getRelativeTime = (dateString: string) => {
@@ -84,6 +88,7 @@ function Content ({ data, fetchNextPage }: { data: GetNotificationResDTO[], fetc
   useEffect(() => {
     return () => {
       post_notification_mark_as_read_all()
+      refetch()
     }
   }, [])
 

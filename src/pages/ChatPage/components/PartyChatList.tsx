@@ -3,10 +3,10 @@ import { InfiniteData } from '@tanstack/react-query'
 import { PageData } from '@/pages/types/api'
 import { Link } from 'react-router-dom'
 import ChatItem from './ChatItem'
-import { Fragment } from 'react/jsx-runtime'
 import { useLoadMore } from '@/utils/useLoadMore'
 import EmptyChat from './EmptyChat'
 import NotFound from '@/components/NotFound'
+import { useEffect } from 'react'
 
 export default function PartyChatList ({
   data,
@@ -15,7 +15,14 @@ export default function PartyChatList ({
   data: InfiniteData<PageData<ChatRoomDto>>
   fetchNextPage: () => void
 }) {
+  const chats = data.pages.flatMap(page => page.content)
   const ref = useLoadMore(fetchNextPage)
+
+  useEffect(() => {
+    return () => {
+      UserChatRoomsQuery.reset()
+    }
+  }, [])
 
   if (data.pages[0].totalElements === 0)
     return (
@@ -24,16 +31,12 @@ export default function PartyChatList ({
 
   return (
     <ul>
-      {data.pages.map((parties, i) => (
-        <Fragment key={i}>
-          {parties.content.map(party => (
-            <li key={party.roomId}>
-              <Link to={`/chat/${party.roomId}`}>
-                <ChatItem data={party} />
-              </Link>
-            </li>
-          ))}
-        </Fragment>
+      {chats.map(chat => (
+        <li key={chat.roomId}>
+          <Link to={`/chat/${chat.roomId}`}>
+            <ChatItem data={chat} />
+          </Link>
+        </li>
       ))}
       <div ref={ref} />
     </ul>

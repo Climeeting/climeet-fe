@@ -363,20 +363,25 @@ export const useUserChatRooms = () => {
     initialPageParam: 0,
     getNextPageParam: lastPage =>
       lastPage.totalPages <= lastPage.pageable.pageNumber ? null : lastPage.pageable.pageNumber + 1,
-    // 마운트시에 요청 보내지 않음
-    retryOnMount: false,
+    refetchOnMount: 'always',
+    refetchOnWindowFocus: 'always',
   })
 }
 
 export const UserChatRoomsQuery = {
   invalidate: async () =>
     await queryClient.invalidateQueries({
-      queryKey: USER_PARTY_LIST_KEY,
+      queryKey: USER_CHAT_ROOS_KEY,
       refetchType: 'all',
     }),
 
   refetch: async () =>
     await queryClient.refetchQueries({
-      queryKey: USER_PARTY_LIST_KEY,
+      queryKey: USER_CHAT_ROOS_KEY,
+    }),
+
+  reset: async () =>
+    await queryClient.resetQueries({
+      queryKey: USER_CHAT_ROOS_KEY,
     }),
 }

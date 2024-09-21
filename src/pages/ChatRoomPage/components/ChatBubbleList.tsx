@@ -10,6 +10,7 @@ import { useLoadMore } from '@/utils/useLoadMore'
 import Icon from '@/components/Icon/Icon'
 import { ReceiveMessage } from '@/utils/chat'
 import { useChat } from '@/utils/useChat'
+import ScrollDownButton from './ScrollDownButton'
 
 type ChatBubbleListProps = {
   chatList: ReceiveMessage[]
@@ -109,6 +110,11 @@ const ChatBubbleListUi = forwardRef(function ChatBubbleList ({ chatList, fetchNe
           <span>새로운 메세지 확인하기</span>
           <Icon icon='ArrowDown' size={16} />
         </button>
+      )}
+      {isScrolled && (
+        <ScrollDownButton
+          scrollBottom={scrollToBottom.bind(null, chatListRef.current!)}
+        />
       )}
     </div>
   )

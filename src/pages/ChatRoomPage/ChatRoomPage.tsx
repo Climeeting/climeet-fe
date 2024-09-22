@@ -10,6 +10,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useMyProfile } from '@/services/user'
 import { ErrorBoundary } from 'react-error-boundary'
 import { ChatProvider, useChatActions } from '@/utils/useChat'
+import { usePartyDetail } from '@/services/party'
 
 const MAX_MESSAGE_LENGTH = 300
 
@@ -18,13 +19,14 @@ export function ChatRoomPage ({ id, userId }: { id: number, userId: number }) {
   const [message, setMessage] = useState('')
   const { send } = useChatActions()
   const chatListRef = useRef<ChatListHandle>(null)
+  const { data } = usePartyDetail(id)
 
   return (
     <div>
       <div className={styles.Container}>
         <TopBar>
           <TopBar.Left back />
-          <TopBar.Center>친해지실 분 구해유</TopBar.Center>
+          <TopBar.Center>{data?.partyName}</TopBar.Center>
           <TopBar.Right close={false}>
             <ChatRoomInfo />
           </TopBar.Right>

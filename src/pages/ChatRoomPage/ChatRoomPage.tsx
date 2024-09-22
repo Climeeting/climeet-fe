@@ -114,7 +114,7 @@ function ChatRoomInfo ({ party, id }: { party?: PartyDetailType, id: number }) {
       <SideSheet.Trigger className={styles.Trigger} style={{ display: 'flex' }}>
         <Icon icon='Hamburger' size={32} />
       </SideSheet.Trigger>
-      {party && open && <ChatSidebar party={party} members={data} />}
+      {party && open && <ChatSidebar partyId={id} party={party} members={data} />}
     </SideSheet>
   )
 }

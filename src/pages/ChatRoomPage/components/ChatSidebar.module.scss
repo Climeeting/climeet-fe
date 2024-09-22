@@ -1,4 +1,5 @@
 $footer-height: 52px;
+$banner-height: (68px + 32px);
 
 .Container {
   width: 80vw;
@@ -9,7 +10,7 @@ $footer-height: 52px;
 
 .Top {
   overflow-y: auto;
-  height: calc(100% - $footer-height);
+  height: calc(100% - $footer-height - $banner-height);
 }
 
 .Title {
@@ -35,6 +36,9 @@ $footer-height: 52px;
 .MemberInfo {
   padding-top: 24px;
   padding-left: 16px;
+
+  height: calc(100% - 48px);
+  overflow: scroll;
 
   .MemberInfoTitle {
     font-size: 16px;
@@ -79,7 +83,7 @@ $footer-height: 52px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 52px;
+  height: $footer-height;
   padding: 0 16px;
 
   .ExitText {
@@ -87,5 +91,55 @@ $footer-height: 52px;
     font-weight: 500;
     line-height: 1.7;
     color: $gray-600;
+  }
+}
+
+.Banner {
+  height: $banner-height;
+  padding: 16px;
+}
+
+.PartyBanner {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 12px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 8px;
+  background-color: $primary-100;
+  border: 1px solid $primary-200;
+  border-radius: 8px;
+  position: relative;
+
+  .Contents {
+    display: flex;
+    flex-direction: column;
+  }
+  .Time {
+    font-size: rem(12px);
+    color: $gray-700;
+  }
+  .Name {
+    font-size: rem(14px);
+    color: $gray-900;
+  }
+  .Image {
+    width: 48px;
+    height: 48px;
+    border-radius: 6px;
+    overflow: hidden;
+    img {
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .Icon {
+    color: $gray-400;
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
   }
 }

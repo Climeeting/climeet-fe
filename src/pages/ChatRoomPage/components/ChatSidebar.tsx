@@ -5,8 +5,9 @@ import Avatar from '@/components/Avatar.tsx'
 import { Member } from '@/services/chat'
 import { PartyDetailType } from '@/services/party'
 import { useMyProfile } from '@/services/user'
+import { Link } from 'react-router-dom'
 
-export default function ChatSidebar ({ party, members }: { party: PartyDetailType, members: Member[] }) {
+export default function ChatSidebar ({ partyId, party, members }: { partyId: number, party: PartyDetailType, members: Member[] }) {
   const { data: my } = useMyProfile()
 
   const myInfo = members.find(member => member.userId === my?.userId)
@@ -23,7 +24,7 @@ export default function ChatSidebar ({ party, members }: { party: PartyDetailTyp
             </button>
           </div>
           <div className={styles.MemberInfo}>
-            <div className={styles.MemberInfoTitle}>파티 멤버</div>
+            <h2 className={styles.MemberInfoTitle}>파티 멤버</h2>
             <div className={styles.MemberList}>
               {memberList.map(member => (
                 <MemberItem
@@ -35,6 +36,9 @@ export default function ChatSidebar ({ party, members }: { party: PartyDetailTyp
               ))}
             </div>
           </div>
+        </div>
+        <div className={styles.Banner}>
+          <PartyBanner partyId={partyId} party={party} />
         </div>
         <div className={styles.Footer}>
           <div className={styles.ExitText}>채팅방 나가기</div>
@@ -55,5 +59,22 @@ function MemberItem ({ isMaster, isMe, memberName, memberThumbnail }: Member & {
       {isMaster && <div className={styles.Chip}>방장</div>}
       {isMe && <div className={styles.Chip}>나</div>}
     </div>
+  )
+}
+
+function PartyBanner ({ partyId, party }: { partyId: number, party: PartyDetailType }) {
+  return (
+    <Link to={`/party/${partyId}`} className={styles.PartyBanner}>
+      {party.partyImageUrl && (
+        <div className={styles.Image}>
+          <img src={party.partyImageUrl} alt={party.partyName} />
+        </div>
+      )}
+      <div className={styles.Contents}>
+        <span className={styles.Time}>{party.appointmentTime}</span>
+        <h2 className={styles.Name}>{party.partyName}</h2>
+      </div>
+      <Icon className={styles.Icon} icon='ArrowRight' size='16' />
+    </Link>
   )
 }

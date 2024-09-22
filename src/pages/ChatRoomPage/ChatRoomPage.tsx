@@ -55,7 +55,6 @@ export function ChatRoomPage ({ id, userId }: { id: number, userId: number }) {
         }}
         className={styles.Bottom}
       >
-        <Icon icon='PlusLine' size={24} className={styles.Plus} />
         <input
           maxLength={MAX_MESSAGE_LENGTH}
           type='text'

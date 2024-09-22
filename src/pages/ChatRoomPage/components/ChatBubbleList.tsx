@@ -11,6 +11,7 @@ import { useLoadMore, useOnScreen } from '@/utils/useLoadMore'
 import { ReceiveMessage } from '@/utils/chat'
 import { useChat } from '@/utils/useChat'
 import ScrollDownButton from './ScrollDownButton'
+import classNames from 'classnames'
 
 type ChatBubbleListProps = {
   chatList: ReceiveMessage[]
@@ -96,7 +97,7 @@ const ChatBubbleListUi = forwardRef(function ChatBubbleList ({ chatList, fetchNe
 
           return (
             <li key={`chat-${chat.messageId}-${chat.createdAt}`}>
-              {isDayChanged && <span className={styles.ChatDate}>{dayjs(chat.createdAt).format('YYYY년 MM월 DD일')}</span>}
+              {isDayChanged && <span className={classNames(styles.ChatDate, { [styles.isFirst]: index === 0 })}>{dayjs(chat.createdAt).format('YYYY년 MM월 DD일')}</span>}
               <ChatBubble
                 {...chat}
                 isStartMessage={isStartMessage}

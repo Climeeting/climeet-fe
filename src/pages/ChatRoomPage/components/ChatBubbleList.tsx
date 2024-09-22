@@ -90,8 +90,13 @@ const ChatBubbleListUi = forwardRef(function ChatBubbleList ({ chatList, fetchNe
               || chat.senderId !== chatList[index + 1].senderId // 2. 다음 메시지와 다른 사용자
               || dayjs(chatList[index + 1].createdAt).startOf('minute').diff(dayjs(chat.createdAt).startOf('minute'), 'minute') >= 1 // 3. 다음 메시지와 1분 이상 차이
 
+          const isDayChanged
+              = index === 0
+              || dayjs(chat.createdAt).startOf('day').diff(dayjs(chatList[index - 1].createdAt).startOf('day'), 'day') !== 0
+
           return (
             <li key={`chat-${chat.messageId}-${chat.createdAt}`}>
+              {isDayChanged && <span className={styles.ChatDate}>{dayjs(chat.createdAt).format('YYYY년 MM월 DD일')}</span>}
               <ChatBubble
                 {...chat}
                 isStartMessage={isStartMessage}

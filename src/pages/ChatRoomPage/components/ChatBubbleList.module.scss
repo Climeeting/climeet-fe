@@ -28,3 +28,12 @@
   background-color: $gray-900;
   color: white;
 }
+
+.ChatDate { 
+  display: block;
+  margin: 48px 0 16px;
+  font-size: rem(12px);
+  color: $gray-400;
+  width: 100%;
+  text-align: center;
+}

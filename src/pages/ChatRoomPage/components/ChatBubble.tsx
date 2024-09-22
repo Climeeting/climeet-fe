@@ -2,9 +2,9 @@ import dayjs from 'dayjs'
 import styles from './ChatBubble.module.scss'
 import Avatar from '@/components/Avatar.tsx'
 import classNames from 'classnames'
-import { ChatMessage } from '@/services/chat'
+import { ReceiveMessage } from '@/utils/chat'
 
-export type ChatBubbleProps = ChatMessage & {
+export type ChatBubbleProps = ReceiveMessage & {
   isStartMessage: boolean
   isMyMessage: boolean
   isLastMessage: boolean
@@ -12,19 +12,14 @@ export type ChatBubbleProps = ChatMessage & {
 
 export default function ChatBubble ({
   messageType,
-  senderId,
+  name,
+  thumbnailImageUrl,
   message,
   createdAt,
   isStartMessage,
   isMyMessage,
   isLastMessage,
 }: ChatBubbleProps) {
-  const user = {
-    id: senderId,
-    name: '테스트',
-    avatar: 'https://avatars.githubusercontent.com/u/44080404?v=4',
-  }
-
   if (messageType === 'SERVER') {
     return (
       <div className={styles.SystemMessageLayout}>
@@ -51,10 +46,10 @@ export default function ChatBubble ({
       })}
     >
       {isStartMessage && (
-        <Avatar src={user.avatar} alt={user.name} size='small' className={styles.MemberAvatar} />
+        <Avatar src={thumbnailImageUrl} alt={name} size='small' className={styles.MemberAvatar} />
       )}
       <div>
-        {isStartMessage && <div className={styles.MemberName}>{user.name}</div>}
+        {isStartMessage && <div className={styles.MemberName}>{name}</div>}
         <div
           className={classNames(styles.MessageItem, {
             [styles.singleMessage]: !isStartMessage,
@@ -63,7 +58,7 @@ export default function ChatBubble ({
           {message}
         </div>
       </div>
-      {isLastMessage && <div className={styles.SendTime}>{dayjs(createdAt).format('A h:MM')}</div>}
+      {isLastMessage && <div className={styles.SendTime}>{dayjs(createdAt).format('A h:mm')}</div>}
     </div>
   )
 }

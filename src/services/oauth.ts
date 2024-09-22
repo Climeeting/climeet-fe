@@ -2,6 +2,7 @@ import axios from 'axios'
 import api from '../utils/api'
 import { stringify } from '../utils/query'
 import { MyProfileQuery } from './user'
+import { useQuery } from '@tanstack/react-query'
 
 export const post_oauth_login = async (accessToken: string) => {
   try {
@@ -41,4 +42,19 @@ export const post_kakao_oauth_token = async (code: string) => {
   } catch (err) {
     console.error(err)
   }
+}
+
+/**
+ * GET /v1/user/token
+ */
+export const get_user_token = async () => {
+  const result = await api.get<string>('/v1/user/token')
+  return result
+}
+
+export const useGetUserToken = () => {
+  return useQuery({
+    queryKey: ['user_token'],
+    queryFn: get_user_token,
+  })
 }

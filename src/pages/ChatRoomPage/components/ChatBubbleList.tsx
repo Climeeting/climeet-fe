@@ -1,29 +1,48 @@
 import dayjs from 'dayjs'
 import ChatBubble from './ChatBubble'
 import { useMyProfile } from '@/services/user'
-import { ChatMessage, ChatRoomQuery, useChatRoomSuspense } from '@/services/chat'
-import { PageData } from '@/pages/types/api'
-import { InfiniteData } from '@tanstack/react-query'
+import { ChatRoomQuery, useChatRoomSuspense } from '@/services/chat'
 import styles from './ChatBubbleList.module.scss'
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { useLoadMore } from '@/utils/useLoadMore'
-import Icon from '@/components/Icon/Icon'
+import {
+  forwardRef, useEffect, useImperativeHandle, useLayoutEffect, useRef,
+  useState,
+} from 'react'
+import { useLoadMore, useOnScreen } from '@/utils/useLoadMore'
+import { ReceiveMessage } from '@/utils/chat'
+import { useChat } from '@/utils/useChat'
+import ScrollDownButton from './ScrollDownButton'
 
 type ChatBubbleListProps = {
-  data: InfiniteData<PageData<ChatMessage>, unknown>
+  chatList: ReceiveMessage[]
   fetchNextPage: () => Promise<unknown>
   isFetched: boolean
   hasNextPage: boolean
 }
 
-export default function ChatBubbleList ({ data, fetchNextPage, isFetched, hasNextPage }: ChatBubbleListProps) {
-  const chatList = data.pages.map(page => page.content).flat().reverse()
+export type ChatListHandle = {
+  scrollToBottom: () => void
+}
+
+const ChatBubbleListUi = forwardRef(function ChatBubbleList ({ chatList, fetchNextPage, isFetched, hasNextPage }: ChatBubbleListProps, forwardRef) {
   const showLoadMore = isFetched && hasNextPage
   const { data: myData } = useMyProfile()
 
+  const bottomRef = useRef<HTMLLIElement>(null)
+  const isBottom = useOnScreen(bottomRef)
+
   const [isScrolled, setIsScrolled] = useState(false)
-  const chatListRef = useChatScroll(chatList, isScrolled)
+  const chatListRef = useChatScroll(chatList, (chatList.length === 0) || isScrolled)
   const snapshotRef = useRef<{ scrollHeight: number, scrollTop: number } | null>(null)
+
+  useImperativeHandle(forwardRef, () => {
+    return {
+      scrollToBottom: () => {
+        if (chatListRef.current) {
+          scrollToBottom(chatListRef.current)
+        }
+      },
+    }
+  }, [])
 
   const loadMoreRef = useLoadMore(async () => {
     if (chatListRef.current) {
@@ -45,9 +64,7 @@ export default function ChatBubbleList ({ data, fetchNextPage, isFetched, hasNex
       })
       snapshotRef.current = null
     }
-  }, [data.pages])
-
-  const hasNewMessage = true
+  }, [chatList])
 
   return (
     <div className={styles.ChatBubbleContainer}>
@@ -56,7 +73,8 @@ export default function ChatBubbleList ({ data, fetchNextPage, isFetched, hasNex
         className={styles.ChatBubbleList}
         onScroll={() => {
           if (chatListRef.current) {
-            setIsScrolled(chatListRef.current.scrollTop + chatListRef.current.clientHeight < chatListRef.current.scrollHeight)
+            if (isBottom) setIsScrolled(false)
+            else setIsScrolled(chatListRef.current.scrollTop + chatListRef.current.clientHeight < chatListRef.current.scrollHeight)
           }
         }}
       >
@@ -65,14 +83,15 @@ export default function ChatBubbleList ({ data, fetchNextPage, isFetched, hasNex
           const isStartMessage
             = index === 0 // 1. 첫 번째 메시지
             || chat.senderId !== chatList[index - 1].senderId // 2. 이전 메시지와 다른 사용자
-            || dayjs(chatList[index - 1].createdAt).diff(dayjs(chat.createdAt), 'minute') > 1 // 3. 이전 메시지와 1분 이상 차이
+            || dayjs(chatList[index - 1].createdAt).startOf('minute').diff(dayjs(chat.createdAt).startOf('minute'), 'minute') >= 1 // 3. 이전 메시지와 1분 이상 차이
+
           const isLastMessage
               = index === chatList.length - 1 // 1. 마지막 메시지
               || chat.senderId !== chatList[index + 1].senderId // 2. 다음 메시지와 다른 사용자
-              || dayjs(chatList[index + 1].createdAt).diff(dayjs(chat.createdAt), 'minute') > 1 // 3. 다음 메시지와 1분 이상 차이
+              || dayjs(chatList[index + 1].createdAt).startOf('minute').diff(dayjs(chat.createdAt).startOf('minute'), 'minute') >= 1 // 3. 다음 메시지와 1분 이상 차이
 
           return (
-            <li key={`chat-${chat.id}-${chat.createdAt}`}>
+            <li key={`chat-${chat.messageId}-${chat.createdAt}`}>
               <ChatBubble
                 {...chat}
                 isStartMessage={isStartMessage}
@@ -82,11 +101,11 @@ export default function ChatBubbleList ({ data, fetchNextPage, isFetched, hasNex
             </li>
           )
         })}
+        <li ref={bottomRef} />
       </ul>
-      {isScrolled && hasNewMessage && (
+      {/* {isScrolled && !isBottom && hasNewMessage && (
         <button
           onClick={() => {
-            setIsScrolled(false)
             scrollToBottom(chatListRef.current!)
           }}
           className={styles.ChatNewMssage}
@@ -94,10 +113,15 @@ export default function ChatBubbleList ({ data, fetchNextPage, isFetched, hasNex
           <span>새로운 메세지 확인하기</span>
           <Icon icon='ArrowDown' size={16} />
         </button>
+      )} */}
+      {isScrolled && !isBottom && (
+        <ScrollDownButton
+          scrollBottom={scrollToBottom.bind(null, chatListRef.current!)}
+        />
       )}
     </div>
   )
-}
+})
 
 const scrollToBottom = (element: HTMLUListElement) => {
   element.scrollTo({
@@ -118,18 +142,40 @@ function useChatScroll<T> (dep: T, disabled: boolean) {
   return ref as React.RefObject<HTMLUListElement>
 }
 
-ChatBubbleList.Query = function ChatBubbleListQuery ({ room }: { room: number }) {
+const ChatBubbleListQuery = forwardRef(function ChatBubbleListQuery ({ room }: { room: number }, forwardRef) {
   const { data, fetchNextPage, isFetched, hasNextPage } = useChatRoomSuspense({ room })
+  const { messages } = useChat()
+  const chatList = data.pages.map(page => page.content).flat().reverse()
 
-  return <ChatBubbleList data={data} fetchNextPage={fetchNextPage} isFetched={isFetched} hasNextPage={hasNextPage} />
-}
+  return (
+    <ChatBubbleListUi
+      ref={forwardRef}
+      chatList={[
+        ...chatList,
+        ...messages,
+      ]}
+      fetchNextPage={fetchNextPage}
+      isFetched={isFetched}
+      hasNextPage={hasNextPage}
+    />
+  )
+})
 
-ChatBubbleList.Skeleton = function ChatBubbleListSkeleton () {
+function ChatBubbleListSkeleton () {
   return (
     <div>로딩중</div>
   )
 }
 
-ChatBubbleList.Retry = function ChatBubbleListRetry ({ room }: { room: number }) {
+function ChatBubbleListRetry ({ room }: { room: number }) {
   return <button onClick={() => ChatRoomQuery.refetch({ room })}>다시 시도하기</button>
 }
+
+const ChatBubbleList = {
+  Ui: ChatBubbleListUi,
+  Query: ChatBubbleListQuery,
+  Skeleton: ChatBubbleListSkeleton,
+  Retry: ChatBubbleListRetry,
+}
+
+export default ChatBubbleList

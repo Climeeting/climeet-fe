@@ -33,8 +33,10 @@
     "@stackflow/plugin-history-sync": "^1.5.0",
     "@stackflow/plugin-renderer-basic": "^1.1.8",
     "@stackflow/react": "^1.1.9",
+    "@stomp/stompjs": "^7.0.0",
     "@tanstack/react-query": "^5.32.1",
     "@tanstack/react-virtual": "^3.10.7",
+    "@types/sockjs-client": "^1.5.4",
     "@uidotdev/usehooks": "^2.4.1",
     "aws-sdk": "^2.1560.0",
     "axios": "^1.6.8",
@@ -48,6 +50,7 @@
     "sass": "^1.77.2",
     "socket.io": "^4.7.5",
     "socket.io-client": "^4.7.5",
+    "sockjs-client": "^1.6.1",
     "vite-plugin-svgr": "^4.2.0",
     "zustand": "^4.5.2"
   },

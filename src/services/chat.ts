@@ -1,4 +1,4 @@
-import { useSuspenseInfiniteQuery } from '@tanstack/react-query'
+import { useSuspenseInfiniteQuery, useSuspenseQuery } from '@tanstack/react-query'
 import api from '../utils/api'
 import { PageData } from '@/pages/types/api'
 import { stringify } from '@/utils/query'
@@ -45,4 +45,25 @@ export const ChatRoomQuery = {
     await queryClient.refetchQueries({
       queryKey: [...CHAT_ROOM_KEY, stringify(params)],
     }),
+}
+
+/**
+ * GET /v1/chat/${room}/members
+ */
+
+export type Member = {
+  userId: number
+  memberName: string
+  memberThumbnail: string
+}
+
+export const get_chat_$room_members = async (room: number) => {
+  return await api.get<Member[]>(`/v1/chat/${room}/members`)
+}
+
+export const useChatRoomMembers = (room: number) => {
+  return useSuspenseQuery({
+    queryKey: ['chat', 'room', room, 'members'],
+    queryFn: () => get_chat_$room_members(room),
+  })
 }

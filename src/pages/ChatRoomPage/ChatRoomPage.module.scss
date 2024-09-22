@@ -1,19 +1,6 @@
 .Container {
   width: 100%;
 
-  .Alert {
-    height: 80px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    background-color: $primary-100;
-    font-size: 14px;
-    font-weight: 400;
-    color: $gray-800;
-    margin-bottom: 24px;
-  }
-
   .LastDate {
     font-size: 12px;
     font-weight: 400;

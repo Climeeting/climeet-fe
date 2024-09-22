@@ -19,10 +19,12 @@ export default function ChatItem ({
           </div>
           {data.hasUnreadMessages && <div className={styles.NewChat} />}
         </div>
-        <div className={styles.Row}>
-          <div className={styles.LastMessage}>{data.lastMessage}</div>
-          {data.lastMessageTime && <div className={styles.LastChatTime}>{dayjs(data.lastMessageTime).format('A hh:mm')}</div>}
-        </div>
+        {data.lastMessageTime && (
+          <div className={styles.Row}>
+            <div className={styles.LastMessage}>{data.lastMessage}</div>
+            {data.lastMessageTime && <div className={styles.LastChatTime}>{dayjs(data.lastMessageTime).format('A hh:mm')}</div>}
+          </div>
+        )}
       </div>
     </div>
   )

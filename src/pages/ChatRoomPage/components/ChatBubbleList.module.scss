@@ -3,11 +3,24 @@
   height: 100vh;
 }
 
+.Alert {
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: $primary-100;
+  font-size: 14px;
+  font-weight: 400;
+  color: $gray-800;
+  margin-bottom: 24px;
+}
+
 .ChatBubbleList {
-  padding: 8px 0;
+  padding-bottom: 8px;
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 60px - 64px);
+  height: calc(100vh - 60px - 64px + 8px);
   overflow-y: scroll;
   overscroll-behavior: contain;
 }
@@ -27,4 +40,17 @@
   padding: 12px 32px;
   background-color: $gray-900;
   color: white;
+}
+
+.ChatDate { 
+  display: block;
+  margin: 48px 0 16px;
+  font-size: rem(12px);
+  color: $gray-400;
+  width: 100%;
+  text-align: center;
+
+  &.isFirst {
+    margin-top: 16px;
+  }
 }

@@ -10,6 +10,8 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useMyProfile } from '@/services/user'
 import { ErrorBoundary } from 'react-error-boundary'
 import { ChatProvider, useChatActions } from '@/utils/useChat'
+import { PartyDetailType, usePartyDetail } from '@/services/party'
+import { useChatRoomMembers } from '@/services/chat'
 
 const MAX_MESSAGE_LENGTH = 300
 
@@ -18,30 +20,23 @@ export function ChatRoomPage ({ id, userId }: { id: number, userId: number }) {
   const [message, setMessage] = useState('')
   const { send } = useChatActions()
   const chatListRef = useRef<ChatListHandle>(null)
+  const { data: party } = usePartyDetail(id)
 
   return (
     <div>
       <div className={styles.Container}>
         <TopBar>
           <TopBar.Left back />
-          <TopBar.Center>친해지실 분 구해유</TopBar.Center>
+          <TopBar.Center>{party?.partyName}</TopBar.Center>
           <TopBar.Right close={false}>
-            <ChatRoomInfo />
+            <ErrorBoundary fallback={<>오류 발생</>}>
+              <Suspense fallback={<>로딩중</>}>
+                <ChatRoomInfo party={party} id={id} />
+              </Suspense>
+            </ErrorBoundary>
           </TopBar.Right>
         </TopBar>
-        {/* <div className={styles.Alert}>
-          👋 파티원분들과 반갑게 인사를 나눠보세요.
-          <br />
-          개인 정보 요구, 외부 채팅방으로 유도하는 경우 주의해주세요!
-        </div>
 
-        <div className={styles.LastDate}>2024년 6월 29일 토요일</div>
-
-        <div className={styles.MemberEnterLayout}>
-          <div className={styles.MemberEnter}>이성진 님이 들어왔습니다.</div>
-        </div> */}
-
-        {/* {JSON.stringify(messages, null, 2)} */}
         <ErrorBoundary fallback={<ChatBubbleList.Retry room={Number(id)} />}>
           <Suspense fallback={<ChatBubbleList.Skeleton />}>
             <ChatBubbleList.Query ref={chatListRef} room={Number(id)} />
@@ -65,7 +60,6 @@ export function ChatRoomPage ({ id, userId }: { id: number, userId: number }) {
         }}
         className={styles.Bottom}
       >
-        <Icon icon='PlusLine' size={24} className={styles.Plus} />
         <input
           maxLength={MAX_MESSAGE_LENGTH}
           type='text'
@@ -111,14 +105,16 @@ export default function ChatRoomPageSocket () {
   )
 }
 
-function ChatRoomInfo () {
+function ChatRoomInfo ({ party, id }: { party?: PartyDetailType, id: number }) {
   const [open, setOpen] = useState(false)
+  const { data } = useChatRoomMembers(id)
+
   return (
     <SideSheet open={open} onOpenChange={setOpen}>
       <SideSheet.Trigger className={styles.Trigger} style={{ display: 'flex' }}>
         <Icon icon='Hamburger' size={32} />
       </SideSheet.Trigger>
-      {open && <ChatSidebar />}
+      {party && open && <ChatSidebar partyId={id} party={party} members={data} />}
     </SideSheet>
   )
 }

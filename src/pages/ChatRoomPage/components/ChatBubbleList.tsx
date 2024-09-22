@@ -11,6 +11,7 @@ import { useLoadMore, useOnScreen } from '@/utils/useLoadMore'
 import { ReceiveMessage } from '@/utils/chat'
 import { useChat } from '@/utils/useChat'
 import ScrollDownButton from './ScrollDownButton'
+import classNames from 'classnames'
 
 type ChatBubbleListProps = {
   chatList: ReceiveMessage[]
@@ -90,8 +91,15 @@ const ChatBubbleListUi = forwardRef(function ChatBubbleList ({ chatList, fetchNe
               || chat.senderId !== chatList[index + 1].senderId // 2. 다음 메시지와 다른 사용자
               || dayjs(chatList[index + 1].createdAt).startOf('minute').diff(dayjs(chat.createdAt).startOf('minute'), 'minute') >= 1 // 3. 다음 메시지와 1분 이상 차이
 
+          const isDayChanged
+              = index === 0
+              || dayjs(chat.createdAt).startOf('day').diff(dayjs(chatList[index - 1].createdAt).startOf('day'), 'day') !== 0
+
+          const isFirstMessage = !hasNextPage && index === 0
           return (
             <li key={`chat-${chat.messageId}-${chat.createdAt}`}>
+              {isFirstMessage && <GreetingMessage />}
+              {isDayChanged && <span className={classNames(styles.ChatDate, { [styles.isFirst]: index === 0 })}>{dayjs(chat.createdAt).format('YYYY년 MM월 DD일')}</span>}
               <ChatBubble
                 {...chat}
                 isStartMessage={isStartMessage}
@@ -122,6 +130,16 @@ const ChatBubbleListUi = forwardRef(function ChatBubbleList ({ chatList, fetchNe
     </div>
   )
 })
+
+function GreetingMessage () {
+  return (
+    <div className={styles.Alert}>
+      👋 파티원분들과 반갑게 인사를 나눠보세요.
+      <br />
+      개인 정보 요구, 외부 채팅방으로 유도하는 경우 주의해주세요!
+    </div>
+  )
+}
 
 const scrollToBottom = (element: HTMLUListElement) => {
   element.scrollTo({

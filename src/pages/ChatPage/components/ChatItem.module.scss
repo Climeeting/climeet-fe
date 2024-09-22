@@ -36,6 +36,10 @@
     font-weight: 600;
     color: $gray-800;
     line-height: 1;
+    max-width: calc(100vw - 52px - 16px - 16px - 48px - 36px);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .Members {
@@ -49,18 +53,23 @@
     width: 52px;
     height: 52px;
   }
-
+  
   .LastMessage {
+    width: calc(100vw - 52px - 16px - 16px - 48px - 36px);
     font-size: rem(14px);
     font-weight: 400;
     color: $gray-600;
     line-height: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .LastChatTime {
     font-size: rem(12px);
     line-height: 1.7;
     font-weight: 500;
+    white-space: nowrap;
     color: $gray-400;
   }
 

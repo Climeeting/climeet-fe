@@ -95,8 +95,10 @@ const ChatBubbleListUi = forwardRef(function ChatBubbleList ({ chatList, fetchNe
               = index === 0
               || dayjs(chat.createdAt).startOf('day').diff(dayjs(chatList[index - 1].createdAt).startOf('day'), 'day') !== 0
 
+          const isFirstMessage = !hasNextPage && index === 0
           return (
             <li key={`chat-${chat.messageId}-${chat.createdAt}`}>
+              {isFirstMessage && <GreetingMessage />}
               {isDayChanged && <span className={classNames(styles.ChatDate, { [styles.isFirst]: index === 0 })}>{dayjs(chat.createdAt).format('YYYY년 MM월 DD일')}</span>}
               <ChatBubble
                 {...chat}
@@ -128,6 +130,16 @@ const ChatBubbleListUi = forwardRef(function ChatBubbleList ({ chatList, fetchNe
     </div>
   )
 })
+
+function GreetingMessage () {
+  return (
+    <div className={styles.Alert}>
+      👋 파티원분들과 반갑게 인사를 나눠보세요.
+      <br />
+      개인 정보 요구, 외부 채팅방으로 유도하는 경우 주의해주세요!
+    </div>
+  )
+}
 
 const scrollToBottom = (element: HTMLUListElement) => {
   element.scrollTo({

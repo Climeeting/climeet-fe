@@ -31,19 +31,7 @@ export function ChatRoomPage ({ id, userId }: { id: number, userId: number }) {
             <ChatRoomInfo />
           </TopBar.Right>
         </TopBar>
-        {/* <div className={styles.Alert}>
-          👋 파티원분들과 반갑게 인사를 나눠보세요.
-          <br />
-          개인 정보 요구, 외부 채팅방으로 유도하는 경우 주의해주세요!
-        </div>
 
-        <div className={styles.LastDate}>2024년 6월 29일 토요일</div>
-
-        <div className={styles.MemberEnterLayout}>
-          <div className={styles.MemberEnter}>이성진 님이 들어왔습니다.</div>
-        </div> */}
-
-        {/* {JSON.stringify(messages, null, 2)} */}
         <ErrorBoundary fallback={<ChatBubbleList.Retry room={Number(id)} />}>
           <Suspense fallback={<ChatBubbleList.Skeleton />}>
             <ChatBubbleList.Query ref={chatListRef} room={Number(id)} />

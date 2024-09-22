@@ -22,10 +22,13 @@ $banner-height: (68px + 32px);
   align-items: center;
   padding: 0 16px;
 
-  .Title {
+  .TitleText {
     font-size: 16px;
     font-weight: 600;
     color: $gray-900;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .Alarm {
@@ -123,6 +126,10 @@ $banner-height: (68px + 32px);
   .Name {
     font-size: rem(14px);
     color: $gray-900;
+    width: 60%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .Image {
     width: 48px;

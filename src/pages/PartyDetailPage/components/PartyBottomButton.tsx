@@ -6,6 +6,7 @@ import { PartyDetailQuery, post_party_$partyId_participate, usePartyDetail } fro
 import { useCheckAdditionalInfo, useIsLogin } from '@/services/user'
 import useToast from '@/utils/useToast'
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 export default function PartyBottomButton ({ id }: { id?: string }) {
   const { data: isLogin, isLoading } = useIsLogin()
@@ -22,7 +23,7 @@ export default function PartyBottomButton ({ id }: { id?: string }) {
       <Chip className={styles.Button} variable='primary' asChild>
         {partyData?.isParticipation
           ? (
-              <button>채팅방으로 가기!</button>
+              <Link to={`/chat/${id}`}>채팅방으로 가기!</Link>
             )
           : (
               <button

@@ -66,8 +66,11 @@ export default function GymSearch () {
                   className={styles.searchItem}
                   onClick={() => {
                     setQuery(el.name)
-                    searchActions.add(el)
                     onOpenChange(false)
+                    const isInclude = searchResult.find(chipInfo => chipInfo.id === el.id)
+                    if (!isInclude) {
+                      searchActions.add(el)
+                    }
                   }}
                 >
                   <Icon icon='Search' size={16} />

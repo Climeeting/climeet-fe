@@ -604,3 +604,19 @@ export const delete_party_$partyId = async (partyId: number) => {
     }
   }
 }
+
+/**
+ * POST /v1/report/{partyId}
+ */
+export const post_party_report = async (partyId: number, reqBody: { reason: string }) => {
+  try {
+    const result = await api.post(`/v1/report/${partyId}`, reqBody)
+    return result
+  } catch (e) {
+    if (e instanceof AxiosError) {
+      throw new Error(e.response?.data.message)
+    } else {
+      throw new Error('파티 신고에 실패하였습니다')
+    }
+  }
+}

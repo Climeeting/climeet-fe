@@ -1,11 +1,13 @@
 .Main {
   width: 100%;
+  max-width: $max-width;
   padding: rem(16px);
   display: flex;
   justify-content: space-between;
   position: fixed;
   top: 0;
-  left: 0;
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 1;
   background-color: #fff;
 }

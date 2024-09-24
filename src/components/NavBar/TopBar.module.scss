@@ -14,12 +14,14 @@
 
 .Default {
   width: 100%;
+  max-width: $max-width;
   height: rem(48px);
   border-bottom: 1px solid $gray-100;
   color: $gray-900;
   position: fixed;
   top: 0;
-  left: 0;
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 1;
   background-color: #fff;
 

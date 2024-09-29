@@ -22,7 +22,10 @@ export default function ChatBubble ({
 }: ChatBubbleProps) {
   if (messageType === 'SERVER') {
     return (
-      <div className={styles.SystemMessageLayout}>
+      <div className={classNames(styles.SystemMessageLayout, {
+        [styles.isStartMessage]: isStartMessage,
+      })}
+      >
         <div className={styles.SystemMessage}>{message}</div>
       </div>
     )

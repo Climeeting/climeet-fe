@@ -106,8 +106,12 @@ $primary-300: #f6f2ff;
 $primary-200: #f6f2ff;
 $primary-100: #fbf9ff;
 
+// constants
 $max-width: 700px;
+$top-bar-height: 48px;
+$chat-input-height: 64px;
 
 body {
   background-color: $gray-100;
 }
+

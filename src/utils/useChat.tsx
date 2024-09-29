@@ -60,7 +60,7 @@ export function ChatProvider ({ id, children }: { id: number } & PropsWithChildr
         (message) => {
           const chatMessage = JSON.parse(message.body)
           console.log('Received message:', chatMessage)
-          setMessages(prev => [...prev, chatMessage])
+          setMessages(prev => [chatMessage, ...prev])
         },
       )
     }

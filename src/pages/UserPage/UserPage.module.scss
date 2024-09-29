@@ -3,13 +3,13 @@
   padding-bottom: 68px;
   width: 100%;
   background-color: $gray-100;
-  min-height: 100vh;
+  min-height: 100svh;
 }
 
 .Error {
   width: 100%;
   background-color: #fff;
-  min-height: calc(100vh - 48px - 68px);
+  min-height: calc(100svh - 48px - 68px);
   padding-top: 100px;
 }
 

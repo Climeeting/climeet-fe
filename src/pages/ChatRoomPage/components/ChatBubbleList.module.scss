@@ -1,6 +1,6 @@
 .ChatBubbleContainer {
   padding: 47px 0 64px;
-  height: 100vh;
+  height: 100svh;
   width: 100%;
 }
 
@@ -19,7 +19,7 @@
 
 .ChatBubbleList {
   width: 100%;
-  height: calc(100vh - $top-bar-height - $chat-input-height);
+  height: calc(100svh - $top-bar-height - $chat-input-height);
   overflow-y: scroll;
   display: flex;
   flex-direction: column-reverse;

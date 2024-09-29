@@ -48,7 +48,7 @@ const ChatBubbleListUi = forwardRef(function ChatBubbleList ({ chatList, fetchNe
   }, [])
 
   useEffect(function scrollToBottomAfterSendMessage () {
-    const lastMessage = chatList[chatList.length - 1]
+    const lastMessage = chatList[0]
     if (!chatListRef.current) return
     if (lastSeenId === lastMessage.messageId) return
     if (lastMessage.senderId === myData?.userId) {
@@ -132,6 +132,7 @@ function GreetingMessage () {
 }
 
 const scrollToBottom = (element: HTMLUListElement) => {
+  console.log('scrollToBottom')
   element.scrollTo({
     top: element.scrollHeight,
     left: 0,

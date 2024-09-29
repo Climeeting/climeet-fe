@@ -84,19 +84,19 @@ const ChatBubbleListUi = forwardRef(function ChatBubbleList ({ chatList, fetchNe
           <li ref={bottomRef} />
           {chatList.map((chat, index) => {
             const isStartMessage
-            = index === 0 // 1. 첫 번째 메시지
-            || chat.senderId !== chatList[index - 1].senderId // 2. 이전 메시지와 다른 사용자
-            || Math.abs(dayjs(chatList[index - 1].createdAt).startOf('minute').diff(dayjs(chat.createdAt).startOf('minute'), 'minute')) >= 1 // 3. 이전 메시지와 1분 이상 차이
-            || chatList[index - 1].messageType === 'SERVER' // 4. 이전 메시지의 타입이 SERVER 인 경우(시스템 메시지)
+            = index === chatList.length - 1 // 1. 첫 번째 메시지
+            || chat.senderId !== chatList[index + 1].senderId // 2. 이전 메시지와 다른 사용자
+            || Math.abs(dayjs(chatList[index + 1].createdAt).startOf('minute').diff(dayjs(chat.createdAt).startOf('minute'), 'minute')) >= 1 // 3. 이전 메시지와 1분 이상 차이
+            || chatList[index + 1].messageType === 'SERVER' // 4. 이전 메시지의 타입이 SERVER 인 경우(시스템 메시지)
 
             const isLastMessage
-              = index === chatList.length - 1 // 1. 마지막 메시지
-              || chat.senderId !== chatList[index + 1].senderId // 2. 다음 메시지와 다른 사용자
-              || Math.abs(dayjs(chatList[index + 1].createdAt).startOf('minute').diff(dayjs(chat.createdAt).startOf('minute'), 'minute')) >= 1 // 3. 다음 메시지와 1분 이상 차이
+              = index === 0 // 1. 마지막 메시지
+              || chat.senderId !== chatList[index - 1].senderId // 2. 다음 메시지와 다른 사용자
+              || Math.abs(dayjs(chatList[index - 1].createdAt).startOf('minute').diff(dayjs(chat.createdAt).startOf('minute'), 'minute')) >= 1 // 3. 다음 메시지와 1분 이상 차이
 
             const isDayChanged
-              = index === 0
-              || dayjs(chat.createdAt).startOf('day').diff(dayjs(chatList[index - 1].createdAt).startOf('day'), 'day') !== 0
+              = index === chatList.length - 1
+              || dayjs(chat.createdAt).startOf('day').diff(dayjs(chatList[index + 1].createdAt).startOf('day'), 'day') !== 0
 
             return (
               <li key={`chat-${chat.messageId}-${chat.createdAt}`}>
@@ -132,7 +132,6 @@ function GreetingMessage () {
 }
 
 const scrollToBottom = (element: HTMLUListElement) => {
-  console.log('scrollToBottom')
   element.scrollTo({
     top: element.scrollHeight,
     left: 0,
@@ -149,7 +148,7 @@ const ChatBubbleListQuery = forwardRef(function ChatBubbleListQuery ({ room }: {
     <ChatBubbleListUi
       ref={forwardRef}
       chatList={[
-        ...messages.reverse(),
+        ...messages,
         ...chatList,
       ]}
       fetchNextPage={fetchNextPage}

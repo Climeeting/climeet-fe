@@ -35,6 +35,8 @@ const ChatBubbleListUi = forwardRef(function ChatBubbleList ({ chatList, fetchNe
   const chatListRef = useChatScroll(chatList, (chatList.length === 0) || isScrolled)
   const snapshotRef = useRef<{ scrollHeight: number, scrollTop: number } | null>(null)
 
+  const [lastSeenId, setLastSeenId] = useState(chatList.length > 0 ? chatList[chatList.length - 1].messageId : null)
+
   useImperativeHandle(forwardRef, () => {
     return {
       scrollToBottom: () => {
@@ -55,7 +57,7 @@ const ChatBubbleListUi = forwardRef(function ChatBubbleList ({ chatList, fetchNe
     }
   })
 
-  useLayoutEffect(() => {
+  useLayoutEffect(function controlScrollAfterFetching () {
     if (snapshotRef.current && chatListRef.current) {
       const { scrollHeight, scrollTop } = snapshotRef.current
       chatListRef.current.scrollTo({
@@ -64,6 +66,16 @@ const ChatBubbleListUi = forwardRef(function ChatBubbleList ({ chatList, fetchNe
         behavior: 'instant',
       })
       snapshotRef.current = null
+    }
+  }, [chatList])
+
+  useEffect(function scrollToBottomAfterSendMessage () {
+    const lastMessage = chatList[chatList.length - 1]
+    if (!chatListRef.current) return
+    if (lastSeenId === lastMessage.messageId) return
+    if (lastMessage.senderId === myData?.userId) {
+      scrollToBottom(chatListRef.current)
+      setLastSeenId(lastMessage.messageId)
     }
   }, [chatList])
 

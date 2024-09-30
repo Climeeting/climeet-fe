@@ -76,7 +76,7 @@ export default function MoreMenu ({ id }: { id?: string }) {
                 onSelect={handlePartyReportClick}
               >
                 <p>파티 신고하기</p>
-                <Icon size='16' icon='Pencil' />
+                <Icon size='16' icon='Report' />
               </Dropdown.Item>
 
               <Dropdown.Item
@@ -88,7 +88,7 @@ export default function MoreMenu ({ id }: { id?: string }) {
                 }}
               >
                 <p>파티 탈퇴하기</p>
-                <Icon size='16' icon='Remove' />
+                <Icon size='16' icon='Exit' />
               </Dropdown.Item>
             </Dropdown.Content>
           )
@@ -104,7 +104,7 @@ export default function MoreMenu ({ id }: { id?: string }) {
                 }}
               >
                 <p>파티 신고하기</p>
-                <Icon size='16' icon='Remove' />
+                <Icon size='16' icon='Report' />
               </Dropdown.Item>
             </Dropdown.Content>
           )

@@ -1,0 +1,26 @@
+.Container {
+  padding-top: $top-bar-height;
+  padding-bottom: $bottom-bar-height;
+  width: 100%;
+  background-color: $gray-100;
+  min-height: 100svh;
+  background-color: white;
+}
+
+.Main {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 40%;
+}
+
+.Text {
+  font-size: rem(16px);
+  color: $gray-700;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}

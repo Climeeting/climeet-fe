@@ -18,6 +18,7 @@ import { PartyEditFormPage } from '@/pages/PartyEditFormPage/PartyEditFormPage.t
 import RedirectUserPage from './UserPage/RedirectUserPage'
 import DeleteAccountPage from '@/pages/DeleteAccountPage/DeleteAccountPage.tsx'
 import PartyReport from '@/pages/PartyReport/PartyReport.tsx'
+import LocationPage from './LocationPage/LocationPage'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -27,6 +28,7 @@ const router = createBrowserRouter(
       <Route element={<CheckIsLogout />}>
         <Route path='login' element={<LoginPage />} />
       </Route>
+      <Route path='location' element={<LocationPage />} />
       <Route element={<CheckIsLogin />}>
         <Route path='/user/my' element={<RedirectUserPage />} />
         <Route path='/user/my/new' element={<MyNewPage />} />

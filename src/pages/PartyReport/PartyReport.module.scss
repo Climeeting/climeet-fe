@@ -1,0 +1,83 @@
+.Container {
+  width: 100%;
+  position: relative;
+  padding: 16px;
+  padding-top: 48px;
+  padding-bottom: 84px;
+}
+
+.Fileldset {
+  margin-top: 32px;
+  width: 100%;
+  margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+}
+
+.LabelWrapper {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  gap: 8px;
+}
+
+.Label {
+  font-size: rem(14px);
+  color: $gray-700;
+}
+
+.Textarea {
+  padding: 16px;
+  color: $gray-900;
+  border: 1px solid $gray-200;
+  border-radius: 8px;
+  resize: none;
+  height: 194px;
+}
+
+.TextCount {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
+  font-size: rem(14px);
+  color: $gray-800;
+
+  .CurrentCount {
+    color: $gray-800;
+    padding-right: 4px;
+  }
+
+  .MaxCount {
+    color: $gray-600;
+  }
+}
+
+.Textarea,
+.Textarea:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.Footer {
+  height: 84px;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .ReportBtn {
+    $wrapper-padding: rem(16px);
+    width: calc(100% - $wrapper-padding * 2);
+    height: 52px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background: #7835f7;
+    border-radius: 999px;
+  }
+}
+

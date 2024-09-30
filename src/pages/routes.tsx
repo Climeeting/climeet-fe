@@ -17,6 +17,7 @@ import ChatRoomPage from '@/pages/ChatRoomPage/ChatRoomPage.tsx'
 import { PartyEditFormPage } from '@/pages/PartyEditFormPage/PartyEditFormPage.tsx'
 import RedirectUserPage from './UserPage/RedirectUserPage'
 import DeleteAccountPage from '@/pages/DeleteAccountPage/DeleteAccountPage.tsx'
+import PartyReport from '@/pages/PartyReport/PartyReport.tsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -37,6 +38,7 @@ const router = createBrowserRouter(
         <Route path='party-suervey/:id' element={<PartyEditFormPage />} />
         <Route path='/chat' element={<ChatPage />} />
         <Route path='/chat/:id' element={<ChatRoomPage />} />
+        <Route path='/party/report/:id' element={<PartyReport />} />
       </Route>
       <Route path='/user/:id' element={<UserPage />} />
       <Route path='/party/:id' element={<PartyDetailPage />} />

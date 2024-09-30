@@ -35,7 +35,7 @@ export default function PartyFilter () {
   )
 }
 
-function DateFilterBottomSheet () {
+export function DateFilterBottomSheet () {
   const { startDate, endDate } = useDateRangeContext()
   const actions = useDateRangeAction()
   const [currentTab, setCurrentTab] = useState<'start' | 'end' | null>(null)

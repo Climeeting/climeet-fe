@@ -27,6 +27,10 @@
   top: 0;
   z-index: 10;
 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
   .Title {
     display: block;
     font-size: rem(20px);

@@ -13,10 +13,21 @@ export default function MoreMenu ({ id }: { id?: string }) {
   const [openAlertLogin, onOpenAlertLogin] = useState(false)
   const [openAlertDelete, onOpenAlertDelete] = useState(false)
   const [openAlertEdit, onOpenAlertEdit] = useState(false)
+  const handlePartyReportClick = () => {
+    onOpenDropdown(false)
+    if (!isLogin) {
+      return onOpenAlertLogin(true)
+    }
+    navigate(`/party/report/${id}`)
+  }
 
   const { data: partyData } = usePartyDetail(Number(id))
 
-  if (!id || !partyData?.isMaster) return null
+  if (!id || !partyData) return null
+
+  const isMaster = partyData.isMaster
+  const isParticipation = !partyData.isMaster && partyData.isParticipation
+  const isNotParticipation = !partyData.isMaster && !partyData.isParticipation
 
   return (
     <>
@@ -24,35 +35,80 @@ export default function MoreMenu ({ id }: { id?: string }) {
         <Dropdown.Trigger>
           <Icon icon='More' />
         </Dropdown.Trigger>
-        <Dropdown.Content>
-          <Dropdown.Item
-            onSelect={() => {
-              onOpenDropdown(false)
-              if (!isLogin) {
-                return onOpenAlertLogin(true)
-              }
-              const isExistParticipant = partyData.currentParticipants > 1
-              if (isExistParticipant) {
-                return onOpenAlertEdit(true)
-              }
-              navigate(`/party-suervey/${id}`)
-            }}
-          >
-            <p>파티 수정하기</p>
-            <Icon size='16' icon='Pencil' />
-          </Dropdown.Item>
+        {
+          isMaster && (
+            <Dropdown.Content>
+              <Dropdown.Item
+                onSelect={() => {
+                  onOpenDropdown(false)
+                  if (!isLogin) {
+                    return onOpenAlertLogin(true)
+                  }
+                  const isExistParticipant = partyData.currentParticipants > 1
+                  if (isExistParticipant) {
+                    return onOpenAlertEdit(true)
+                  }
+                  navigate(`/party-suervey/${id}`)
+                }}
+              >
+                <p>파티 수정하기</p>
+                <Icon size='16' icon='Pencil' />
+              </Dropdown.Item>
 
-          <Dropdown.Item
-            onSelect={() => {
-              onOpenDropdown(false)
-              if (isLogin) onOpenAlertDelete(true)
-              if (!isLogin) onOpenAlertLogin(true)
-            }}
-          >
-            <p>파티 삭제하기</p>
-            <Icon size='16' icon='Remove' />
-          </Dropdown.Item>
-        </Dropdown.Content>
+              <Dropdown.Item
+                onSelect={() => {
+                  onOpenDropdown(false)
+                  if (isLogin) onOpenAlertDelete(true)
+                  if (!isLogin) onOpenAlertLogin(true)
+                }}
+              >
+                <p>파티 삭제하기</p>
+                <Icon size='16' icon='Remove' />
+              </Dropdown.Item>
+            </Dropdown.Content>
+          )
+        }
+
+        {
+          isParticipation && (
+            <Dropdown.Content>
+              <Dropdown.Item
+                onSelect={handlePartyReportClick}
+              >
+                <p>파티 신고하기</p>
+                <Icon size='16' icon='Report' />
+              </Dropdown.Item>
+
+              <Dropdown.Item
+                onSelect={() => {
+                  onOpenDropdown(false)
+                  // @todo 탈퇴 로직 추가
+                  if (isLogin) onOpenAlertDelete(true)
+                  if (!isLogin) onOpenAlertLogin(true)
+                }}
+              >
+                <p>파티 탈퇴하기</p>
+                <Icon size='16' icon='Exit' />
+              </Dropdown.Item>
+            </Dropdown.Content>
+          )
+        }
+
+        {
+          isNotParticipation && (
+            <Dropdown.Content>
+              <Dropdown.Item
+                onSelect={() => {
+                  if (isLogin) handlePartyReportClick()
+                  if (!isLogin) onOpenAlertLogin(true)
+                }}
+              >
+                <p>파티 신고하기</p>
+                <Icon size='16' icon='Report' />
+              </Dropdown.Item>
+            </Dropdown.Content>
+          )
+        }
       </Dropdown>
 
       <Dialog open={openAlertLogin} onOpenChange={onOpenAlertLogin}>

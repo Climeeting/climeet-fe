@@ -22,7 +22,10 @@ export default function ChatBubble ({
 }: ChatBubbleProps) {
   if (messageType === 'SERVER') {
     return (
-      <div className={styles.SystemMessageLayout}>
+      <div className={classNames(styles.SystemMessageLayout, {
+        [styles.isStartMessage]: isStartMessage,
+      })}
+      >
         <div className={styles.SystemMessage}>{message}</div>
       </div>
     )
@@ -30,7 +33,10 @@ export default function ChatBubble ({
 
   if (isMyMessage) {
     return (
-      <div className={styles.MyMessageContainer}>
+      <div className={classNames(styles.MyMessageContainer, {
+        [styles.isStartMessage]: isStartMessage,
+      })}
+      >
         {isLastMessage && <div className={styles.SendTime}>{dayjs(createdAt).format('A h:mm')}</div>}
         <div className={styles.MyMessageList}>
           <div className={styles.MessageItem}>{message}</div>

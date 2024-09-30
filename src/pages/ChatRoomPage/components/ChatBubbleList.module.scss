@@ -1,6 +1,7 @@
 .ChatBubbleContainer {
   padding: 47px 0 64px;
-  height: 100vh;
+  height: 100svh;
+  width: 100%;
 }
 
 .Alert {
@@ -17,12 +18,18 @@
 }
 
 .ChatBubbleList {
-  padding-bottom: 8px;
-  display: flex;
-  flex-direction: column;
-  height: calc(100vh - 60px - 64px + 8px);
+  width: 100%;
+  height: calc(100svh - $top-bar-height - $chat-input-height);
   overflow-y: scroll;
+  display: flex;
+  flex-direction: column-reverse;
   overscroll-behavior: contain;
+}
+
+.InfiniteScroll {
+  display: flex;
+  flex-direction: column-reverse;
+  overflow: visible;
 }
 
 .ChatNewMssage {

@@ -37,8 +37,8 @@ export default function ChatBubble ({
         [styles.isStartMessage]: isStartMessage,
       })}
       >
-        {isLastMessage && <div className={styles.SendTime}>{dayjs(createdAt).format('A h:mm')}</div>}
-        <div className={styles.MyMessageList}>
+        <div className={styles.MyMessage}>
+          {isLastMessage && <div className={styles.SendTime}>{dayjs(createdAt).format('A h:mm')}</div>}
           <div className={styles.MessageItem}>{message}</div>
         </div>
       </div>
@@ -51,20 +51,22 @@ export default function ChatBubble ({
         [styles.isStartMessage]: isStartMessage,
       })}
     >
-      {isStartMessage && (
-        <Avatar src={thumbnailImageUrl} alt={name} size='small' className={styles.MemberAvatar} />
-      )}
-      <div>
-        {isStartMessage && <div className={styles.MemberName}>{name}</div>}
-        <div
-          className={classNames(styles.MessageItem, {
-            [styles.singleMessage]: !isStartMessage,
-          })}
-        >
-          {message}
+      <div className={styles.OtherMessage}>
+        {isStartMessage && (
+          <Avatar src={thumbnailImageUrl} alt={name} size='small' className={styles.MemberAvatar} />
+        )}
+        <div>
+          {isStartMessage && <div className={styles.MemberName}>{name}</div>}
+          <div
+            className={classNames(styles.MessageItem, {
+              [styles.singleMessage]: !isStartMessage,
+            })}
+          >
+            {message}
+          </div>
         </div>
+        {isLastMessage && <div className={styles.SendTime}>{dayjs(createdAt).format('A h:mm')}</div>}
       </div>
-      {isLastMessage && <div className={styles.SendTime}>{dayjs(createdAt).format('A h:mm')}</div>}
     </div>
   )
 }

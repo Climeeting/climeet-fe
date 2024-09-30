@@ -1,5 +1,5 @@
 .ChatBubbleContainer {
-  padding: 47px 0 64px;
+  padding: $top-bar-height 0 $chat-input-height;
   height: 100svh;
   width: 100%;
 }
@@ -14,7 +14,6 @@
   font-size: 14px;
   font-weight: 400;
   color: $gray-800;
-  margin-bottom: 24px;
 }
 
 .ChatBubbleList {

@@ -10,6 +10,7 @@
     font-weight: 500;
     color: $gray-400;
     align-self: end;
+    flex-shrink: 0;
   }
 
   .MessageItem {
@@ -33,8 +34,17 @@
 }
 
 .OtherMessageContainer {
+  width: 100%;
+
   .MemberAvatar {
     margin-right: 8px;
+    flex-shrink: 0;
+  }
+
+  .OtherMessage {
+    display: flex;
+    justify-content: start;
+    max-width: 80%;
   }
 
   .MemberName {
@@ -48,6 +58,13 @@
 .MyMessageContainer {
   gap: 8px;
   justify-content: flex-end;
+  width: 100%;
+
+  .MyMessage {
+    display: flex;
+    justify-content: end;
+    max-width: 80%;
+  }
 
   .MessageItem {
     color: white;
@@ -56,13 +73,6 @@
 
   .SendTime {
     margin-right: 4px;
-  }
-
-  .MyMessageList {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 6px;
   }
 }
 

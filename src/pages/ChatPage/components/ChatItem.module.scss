@@ -13,6 +13,7 @@
 
   .Row {
     display: flex;
+    position: relative;
     width: 100%;
     justify-content: space-between;
     align-items: center;
@@ -55,7 +56,7 @@
     width: 52px;
     height: 52px;
   }
-  
+
   .LastMessage {
     max-width: calc(100% - 60px);
     font-size: rem(14px);
@@ -76,7 +77,10 @@
   }
 
   .NewChat {
-    display: inline;
+    position: absolute;
+    top: 8px;
+    transform: translateY(-50%);
+    right: 8px;
     width: 8px;
     height: 8px;
     border-radius: 100%;

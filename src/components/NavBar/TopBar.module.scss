@@ -15,7 +15,7 @@
 .Default {
   width: 100%;
   max-width: $max-width;
-  height: rem(48px);
+  height: $top-bar-height;
   border-bottom: 1px solid $gray-100;
   color: $gray-900;
   position: fixed;

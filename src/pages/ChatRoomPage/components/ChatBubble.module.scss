@@ -14,9 +14,10 @@
   }
 
   .MessageItem {
+    display: inline-block;
+    position: relative;
     background-color: $gray-100;
     border-radius: calc(38px / 2);
-    max-width: 70vw;
     padding: 7px 12px;
     color: $gray-900;
     font-size: 14px;
@@ -52,6 +53,14 @@
     font-weight: 500;
     color: $gray-600;
     margin-bottom: 6px;
+  }
+
+  .SendTime {
+    white-space: nowrap;
+    position: absolute;
+    bottom: 0;
+    right: -4px;
+    transform: translateX(100%);
   }
 }
 

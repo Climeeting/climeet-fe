@@ -63,9 +63,9 @@ export default function ChatBubble ({
             })}
           >
             {message}
+            {isLastMessage && <div className={styles.SendTime}>{dayjs(createdAt).format('A h:mm')}</div>}
           </div>
         </div>
-        {isLastMessage && <div className={styles.SendTime}>{dayjs(createdAt).format('A h:mm')}</div>}
       </div>
     </div>
   )

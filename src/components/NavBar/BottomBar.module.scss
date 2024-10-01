@@ -22,6 +22,10 @@
   justify-content: center;
   color: #a1a1a1;
   text-decoration: none;
+
+  &.MyPage {
+    color: $gray-900;
+  }
 }
 
 .active {

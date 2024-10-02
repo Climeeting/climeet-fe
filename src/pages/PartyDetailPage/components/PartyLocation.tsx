@@ -29,5 +29,12 @@ function KakaoMap ({ locationId }: { locationId: number }) {
 
   const { mapRef } = useKakaoStaticMap({ name, address: `${address1} ${address2} ${address3}` })
 
-  return <div ref={mapRef} className={styles.KakaoMap}></div>
+  return (
+    <div ref={mapRef} className={styles.KakaoMap}>
+      <div className={styles.ViewLargerMap}>
+        <span>지도보기</span>
+        <Icon icon='ViewLarger' size={12} />
+      </div>
+    </div>
+  )
 }

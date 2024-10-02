@@ -3,8 +3,11 @@ import { PartyDetailType } from '@/services/party'
 import { useClimbingGym } from '@/services/gym'
 import { useKakaoStaticMap } from '@/utils/useKakaoMap'
 import Icon from '@/components/Icon/Icon'
+import useToast from '@/utils/useToast.tsx'
 
 export function PartyLocation ({ locationId, gymName }: PartyDetailType) {
+  const toast = useToast()
+
   return (
     <>
       <h2 className={styles.Title}>위치 정보</h2>
@@ -12,7 +15,16 @@ export function PartyLocation ({ locationId, gymName }: PartyDetailType) {
       <div className={styles.Info}>
         <h3 className={styles.Name}>{gymName}</h3>
         <button>
-          <div className={styles.SubInfo}>
+          <div
+            className={styles.SubInfo}
+            onClick={() => {
+              window.navigator.clipboard.writeText('(임시 주소)서울 영등포구 문래로 164 SK리더스뷰 B동 1층').then(() => {
+                toast.add({
+                  message: '클립보드에 복사되었어요.',
+                })
+              })
+            }}
+          >
             (임시 주소)서울 영등포구 문래로 164 SK리더스뷰 B동 1층
             <Icon icon='Copy' size='16' />
           </div>

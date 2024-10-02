@@ -26,6 +26,16 @@
 .InfoContent {
   color: $gray-800;
 }
+.InfoPerson {
+  display: flex;
+  align-items: center;
+}
+.SmallDivider {
+  margin: 0 10px;
+  height: 12px;
+  width: 1.5px;
+  background: $gray-400;
+}
 
 .UserInfo {
   width: 100%;

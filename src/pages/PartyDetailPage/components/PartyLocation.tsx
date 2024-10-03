@@ -17,16 +17,18 @@ export function PartyLocation ({ locationId, gymName }: PartyDetailType) {
         <button>
           <div
             className={styles.SubInfo}
-            onClick={() => {
+          >
+            (임시 주소)서울 영등포구 문래로 164 SK리더스뷰 B동 1층
+            <button onClick={() => {
               window.navigator.clipboard.writeText('(임시 주소)서울 영등포구 문래로 164 SK리더스뷰 B동 1층').then(() => {
                 toast.add({
                   message: '클립보드에 복사되었어요.',
                 })
               })
             }}
-          >
-            (임시 주소)서울 영등포구 문래로 164 SK리더스뷰 B동 1층
-            <Icon icon='Copy' size='16' />
+            >
+              <Icon icon='Copy' size='16' />
+            </button>
           </div>
         </button>
       </div>

@@ -10,7 +10,7 @@ export default function BottomBar () {
       <NavLink icon='LocationLine' title='탐색' to='/location' />
       <NavLink icon='Plus' title='만들기' to='/party-suervey' />
       <NavLink icon='ChatLine' title='채팅' to='/chat' />
-      <NavLink icon='MyPage' title='My' to='/user/my' />
+      <MyPageLink />
     </div>
   )
 }
@@ -27,6 +27,26 @@ function NavLink ({ icon, title, to }: { icon: string, title: string, to: string
     >
       <Icon icon={icon as IconType} size={24} />
       <span>{title}</span>
+    </Link>
+  )
+}
+
+function MyPageLink () {
+  const { pathname } = useLocation()
+  const isActive = pathname.includes('/user/')
+
+  return (
+    <Link
+      to='/user/my'
+      className={classNames(styles.item, styles.MyPage)}
+    >
+      <Icon
+        icon={
+          isActive ? 'MyPage' : 'MyPageInactive'
+        }
+        size={24}
+      />
+      <span>My</span>
     </Link>
   )
 }

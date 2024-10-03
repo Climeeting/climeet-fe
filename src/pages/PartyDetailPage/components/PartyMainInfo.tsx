@@ -3,6 +3,7 @@ import styles from './PartyMainInfo.module.scss'
 import { PartyDetailType } from '@/services/party'
 import Avatar from '@/components/Avatar'
 import { Link } from 'react-router-dom'
+import { ReactNode } from 'react'
 
 export function PartyMainInfo ({
   partyName,
@@ -31,7 +32,9 @@ export function PartyMainInfo ({
           <InfoItem
             icon='PersonLine'
             title='참여 인원'
-            content={`${constraints} | ${currentParticipants}/${maxParticipants}명`}
+            content={
+              <div className={styles.InfoPerson}>{constraints}<span className={styles.SmallDivider} />{currentParticipants}/{maxParticipants}명</div>
+            }
           />
         </li>
       </ul>
@@ -52,7 +55,7 @@ export function PartyMainInfo ({
   )
 }
 
-function InfoItem ({ icon, title, content }: { icon: IconType, title: string, content: string }) {
+function InfoItem ({ icon, title, content }: { icon: IconType, title: string, content: ReactNode }) {
   return (
     <>
       <div className={styles.InfoTitle}>

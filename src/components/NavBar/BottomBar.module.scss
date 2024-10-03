@@ -10,6 +10,7 @@
   transform: translateX(-50%);
   z-index: 1;
   background-color: #fff;
+  border-top: 1px solid $gray-100;
 }
 
 .item {
@@ -21,6 +22,10 @@
   justify-content: center;
   color: #a1a1a1;
   text-decoration: none;
+
+  &.MyPage {
+    color: $gray-900;
+  }
 }
 
 .active {

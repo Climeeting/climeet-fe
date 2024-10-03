@@ -10,6 +10,25 @@
   height: 150px;
   cursor: pointer;
   margin-top: 20px;
+  border-radius: 8px;
+  position: relative;
+}
+
+.ViewLargerMap {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  background: rgba(51, 51, 51, 0.7);
+  border-radius: 4px;
+  padding: 6px 8px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1;
+  color: white;
 }
 
 .Info {

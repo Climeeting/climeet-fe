@@ -4,6 +4,7 @@ import styles from './PartyCard.module.scss'
 import classNames from 'classnames'
 import { PartyItem } from '@/services/party'
 import { Party } from '@/pages/types/api'
+import DefaultImage from '@/assets/default_main_thumbnail.png'
 
 export default function PartyCard ({ party }: { party: Party }) {
   const {
@@ -14,15 +15,13 @@ export default function PartyCard ({ party }: { party: Party }) {
   return (
     <div className={styles.Container}>
       <section className={styles.Top}>
-        {party.partyImageUrl && (
-          <div className={styles.Image}>
-            <img src={party.partyImageUrl} alt={party.partyTitle} />
-            {/* <img
+        <div className={styles.Image}>
+          <img src={party.partyImageUrl || DefaultImage} alt={party.partyTitle} />
+          {/* <img
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnDYav_Rs5aHeNlHWC0_QC9JLMwLa_7jzKTQ&s"
               alt={party.partyTitle}
             /> */}
-          </div>
-        )}
+        </div>
         <div className={styles.Content}>
           <span className={styles.Time}>{appointmentTime}</span>
           <h3>{partyTitle}</h3>

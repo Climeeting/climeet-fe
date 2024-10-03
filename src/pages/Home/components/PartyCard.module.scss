@@ -68,12 +68,21 @@
     align-items: center;
     gap: rem(5px);
   }
+
+  .Chip {
+    width: 76px;
+    font-weight: 700;
+    line-height: 24px;
+    font-size: 14px;
+  }
 }
 
 .Divider {
-  width: 100%;
-  margin: rem(14px) 0;
-  border-bottom: 1px solid $gray-100;
+  $side-margin: 20px;
+  width: calc(100% - $side-margin * 2);
+  margin: rem(14px) auto;
+  height: 1px;
+  background: $gray-100;
 }
 
 .SkeletonContainer {

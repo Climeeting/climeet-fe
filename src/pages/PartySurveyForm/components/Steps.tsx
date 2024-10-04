@@ -18,6 +18,8 @@ import styles from './Steps.module.scss'
 import useToast from '@/utils/useToast.tsx'
 import { uploadFileS3 } from '@/utils/s3.ts'
 import { useFileContext } from '@/pages/PartySurveyForm/hooks/useFileContext.tsx'
+import Dialog from '@/components/Dialog/Dialog.tsx'
+import { useState } from 'react'
 
 const indoorSteps = ['암장', '조건', '소개', '일정', '미리보기'] as const
 type IndoorStepName = (typeof indoorSteps)[number]
@@ -34,6 +36,7 @@ type StepProps = {
 }
 
 export function IndoorStep ({ formData, updateFormData }: StepProps) {
+  const [openAlertGoHome, setOpenAlertGoHome] = useState(false)
   const { Funnel, Step, setStep, step } = useFunnel<IndoorStepName>('암장')
   const navigate = useNavigate()
   const { id } = useParams<{ id: string }>()
@@ -64,7 +67,12 @@ export function IndoorStep ({ formData, updateFormData }: StepProps) {
             setStep(previousStep)
           }}
         />
-        <TopBar.Right close />
+        <TopBar.Right
+          close
+          onClick={() => {
+            setOpenAlertGoHome(true)
+          }}
+        />
       </TopBar>
       <div className={styles.ProgressBarContainer}>
         <ProgressBar ratio={calcCurrentProgressValue(indoorSteps, step)} />
@@ -137,11 +145,29 @@ export function IndoorStep ({ formData, updateFormData }: StepProps) {
           />
         </Step>
       </Funnel>
+
+      <Dialog open={openAlertGoHome} onOpenChange={setOpenAlertGoHome}>
+        <Dialog.Content
+          hasCancel
+          onAction={() => {
+            navigate('/')
+            setOpenAlertGoHome(false)
+          }}
+          onClose={() => {
+            setOpenAlertGoHome(false)
+          }}
+        >
+          파티 생성을 종료하시겠습니까?
+          <br />
+          작성중인 내용은 저장되지 않습니다.
+        </Dialog.Content>
+      </Dialog>
     </>
   )
 }
 
 export function OutdoorStep ({ formData, updateFormData }: StepProps) {
+  const [openAlertGoHome, setOpenAlertGoHome] = useState(false)
   const { Funnel, Step, setStep, step } = useFunnel<OutdoorStepName>('소개')
   const navigate = useNavigate()
   const { id } = useParams<{ id: string }>()
@@ -170,7 +196,12 @@ export function OutdoorStep ({ formData, updateFormData }: StepProps) {
             setStep(previousStep)
           }}
         />
-        <TopBar.Right close />
+        <TopBar.Right
+          close
+          onClick={() => {
+            setOpenAlertGoHome(true)
+          }}
+        />
       </TopBar>
       <ProgressBar ratio={calcCurrentProgressValue(outdoorSteps, step)} />
       <Funnel>
@@ -219,6 +250,23 @@ export function OutdoorStep ({ formData, updateFormData }: StepProps) {
           />
         </Step>
       </Funnel>
+
+      <Dialog open={openAlertGoHome} onOpenChange={setOpenAlertGoHome}>
+        <Dialog.Content
+          hasCancel
+          onAction={() => {
+            navigate('/')
+            setOpenAlertGoHome(false)
+          }}
+          onClose={() => {
+            setOpenAlertGoHome(false)
+          }}
+        >
+          파티 생성을 종료하시겠습니까?
+          <br />
+          작성중인 내용은 저장되지 않습니다.
+        </Dialog.Content>
+      </Dialog>
     </>
   )
 }
@@ -232,6 +280,7 @@ export function PartyEditStep ({
   updateFormData: UpdateFormData
   id: string
 }) {
+  const [openAlertGoHome, setOpenAlertGoHome] = useState(false)
   const { Funnel, Step, setStep, step } = useFunnel<EditStepName>('소개')
   const navigate = useNavigate()
   const toast = useToast()
@@ -260,7 +309,12 @@ export function PartyEditStep ({
             setStep(previousStep)
           }}
         />
-        <TopBar.Right close />
+        <TopBar.Right
+          close
+          onClick={() => {
+            setOpenAlertGoHome(true)
+          }}
+        />
       </TopBar>
       <div className={styles.ProgressBarContainer}>
         <ProgressBar ratio={calcCurrentProgressValue(editSteps, step)} />
@@ -296,6 +350,23 @@ export function PartyEditStep ({
           />
         </Step>
       </Funnel>
+
+      <Dialog open={openAlertGoHome} onOpenChange={setOpenAlertGoHome}>
+        <Dialog.Content
+          hasCancel
+          onAction={() => {
+            navigate('/')
+            setOpenAlertGoHome(false)
+          }}
+          onClose={() => {
+            setOpenAlertGoHome(false)
+          }}
+        >
+          파티 생성을 종료하시겠습니까?
+          <br />
+          작성중인 내용은 저장되지 않습니다.
+        </Dialog.Content>
+      </Dialog>
     </div>
   )
 }

@@ -38,7 +38,9 @@ function MyPageLink () {
   return (
     <Link
       to='/user/my'
-      className={classNames(styles.item, styles.MyPage)}
+      className={classNames(styles.item, styles.MyPage, {
+        [styles.active]: isActive,
+      })}
     >
       <Icon
         icon={

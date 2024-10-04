@@ -14,13 +14,15 @@ export default function DatePickerContainer ({ onClick }: Props) {
   return (
     <div className={styles.Container}>
       <h3 className={styles.Title}>{now.format('YYYY년 MM월 DD일 (dd)')}</h3>
-      <DatePicker
-        selected={selected}
-        onClick={(date: dayjs.Dayjs) => {
-          updateDate(date)
-          onClick?.(date)
-        }}
-      />
+      <div className={styles.DatePickerContainer}>
+        <DatePicker
+          selected={selected}
+          onClick={(date: dayjs.Dayjs) => {
+            updateDate(date)
+            onClick?.(date)
+          }}
+        />
+      </div>
     </div>
   )
 }

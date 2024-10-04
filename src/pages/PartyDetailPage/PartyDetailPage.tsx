@@ -6,6 +6,7 @@ import { Suspense } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 import MoreMenu from './components/MoreMenu'
 import PartyBottomButton from './components/PartyBottomButton'
+import Share from '@/pages/PartyDetailPage/components/Share.tsx'
 
 export function PartyDetailPage () {
   const { id } = useParams<{ id: string }>()
@@ -16,7 +17,10 @@ export function PartyDetailPage () {
         <TopBar.Left back />
         <TopBar.Center>파티 상세</TopBar.Center>
         <TopBar.Right asChild>
-          <MoreMenu id={id} />
+          <>
+            <Share />
+            <MoreMenu id={id} />
+          </>
         </TopBar.Right>
       </TopBar>
 

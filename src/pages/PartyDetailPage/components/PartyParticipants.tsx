@@ -13,7 +13,8 @@ export function PartyParticipants ({
       <h2 className={styles.Title}>참가자 실력 분포</h2>
 
       <div className={styles.Noti}>
-        <span className={styles.NotiTitle}>파티 레벨 :</span>
+        <span className={styles.NotiTitle}>파티 레벨</span>
+        <span className={styles.Colon}>:</span>
         <span
           className={styles.NotiDescription}
         >{` V${minimumSkillLevel}부터 V${maximumSkillLevel}까지`}

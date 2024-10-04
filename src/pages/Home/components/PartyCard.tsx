@@ -1,10 +1,20 @@
-import Chip from '@/components/Chip'
+import Chip, { Variable } from '@/components/Chip'
 import Icon from '@/components/Icon/Icon'
 import styles from './PartyCard.module.scss'
 import classNames from 'classnames'
 import { PartyItem } from '@/services/party'
 import { Party } from '@/pages/types/api'
 import DefaultImage from '@/assets/default_main_thumbnail.png'
+import { JoinStatusFe } from '@/services/adaptor.ts'
+
+const chipColor: {
+  [key in JoinStatusFe]: Variable
+} = {
+  전체: 'primary',
+  신청하기: 'primary',
+  마감임박: 'secondary',
+  마감: 'default',
+}
 
 export default function PartyCard ({ party }: { party: Party }) {
   const {
@@ -42,7 +52,10 @@ export default function PartyCard ({ party }: { party: Party }) {
             {constraints}
           </div>
         </div>
-        <Chip className={styles.Chip} variable='primary'>
+        <Chip
+          className={styles.Chip}
+          variable={chipColor[joinStatus]}
+        >
           {joinStatus}
         </Chip>
       </section>

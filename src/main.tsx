@@ -6,6 +6,7 @@ import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClient } from './utils/tanstack'
 import { RouterProvider } from 'react-router-dom'
 import router from './pages/routes'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

@@ -54,6 +54,7 @@
   }
 }
 
+
 .Section {
   padding: 0 rem(20px);
   display: flex;
@@ -87,51 +88,24 @@
 
 .SkeletonContainer {
   width: 100%;
-  height: rem(194px);
+  height: 198px;
   background-color: white;
-  border-radius: rem(8px);
-}
-.SkeletonTop {
-  padding: rem(20px);
-  display: flex;
-  flex-direction: column;
-  gap: rem(10px);
-}
-.SkeletonSection {
-  padding: 0 rem(20px);
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  gap: rem(10px);
-}
-.Skeleton {
-  width: 100%;
-  height: rem(20px);
-  background-color: $gray-100;
-  border-radius: rem(8px);
-  animation: skeleton-loading 0.7s linear infinite alternate;
-}
-.w-80 {
-  width: 80%;
-}
-.w-60 {
-  width: 60%;
-}
-.w-40 {
-  width: 40%;
-}
-.h-25 {
-  height: rem(25px);
+  border-radius: 8px;
+  padding: 20px 0;
+  line-height: 1;
 }
 
-@keyframes skeleton-loading {
-  0% {
-    background-color: $gray-100;
-    opacity: 0.5;
-  }
-  100% {
-    background-color: $gray-100;
-    opacity: 1;
-    width: 70%;
-  }
+.SkeletonContent {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 82px;
+}
+
+.SkeletonSection {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }

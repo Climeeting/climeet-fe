@@ -8,6 +8,7 @@ import { useLoadMore } from '@/utils/useLoadMore'
 import { useFilterParams } from '../hooks/useFilterParams'
 import EmptyParty from '@/assets/empty_party.png'
 import NotFound from '@/components/NotFound'
+import useDelaySkeleton from '@/utils/useDelaySkeleton'
 
 export default function PartyList () {
   const params = useFilterParams()
@@ -41,6 +42,10 @@ export default function PartyList () {
 }
 
 PartyList.Skeleton = function Skeleton () {
+  const isShow = useDelaySkeleton()
+
+  if (!isShow) return null
+
   return (
     <ul className={styles.PartyUl}>
       {Array.from({ length: 5 }).map((_, index) => (

@@ -22,7 +22,10 @@ export default function ChatItem ({
         {data.lastMessageTime && (
           <div className={styles.Row}>
             <div className={styles.LastMessage}>{data.lastMessage}</div>
-            <div className={styles.LastChatTime}>{dayjs(data.lastMessageTime).format('A hh:mm')}</div>
+            <div className={styles.LastChatTime}>{
+              dayjs(data.lastMessageTime).calendar()
+            }
+            </div>
           </div>
         )}
       </div>

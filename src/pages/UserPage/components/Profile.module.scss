@@ -36,3 +36,10 @@
   font-size: rem(14px);
   margin-top: 16px;
 }
+
+.Skeleton {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  line-height: 1;
+}

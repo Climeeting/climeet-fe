@@ -87,3 +87,18 @@
     background-color: $primary-500;
   }
 }
+
+.Skeleton {
+  display: flex;
+  gap: 16px;
+  border-bottom: 1px solid $gray-100;
+  padding: 16px;
+  cursor: pointer;
+  width: 100%;
+  line-height: 1;
+
+  .RoomInfo {
+    width: 100%;
+    padding-top: 8px;
+  }
+}

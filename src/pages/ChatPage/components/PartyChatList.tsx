@@ -54,8 +54,7 @@ PartyChatList.Skeleton = function Skeleton () {
     <ul>
       {Array.from({ length: 5 }).map((_, index) => (
         <li key={index}>
-          로딩중
-          {/* <PartyCard.Skeleton key={index} /> */}
+          <ChatItem.Skeleton key={index} />
         </li>
       ))}
     </ul>

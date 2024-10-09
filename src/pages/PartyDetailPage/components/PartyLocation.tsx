@@ -4,6 +4,7 @@ import { useClimbingGym } from '@/services/gym'
 import { useKakaoStaticMap } from '@/utils/useKakaoMap'
 import Icon from '@/components/Icon/Icon'
 import useToast from '@/utils/useToast.tsx'
+import Skeleton from 'react-loading-skeleton'
 
 export function PartyLocation ({ locationId, gymName }: PartyDetailType) {
   const toast = useToast()
@@ -50,5 +51,31 @@ function KakaoMap ({ locationId }: { locationId: number }) {
         <Icon icon='ViewLarger' size={12} />
       </div>
     </div>
+  )
+}
+
+PartyLocation.Skeleton = function PartyLocationSkeleton () {
+  return (
+    <>
+      <h2 className={styles.Title}>위치 정보</h2>
+
+      <div className={styles.KakaoMap}>
+        <Skeleton width='100%' height='100%' />
+        <div className={styles.ViewLargerMap}>
+          <Icon icon='ViewLarger' size={12} />
+        </div>
+      </div>
+      <div className={styles.Info}>
+        <div className={styles.Name}>
+          <Skeleton width={200} height={24} borderRadius={12} />
+        </div>
+        <div>
+          <div className={styles.SubInfo}>
+            <Skeleton width={230} height={16} borderRadius={8} />
+            <Icon icon='Copy' size='16' />
+          </div>
+        </div>
+      </div>
+    </>
   )
 }

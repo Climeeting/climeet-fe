@@ -88,3 +88,52 @@
     border-radius: 22px;
   }
 }
+
+
+.SkeletonContainer {
+  width: 100%;
+  height: 198px;
+  background-color: white;
+  border-radius: 8px;
+  padding: 20px 0;
+  line-height: 1;
+
+  .Top {
+    padding: 0 rem(20px);
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 16px; 
+  }
+
+  .Divider {
+    $side-margin: 20px;
+    width: calc(100% - $side-margin * 2);
+    margin: rem(14px) auto;
+    height: 1px;
+    background: $gray-100;
+  }
+
+  .Section {
+    padding: 0 rem(20px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.SkeletonContent {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 82px;
+}
+
+.SkeletonSection {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+

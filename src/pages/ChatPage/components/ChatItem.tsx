@@ -2,8 +2,9 @@ import styles from './ChatItem.module.scss'
 import Avatar from '@/components/Avatar.tsx'
 import { ChatRoomDto } from '@/services/user'
 import dayjs from 'dayjs'
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 
-export default function ChatItem ({
+function ChatItem ({
   data,
 }: {
   data: ChatRoomDto
@@ -32,3 +33,19 @@ export default function ChatItem ({
     </div>
   )
 }
+
+ChatItem.Skeleton = function ChatItemSkeleton () {
+  return (
+    <SkeletonTheme baseColor='#f6f6f6' highlightColor='#fff'>
+      <div className={styles.Skeleton}>
+        <Skeleton circle={true} width={52} height={52} />
+        <div className={styles.RoomInfo}>
+          <Skeleton width='60%' height={16} borderRadius={6} />
+          <Skeleton width={80} height={16} borderRadius={6} />
+        </div>
+      </div>
+    </SkeletonTheme>
+  )
+}
+
+export default ChatItem

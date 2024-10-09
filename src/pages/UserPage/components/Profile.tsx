@@ -6,6 +6,8 @@ import Icon from '@/components/Icon/Icon'
 import { PropsWithChildren } from 'react'
 import { MyProfile } from '@/pages/types/api'
 import { get_oauth_logout } from '@/services/oauth'
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
+import useDelaySkeleton from '@/utils/useDelaySkeleton'
 
 export default function Profile ({ isMine = false, data }: { isMine: boolean, data: MyProfile }) {
   const { profileImageUrl, nickname, skillLevel, description } = data
@@ -35,17 +37,49 @@ export default function Profile ({ isMine = false, data }: { isMine: boolean, da
 }
 
 Profile.Skeleton = function ProfileSkeleton () {
+  const isShow = useDelaySkeleton()
+
+  if (!isShow) return null
+
   return (
-    <>
-      <ProfileContainer isMine={false}>
-        로딩중
-        <div className={styles.ProfileInfo}>
-          <span className={styles.Name} />
-          <span />
+    <SkeletonTheme baseColor='#f6f6f6' highlightColor='#fff'>
+      <div className={styles.Skeleton}>
+        <div style={{
+          display: 'flex',
+          justifyContent: 'start',
+          alignItems: 'center',
+          width: '100%',
+          marginBottom: 16,
+        }}
+        >
+          <Skeleton circle={true} width={54} height={54} />
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            marginLeft: 12,
+            width: '100%',
+            gap: 4,
+          }}
+          >
+            <Skeleton width={46} height={27} borderRadius={13} />
+            <Skeleton width={68} height={20} borderRadius={10} />
+          </div>
         </div>
-      </ProfileContainer>
-      <div className={styles.Description} />
-    </>
+        <div style={{
+          width: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 7,
+        }}
+        >
+          <Skeleton width='100%' height={22} borderRadius={11} />
+          <Skeleton width='90%' height={22} borderRadius={11} />
+          <Skeleton width='100%' height={22} borderRadius={11} />
+          <Skeleton width='70%' height={22} borderRadius={11} />
+        </div>
+      </div>
+    </SkeletonTheme>
   )
 }
 

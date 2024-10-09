@@ -4,6 +4,7 @@ import { PartyDetailType } from '@/services/party'
 import Avatar from '@/components/Avatar'
 import { Link } from 'react-router-dom'
 import { ReactNode } from 'react'
+import Skeleton from 'react-loading-skeleton'
 
 export function PartyMainInfo ({
   partyName,
@@ -63,6 +64,80 @@ function InfoItem ({ icon, title, content }: { icon: IconType, title: string, co
         {title}
       </div>
       <div className={styles.InfoContent}>{content}</div>
+    </>
+  )
+}
+
+PartyMainInfo.Skeleton = function PartyMainInfoSkeleton () {
+  return (
+    <>
+      <div style={{
+        lineHeight: 1,
+        backgroundColor: '#fff',
+      }}
+      >
+        <Skeleton width={160} height={27} borderRadius={13} />
+      </div>
+
+      <ul className={styles.Ul}>
+        <li className={styles.Li}>
+          <InfoItem
+            icon='CalendarLine'
+            title='파티 일정'
+            content={
+              <Skeleton width={152} height={22} borderRadius={11} />
+            }
+          />
+        </li>
+        <li className={styles.Li}>
+          <InfoItem
+            icon='TypeLine'
+            title='파티 종목'
+            content={
+              <Skeleton width={67} height={22} borderRadius={11} />
+            }
+          />
+        </li>
+        <li className={styles.Li}>
+          <InfoItem
+            icon='PersonLine'
+            title='참여 인원'
+            content={(
+              <div className={styles.InfoPerson}>
+                <Skeleton width={67} height={22} borderRadius={11} />
+                <span className={styles.SmallDivider} />
+                <Skeleton width={67} height={22} borderRadius={11} />
+              </div>
+            )}
+          />
+        </li>
+      </ul>
+
+      <div className={styles.Divider} />
+
+      <div>
+        <div className={styles.UserInfo}>
+          <div className={styles.Profile}>
+            <Skeleton width={32} height={32} circle />
+            <span>
+              <Skeleton width={150} height={27} borderRadius={13} />
+            </span>
+          </div>
+        </div>
+        <div
+          style={{
+            lineHeight: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 6,
+            width: '100%',
+          }}
+        >
+          <Skeleton width='90%' height={22} borderRadius={11} />
+          <Skeleton width='100%' height={22} borderRadius={11} />
+          <Skeleton width='80%' height={22} borderRadius={11} />
+        </div>
+      </div>
     </>
   )
 }

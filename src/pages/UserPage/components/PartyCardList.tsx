@@ -10,6 +10,7 @@ import { PageData } from '@/pages/types/api'
 import { InfiniteData } from '@tanstack/react-query'
 import NotFound from '@/components/NotFound'
 import { useDateRangeContext } from '../hook/useDateRangeContext'
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 
 export default function PartyCardList ({
   data,
@@ -68,11 +69,10 @@ PartyCardList.Query = function PartyCardListQuery ({ userId }: { userId: number 
 
 PartyCardList.Skeleton = function Skeleton () {
   return (
-    <ul className={styles.PartyUl}>
+    <ul className={styles.PartyList}>
       {Array.from({ length: 5 }).map((_, index) => (
         <li key={index}>
-          로딩중
-          {/* <PartyCard.Skeleton key={index} /> */}
+          <PartyCard.Skeleton key={index} />
         </li>
       ))}
     </ul>
@@ -101,5 +101,30 @@ function PartyCard ({ party }: { party: PartyListDto }) {
       </div>
       <Icon className={styles.ArrowIcon} icon='ArrowRight' size={16} />
     </div>
+  )
+}
+
+PartyCard.Skeleton = function PartyCardSkeleton () {
+  return (
+    <SkeletonTheme baseColor='#f6f6f6' highlightColor='#fff'>
+      <div className={styles.SkeletonContainer}>
+        <div className={styles.Top}>
+          <Skeleton width={82} height={82} borderRadius={6} />
+          <div className={styles.SkeletonContent}>
+            <Skeleton width='40%' height={20} borderRadius={10} />
+            <Skeleton width='80%' height={20} borderRadius={10} />
+            <Skeleton width='60%' height={24} borderRadius={12} />
+          </div>
+        </div>
+        <div className={styles.Divider} />
+        <section className={styles.Section}>
+          <div className={styles.SkeletonSection}>
+            <Skeleton width='40%' height={20} borderRadius={10} />
+            <Skeleton width='20%' height={20} borderRadius={10} />
+          </div>
+          <Skeleton className={styles.Chip} width={76} height={36} borderRadius={18} />
+        </section>
+      </div>
+    </SkeletonTheme>
   )
 }

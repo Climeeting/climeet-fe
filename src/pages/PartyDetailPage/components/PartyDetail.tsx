@@ -5,6 +5,7 @@ import { PartyLocation } from './PartyLocation'
 import NotFound from '@/components/NotFound'
 import styles from './PartyDetail.module.scss'
 import PartyBanner from '@/pages/PartyDetailPage/components/PartyBanner.tsx'
+import { SkeletonTheme } from 'react-loading-skeleton'
 
 export default function PartyDetail ({ data }: { data: PartyDetailType }) {
   return (
@@ -50,8 +51,16 @@ PartyDetail.Retry = function Retry ({ id }: { id: number }) {
 
 PartyDetail.Skeleton = function Skeleton () {
   return (
-    <div>
-      <h1>로딩중!~~</h1>
-    </div>
+    <SkeletonTheme baseColor='#f6f6f6' highlightColor='#fff'>
+      <PartyBanner.Skeleton />
+
+      <section>
+        <PartyMainInfo.Skeleton />
+      </section>
+
+      <section>
+        <PartyLocation.Skeleton />
+      </section>
+    </SkeletonTheme>
   )
 }

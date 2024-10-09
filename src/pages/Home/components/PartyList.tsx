@@ -8,6 +8,7 @@ import { useLoadMore } from '@/utils/useLoadMore'
 import { useFilterParams } from '../hooks/useFilterParams'
 import EmptyParty from '@/assets/empty_party.png'
 import NotFound from '@/components/NotFound'
+import useDelaySkeleton from '@/utils/useDelaySkeleton'
 
 export default function PartyList () {
   const params = useFilterParams()
@@ -40,17 +41,23 @@ export default function PartyList () {
   )
 }
 
-PartyList.Skeleton = () => (
-  <ul className={styles.PartyUl}>
-    {Array.from({ length: 5 }).map((_, index) => (
-      <li key={index}>
-        <PartyCard.Skeleton key={index} />
-      </li>
-    ))}
-  </ul>
-)
+PartyList.Skeleton = function Skeleton () {
+  const isShow = useDelaySkeleton()
 
-PartyList.Retry = () => {
+  if (!isShow) return null
+
+  return (
+    <ul className={styles.PartyUl}>
+      {Array.from({ length: 5 }).map((_, index) => (
+        <li key={index}>
+          <PartyCard.Skeleton key={index} />
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+PartyList.Retry = function Retry () {
   return (
     <div className={styles.PartyError}>
       <NotFound message='파티 목록 로딩에 실패했습니다.' refresh={PartyListQuery.refetch} />

@@ -1,120 +1,77 @@
 import styles from './ChatRoomPage.module.scss'
-import TopBar from '@/components/NavBar/TopBar.tsx'
 import Icon from '@/components/Icon/Icon.tsx'
-import { Suspense, useRef, useState } from 'react'
-import SideSheet from '@/components/SideSheet.tsx'
-import ChatSidebar from '@/pages/ChatRoomPage/components/ChatSidebar.tsx'
+import { Suspense, useState } from 'react'
 // import { useVisualViewport } from '@/pages/ChatRoomPage/hooks/useVisualViewport.tsx'
-import ChatBubbleList, { ChatListHandle } from './components/ChatBubbleList'
-import { useNavigate, useParams } from 'react-router-dom'
+import ChatBubbleList from './components/ChatBubbleList'
+import { useParams } from 'react-router-dom'
 import { useMyProfile } from '@/services/user'
 import { ErrorBoundary } from 'react-error-boundary'
 import { ChatProvider, useChatActions } from '@/utils/useChat'
-import { PartyDetailType, usePartyDetail } from '@/services/party'
-import { useChatRoomMembers } from '@/services/chat'
+import ChatRoomTopBar from './components/ChatRoomTopBar'
 
 const MAX_MESSAGE_LENGTH = 300
 
-export function ChatRoomPage ({ id, userId }: { id: number, userId: number }) {
+export default function ChatRoomPage () {
   // const { wrapperRef, containerRef } = useVisualViewport()
-  const [message, setMessage] = useState('')
-  const { send } = useChatActions()
-  const chatListRef = useRef<ChatListHandle>(null)
-  const { data: party } = usePartyDetail(id)
+  const { id } = useParams<{ id: string }>()
 
   return (
-    <div>
+    <ChatProvider id={Number(id)}>
       <div className={styles.Container}>
-        <TopBar>
-          <TopBar.Left back />
-          <TopBar.Center>{party?.partyName}</TopBar.Center>
-          <TopBar.Right close={false}>
-            <ErrorBoundary fallback={<>오류 발생</>}>
-              <Suspense fallback={<>로딩중</>}>
-                <ChatRoomInfo party={party} id={id} />
-              </Suspense>
-            </ErrorBoundary>
-          </TopBar.Right>
-        </TopBar>
+        <ErrorBoundary fallback={<>오류 발생</>}>
+          <Suspense fallback={<>로딩중</>}>
+            <ChatRoomTopBar id={Number(id)} />
+          </Suspense>
+        </ErrorBoundary>
 
         <ErrorBoundary fallback={<ChatBubbleList.Retry room={Number(id)} />}>
           <Suspense fallback={<ChatBubbleList.Skeleton />}>
-            <ChatBubbleList.Query ref={chatListRef} room={Number(id)} />
+            <ChatBubbleList.Query room={Number(id)} />
           </Suspense>
         </ErrorBoundary>
       </div>
 
-      <form
-        onSubmit={(e) => {
-          e.preventDefault()
-
-          if (!message.trim()) return
-          send({
-            messageType: 'CLIENT',
-            room: id,
-            senderId: userId,
-            message: message.trim(),
-          })
-          setMessage('')
-          chatListRef.current?.scrollToBottom()
-        }}
-        className={styles.Bottom}
-      >
-        <input
-          maxLength={MAX_MESSAGE_LENGTH}
-          type='text'
-          value={message}
-          onChange={(e) => {
-            if (e.target.value.length > MAX_MESSAGE_LENGTH) return
-            setMessage(e.target.value)
-          }}
-          className={styles.Input}
-          placeholder='메시지 보내기'
-        />
-        <button type='submit'>
-          <Icon icon='Upload' size={28} className={styles.Send} />
-        </button>
-      </form>
-    </div>
-  )
-}
-
-export default function ChatRoomPageSocket () {
-  const navigate = useNavigate()
-  const { id } = useParams<{ id: string }>()
-  const { data: myData, isLoading } = useMyProfile()
-
-  if (!id) {
-    navigate('/404', { replace: true })
-    return <>404</>
-  }
-
-  if (!isLoading && !myData) {
-    navigate('/login', { replace: true })
-    return <>로그인이 필요합니다.</>
-  }
-
-  if (isLoading && !myData) {
-    return <>로딩중...</>
-  }
-
-  return (
-    <ChatProvider id={Number(id)}>
-      <ChatRoomPage id={Number(id)} userId={myData!.userId} />
+      <ChatForm id={Number(id)} />
     </ChatProvider>
   )
 }
 
-function ChatRoomInfo ({ party, id }: { party?: PartyDetailType, id: number }) {
-  const [open, setOpen] = useState(false)
-  const { data } = useChatRoomMembers(id)
+function ChatForm ({ id }: { id: number }) {
+  const [message, setMessage] = useState('')
+  const { send } = useChatActions()
+  const { data: myData } = useMyProfile()
 
   return (
-    <SideSheet open={open} onOpenChange={setOpen}>
-      <SideSheet.Trigger className={styles.Trigger} style={{ display: 'flex' }}>
-        <Icon icon='Hamburger' size={32} />
-      </SideSheet.Trigger>
-      {party && open && <ChatSidebar partyId={id} party={party} members={data} />}
-    </SideSheet>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault()
+
+        if (!myData) return
+        if (!message.trim()) return
+        send({
+          messageType: 'CLIENT',
+          room: id,
+          senderId: myData.userId,
+          message: message.trim(),
+        })
+        setMessage('')
+      }}
+      className={styles.Bottom}
+    >
+      <input
+        maxLength={MAX_MESSAGE_LENGTH}
+        type='text'
+        value={message}
+        onChange={(e) => {
+          if (e.target.value.length > MAX_MESSAGE_LENGTH) return
+          setMessage(e.target.value)
+        }}
+        className={styles.Input}
+        placeholder='메시지 보내기'
+      />
+      <button type='submit'>
+        <Icon icon='Upload' size={28} className={styles.Send} />
+      </button>
+    </form>
   )
 }

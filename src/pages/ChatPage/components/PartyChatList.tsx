@@ -7,7 +7,6 @@ import { useLoadMore } from '@/utils/useLoadMore'
 import EmptyChat from './EmptyChat'
 import NotFound from '@/components/NotFound'
 import { useEffect } from 'react'
-import useDelaySkeleton from '@/utils/useDelaySkeleton'
 
 export default function PartyChatList ({
   data,
@@ -51,10 +50,6 @@ PartyChatList.Query = function PartyChatListQuery () {
 }
 
 PartyChatList.Skeleton = function Skeleton () {
-  const isShow = useDelaySkeleton()
-
-  if (!isShow) return null
-
   return (
     <ul>
       {Array.from({ length: 5 }).map((_, index) => (

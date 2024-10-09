@@ -71,3 +71,7 @@ export const SkillColor: {
   V9: '#222222',
   V10: '#222222',
 } as const
+
+PartyParticipants.Skeleton = function PartyParticipantsSkeleton () {
+  return null
+}

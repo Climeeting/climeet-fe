@@ -25,8 +25,10 @@ export const useChatRoomSuspense = (params: GetChatRoomParams) => {
     queryKey: [...CHAT_ROOM_KEY, params.room],
     queryFn: ({ pageParam }) => get_chat_$room({ ...params, page: pageParam ?? params.page }),
     initialPageParam: 0,
-    getNextPageParam: lastPage =>
-      lastPage.totalPages <= lastPage.pageable.pageNumber ? null : lastPage.pageable.pageNumber + 1,
+    getNextPageParam: (lastPage) => {
+      if (lastPage.last) return null
+      return lastPage.totalPages <= lastPage.pageable.pageNumber ? null : lastPage.pageable.pageNumber + 1
+    },
     // 마운트시에 요청 보내지 않음
     retryOnMount: false,
     // 윈도우 포커스시에 새로고침하지 않음

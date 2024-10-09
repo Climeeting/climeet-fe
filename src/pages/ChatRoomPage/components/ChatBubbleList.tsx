@@ -13,6 +13,8 @@ import ScrollDownButton from './ScrollDownButton'
 import classNames from 'classnames'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import ChatLoading from './ChatLoading'
+import useDelaySkeleton from '@/utils/useDelaySkeleton'
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 
 type ChatBubbleListProps = {
   chatList: ReceiveMessage[]
@@ -172,8 +174,154 @@ const ChatBubbleListQuery = forwardRef(function ChatBubbleListQuery ({ room }: {
 })
 
 function ChatBubbleListSkeleton () {
+  const isShow = useDelaySkeleton()
+
+  if (!isShow) return <div className={styles.Skeleton} />
+
   return (
-    <div>로딩중</div>
+    <SkeletonTheme baseColor='#f6f6f6' highlightColor='#fff'>
+      <div className={styles.Skeleton}>
+        <div style={{
+          padding: '24px 16px',
+        }}
+        >
+          <div
+            style={{
+              width: '30%',
+              margin: '0 auto',
+              marginBottom: 6,
+            }}
+          >
+            <Skeleton width='100%' height={20} borderRadius={10} />
+          </div>
+          <div
+            style={{
+              width: '35%',
+              margin: '0 auto',
+              marginBottom: 6,
+            }}
+          >
+            <Skeleton width='100%' height={30} borderRadius={15} />
+          </div>
+          <div
+            style={{
+              width: '35%',
+              margin: '0 auto',
+              marginBottom: 6,
+            }}
+          >
+            <Skeleton width='100%' height={30} borderRadius={15} />
+          </div>
+        </div>
+
+        <div style={{
+          padding: '24px 16px 16px',
+          display: 'flex',
+        }}
+        >
+          <Skeleton circle width={32} height={32} />
+          <div
+            style={{
+              width: '100%',
+              marginLeft: 8,
+            }}
+          >
+            <div
+              style={{
+                marginBottom: 6,
+              }}
+            >
+              <Skeleton width={32} height={14} borderRadius={7} />
+            </div>
+            <div
+              style={{
+                width: '100%',
+              }}
+            >
+              <Skeleton width='40%' height={38} borderRadius={19} />
+            </div>
+          </div>
+        </div>
+
+        <div style={{
+          padding: '0 16px',
+          width: '100%',
+        }}
+        >
+          <div
+            style={{
+              width: '100%',
+              textAlign: 'end',
+              marginBottom: 8,
+            }}
+          >
+            <Skeleton width='30%' height={38} borderRadius={19} />
+          </div>
+          <div
+            style={{
+              width: '100%',
+              textAlign: 'end',
+            }}
+          >
+            <Skeleton width='40%' height={38} borderRadius={19} />
+          </div>
+        </div>
+
+        <div style={{
+          padding: '24px 16px',
+        }}
+        >
+          <div
+            style={{
+              width: '30%',
+              margin: '0 auto',
+              marginBottom: 6,
+            }}
+          >
+            <Skeleton width='100%' height={20} borderRadius={10} />
+          </div>
+          <div
+            style={{
+              width: '35%',
+              margin: '0 auto',
+              marginBottom: 6,
+            }}
+          >
+            <Skeleton width='100%' height={30} borderRadius={15} />
+          </div>
+        </div>
+
+        <div style={{
+          padding: '24px 16px 16px',
+          display: 'flex',
+        }}
+        >
+          <Skeleton circle width={32} height={32} />
+          <div
+            style={{
+              width: '100%',
+              marginLeft: 8,
+            }}
+          >
+            <div
+              style={{
+                marginBottom: 6,
+              }}
+            >
+              <Skeleton width={32} height={14} borderRadius={7} />
+            </div>
+            <div
+              style={{
+                width: '100%',
+              }}
+            >
+              <Skeleton width='40%' height={38} borderRadius={19} />
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </SkeletonTheme>
   )
 }
 

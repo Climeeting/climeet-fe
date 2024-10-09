@@ -7,7 +7,7 @@ import SideSheet from '@/components/SideSheet.tsx'
 import Icon from '@/components/Icon/Icon.tsx'
 import ChatSidebar from '@/pages/ChatRoomPage/components/ChatSidebar.tsx'
 
-export default function ChatRoomTopBar ({ id }: { id: number }) {
+function ChatRoomTopBar ({ id }: { id: number }) {
   const { data: party } = usePartyDetailSuspense(id)
 
   return (
@@ -24,6 +24,16 @@ export default function ChatRoomTopBar ({ id }: { id: number }) {
     </TopBar>
   )
 }
+
+ChatRoomTopBar.Suspense = function ChatRoomTopBarSuspense () {
+  return (
+    <TopBar>
+      <TopBar.Left back />
+    </TopBar>
+  )
+}
+
+export default ChatRoomTopBar
 
 function ChatRoomInfo ({ party, id }: { party?: PartyDetailType, id: number }) {
   const [open, setOpen] = useState(false)

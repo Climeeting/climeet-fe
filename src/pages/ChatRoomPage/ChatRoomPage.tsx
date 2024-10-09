@@ -18,8 +18,8 @@ export default function ChatRoomPage () {
   return (
     <ChatProvider id={Number(id)}>
       <div className={styles.Container}>
-        <ErrorBoundary fallback={<>오류 발생</>}>
-          <Suspense fallback={<>로딩중</>}>
+        <ErrorBoundary fallback={<ChatRoomTopBar.Suspense />}>
+          <Suspense fallback={<ChatRoomTopBar.Suspense />}>
             <ChatRoomTopBar id={Number(id)} />
           </Suspense>
         </ErrorBoundary>

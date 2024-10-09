@@ -60,11 +60,16 @@ const ChatBubbleListUi = forwardRef(function ChatBubbleList ({ chatList, fetchNe
    * 채팅 리스트가 적어서 스크롤이 생기지 않을 때에는 채팅을 가장 상위 부터 렌더링 하기 위해 스타일을 조정합니다.
    */
   useEffect(function fixStyle () {
-    const chatListHeight = chatListRef.current?.clientHeight
-    const infiniteScrollHeight = document.querySelector('.infinite-scroll-component__outerdiv')?.clientHeight
+    const chatListEl = chatListRef.current
+    const infiniteScrollEl = document.querySelector('.infinite-scroll-component__outerdiv')
+    if (!chatListEl || !infiniteScrollEl) return
+    const chatListHeight = chatListEl.clientHeight
+    const infiniteScrollHeight = infiniteScrollEl.clientHeight
 
-    if (!hasNextPage && chatListHeight && infiniteScrollHeight && chatListHeight > infiniteScrollHeight) {
-      chatListRef.current.style.justifyContent = 'flex-end'
+    if (!hasNextPage && chatListHeight > infiniteScrollHeight) {
+      chatListEl.style.justifyContent = 'flex-end'
+    } else {
+      chatListEl.style.justifyContent = ''
     }
   }, [chatList.length])
 

@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
-import { delete_party_$partyId, usePartyDetail } from '@/services/party'
+import { delete_party_$partyId, delete_party_$partyId_leave, usePartyDetail } from '@/services/party'
 import { useIsLogin } from '@/services/user'
 import Icon from '@/components/Icon/Icon'
 import Dialog from '@/components/Dialog/Dialog'
@@ -13,6 +13,7 @@ export default function MoreMenu ({ id }: { id?: string }) {
   const [openAlertLogin, onOpenAlertLogin] = useState(false)
   const [openAlertDelete, onOpenAlertDelete] = useState(false)
   const [openAlertEdit, onOpenAlertEdit] = useState(false)
+  const [openAlertLeave, onOpenAlertLeave] = useState(false)
   const handlePartyReportClick = () => {
     onOpenDropdown(false)
     if (!isLogin) {
@@ -82,8 +83,7 @@ export default function MoreMenu ({ id }: { id?: string }) {
               <Dropdown.Item
                 onSelect={() => {
                   onOpenDropdown(false)
-                  // @todo 탈퇴 로직 추가
-                  if (isLogin) onOpenAlertDelete(true)
+                  if (isLogin) onOpenAlertLeave(true)
                   if (!isLogin) onOpenAlertLogin(true)
                 }}
               >
@@ -141,6 +141,30 @@ export default function MoreMenu ({ id }: { id?: string }) {
           }}
         >
           참가자가 있는 경우에<br />제한된 정보만 수정 가능합니다.
+        </Dialog.Content>
+      </Dialog>
+
+      <Dialog open={openAlertLeave} onOpenChange={onOpenAlertLeave}>
+        <Dialog.Content
+          hasCancel
+          onAction={async () => {
+            try {
+              await delete_party_$partyId_leave(Number(id))
+              navigate('/')
+            } catch (e) {
+              console.error(e)
+            }
+            onOpenAlertLeave(false)
+          }}
+          onClose={() => {
+            onOpenAlertLeave(false)
+          }}
+        >
+          정말로 탈퇴하시겠습니까?
+          <br />
+          탈퇴 시 파티와 관련된 모든 데이터가 삭제되며
+          <br />
+          서비스 이용의 제한을 받을 수 있습니다
         </Dialog.Content>
       </Dialog>
     </>

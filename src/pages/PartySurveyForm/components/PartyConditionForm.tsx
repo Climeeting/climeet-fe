@@ -40,7 +40,7 @@ export function PartyConditionForm ({ onNext, formData, updateFormData }: PartyC
         <Accordion.Root className='AccordionRoot' type='multiple' defaultValue={['item-1']}>
           <div className={styles.question}>
             <h3 className={styles.questionTitle}>파티 인원 (본인 포함)</h3>
-            <Accordion.Item className='AccordionItem' value='members'>
+            <Accordion.Item className={styles.AccordionItem} value='members'>
               <AccordionTrigger>{condition.maximumParticipationNumber}</AccordionTrigger>
               <AccordionContent>
                 <div className={styles.ScrollPickerWrapper}>
@@ -61,7 +61,7 @@ export function PartyConditionForm ({ onNext, formData, updateFormData }: PartyC
           </div>
           <div className={styles.question}>
             <h3 className={styles.questionTitle}>성별</h3>
-            <Accordion.Item className='AccordionItem' value='gender'>
+            <Accordion.Item className={styles.AccordionItem} value='gender'>
               <AccordionTrigger>{condition.gender}</AccordionTrigger>
               <AccordionContent>
                 <RadioButtonGroup
@@ -74,7 +74,7 @@ export function PartyConditionForm ({ onNext, formData, updateFormData }: PartyC
           </div>
           <div className={styles.question}>
             <h3 className={styles.questionTitle}>종목</h3>
-            <Accordion.Item className='AccordionItem' value='subject'>
+            <Accordion.Item className={styles.AccordionItem} value='subject'>
               <AccordionTrigger>{condition.climbingType}</AccordionTrigger>
               <AccordionContent>
                 <RadioButtonGroup
@@ -88,7 +88,7 @@ export function PartyConditionForm ({ onNext, formData, updateFormData }: PartyC
           </div>
           <div className={styles.question}>
             <h3 className={styles.questionTitle}>실력</h3>
-            <Accordion.Item className='AccordionItem' value='level'>
+            <Accordion.Item className={styles.AccordionItem} value='level'>
               <AccordionTrigger>
                 {isAllSkillLevel
                   ? '상관없음'

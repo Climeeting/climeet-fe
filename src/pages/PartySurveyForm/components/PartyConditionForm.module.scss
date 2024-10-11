@@ -12,8 +12,12 @@
     margin-bottom: rem(32px);
   }
 
-  .question {
-    margin-bottom: rem(40px);
+  .AccordionItem {
+    margin-bottom: 40px;
+
+    &[data-state="open"] {
+      margin-bottom: 60px;
+    }
   }
 
   .questionTitle {

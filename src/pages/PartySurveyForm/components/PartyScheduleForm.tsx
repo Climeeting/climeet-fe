@@ -42,7 +42,7 @@ export function PartyScheduleForm ({ onNext, formData, updateFormData }: PartySc
             <div className={styles.question}>
               <h3 className={styles.questionTitle}>파티 날짜</h3>
               <Accordion.Item className='AccordionItem' value='partyDate'>
-                <AccordionTrigger>{schedule.partyDate.format('YYYY-MM-DD')}</AccordionTrigger>
+                <AccordionTrigger>{schedule.partyDate.format('M월 DD일 (dd)')}</AccordionTrigger>
                 <AccordionContent>
                   <DatePicker
                     selected={schedule.partyDate}
@@ -57,7 +57,7 @@ export function PartyScheduleForm ({ onNext, formData, updateFormData }: PartySc
               <h3 className={styles.questionTitle}>파티 시간</h3>
               <Accordion.Item className='AccordionItem' value='partyTime'>
                 {/* 아래 값이 이상함 */}
-                <AccordionTrigger>{schedule.partyTime}</AccordionTrigger>
+                <AccordionTrigger>{timePicker.meridiem} {timePicker.hours}:{timePicker.minutes}</AccordionTrigger>
                 <AccordionContent>
                   <div className={styles.ScrollPickerWrapper}>
                     <ScrollPicker

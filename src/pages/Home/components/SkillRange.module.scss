@@ -27,6 +27,7 @@
   background-color: $gray-200;
   position: relative;
   flex-grow: 1;
+  border-radius: 12px;
 
   &[data-orientation='horizontal'] {
     height: 8px;

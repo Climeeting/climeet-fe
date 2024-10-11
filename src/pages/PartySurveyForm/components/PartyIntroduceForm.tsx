@@ -91,7 +91,7 @@ export function PartyIntroduceForm ({ onNext, formData, updateFormData }: PartyI
               }}
               maxLength={20}
             />
-            {partyName === ''
+            {partyName.length < PARTY_NAME_MIN_LIMIT
               ? (
                   <div className={styles.minMax}>
                     최소 {PARTY_NAME_MIN_LIMIT}자 / 최대 {PARTY_NAME_MAX_LIMIT}자

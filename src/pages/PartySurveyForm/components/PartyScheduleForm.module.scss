@@ -14,14 +14,15 @@
 
   .question {
     margin-bottom: rem(40px);
+    display: flex;
+    flex-direction: column;
   }
 
   .questionTitle {
     font-size: rem(14px);
     font-weight: 500;
-    line-height: 1.7;
+    line-height: 20px;
     color: #777777;
-    margin-bottom: rem(8px);
   }
 
   .input {

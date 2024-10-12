@@ -8,6 +8,7 @@ import { Suspense } from 'react'
 import PartyDetail from '@/pages/PartyDetailPage/components/PartyDetail.tsx'
 import styles from './PartyPreview.module.scss'
 import dayjs from 'dayjs'
+import { SkillDistribution } from '@/pages/types/api.ts'
 
 type PartyIntroduceFormProps = {
   onNext: () => void
@@ -33,7 +34,7 @@ export function PartyPreview ({ onNext, formData }: PartyIntroduceFormProps) {
     gymName: formData.cragName,
     partyDescription: formData.partyDescription,
     masterName: data.nickname,
-    skillDistributions: [],
+    skillDistributions: createSkillDistributions(data.skillLevel),
     approachDescription: formData.approachDescription,
     locationId: formData.locationId,
     minimumSkillLevel: formData.minSkillLevel,
@@ -74,4 +75,49 @@ const appointmentTime = (partyDate: string, partyTime: string) => {
 
 const appointmentTimeToFormatTime = (appointmentTime: string) => {
   return dayjs(appointmentTime).format('M월 DD일 (dd) A h:mm')
+}
+
+const createSkillDistributions = (skillLevel: string = 'V0') => {
+  const newSkillDistributions: SkillDistribution[] = [
+    {
+      skillLevel: 'V0',
+      count: 0,
+    },
+    {
+      skillLevel: 'V1',
+      count: 0,
+    },
+    {
+      skillLevel: 'V2',
+      count: 0,
+    },
+    {
+      skillLevel: 'V3',
+      count: 0,
+    },
+    {
+      skillLevel: 'V4',
+      count: 0,
+    },
+    {
+      skillLevel: 'V5',
+      count: 0,
+    },
+    {
+      skillLevel: 'V6',
+      count: 0,
+    },
+    {
+      skillLevel: 'V7',
+      count: 0,
+    },
+    {
+      skillLevel: 'V8',
+      count: 0,
+    },
+  ]
+  const index = newSkillDistributions.findIndex(skill => skill.skillLevel === skillLevel)
+  newSkillDistributions[index].count = 1
+
+  return newSkillDistributions
 }

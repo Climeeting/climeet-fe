@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom'
 import Icon from '@/components/Icon/Icon'
 import { PropsWithChildren } from 'react'
 import { MyProfile } from '@/pages/types/api'
-import { get_oauth_logout } from '@/services/oauth'
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import useDelaySkeleton from '@/utils/useDelaySkeleton'
 
@@ -22,16 +21,6 @@ export default function Profile ({ isMine = false, data }: { isMine: boolean, da
         </div>
       </ProfileContainer>
       <div className={styles.Description}>{description}</div>
-      {isMine && (
-        <button
-          onClick={async () => {
-            await get_oauth_logout()
-            window.location.href = '/'
-          }}
-        >
-          로그아웃
-        </button>
-      )}
     </>
   )
 }

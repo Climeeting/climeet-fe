@@ -10,6 +10,7 @@ import PartyCardList from './components/PartyCardList'
 import { DateFilterBottomSheet } from './components/PartyFilter'
 import NotFound from '@/components/NotFound'
 import { DateRangeProvider } from './hook/useDateRangeContext'
+import SettingDialog from './components/SettingDialog'
 
 export default function UserPage () {
   const { id } = useParams<{ id: string }>()
@@ -20,7 +21,11 @@ export default function UserPage () {
       <TopBar>
         <TopBar.Left back />
         <TopBar.Center>{isMine ? '마이페이지' : ''}</TopBar.Center>
-        <TopBar.Right close />
+        {isMine && (
+          <TopBar.Right asChild>
+            <SettingDialog />
+          </TopBar.Right>
+        )}
       </TopBar>
 
       <ErrorBoundary fallback={<UserPageError />}>

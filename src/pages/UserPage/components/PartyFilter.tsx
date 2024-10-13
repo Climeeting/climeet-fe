@@ -5,9 +5,9 @@ import Icon from '@/components/Icon/Icon'
 import BottomSheet from '@/components/BottomSheet'
 import ScrollPicker from '@/components/ScrollPicker'
 import dayjs from 'dayjs'
-import { useDateRangeAction, useDateRangeContext } from '../hook/useDateRangeContext'
+import { useDateRangeAction, useDateRangeHook } from '../hook/useDateRangeContext'
 
-export default function PartyFilter () {
+export function PartyFilter () {
   const [activeFilter, setActiveFilter] = useState<'전체' | '암장' | '자연'>('전체')
 
   return (
@@ -36,12 +36,14 @@ export default function PartyFilter () {
 }
 
 export function DateFilterBottomSheet () {
-  const { startDate, endDate } = useDateRangeContext()
-  const actions = useDateRangeAction()
+  const [open, onOpenChange] = useState(false)
+  const close = () => onOpenChange(false)
+  const contextActions = useDateRangeAction()
+  const { state: { startDate, endDate }, actions } = useDateRangeHook()
   const [currentTab, setCurrentTab] = useState<'start' | 'end' | null>(null)
 
   return (
-    <BottomSheet>
+    <BottomSheet open={open} onOpenChange={onOpenChange}>
       <BottomSheet.Trigger asChild>
         <button className={styles.DateFilterTrigger}>
           <Icon className={styles.Icon} icon='CalendarLine' size='16' />
@@ -109,7 +111,14 @@ export function DateFilterBottomSheet () {
             >
               취소
             </button>
-            <button className={styles.Submit}>
+            <button
+              onClick={() => {
+                contextActions.start.update(startDate)
+                contextActions.end.update(endDate)
+                close()
+              }}
+              className={styles.Submit}
+            >
               적용
             </button>
           </section>

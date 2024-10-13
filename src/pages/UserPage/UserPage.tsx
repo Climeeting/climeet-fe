@@ -38,16 +38,6 @@ export default function UserPage () {
         <DateRangeProvider>
           <section className={styles.PartyHistoryInfoSection}>
             <h2 className={styles.Title}>파티 이력</h2>
-            {/* <div className={styles.Table}>
-              <div className={styles.Box}>
-                <h3 className={styles.Label}>암장 파티</h3>
-                <span className={styles.Times}>4번</span>
-              </div>
-              <div className={styles.Box}>
-                <h3 className={styles.Label}>자연 파티</h3>
-                <span className={styles.Times}>4번</span>
-              </div>
-            </div> */}
             <DateFilterBottomSheet />
           </section>
 

@@ -39,18 +39,24 @@ const DateRangeAction = createContext<DateRangeAction>({
   },
 })
 
-export function DateRangeProvider ({ children }: { children: React.ReactNode }) {
+export function useDateRangeHook () {
   const [startDate, setStartDate] = useState<dayjs.Dayjs | null>(null)
   const [endDate, setEndDate] = useState<dayjs.Dayjs | null>(null)
 
   const updateStartDate = (date: dayjs.Dayjs | null) => {
-    if (!date) return
+    if (!date) {
+      setStartDate(date)
+      return
+    }
     setStartDate(date)
     if (date.isAfter(endDate)) setEndDate(date.add(1, 'day'))
   }
 
   const updateEndDate = (date: dayjs.Dayjs | null) => {
-    if (!date) return
+    if (!date) {
+      setEndDate(date)
+      return
+    }
     setEndDate(date)
     if (date.isBefore(startDate)) setStartDate(date.subtract(1, 'day'))
   }
@@ -69,21 +75,34 @@ export function DateRangeProvider ({ children }: { children: React.ReactNode }) 
     else setEndDate(date)
   }
 
+  const state = {
+    startDate,
+    endDate,
+  }
+
+  const actions = {
+    start: {
+      update: updateStartDate,
+      init: initStartDate,
+      reset: () => setStartDate(null),
+    },
+    end: {
+      update: updateEndDate,
+      init: initEndDate,
+      reset: () => setEndDate(null),
+    },
+  }
+
+  return { state, actions }
+}
+
+export function DateRangeProvider ({ children }: { children: React.ReactNode }) {
+  const { state, actions } = useDateRangeHook()
+
   return (
-    <DateRangeContext.Provider value={{ startDate, endDate }}>
+    <DateRangeContext.Provider value={state}>
       <DateRangeAction.Provider
-        value={{
-          start: {
-            update: updateStartDate,
-            init: initStartDate,
-            reset: () => setStartDate(null),
-          },
-          end: {
-            update: updateEndDate,
-            init: initEndDate,
-            reset: () => setEndDate(null),
-          },
-        }}
+        value={actions}
       >
         {children}
       </DateRangeAction.Provider>

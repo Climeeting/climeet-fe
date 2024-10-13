@@ -6,7 +6,6 @@ import { MyProfile } from '@/pages/types/api'
 import { useMyInfoFormActions, useMyInfoFormContext } from '../hooks/useMyInfoForm'
 import { useFileActions } from '../hooks/useFileContext'
 import SelectSkill from '@/components/SelectSkill'
-import { Link } from 'react-router-dom'
 
 type MyUpdateFormProps = {
   checkValid: boolean
@@ -90,12 +89,6 @@ export function MyUpdateForm ({ checkValid }: MyUpdateFormProps) {
           <span className={styles.CurrentCount}>{description.length}자</span>
           <span className={styles.MaxCount}>/ 최대 150자</span>
         </div>
-      </fieldset>
-
-      <fieldset className={styles.Fileldset}>
-        <Link className={styles.Link} to='/user/delete-account'>
-          회원탈퇴
-        </Link>
       </fieldset>
     </>
   )

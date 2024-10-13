@@ -69,19 +69,6 @@ export function DateFilterBottomSheet () {
             >
               <Icon className={styles.Icon} icon='CalendarLine' size='16' />
               {startDate ? startDate.format('YYYY.MM.DD') : '시작 날짜'}
-              {startDate && (
-                <button
-                  onClick={(e) => {
-                    e.preventDefault()
-                    e.stopPropagation()
-                    actions.start.reset()
-                    setCurrentTab(null)
-                  }}
-                  className={styles.Delete}
-                >
-                  <Icon icon='Close' size='16' />
-                </button>
-              )}
             </button>
 
             <span className={styles.Dash}>~</span>
@@ -96,29 +83,35 @@ export function DateFilterBottomSheet () {
             >
               <Icon className={styles.Icon} icon='CalendarLine' size='16' />
               {endDate ? endDate.format('YYYY.MM.DD') : '종료 날짜'}
-              {endDate && (
-                <button
-                  onClick={(e) => {
-                    e.preventDefault()
-                    e.stopPropagation()
-                    actions.end.reset()
-                    setCurrentTab(null)
-                  }}
-                  className={styles.Delete}
-                >
-                  <Icon icon='Close' size='16' />
-                </button>
-              )}
             </button>
           </section>
 
-          <section className={styles.DateFilter}>
-            {currentTab === 'start' && startDate && (
-              <DatePicker defaultDate={startDate} date={startDate} setDate={actions.start.update} />
-            )}
-            {currentTab === 'end' && endDate && (
-              <DatePicker defaultDate={endDate} date={endDate} setDate={actions.end.update} />
-            )}
+          {currentTab
+          && (
+            <section className={styles.DateFilter}>
+              {currentTab === 'start' && startDate && (
+                <DatePicker defaultDate={startDate} date={startDate} setDate={actions.start.update} />
+              )}
+              {currentTab === 'end' && endDate && (
+                <DatePicker defaultDate={endDate} date={endDate} setDate={actions.end.update} />
+              )}
+            </section>
+          )}
+
+          <section className={styles.Buttons}>
+            <button
+              onClick={() => {
+                actions.start.reset()
+                actions.end.reset()
+                setCurrentTab(null)
+              }}
+              className={styles.Cancel}
+            >
+              취소
+            </button>
+            <button className={styles.Submit}>
+              적용
+            </button>
           </section>
         </div>
       </BottomSheet.Content>

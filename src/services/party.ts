@@ -606,6 +606,14 @@ export const delete_party_$partyId = async (partyId: number) => {
 }
 
 /**
+ * DELETE /v1/party/{partyId}/leave
+ */
+export const delete_party_$partyId_leave = async (partyId: number) => {
+  const result = await api.delete(`/v1/party/${partyId}/leave`)
+  return result
+}
+
+/**
  * POST /v1/report/{partyId}
  */
 export const post_party_report = async (partyId: number, reqBody: { reason: string }) => {

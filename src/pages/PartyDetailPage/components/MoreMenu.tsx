@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
-import { delete_party_$partyId, usePartyDetail } from '@/services/party'
+import { delete_party_$partyId, delete_party_$partyId_leave, usePartyDetail } from '@/services/party'
 import { useIsLogin } from '@/services/user'
 import Icon from '@/components/Icon/Icon'
 import Dialog from '@/components/Dialog/Dialog'
@@ -12,6 +12,7 @@ export default function MoreMenu ({ id }: { id?: string }) {
   const [openDropdown, onOpenDropdown] = useState(false)
   const [openAlertLogin, onOpenAlertLogin] = useState(false)
   const [openAlertDelete, onOpenAlertDelete] = useState(false)
+  const [openAlertLeave, onOpenAlertLeave] = useState(false)
   const [openAlertEdit, onOpenAlertEdit] = useState(false)
   const handlePartyReportClick = () => {
     onOpenDropdown(false)
@@ -83,7 +84,7 @@ export default function MoreMenu ({ id }: { id?: string }) {
                 onSelect={() => {
                   onOpenDropdown(false)
                   // @todo 탈퇴 로직 추가
-                  if (isLogin) onOpenAlertDelete(true)
+                  if (isLogin) onOpenAlertLeave(true)
                   if (!isLogin) onOpenAlertLogin(true)
                 }}
               >
@@ -131,6 +132,21 @@ export default function MoreMenu ({ id }: { id?: string }) {
           }}
         >
           정말 삭제하시겠습니까?
+        </Dialog.Content>
+      </Dialog>
+
+      <Dialog open={openAlertLeave} onOpenChange={onOpenAlertLeave}>
+        <Dialog.Content
+          onAction={async () => {
+            try {
+              await delete_party_$partyId_leave(Number(id))
+              navigate(-1)
+            } catch (e) {
+              console.error(e)
+            }
+          }}
+        >
+          파티를 탈퇴하시겠습니까?
         </Dialog.Content>
       </Dialog>
 

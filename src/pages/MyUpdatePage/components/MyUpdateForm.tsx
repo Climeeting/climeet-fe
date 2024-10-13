@@ -62,7 +62,9 @@ export function MyUpdateForm ({ checkValid }: MyUpdateFormProps) {
           <h2 className={styles.Label}>성별</h2>
           {warningSex ? <p className={styles.Warning}>성별을 선택해주세요.</p> : null}
         </div>
-        <RadioSex sex={sex} setSex={setSex} />
+        <div className={styles.RadioSexContainer}>
+          <RadioSex sex={sex} setSex={setSex} />
+        </div>
       </fieldset>
 
       <fieldset className={styles.Fileldset}>

@@ -109,7 +109,7 @@ export function DateFilterBottomSheet () {
               }}
               className={styles.Cancel}
             >
-              취소
+              초기화
             </button>
             <button
               onClick={() => {

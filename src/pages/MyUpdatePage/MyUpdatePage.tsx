@@ -17,7 +17,7 @@ export default function MyUpdatePage () {
     <MyInfoFormProvider data={data}>
       <FileProvider>
         <div className={styles.Container}>
-          <TopBar>
+          <TopBar bottomBorder>
             <TopBar.Left back />
             <TopBar.Center>프로필 수정</TopBar.Center>
             <TopBar.Right asChild>

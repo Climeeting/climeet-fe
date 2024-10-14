@@ -14,11 +14,14 @@
   height: 48px;
 }
 
+.bottomBorder {
+  border-bottom: 1px solid $gray-100;
+}
+
 .Default {
   width: 100%;
   max-width: $max-width;
   height: $top-bar-height;
-  border-bottom: 1px solid $gray-100;
   color: $gray-900;
   position: fixed;
   top: 0;

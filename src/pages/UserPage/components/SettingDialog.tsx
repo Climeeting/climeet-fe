@@ -19,7 +19,7 @@ export default function SettingDialog () {
       <Dialog.Overlay />
       <Dialog.Portal>
         <Dialog.Content className={styles.container}>
-          <TopBar>
+          <TopBar bottomBorder>
             <TopBar.Left
               back
               onClick={() => {

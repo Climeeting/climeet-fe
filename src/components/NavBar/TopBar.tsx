@@ -140,9 +140,11 @@ function getCenterContent (children: ReactNode) {
 type TopBarProps =
   | {
     type: 'main'
+    bottomBorder?: boolean
   }
   | {
     type?: 'default'
+    bottomBorder?: boolean
     children: ReactNode
   }
 function TopBarRoot (props: TopBarProps) {
@@ -162,9 +164,9 @@ function TopBarRoot (props: TopBarProps) {
       </div>
     )
 
-  const { children } = props
+  const { children, bottomBorder } = props
   return (
-    <div className={styles.Default}>
+    <div className={classNames(styles.Default, { [styles.bottomBorder]: bottomBorder })}>
       {getLeftContent(children)}
       {getCenterContent(children)}
       {getRightContent(children)}

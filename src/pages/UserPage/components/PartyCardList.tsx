@@ -95,8 +95,10 @@ function PartyCard ({ party }: { party: PartyListDto }) {
         <div className={styles.Time}>{dayjs(party.appointmentTime).format('YYYY.MM.DD')}</div>
         <div className={styles.Title}>{party.partyTitle}</div>
         <div className={styles.Address}>
-          <Icon icon='LocationFill' size={16} />
-          {party.gymName}
+          <Icon className={styles.Icon} icon='LocationFill' size={16} />
+          <span>
+            {party.gymName}
+          </span>
         </div>
       </div>
       <Icon className={styles.ArrowIcon} icon='ArrowRight' size={16} />

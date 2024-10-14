@@ -17,11 +17,16 @@
   width: 100%;
   position: relative;
 
+  .Info {
+    width: calc(100% - 82px - 32px);
+  }
+
   .Image {
     width: 82px;
     height: 82px;
     border-radius: 6px;
     overflow: hidden;
+    flex-shrink: 0;
     img {
       object-fit: cover;
       width: 100%;
@@ -41,6 +46,9 @@
     color: $gray-900;
     font-weight: 600;
     margin-bottom: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .Address {
@@ -49,6 +57,17 @@
     display: flex;
     justify-content: start;
     align-items: center;
+    
+    .Icon {
+      flex-shrink: 0;
+    }
+
+    span {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-left: 4px;
+    }
   }
 
   .ArrowIcon {

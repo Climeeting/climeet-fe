@@ -133,7 +133,17 @@
     margin-right: 8px;
   }
 
-  .Send {
+  .Submit {
     flex-shrink: 0;
+    color: $gray-400;
+    width: 28px;
+    height: 28px;
+    border-radius: 100%;
+    background-color: $gray-100;
+  }
+
+  .Active {
+    color: white;
+    background-color: $primary-500;
   }
 }

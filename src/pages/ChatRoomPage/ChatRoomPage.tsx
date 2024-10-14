@@ -8,6 +8,7 @@ import { useMyProfile } from '@/services/user'
 import { ErrorBoundary } from 'react-error-boundary'
 import { ChatProvider, useChatActions } from '@/utils/useChat'
 import ChatRoomTopBar from './components/ChatRoomTopBar'
+import classNames from 'classnames'
 
 const MAX_MESSAGE_LENGTH = 300
 
@@ -40,6 +41,7 @@ function ChatForm ({ id }: { id: number }) {
   const [message, setMessage] = useState('')
   const { send } = useChatActions()
   const { data: myData } = useMyProfile()
+  const disabled = message.length === 0
 
   return (
     <form
@@ -69,8 +71,14 @@ function ChatForm ({ id }: { id: number }) {
         className={styles.Input}
         placeholder='메시지 보내기'
       />
-      <button type='submit'>
-        <Icon icon='Upload' size={28} className={styles.Send} />
+      <button
+        disabled={disabled}
+        type='submit'
+        className={classNames(styles.Submit, {
+          [styles.Active]: !disabled,
+        })}
+      >
+        <Icon icon='Upload' size={28} />
       </button>
     </form>
   )

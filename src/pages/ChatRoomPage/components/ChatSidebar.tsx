@@ -19,9 +19,6 @@ export default function ChatSidebar ({ partyId, party, members }: { partyId: num
         <div className={styles.Top}>
           <div className={styles.Title}>
             <div className={styles.TitleText}>{party.partyName}</div>
-            <button className={styles.Alarm}>
-              <Icon icon='Alarm' size={20} />
-            </button>
           </div>
           <div className={styles.MemberInfo}>
             <h2 className={styles.MemberInfoTitle}>파티 멤버</h2>

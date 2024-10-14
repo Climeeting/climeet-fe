@@ -365,6 +365,7 @@ export const useUserChatRooms = () => {
       if (lastPage.last) return null
       return lastPage.totalPages <= lastPage.pageable.pageNumber ? null : lastPage.pageable.pageNumber + 1
     },
+    refetchInterval: 30 * 1000, // 30초마다 새로고침
     // refetchOnMount: 'always',
     // refetchOnWindowFocus: 'always',
   })

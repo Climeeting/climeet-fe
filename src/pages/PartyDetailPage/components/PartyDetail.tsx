@@ -6,6 +6,7 @@ import NotFound from '@/components/NotFound'
 import styles from './PartyDetail.module.scss'
 import PartyBanner from '@/pages/PartyDetailPage/components/PartyBanner.tsx'
 import { SkeletonTheme } from 'react-loading-skeleton'
+import { useClimbingGym } from '@/services/gym'
 
 export default function PartyDetail ({ data }: { data: PartyDetailType }) {
   return (
@@ -33,7 +34,10 @@ export default function PartyDetail ({ data }: { data: PartyDetailType }) {
 
 PartyDetail.Query = function Container ({ id }: { id: number }) {
   const { data } = usePartyDetailSuspense(id)
-  return <PartyDetail data={data} />
+  const { data: { address1, address2, address3 } } = useClimbingGym(data.locationId)
+  const location = [address1, address2, address3].join(' ')
+  console.log({ location })
+  return <PartyDetail data={{ ...data, location }} />
 }
 
 PartyDetail.Retry = function Retry ({ id }: { id: number }) {

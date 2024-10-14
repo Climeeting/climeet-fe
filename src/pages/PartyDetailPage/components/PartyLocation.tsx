@@ -6,7 +6,7 @@ import Icon from '@/components/Icon/Icon'
 import useToast from '@/utils/useToast.tsx'
 import Skeleton from 'react-loading-skeleton'
 
-export function PartyLocation ({ locationId, gymName }: PartyDetailType) {
+export function PartyLocation ({ locationId, gymName, location }: PartyDetailType) {
   const toast = useToast()
 
   return (
@@ -16,12 +16,11 @@ export function PartyLocation ({ locationId, gymName }: PartyDetailType) {
       <div className={styles.Info}>
         <h3 className={styles.Name}>{gymName}</h3>
         <button>
-          <div
-            className={styles.SubInfo}
-          >
-            (임시 주소)서울 영등포구 문래로 164 SK리더스뷰 B동 1층
+          <div className={styles.SubInfo}>
+            {location}
             <button onClick={() => {
-              window.navigator.clipboard.writeText('(임시 주소)서울 영등포구 문래로 164 SK리더스뷰 B동 1층').then(() => {
+              if (!location) return
+              window.navigator.clipboard.writeText(location).then(() => {
                 toast.add({
                   message: '클립보드에 복사되었어요.',
                 })

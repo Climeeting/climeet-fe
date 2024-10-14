@@ -319,10 +319,14 @@ export const usePartyDetailSuspense = (partyId: number) => {
 export type PartyDetailType = ReturnType<PartyDetailAdapter['adapt']>
 
 export class PartyDetailAdapter {
-  private value: PartyDetail
+  private value: PartyDetail & { location?: string }
 
   constructor (value: PartyDetail) {
     this.value = value
+  }
+
+  get location () {
+    return this.value.location
   }
 
   get appointmentTime () {
@@ -343,6 +347,7 @@ export class PartyDetailAdapter {
       appointmentTime: this.appointmentTime,
       climbingType: this.climbingType,
       constraints: this.constraints,
+      location: this.value.location,
     }
   }
 }

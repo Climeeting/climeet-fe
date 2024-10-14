@@ -6,7 +6,7 @@ import ChatItem from './ChatItem'
 import { useLoadMore } from '@/utils/useLoadMore'
 import EmptyChat from './EmptyChat'
 import NotFound from '@/components/NotFound'
-import { useEffect } from 'react'
+import { useUnmount } from 'react-use'
 
 export default function PartyChatList ({
   data,
@@ -18,11 +18,7 @@ export default function PartyChatList ({
   const chats = data.pages.flatMap(page => page.content)
   const ref = useLoadMore(fetchNextPage)
 
-  useEffect(() => {
-    return () => {
-      UserChatRoomsQuery.reset()
-    }
-  }, [])
+  useUnmount(UserChatRoomsQuery.reset)
 
   if (data.pages[0].totalElements === 0)
     return (

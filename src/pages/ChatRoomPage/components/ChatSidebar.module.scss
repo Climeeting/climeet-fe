@@ -1,5 +1,5 @@
 $footer-height: 52px;
-$banner-height: (68px + 32px);
+$banner-height: (68px + 26px + 24px);
 
 .Container {
   width: 80vw;
@@ -104,8 +104,9 @@ $banner-height: (68px + 32px);
 }
 
 .Banner {
+  border-top: 1px solid $gray-100;
   height: $banner-height;
-  padding: 16px;
+  padding: 26px 16px 24px;
 }
 
 .PartyBanner {

@@ -49,6 +49,8 @@ const ChatBubbleListUi = forwardRef(function ChatBubbleList ({ chatList, fetchNe
   }, [])
 
   useEffect(function scrollToBottomAfterSendMessage () {
+    if (!chatList.length) return
+
     const lastMessage = chatList[0]
     if (!chatListRef.current) return
     if (lastSeenId === lastMessage.messageId) return
@@ -158,6 +160,8 @@ const ChatBubbleListQuery = forwardRef(function ChatBubbleListQuery ({ room }: {
   const { data, fetchNextPage, isFetched, hasNextPage } = useChatRoomSuspense({ room })
   const { messages } = useChat()
   const chatList = data.pages.map(page => page.content).flat()
+
+  console.log({ chatList })
 
   return (
     <ChatBubbleListUi

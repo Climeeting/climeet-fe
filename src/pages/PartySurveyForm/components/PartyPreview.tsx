@@ -112,7 +112,7 @@ const createSkillDistributions = (skillLevel: string = 'V0') => {
       count: 0,
     },
     {
-      skillLevel: 'V8',
+      skillLevel: 'V8+',
       count: 0,
     },
   ]

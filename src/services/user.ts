@@ -120,9 +120,7 @@ export const skillLevelOptions: MyInfo['skillLevel'][] = [
   'V5',
   'V6',
   'V7',
-  'V8',
-  'V9',
-  'V10',
+  'V8+',
 ]
 
 export class AdditionalInfoAddapter {

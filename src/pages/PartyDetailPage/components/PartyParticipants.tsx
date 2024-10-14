@@ -59,17 +59,17 @@ function SkillGraph ({
 export const SkillColor: {
   [key in SkillLevel]: string
 } = {
-  V0: '#F9CD56',
-  V1: '#FF862F',
-  V2: '#72C81D',
-  V3: '#4B7BF7',
-  V4: '#F0543F',
-  V5: '#7835F7',
-  V6: '#A1A1A1',
-  V7: '#9A5624',
-  V8: '#222222',
-  V9: '#222222',
-  V10: '#222222',
+  'V0': '#F9CD56',
+  'V1': '#FF862F',
+  'V2': '#72C81D',
+  'V3': '#4B7BF7',
+  'V4': '#F0543F',
+  'V5': '#7835F7',
+  'V6': '#A1A1A1',
+  'V7': '#9A5624',
+  'V8+': '#222222',
+  // V9: '#222222',
+  // V10: '#222222',
 } as const
 
 PartyParticipants.Skeleton = function PartyParticipantsSkeleton () {

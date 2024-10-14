@@ -26,7 +26,6 @@ function ChatItem ({
         {data.lastMessageTime && (
           <div className={styles.Row}>
             <div className={styles.LastMessage}>{data.lastMessage}</div>
-            <div className={styles.NewChat} />
             {data.hasUnreadMessages && <div className={styles.NewChat} />}
           </div>
         )}

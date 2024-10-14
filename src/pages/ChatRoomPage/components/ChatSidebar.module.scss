@@ -44,6 +44,7 @@ $banner-height: (68px + 32px);
   overflow: scroll;
 
   .MemberInfoTitle {
+    display: block;
     font-size: 16px;
     font-weight: 500;
     color: $gray-900;
@@ -60,6 +61,11 @@ $banner-height: (68px + 32px);
     width: 40px;
     height: 40px;
     margin-right: 8px;
+  }
+
+  .Master {
+    color: $primary-400;
+    margin-right: 4px;
   }
 
   .MemberName {

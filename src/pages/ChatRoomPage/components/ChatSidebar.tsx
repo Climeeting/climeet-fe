@@ -6,6 +6,7 @@ import { Member } from '@/services/chat'
 import { PartyDetailType } from '@/services/party'
 import { useMyProfile } from '@/services/user'
 import { Link } from 'react-router-dom'
+import { VisuallyHidden } from '@radix-ui/react-visually-hidden'
 
 export default function ChatSidebar ({ partyId, party, members }: { partyId: number, party: PartyDetailType, members: Member[] }) {
   const { data: my } = useMyProfile()
@@ -52,8 +53,13 @@ function MemberItem ({ isMaster, isMe, memberName, memberThumbnail }: Member & {
   return (
     <div className={styles.Member}>
       <Avatar src={memberThumbnail} alt='아바타' size='small' className={styles.Avatar} />
+      {isMaster && (
+        <div className={styles.Master}>
+          <VisuallyHidden>방장</VisuallyHidden>
+          <Icon icon='Crown' size={16} />
+        </div>
+      )}
       <div className={styles.MemberName}>{memberName}</div>
-      {isMaster && <div className={styles.Chip}>방장</div>}
       {isMe && <div className={styles.Chip}>나</div>}
     </div>
   )

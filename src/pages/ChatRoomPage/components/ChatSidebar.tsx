@@ -49,9 +49,11 @@ export default function ChatSidebar ({ partyId, party, members }: { partyId: num
   )
 }
 
-function MemberItem ({ isMaster, isMe, memberName, memberThumbnail }: Member & { isMe: boolean, isMaster: boolean }) {
+function MemberItem ({
+  isMaster, isMe, userId, memberName, memberThumbnail,
+}: Member & { isMe: boolean, isMaster: boolean }) {
   return (
-    <div className={styles.Member}>
+    <Link to={`/user/${userId}`} className={styles.Member}>
       <Avatar src={memberThumbnail} alt='아바타' size='small' className={styles.Avatar} />
       {isMaster && (
         <div className={styles.Master}>
@@ -61,7 +63,7 @@ function MemberItem ({ isMaster, isMe, memberName, memberThumbnail }: Member & {
       )}
       <div className={styles.MemberName}>{memberName}</div>
       {isMe && <div className={styles.Chip}>나</div>}
-    </div>
+    </Link>
   )
 }
 

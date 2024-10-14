@@ -18,15 +18,16 @@ function ChatItem ({
             <h2 className={styles.RoomName}>{data.roomTitle}</h2>
             <span className={styles.Members}>{data.memberCount}</span>
           </div>
-          {data.hasUnreadMessages && <div className={styles.NewChat} />}
+          <div className={styles.LastChatTime}>{
+            dayjs(data.lastMessageTime).calendar()
+          }
+          </div>
         </div>
         {data.lastMessageTime && (
           <div className={styles.Row}>
             <div className={styles.LastMessage}>{data.lastMessage}</div>
-            <div className={styles.LastChatTime}>{
-              dayjs(data.lastMessageTime).calendar()
-            }
-            </div>
+            <div className={styles.NewChat} />
+            {data.hasUnreadMessages && <div className={styles.NewChat} />}
           </div>
         )}
       </div>

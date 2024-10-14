@@ -33,8 +33,10 @@ export const useNotification = () => {
     queryKey: NOTIFICATION_KEY,
     queryFn: ({ pageParam }) => get_notification({ page: pageParam ?? 0 }),
     initialPageParam: 0,
-    getNextPageParam: lastPage =>
-      lastPage.totalPages <= lastPage.pageable.pageNumber ? null : lastPage.pageable.pageNumber + 1,
+    getNextPageParam: (lastPage) => {
+      if (lastPage.last) return null
+      return lastPage.totalPages <= lastPage.pageable.pageNumber ? null : lastPage.pageable.pageNumber + 1
+    },
     retryOnMount: false,
     refetchOnWindowFocus: false,
     refetchInterval: 30 * 1000,

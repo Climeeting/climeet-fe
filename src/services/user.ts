@@ -285,8 +285,10 @@ export const useUserPartyList = (params: GetPartyListParams) => {
     queryKey: [...USER_PARTY_LIST_KEY, stringify(params)],
     queryFn: ({ pageParam }) => get_user_$userId_party({ ...params, page: pageParam ?? 0 }),
     initialPageParam: 0,
-    getNextPageParam: lastPage =>
-      lastPage.totalPages <= lastPage.pageable.pageNumber ? null : lastPage.pageable.pageNumber + 1,
+    getNextPageParam: (lastPage) => {
+      if (lastPage.last) return null
+      return lastPage.totalPages <= lastPage.pageable.pageNumber ? null : lastPage.pageable.pageNumber + 1
+    },
     // 마운트시에 요청 보내지 않음
     retryOnMount: false,
     // 윈도우 포커스시에 새로고침하지 않음
@@ -359,10 +361,12 @@ export const useUserChatRooms = () => {
     queryKey: USER_CHAT_ROOS_KEY,
     queryFn: ({ pageParam }) => get_user_chatRooms({ page: pageParam ?? 0 }),
     initialPageParam: 0,
-    getNextPageParam: lastPage =>
-      lastPage.totalPages <= lastPage.pageable.pageNumber ? null : lastPage.pageable.pageNumber + 1,
-    refetchOnMount: 'always',
-    refetchOnWindowFocus: 'always',
+    getNextPageParam: (lastPage) => {
+      if (lastPage.last) return null
+      return lastPage.totalPages <= lastPage.pageable.pageNumber ? null : lastPage.pageable.pageNumber + 1
+    },
+    // refetchOnMount: 'always',
+    // refetchOnWindowFocus: 'always',
   })
 }
 

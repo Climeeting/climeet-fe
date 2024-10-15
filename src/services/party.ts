@@ -616,8 +616,16 @@ export const delete_party_$partyId = async (partyId: number) => {
  * DELETE /v1/party/{partyId}/leave
  */
 export const delete_party_$partyId_leave = async (partyId: number) => {
-  const result = await api.delete(`/v1/party/${partyId}/leave`)
-  return result
+  try {
+    const result = await api.delete(`/v1/party/${partyId}/leave`)
+    return result
+  } catch (e) {
+    if (e instanceof AxiosError) {
+      throw new Error(e.response?.data.message)
+    } else {
+      throw new Error('파티 탈퇴에 실패하였습니다')
+    }
+  }
 }
 
 /**

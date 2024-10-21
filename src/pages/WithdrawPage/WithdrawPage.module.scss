@@ -194,13 +194,15 @@
 .submitBar {
   position: fixed;
   bottom: 0;
-  left: 0;
+  left: 50%;
+  transform: translateX(-50%);
   width: 100%;
   padding: 16px;
   box-sizing: border-box;
   background-color: white;
   border-top: 1px solid $gray-200;
   z-index: 100;
+  max-width: $max-width;
 
   .checkboxContainer {
     display: flex;

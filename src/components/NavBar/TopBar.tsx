@@ -5,8 +5,8 @@ import { useNavigate } from 'react-router-dom'
 import { Slot, SlotProps } from '@radix-ui/react-slot'
 import { Children, ReactNode, isValidElement, Suspense } from 'react'
 import classNames from 'classnames'
-import Notification from '@/pages/Home/components/Notification.tsx'
 import { useIsLogin } from '@/services/user.ts'
+import NotificationButton from '@/pages/Home/components/NotificationButton.tsx'
 
 /**
  * Left
@@ -157,7 +157,7 @@ function TopBarRoot (props: TopBarProps) {
         {
           isLogin && (
             <Suspense fallback={<div></div>}>
-              <Notification />
+              <NotificationButton />
             </Suspense>
           )
         }

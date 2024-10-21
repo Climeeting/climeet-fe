@@ -20,6 +20,7 @@ import DeleteAccountPage from '@/pages/DeleteAccountPage/DeleteAccountPage.tsx'
 import PartyReport from '@/pages/PartyReport/PartyReport.tsx'
 import LocationPage from './LocationPage/LocationPage'
 import WithdrawPage from './WithdrawPage/WithdrawPage'
+import { Notification } from '@/pages/Notification/Notification.tsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -43,6 +44,7 @@ const router = createBrowserRouter(
         <Route path='/chat' element={<ChatPage />} />
         <Route path='/chat/:id' element={<ChatRoomPage />} />
         <Route path='/party/report/:id' element={<PartyReport />} />
+        <Route path='/notification' element={<Notification />} />
       </Route>
       <Route path='/user/:id' element={<UserPage />} />
       <Route path='/party/:id' element={<PartyDetailPage />} />

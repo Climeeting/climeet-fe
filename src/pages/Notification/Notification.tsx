@@ -1,7 +1,5 @@
 import styles from './Notification.module.scss'
-import * as Dialog from '@radix-ui/react-dialog'
-import Icon from '@/components/Icon/Icon.tsx'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import TopBar from '@/components/NavBar/TopBar.tsx'
 import Avatar from '@/components/Avatar.tsx'
 import classNames from 'classnames'
@@ -14,47 +12,27 @@ import { useNavigate } from 'react-router-dom'
 import dayjs from 'dayjs'
 import { useLoadMore } from '@/utils/useLoadMore.tsx'
 
-export default function Notification () {
-  const [open, onOpenChange] = useState(false)
+export function Notification () {
   const { data, fetchNextPage, refetch } = useNotification()
-  const isAlarmsExist = data.pages.some(notificationList => (
-    notificationList.content.some((notification) => {
-      return !notification.isRead
-    })
-  ))
 
   return (
-    <Dialog.Root open={open} onOpenChange={onOpenChange}>
-      <Dialog.Trigger>
-        <Icon icon={isAlarmsExist ? 'AlarmNew' : 'Alarm'} />
-      </Dialog.Trigger>
-      <Dialog.Overlay />
-      <Dialog.Portal>
-        <Dialog.Content className={styles.Container}>
-          <div className={styles.top}>
-            <TopBar>
-              <TopBar.Left asChild>
-                <Dialog.Close asChild>
-                  <button className={styles.Left}>
-                    <Icon icon='ArrowLeft' size={24} />
-                  </button>
-                </Dialog.Close>
-              </TopBar.Left>
-              <TopBar.Center title='알림' />
-            </TopBar>
-          </div>
-          {
-            data.pages.map((notificationList, i) => {
-              return (
-                <React.Fragment key={i}>
-                  <Content data={notificationList.content ?? []} fetchNextPage={fetchNextPage} refetch={refetch} />
-                </React.Fragment>
-              )
-            })
-          }
-        </Dialog.Content>
-      </Dialog.Portal>
-    </Dialog.Root>
+    <div className={styles.Container}>
+      <div className={styles.top}>
+        <TopBar>
+          <TopBar.Left back />
+          <TopBar.Center title='알림' />
+        </TopBar>
+      </div>
+      {
+        data.pages.map((notificationList, i) => {
+          return (
+            <React.Fragment key={i}>
+              <Content data={notificationList.content ?? []} fetchNextPage={fetchNextPage} refetch={refetch} />
+            </React.Fragment>
+          )
+        })
+      }
+    </div>
   )
 }
 

@@ -19,6 +19,7 @@ import RedirectUserPage from './UserPage/RedirectUserPage'
 import DeleteAccountPage from '@/pages/DeleteAccountPage/DeleteAccountPage.tsx'
 import PartyReport from '@/pages/PartyReport/PartyReport.tsx'
 import LocationPage from './LocationPage/LocationPage'
+import WithdrawPage from './WithdrawPage/WithdrawPage'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -33,6 +34,7 @@ const router = createBrowserRouter(
         <Route path='/user/my' element={<RedirectUserPage />} />
         <Route path='/user/my/new' element={<MyNewPage />} />
         <Route path='/user/my/update' element={<MyUpdatePage />} />
+        <Route path='/user/my/withdraw' element={<WithdrawPage />} />
         <Route path='/user/delete-account' element={<DeleteAccountPage />} />
         <Route element={<CheckAdditionalInfo />}>
           <Route path='party-suervey' element={<PartySurveyFormPage />} />

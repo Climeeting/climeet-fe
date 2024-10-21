@@ -4,6 +4,7 @@ import Icon from '@/components/Icon/Icon'
 import TopBar from '@/components/NavBar/TopBar'
 import { useState } from 'react'
 import { get_oauth_logout } from '@/services/oauth'
+import { Link } from 'react-router-dom'
 
 export default function SettingDialog () {
   const [open, onOpenChange] = useState(false)
@@ -42,10 +43,10 @@ export default function SettingDialog () {
               </button>
             </li>
             <li>
-              <button>
+              <Link to='/user/my/withdraw'>
                 <Icon className={styles.icon} icon='Exit' size='16' />
                 회원 탈퇴
-              </button>
+              </Link>
             </li>
           </ul>
 

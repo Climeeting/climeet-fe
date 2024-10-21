@@ -8,6 +8,7 @@ type CheckboxProps = {
   defaultChecked?: boolean
   checked: boolean
   onCheckedChange: (checked: boolean) => void
+  disabled?: boolean
 }
 
 export default function Checkbox ({
@@ -16,6 +17,7 @@ export default function Checkbox ({
   checked,
   onCheckedChange,
   defaultChecked = false,
+  disabled = false,
 }: CheckboxProps) {
   return (
     <div className={styles.Container}>
@@ -25,6 +27,7 @@ export default function Checkbox ({
         onCheckedChange={onCheckedChange}
         defaultChecked={defaultChecked}
         id={id}
+        disabled={disabled}
       >
         <CheckboxUi.Indicator className={styles.CheckboxIndicator}>
           {checked

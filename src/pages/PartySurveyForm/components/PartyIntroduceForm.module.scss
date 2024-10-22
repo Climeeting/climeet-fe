@@ -60,6 +60,11 @@
     margin-bottom: rem(8px);
   }
 
+  .content {
+    display: flex;
+    flex-direction: column;
+  }
+
   .input {
     width: 100%;
     padding-bottom: 8px;
@@ -75,6 +80,7 @@
     line-height: 1.7;
     letter-spacing: -0.02;
     color: $gray-600;
+    margin-top: 8px;
 
     strong {
       color: $gray-800;

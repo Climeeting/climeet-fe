@@ -1,23 +1,14 @@
-# 구글 봇 허용
 User-agent: Googlebot
 Allow: /
 
-# 네이버 봇 허용
 User-agent: Yeti
 Allow: /
 
-# 페이스북 봇 허용
 User-agent: facebookexternalhit
 Allow: /
 
-# Bing 봇 허용 (옵션)
 User-agent: bingbot
 Allow: /
 
-# Twitter 봇 허용 (옵션)
 User-agent: Twitterbot
 Allow: /
-
-# 기타 모든 봇 차단
-# User-agent: *
-# Disallow: /

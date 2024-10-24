@@ -5,6 +5,7 @@ import { useIsLogin } from '@/services/user'
 import Icon from '@/components/Icon/Icon'
 import Dialog from '@/components/Dialog/Dialog'
 import Dropdown from '@/components/Dropdown'
+import useToast from '@/utils/useToast.tsx'
 
 export default function MoreMenu ({ id }: { id?: string }) {
   const navigate = useNavigate()
@@ -29,6 +30,8 @@ export default function MoreMenu ({ id }: { id?: string }) {
   const isMaster = partyData.isMaster
   const isParticipation = !partyData.isMaster && partyData.isParticipation
   const isNotParticipation = !partyData.isMaster && !partyData.isParticipation
+
+  const toast = useToast()
 
   return (
     <>
@@ -151,8 +154,15 @@ export default function MoreMenu ({ id }: { id?: string }) {
             try {
               await delete_party_$partyId_leave(Number(id))
               navigate('/')
+              toast.add({
+                message: '파티를 탈퇴하였습니다.',
+              })
             } catch (e) {
-              console.error(e)
+              if (e instanceof Error) {
+                toast.add({
+                  message: e.message,
+                })
+              }
             }
             onOpenAlertLeave(false)
           }}

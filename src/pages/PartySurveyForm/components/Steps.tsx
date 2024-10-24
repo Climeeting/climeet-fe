@@ -122,6 +122,9 @@ export function IndoorStep ({ formData, updateFormData }: StepProps) {
                 if (isPartyEdit) {
                   const req = new PutPartyReqAdapter(formData).adapt()
                   await put_party_edit(id, req)
+                  toast.add({
+                    message: '파티 수정이 완료되었습니다.',
+                  })
                 } else {
                   const req = new PostPartyNewReqAdapter(formData).adapt()
                   const newPartyInfo = {

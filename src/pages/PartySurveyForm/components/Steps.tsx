@@ -129,6 +129,9 @@ export function IndoorStep ({ formData, updateFormData }: StepProps) {
                     partyImageUrl: file ? await uploadFileS3(file) : formData.partyImageUrl,
                   }
                   await post_party_new(newPartyInfo)
+                  toast.add({
+                    message: '파티가 생성되었습니다.',
+                  })
                 }
                 navigate('/')
               } catch (e) {

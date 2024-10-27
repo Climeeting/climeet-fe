@@ -1,7 +1,7 @@
 import { useQuery, useSuspenseInfiniteQuery, useSuspenseQuery } from '@tanstack/react-query'
 import api from '../utils/api'
 import { MyProfile, PageData, SkillLevel } from '../pages/types/api'
-import { isAxiosError } from 'axios'
+import { AxiosError, isAxiosError } from 'axios'
 import { queryClient } from '../utils/tanstack'
 import { sexBe2Fe, sexFe2Be } from './adaptor'
 import { stringify } from '@/utils/query'
@@ -151,7 +151,16 @@ export class AdditionalInfoAddapter {
  * PUT /v1/user/information
  */
 export const put_user_information = async (body: Partial<PutUserInformationBody>) => {
-  return await api.put<PutUserInformationBody>('/v1/user/information', body)
+  try {
+    const result = await api.put<PutUserInformationBody>('/v1/user/information', body)
+    return result
+  } catch (e) {
+    if (e instanceof AxiosError) {
+      throw new Error(e.response?.data.title)
+    } else {
+      throw new Error('파티 수정에 실패하였습니다')
+    }
+  }
 }
 
 type PutUserInformationBody = {

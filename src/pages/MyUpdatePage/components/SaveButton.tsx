@@ -40,10 +40,12 @@ export function SaveButton ({ onClick }: { onClick: () => void }) {
             message: '프로필이 수정되었습니다.',
           })
           navigate(`/user/${data?.userId}`)
-        } catch {
-          toast.add({
-            message: '프로필 수정에 실패하였습니다.',
-          })
+        } catch (e) {
+          if (e instanceof Error) {
+            toast.add({
+              message: e.message,
+            })
+          }
         }
       }}
       className={styles.Button}

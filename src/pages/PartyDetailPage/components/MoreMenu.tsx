@@ -128,8 +128,15 @@ export default function MoreMenu ({ id }: { id?: string }) {
             try {
               await delete_party_$partyId(Number(id))
               navigate(-1)
+              toast.add({
+                message: '파티가 삭제되었습니다.',
+              })
             } catch (e) {
-              console.error(e)
+              if (e instanceof Error) {
+                toast.add({
+                  message: e.message,
+                })
+              }
             }
           }}
         >

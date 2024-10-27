@@ -589,7 +589,7 @@ export const post_party_$partyId_participate = async (partyId: number) => {
     return result
   } catch (e) {
     if (e instanceof AxiosError) {
-      throw new Error(e.response?.data.title)
+      throw new Error(e.response?.data.detail)
     } else {
       throw new Error('파티 참가에 실패하였습니다')
     }
@@ -605,7 +605,7 @@ export const delete_party_$partyId = async (partyId: number) => {
     return result
   } catch (e) {
     if (e instanceof AxiosError) {
-      throw new Error(e.response?.data.title)
+      throw new Error(e.response?.data.detail)
     } else {
       throw new Error('파티 삭제에 실패하였습니다')
     }
@@ -621,7 +621,7 @@ export const delete_party_$partyId_leave = async (partyId: number) => {
     return result
   } catch (e) {
     if (e instanceof AxiosError) {
-      throw new Error(e.response?.data.title)
+      throw new Error(e.response?.data.detail)
     } else {
       throw new Error('파티 탈퇴에 실패하였습니다')
     }
@@ -637,7 +637,7 @@ export const post_party_report = async (partyId: number, reqBody: { reason: stri
     return result
   } catch (e) {
     if (e instanceof AxiosError) {
-      throw new Error(e.response?.data.title)
+      throw new Error(e.response?.data.detail)
     } else {
       throw new Error('파티 신고에 실패하였습니다')
     }

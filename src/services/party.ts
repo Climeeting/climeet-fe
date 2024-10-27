@@ -264,8 +264,11 @@ export const post_party_new = async (reqBody: PostPartyNewReq) => {
     const result = await api.post<PostPartyNewRes>('/v1/party/new', reqBody)
     return result
   } catch (e) {
-    console.error(e)
-    throw new Error('파티 생성에 실패하였습니다. post v1/party/new')
+    if (e instanceof AxiosError) {
+      throw new Error(e.response?.data.detail)
+    } else {
+      throw new Error('파티 생성에 실패하였습니다. post v1/party/new')
+    }
   }
 }
 
@@ -478,8 +481,11 @@ export const put_party_edit = async (partyId: number | string, reqBody: PutParty
     const result = await api.put<PostPartyNewRes>(`/v1/party/${partyId}`, reqBody)
     return result
   } catch (e) {
-    console.error(e)
-    throw new Error(`파티 수정에 실패하였습니다. put v1/party/${partyId}`)
+    if (e instanceof AxiosError) {
+      throw new Error(e.response?.data.detail)
+    } else {
+      throw new Error('파티 수정에 실패하였습니다. put v1/party/${partyId}`')
+    }
   }
 }
 

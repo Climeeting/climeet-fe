@@ -156,7 +156,7 @@ export const put_user_information = async (body: Partial<PutUserInformationBody>
     return result
   } catch (e) {
     if (e instanceof AxiosError) {
-      throw new Error(e.response?.data.title)
+      throw new Error(e.response?.data.detail)
     } else {
       throw new Error('파티 수정에 실패하였습니다')
     }

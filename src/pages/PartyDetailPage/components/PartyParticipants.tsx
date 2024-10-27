@@ -22,7 +22,9 @@ export function PartyParticipants ({
       </div>
 
       <div className={styles.GraphContainer}>
-        {skillDistributions.map(skillDistribution => (
+        {skillDistributions.filter((el) => {
+          return createPossibleSkillRange(minimumSkillLevel, maximumSkillLevel).includes(el.skillLevel)
+        }).map(skillDistribution => (
           <SkillGraph
             key={skillDistribution.skillLevel}
             skillDistribution={skillDistribution}
@@ -74,4 +76,13 @@ export const SkillColor: {
 
 PartyParticipants.Skeleton = function PartyParticipantsSkeleton () {
   return null
+}
+
+const createPossibleSkillRange = (min: number, max: number): SkillLevel[] => {
+  const result: SkillLevel[] = []
+  for (let i = min; i <= max; i++) {
+    result.push(`V${i}` as SkillLevel)
+  }
+
+  return result
 }

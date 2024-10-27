@@ -122,6 +122,9 @@ export function IndoorStep ({ formData, updateFormData }: StepProps) {
                 if (isPartyEdit) {
                   const req = new PutPartyReqAdapter(formData).adapt()
                   await put_party_edit(id, req)
+                  toast.add({
+                    message: '파티 수정이 완료되었습니다.',
+                  })
                 } else {
                   const req = new PostPartyNewReqAdapter(formData).adapt()
                   const newPartyInfo = {
@@ -129,6 +132,9 @@ export function IndoorStep ({ formData, updateFormData }: StepProps) {
                     partyImageUrl: file ? await uploadFileS3(file) : formData.partyImageUrl,
                   }
                   await post_party_new(newPartyInfo)
+                  toast.add({
+                    message: '파티가 생성되었습니다.',
+                  })
                 }
                 navigate('/')
               } catch (e) {

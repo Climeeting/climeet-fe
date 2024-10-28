@@ -6,6 +6,8 @@ import Icon from '@/components/Icon/Icon'
 import { useState } from 'react'
 import { useMount } from 'react-use'
 import Checkbox from '@/components/CheckBox'
+import { delete_user_withdraw } from '@/services/oauth'
+import useToast from '@/utils/useToast'
 
 type Option = {
   label: string
@@ -34,6 +36,7 @@ const reasonOptions: Option[] = [
 export default function WithdrawPage () {
   const [reason, setReason] = useState<Option | null>(null)
   const [detail, setDetail] = useState('')
+  const toast = useToast()
 
   return (
     <div className={styles.Container}>
@@ -80,8 +83,25 @@ export default function WithdrawPage () {
         }
         <SubmitBar
           disabled={reason === null}
-          onSubmit={() => {
-            console.log({ reason, detail })
+          onSubmit={async () => {
+            if (reason === null) return
+            try {
+              await delete_user_withdraw(reason.value === 3 ? detail : reason.label)
+              toast.add({
+                message: '탈퇴가 완료되었습니다.',
+              })
+              window.location.href = '/'
+            } catch (e) {
+              if (e instanceof Error) {
+                toast.add({
+                  message: e.message,
+                })
+              } else {
+                toast.add({
+                  message: '탈퇴에 실패하였습니다.',
+                })
+              }
+            }
           }}
         />
       </form>

@@ -1,5 +1,5 @@
 import styles from './Notification.module.scss'
-import React, { useEffect } from 'react'
+import React, { Suspense, useEffect } from 'react'
 import TopBar from '@/components/NavBar/TopBar.tsx'
 import Avatar from '@/components/Avatar.tsx'
 import classNames from 'classnames'
@@ -11,10 +11,9 @@ import {
 import { useNavigate } from 'react-router-dom'
 import dayjs from 'dayjs'
 import { useLoadMore } from '@/utils/useLoadMore.tsx'
+import { ErrorBoundary } from 'react-error-boundary'
 
-export function Notification () {
-  const { data, fetchNextPage, refetch } = useNotification()
-
+export default function NotificationPage () {
   return (
     <div className={styles.Container}>
       <div className={styles.top}>
@@ -23,16 +22,30 @@ export function Notification () {
           <TopBar.Center title='알림' />
         </TopBar>
       </div>
-      {
-        data.pages.map((notificationList, i) => {
-          return (
-            <React.Fragment key={i}>
-              <Content data={notificationList.content ?? []} fetchNextPage={fetchNextPage} refetch={refetch} />
-            </React.Fragment>
-          )
-        })
-      }
+      <ErrorBoundary fallback={<div>에러가 발생했습니다.</div>}>
+        <Suspense fallback={<div>로딩중...</div>}>
+          <Notification />
+        </Suspense>
+      </ErrorBoundary>
     </div>
+  )
+}
+
+export function Notification () {
+  const { data, fetchNextPage, refetch } = useNotification()
+
+  return (
+    data.pages.map((notificationList, i) => {
+      return (
+        <React.Fragment key={i}>
+          <Content
+            data={notificationList.content ?? []}
+            fetchNextPage={fetchNextPage}
+            refetch={refetch}
+          />
+        </React.Fragment>
+      )
+    })
   )
 }
 

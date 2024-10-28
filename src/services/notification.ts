@@ -1,5 +1,4 @@
 import { useSuspenseInfiniteQuery } from '@tanstack/react-query'
-import { isAxiosError } from 'axios'
 import api from '@/utils/api.ts'
 import { PageData } from '@/pages/types/api.ts'
 
@@ -40,12 +39,6 @@ export const useNotification = () => {
     retryOnMount: false,
     refetchOnWindowFocus: false,
     refetchInterval: 30 * 1000,
-    retry: (failureCount, error) => {
-      if (isAxiosError(error) && error.response && error.response.status === 403) {
-        return false
-      }
-      return failureCount < 3
-    },
   })
 }
 

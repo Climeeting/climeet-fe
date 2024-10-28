@@ -1,10 +1,29 @@
 import { useQuery, useSuspenseInfiniteQuery, useSuspenseQuery } from '@tanstack/react-query'
 import api from '../utils/api'
 import { MyProfile, PageData, SkillLevel } from '../pages/types/api'
-import { AxiosError, isAxiosError } from 'axios'
+import { AxiosError } from 'axios'
 import { queryClient } from '../utils/tanstack'
 import { sexBe2Fe, sexFe2Be } from './adaptor'
 import { stringify } from '@/utils/query'
+
+export const USER_KEY = ['my']
+
+export const MyProfileQuery = {
+  invalidate: async () =>
+    await queryClient.invalidateQueries({
+      queryKey: USER_KEY,
+      refetchType: 'all',
+    }),
+
+  refetch: async () =>
+    await queryClient.refetchQueries({
+      queryKey: USER_KEY,
+    }),
+
+  logout: () => {
+    queryClient.setQueryData(USER_KEY, null) // 로그아웃 시 쿼리 데이터를 null로 설정
+  },
+}
 
 /**
  * GET /v1/user/myProfile
@@ -13,11 +32,9 @@ export const get_user_myProfile = async () => {
   return await api.get<MyProfile>('/v1/user/myProfile')
 }
 
-export const USER_KEY = ['user-profile']
-
 export const useMyProfile = () => {
   return useQuery({
-    queryKey: [...USER_KEY, 'my'],
+    queryKey: USER_KEY,
     queryFn: get_user_myProfile,
     // 1시간마다 새로고침
     refetchInterval: 60 * 60 * 1000,
@@ -25,20 +42,12 @@ export const useMyProfile = () => {
     retryOnMount: false,
     // 윈도우 포커스시에 새로고침하지 않음
     refetchOnWindowFocus: false,
-
-    // 인증 만료시 재시도하지 않음
-    retry: (failureCount, error) => {
-      if (isAxiosError(error) && error.response && error.response.status === 403) {
-        return false
-      }
-      return failureCount < 3
-    },
   })
 }
 
 export const useMyProfileSuspense = () => {
   return useSuspenseQuery({
-    queryKey: [...USER_KEY, 'my'],
+    queryKey: USER_KEY,
     queryFn: get_user_myProfile,
     // 1시간마다 새로고침
     refetchInterval: 60 * 60 * 1000,
@@ -46,14 +55,6 @@ export const useMyProfileSuspense = () => {
     retryOnMount: false,
     // 윈도우 포커스시에 새로고침하지 않음
     refetchOnWindowFocus: false,
-
-    // 인증 만료시 재시도하지 않음
-    retry: (failureCount, error) => {
-      if (isAxiosError(error) && error.response && error.response.status === 403) {
-        return false
-      }
-      return failureCount < 3
-    },
   })
 }
 
@@ -68,28 +69,7 @@ export const useIsLogin = () => {
     retryOnMount: false,
     // 윈도우 포커스시에 새로고침하지 않음
     refetchOnWindowFocus: false,
-
-    // 인증 만료시 재시도하지 않음
-    retry: (failureCount, error) => {
-      if (isAxiosError(error) && error.response && error.response.status === 403) {
-        return false
-      }
-      return failureCount < 3
-    },
   })
-}
-
-export const MyProfileQuery = {
-  invalidate: async () =>
-    await queryClient.invalidateQueries({
-      queryKey: USER_KEY,
-      refetchType: 'all',
-    }),
-
-  refetch: async () =>
-    await queryClient.refetchQueries({
-      queryKey: USER_KEY,
-    }),
 }
 
 /**

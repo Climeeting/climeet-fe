@@ -40,7 +40,7 @@ export default function SettingDialog () {
                 onClick={async () => {
                   await get_oauth_logout()
                   navigate('/', { replace: true })
-                  await MyProfileQuery.invalidate()
+                  MyProfileQuery.logout()
                   toast.add({
                     message: '로그아웃 되었습니다.',
                   })

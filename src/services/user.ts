@@ -96,7 +96,16 @@ export const MyProfileQuery = {
  * POST /v1/user/additional-info
  */
 export const post_user_additionalInfo = async (params: PostAdditonalInfoParams) => {
-  return await api.post<PostAdditonalInfoParams>('/v1/user/additional-info', params)
+  try {
+    const result = await api.post<PostAdditonalInfoParams>('/v1/user/additional-info', params)
+    return result
+  } catch (e) {
+    if (e instanceof AxiosError && e.response?.data.detail) {
+      throw new Error(e.response.data.detail)
+    } else {
+      throw new Error('추가정보 작성에 실패하였습니다')
+    }
+  }
 }
 
 export type PostAdditonalInfoParams = {
@@ -155,10 +164,10 @@ export const put_user_information = async (body: Partial<PutUserInformationBody>
     const result = await api.put<PutUserInformationBody>('/v1/user/information', body)
     return result
   } catch (e) {
-    if (e instanceof AxiosError) {
-      throw new Error(e.response?.data.detail)
+    if (e instanceof AxiosError && e.response?.data.detail) {
+      throw new Error(e.response.data.detail)
     } else {
-      throw new Error('파티 수정에 실패하였습니다')
+      throw new Error('수정에 실패하였습니다')
     }
   }
 }

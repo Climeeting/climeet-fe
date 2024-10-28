@@ -10,8 +10,10 @@ import { useFileContext } from '../hooks/useFileContext'
 import { uploadFileS3 } from '@/utils/s3'
 import useToast from '@/utils/useToast'
 import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
 
 export function SaveButton ({ onClick }: { onClick: () => void }) {
+  const [disabled, setDisabled] = useState(false)
   const info = useMyInfoFormContext()
   const file = useFileContext()
   const { data } = useMyProfile()
@@ -30,9 +32,10 @@ export function SaveButton ({ onClick }: { onClick: () => void }) {
 
   return (
     <button
+      disabled={disabled}
       onClick={async () => {
         onClick?.()
-
+        setDisabled(true)
         try {
           const userNewInfo = await getUserNewInfo()
           if (!isEmpty(userNewInfo)) await put_user_information(userNewInfo)
@@ -46,6 +49,8 @@ export function SaveButton ({ onClick }: { onClick: () => void }) {
               message: e.message,
             })
           }
+        } finally {
+          setDisabled(false)
         }
       }}
       className={styles.Button}

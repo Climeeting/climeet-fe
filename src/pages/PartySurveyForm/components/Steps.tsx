@@ -42,6 +42,7 @@ export function IndoorStep ({ formData, updateFormData }: StepProps) {
   const { id } = useParams<{ id: string }>()
   const toast = useToast()
   const file = useFileContext()
+  const [enableNext, setEnableNext] = useState(true)
 
   const getCurrentStepIndex = (steps: readonly IndoorStepName[], step: IndoorStepName) => {
     return steps.findIndex(el => el === step)
@@ -116,7 +117,9 @@ export function IndoorStep ({ formData, updateFormData }: StepProps) {
         </Step>
         <Step name='미리보기'>
           <PartyPreview
+            enableNext={enableNext}
             onNext={async () => {
+              setEnableNext(false)
               try {
                 const isPartyEdit = id !== undefined
                 if (isPartyEdit) {
@@ -144,6 +147,8 @@ export function IndoorStep ({ formData, updateFormData }: StepProps) {
                     message: e.message,
                   })
                 }
+              } finally {
+                setEnableNext(true)
               }
             }}
             formData={formData}
@@ -174,6 +179,7 @@ export function IndoorStep ({ formData, updateFormData }: StepProps) {
 
 export function OutdoorStep ({ formData, updateFormData }: StepProps) {
   const [openAlertGoHome, setOpenAlertGoHome] = useState(false)
+  const [enableNext, setEnableNext] = useState(true)
   const { Funnel, Step, setStep, step } = useFunnel<OutdoorStepName>('소개')
   const navigate = useNavigate()
   const { id } = useParams<{ id: string }>()
@@ -232,6 +238,7 @@ export function OutdoorStep ({ formData, updateFormData }: StepProps) {
         <Step name='미리보기'>
           <PartyPreview
             onNext={async () => {
+              setEnableNext(false)
               try {
                 const isPartyEdit = id !== undefined
                 if (isPartyEdit) {
@@ -249,8 +256,11 @@ export function OutdoorStep ({ formData, updateFormData }: StepProps) {
                     message: e.message,
                   })
                 }
+              } finally {
+                setEnableNext(true)
               }
             }}
+            enableNext={enableNext}
             formData={formData}
             updateFormData={updateFormData}
           />
@@ -287,6 +297,7 @@ export function PartyEditStep ({
   id: string
 }) {
   const [openAlertGoHome, setOpenAlertGoHome] = useState(false)
+  const [enableNext, setEnableNext] = useState(true)
   const { Funnel, Step, setStep, step } = useFunnel<EditStepName>('소개')
   const navigate = useNavigate()
   const toast = useToast()
@@ -337,7 +348,9 @@ export function PartyEditStep ({
         </Step>
         <Step name='미리보기'>
           <PartyPreview
+            enableNext={enableNext}
             onNext={async () => {
+              setEnableNext(false)
               try {
                 const req = new PutPartyReqAdapter(formData).adapt()
                 await put_party_edit(id, req)
@@ -349,6 +362,8 @@ export function PartyEditStep ({
                     message: e.message,
                   })
                 }
+              } finally {
+                setEnableNext(true)
               }
             }}
             formData={formData}

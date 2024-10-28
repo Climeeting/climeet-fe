@@ -3,11 +3,7 @@
   max-width: $max-width;
   position: fixed;
   background-color: white;
-  left: 50%;
-  transform: translateX(-50%);
-  top: 0;
   height: 100%;
-  z-index: 10;
   padding-top: 48px;
   overflow-y: auto;
 }

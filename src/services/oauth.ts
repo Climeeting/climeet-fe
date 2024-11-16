@@ -58,3 +58,21 @@ export const useGetUserToken = () => {
     queryFn: get_user_token,
   })
 }
+
+/**
+ * DELETE /v1/user/withdraw
+ */
+export const delete_user_withdraw = async (reason: string) => {
+  try {
+    const result = await api.delete('/v1/user/withdraw', {
+      data: {
+        reason,
+      },
+    })
+    await MyProfileQuery.invalidate()
+    return result
+  } catch (e) {
+    console.error(e)
+    throw new Error('회원탈퇴가 실패하였습니다. delete v1/user/withdraw')
+  }
+}

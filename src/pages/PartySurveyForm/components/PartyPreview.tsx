@@ -12,11 +12,12 @@ import { SkillDistribution } from '@/pages/types/api.ts'
 
 type PartyIntroduceFormProps = {
   onNext: () => void
+  enableNext: boolean
   formData: PartySurveyFormData
   updateFormData: UpdateFormData
 }
 
-export function PartyPreview ({ onNext, formData }: PartyIntroduceFormProps) {
+export function PartyPreview ({ onNext, formData, enableNext }: PartyIntroduceFormProps) {
   const { data, isError } = useMyProfile()
 
   if (!data || isError) return null
@@ -54,6 +55,8 @@ export function PartyPreview ({ onNext, formData }: PartyIntroduceFormProps) {
       <div className={styles.footer}>
         <button
           className={styles.nextBtn}
+          disabled={!enableNext}
+          data-disabled={!enableNext}
           onClick={() => {
             onNext()
           }}

@@ -39,6 +39,9 @@ export default function PartyBottomButton ({ id }: { id?: string }) {
                   try {
                     await post_party_$partyId_participate(Number(id))
                     PartyDetailQuery.refetch(Number(id))
+                    toast.add({
+                      message: '파티에 참가하였습니다.',
+                    })
                   } catch (e) {
                     if (e instanceof Error) {
                       console.log({ e })

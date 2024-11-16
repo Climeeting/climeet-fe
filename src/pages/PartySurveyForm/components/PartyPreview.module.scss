@@ -35,6 +35,9 @@
       opacity: 0.2;
     }
   }
+  .nextBtn[data-disabled='true'] {
+    opacity: 0.2;
+  }
 }
 
 .Container {

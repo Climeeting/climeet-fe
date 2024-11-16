@@ -4,10 +4,14 @@ import Icon from '@/components/Icon/Icon'
 import TopBar from '@/components/NavBar/TopBar'
 import { useState } from 'react'
 import { get_oauth_logout } from '@/services/oauth'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import useToast from '@/utils/useToast'
+import { MyProfileQuery } from '@/services/user'
 
 export default function SettingDialog () {
   const [open, onOpenChange] = useState(false)
+  const toast = useToast()
+  const navigate = useNavigate()
 
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
@@ -35,7 +39,11 @@ export default function SettingDialog () {
               <button
                 onClick={async () => {
                   await get_oauth_logout()
-                  window.location.href = '/'
+                  navigate('/', { replace: true })
+                  MyProfileQuery.logout()
+                  toast.add({
+                    message: '로그아웃 되었습니다.',
+                  })
                 }}
               >
                 <Icon className={styles.icon} icon='Logout' size='16' />

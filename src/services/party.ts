@@ -39,8 +39,11 @@ export const get_party_list = async (params?: GetPartyListParams) => {
     const result = await api.get<PageData<Party>>(`/v1/party/list?${queryString}`)
     return result
   } catch (e) {
-    console.error(e)
-    throw new Error('로그인이 실패하였습니다. post v1/oauth/login')
+    if (e instanceof AxiosError && e.response?.data.detail) {
+      throw new Error(e.response.data.detail)
+    } else {
+      throw new Error('파티 목록 조회에 실패하였습니다.')
+    }
   }
 }
 
@@ -264,8 +267,11 @@ export const post_party_new = async (reqBody: PostPartyNewReq) => {
     const result = await api.post<PostPartyNewRes>('/v1/party/new', reqBody)
     return result
   } catch (e) {
-    console.error(e)
-    throw new Error('파티 생성에 실패하였습니다. post v1/party/new')
+    if (e instanceof AxiosError && e.response?.data.detail) {
+      throw new Error(e.response.data.detail)
+    } else {
+      throw new Error('파티 생성에 실패하였습니다.')
+    }
   }
 }
 
@@ -278,7 +284,11 @@ export const get_party_$partyId_detail = async (partyId: number) => {
     return result
   } catch (e) {
     console.error(e)
-    throw new Error('파티 상세 조회에 실패하였습니다. get v1/party/${partyId}/detail')
+    if (e instanceof AxiosError && e.response?.data.detail) {
+      throw new Error(e.response.data.detail)
+    } else {
+      throw new Error('파티를 조회할 수 없습니다.')
+    }
   }
 }
 
@@ -478,8 +488,11 @@ export const put_party_edit = async (partyId: number | string, reqBody: PutParty
     const result = await api.put<PostPartyNewRes>(`/v1/party/${partyId}`, reqBody)
     return result
   } catch (e) {
-    console.error(e)
-    throw new Error(`파티 수정에 실패하였습니다. put v1/party/${partyId}`)
+    if (e instanceof AxiosError && e.response?.data.detail) {
+      throw new Error(e.response.data.detail)
+    } else {
+      throw new Error('파티 수정에 실패하였습니다.')
+    }
   }
 }
 
@@ -588,10 +601,10 @@ export const post_party_$partyId_participate = async (partyId: number) => {
     const result = await api.post(`/v1/party/${partyId}/participate`)
     return result
   } catch (e) {
-    if (e instanceof AxiosError) {
-      throw new Error(e.response?.data.message)
+    if (e instanceof AxiosError && e.response?.data.detail) {
+      throw new Error(e.response.data.detail)
     } else {
-      throw new Error('파티 참가에 실패하였습니다')
+      throw new Error('파티 참가에 실패하였습니다.')
     }
   }
 }
@@ -604,10 +617,10 @@ export const delete_party_$partyId = async (partyId: number) => {
     const result = await api.delete(`/v1/party/${partyId}`)
     return result
   } catch (e) {
-    if (e instanceof AxiosError) {
-      throw new Error(e.response?.data.message)
+    if (e instanceof AxiosError && e.response?.data.detail) {
+      throw new Error(e.response.data.detail)
     } else {
-      throw new Error('파티 삭제에 실패하였습니다')
+      throw new Error('파티 삭제에 실패하였습니다.')
     }
   }
 }
@@ -620,10 +633,10 @@ export const delete_party_$partyId_leave = async (partyId: number) => {
     const result = await api.delete(`/v1/party/${partyId}/leave`)
     return result
   } catch (e) {
-    if (e instanceof AxiosError) {
-      throw new Error(e.response?.data.message)
+    if (e instanceof AxiosError && e.response?.data.detail) {
+      throw new Error(e.response.data.detail)
     } else {
-      throw new Error('파티 탈퇴에 실패하였습니다')
+      throw new Error('파티 탈퇴에 실패하였습니다.')
     }
   }
 }
@@ -636,10 +649,10 @@ export const post_party_report = async (partyId: number, reqBody: { reason: stri
     const result = await api.post(`/v1/report/${partyId}`, reqBody)
     return result
   } catch (e) {
-    if (e instanceof AxiosError) {
-      throw new Error(e.response?.data.message)
+    if (e instanceof AxiosError && e.response?.data.detail) {
+      throw new Error(e.response.data.detail)
     } else {
-      throw new Error('파티 신고에 실패하였습니다')
+      throw new Error('파티 신고에 실패하였습니다.')
     }
   }
 }

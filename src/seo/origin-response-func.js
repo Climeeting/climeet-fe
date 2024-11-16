@@ -29,11 +29,11 @@ export const handler = async (event, context, callback) => {
       return callback(null, createResponse(response, defaultData))
     }
 
-    const { partyName, partyDescription, partyImageUrl } = JSON.parse(data)
+    const party = JSON.parse(data)
     return callback(null, createResponse(response, {
-      title: partyName,
-      description: partyDescription,
-      image: partyImageUrl || 'https://www.cli-meet.com/android-chrome-512x512.png',
+      title: party.partyName,
+      description: party.partyDescription,
+      image: party.partyImageUrl || 'https://www.cli-meet.com/android-chrome-512x512.png',
       url: requestURL,
     }))
   }
@@ -46,11 +46,11 @@ export const handler = async (event, context, callback) => {
       return callback(null, createResponse(response, defaultData))
     }
 
-    const { nickname, description, profileImageUrl } = JSON.parse(data)
+    const user = JSON.parse(data)
     return callback(null, createResponse(response, {
-      title: nickname,
-      description: description,
-      image: profileImageUrl || 'https://www.cli-meet.com/android-chrome-512x512.png',
+      title: user.nickname,
+      description: user.description,
+      image: user.profileImageUrl || 'https://www.cli-meet.com/android-chrome-512x512.png',
       url: requestURL,
     }))
   }
@@ -129,7 +129,7 @@ async function sendRequest (path) {
 
     return {
       statusCode: 200,
-      data,
+      data: JSON.stringify(data),
     }
   } catch (error) {
     console.error('Error fetching data:', error)

@@ -1,12 +1,19 @@
 // viewer-request-func.js
-// 참고: https://blog.hoseung.me/2021-11-28-lambda-edge-seo
-export async function handler (event) {
+const bot = /googlebot|bingbot|yandex|baiduspider|twitterbot|facebookexternalhit|rogerbot|linkedinbot|embedly|quora link preview|showyoubot|outbrain|pinterest|slackbot|vkShare|W3C_Validator|kakaotalk-scrap|yeti|naverbot|kakaostory-og-reader|daum|postman/g
+
+export async function handler (event, context, callback) {
   const request = event.Records[0].cf.request
-  const headers = new Headers(request.headers)
+  const user_agent = request.headers['user-agent'][0]['value'].toLowerCase()
 
-  const type = headers.get('user-agent')?.match(/facebookexternalhit|twitterbot|slackbot/g) ? 'bot' : 'user'
-  const headerName = 'X-Viewer-Type'
-  request.headers[headerName.toLowerCase()] = [{ key: headerName, value: type }]
+  if (user_agent) {
+    const found = user_agent.match(bot)
+    request.headers['is-bot'] = [
+      {
+        key: 'is-bot',
+        value: `${!!found}`,
+      },
+    ]
+  }
 
-  return request
+  callback(null, request)
 }

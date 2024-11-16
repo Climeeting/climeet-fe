@@ -18,7 +18,7 @@ export function PartyDetailPage () {
         <TopBar.Center>파티 상세</TopBar.Center>
         <TopBar.Right asChild>
           <>
-            <Share />
+            <Share id={id} />
             <MoreMenu id={id} />
           </>
         </TopBar.Right>

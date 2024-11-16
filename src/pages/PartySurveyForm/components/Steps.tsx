@@ -20,6 +20,7 @@ import { uploadFileS3 } from '@/utils/s3.ts'
 import { useFileContext } from '@/pages/PartySurveyForm/hooks/useFileContext.tsx'
 import Dialog from '@/components/Dialog/Dialog.tsx'
 import { useState } from 'react'
+import { getRandomThumbnailUrl } from '@/utils/thumbnails.ts'
 
 const indoorSteps = ['암장', '조건', '소개', '일정', '미리보기'] as const
 type IndoorStepName = (typeof indoorSteps)[number]
@@ -132,7 +133,7 @@ export function IndoorStep ({ formData, updateFormData }: StepProps) {
                   const req = new PostPartyNewReqAdapter(formData).adapt()
                   const newPartyInfo = {
                     ...req,
-                    partyImageUrl: file ? await uploadFileS3(file) : formData.partyImageUrl,
+                    partyImageUrl: file ? await uploadFileS3(file) : (formData.partyImageUrl || getRandomThumbnailUrl()),
                   }
                   await post_party_new(newPartyInfo)
                   toast.add({

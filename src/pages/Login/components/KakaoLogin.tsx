@@ -9,7 +9,7 @@ export default function KakaoLogin () {
   return (
     <button className={styles.Button} onClick={() => window.location.replace(`${KAKAO_AUTH_URL}`)}>
       <Icon className={styles.Icon} icon='Kakao' />
-      카카오로 로그인하기
+      카카오로 계속하기
     </button>
   )
 }

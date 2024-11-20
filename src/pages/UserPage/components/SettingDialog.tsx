@@ -7,6 +7,7 @@ import { get_oauth_logout } from '@/services/oauth'
 import { Link, useNavigate } from 'react-router-dom'
 import useToast from '@/utils/useToast'
 import { MyProfileQuery } from '@/services/user'
+import AppInfoDialog from './AppInfoDialog'
 
 export default function SettingDialog () {
   const [open, onOpenChange] = useState(false)
@@ -55,6 +56,14 @@ export default function SettingDialog () {
                 <Icon className={styles.icon} icon='Exit' size='16' />
                 회원 탈퇴
               </Link>
+            </li>
+            <li>
+              <AppInfoDialog>
+                <button>
+                  <Icon className={styles.icon} size='16' icon='Check' />
+                  앱 관리
+                </button>
+              </AppInfoDialog>
             </li>
           </ul>
 

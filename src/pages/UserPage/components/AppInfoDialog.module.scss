@@ -1,0 +1,56 @@
+.container {
+  width: 100%;
+  position: fixed;
+  background-color: white;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 0;
+  height: 100%;
+  z-index: 10;
+  padding-top: $top-bar-height;
+  max-width: $max-width;
+  margin: 0 auto;
+}
+
+.content {
+  padding: 20px 16px;
+
+  .title {
+    display: block;
+    font-size: rem(12px);
+    color: $gray-700;
+    font-weight: 500;
+    margin-bottom: 20px;
+  }
+
+  .logo {
+    img {
+      width: 60px;
+      height: 60px;
+      border-radius: 8px;
+    }
+  }
+
+  .info {
+    display: flex;
+    gap: 16px;
+  }
+
+  .detail {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+
+    .name {
+      font-size: rem(14px);
+      font-weight: 600;
+      color: $gray-900;
+    }
+
+    .version {
+      font-size: rem(12px);
+      color: $gray-700;
+    }
+  }
+}

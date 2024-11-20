@@ -32,7 +32,9 @@ export default function ChatRoomPage () {
         </ErrorBoundary>
       </div>
 
-      <ChatForm id={Number(id)} />
+      <div className={styles.footer}>
+        <ChatForm id={Number(id)} />
+      </div>
     </ChatProvider>
   )
 }

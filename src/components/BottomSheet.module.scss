@@ -19,6 +19,7 @@
   border-top-right-radius: rem(20px);
   transition: transform 0.3s;
   animation: contentShow 400ms cubic-bezier(0.16, 1, 0.3, 1);
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 @keyframes overlayShow {

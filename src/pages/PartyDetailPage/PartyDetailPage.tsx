@@ -30,8 +30,10 @@ export function PartyDetailPage () {
             <PartyDetail.Query id={Number(id)} />
           </Suspense>
         </div>
-        <div className={styles.Bottom}>
-          <PartyBottomButton id={id} />
+        <div className={styles.Footer}>
+          <div className={styles.Bottom}>
+            <PartyBottomButton id={id} />
+          </div>
         </div>
       </ErrorBoundary>
     </>

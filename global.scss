@@ -109,8 +109,8 @@ $primary-100: #fbf9ff;
 // constants
 $max-width: 700px;
 $top-bar-height: 48px;
-$bottom-bar-height: 68px;
-$chat-input-height: 64px;
+$bottom-bar-height: calc(68px + env(safe-area-inset-bottom));
+$chat-input-height: calc(64px + env(safe-area-inset-bottom));
 
 body {
   background-color: $gray-100;

@@ -1,4 +1,4 @@
-$footer-height: 52px;
+$footer-height: 52px + env(safe-area-inset-bottom);
 $banner-height: (68px + 26px + 24px);
 
 .Container {
@@ -94,6 +94,7 @@ $banner-height: (68px + 26px + 24px);
   align-items: center;
   height: $footer-height;
   padding: 0 16px;
+  padding-bottom: env(safe-area-inset-bottom);
 
   .ExitText {
     font-size: 14px;

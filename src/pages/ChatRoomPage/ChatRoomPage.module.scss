@@ -100,12 +100,18 @@
   }
 }
 
-.Bottom {
+.footer{
   position: fixed;
   max-width: $max-width;
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
+  width: 100%;
+  background: #ffffff;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.Bottom {
   display: flex;
   align-items: center;
   width: 100%;

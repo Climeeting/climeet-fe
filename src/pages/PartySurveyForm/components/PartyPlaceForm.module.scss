@@ -5,12 +5,13 @@
   transform: translateX(-50%);
   width: 100%;
   max-width: $max-width;
-  height: 84px;
+  height: calc(84px + env(safe-area-inset-bottom));
   display: flex;
   justify-content: center;
   align-items: center;
   background: white;
   border-top: 1px solid #f6f6f6;
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 @mixin nextBtn {

@@ -19,6 +19,7 @@ export default function PreviewImage ({ src, onChange, onChangeSrc }: Props) {
       <input
         className={styles.Hidden}
         type='file'
+        accept={'image/*'}
         ref={ref}
         onChange={(e) => {
           if (e.target.files) onChange(e.target.files[0])

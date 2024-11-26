@@ -1,19 +1,19 @@
 import Icon from '@/components/Icon/Icon'
 import styles from './RemoveFullButton.module.scss'
-import { useState } from 'react'
-import { useFilterActions } from '../hooks/useFilterContext'
+import { useFilterActions, useFilterContext } from '../hooks/useFilterContext'
 
 export default function RemoveFullButton () {
+  const { partyDisplayOption } = useFilterContext()
   const actions = useFilterActions()
-  const [checked, setChecked] = useState(false)
+  const checked = partyDisplayOption === '마감제거'
 
   return (
     <button
       className={styles.Button}
       data-checked={checked}
       onClick={() => {
-        actions.status.toggle('신청하기')
-        setChecked(!checked)
+        if (!checked) actions.partyDisplayOption.toggle('마감제거')
+        else actions.partyDisplayOption.toggle('전체')
       }}
     >
       <Icon className={styles.Icon} icon='checkCircle' size='24' />

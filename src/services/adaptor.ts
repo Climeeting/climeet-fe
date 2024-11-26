@@ -56,6 +56,29 @@ export const clibingBe2Fe = (clibing: ClibingBe | ''): ClibingFe => {
   }
 }
 
+export type PartyDisplayOptionFe = '전체' | '마감제거'
+export type PartyDisplayOptionBe = 'SHOW_ALL' | 'REMOVE_FINISHED_PARTIES'
+export const PartyDisplayOptionFe2Be = (status: PartyDisplayOptionFe | ''): PartyDisplayOptionBe => {
+  switch (status) {
+    case '전체':
+      return 'SHOW_ALL'
+    case '마감제거':
+      return 'REMOVE_FINISHED_PARTIES'
+    default:
+      return 'SHOW_ALL'
+  }
+}
+export const PartyDisplayOptionBe2Fe = (status: PartyDisplayOptionBe | ''): PartyDisplayOptionFe => {
+  switch (status) {
+    case 'SHOW_ALL':
+      return '전체'
+    case 'REMOVE_FINISHED_PARTIES':
+      return '마감제거'
+    default:
+      return '전체'
+  }
+}
+
 export type JoinStatusFe = '전체' | '신청하기' | '마감임박' | '마감'
 export type JoinStatusBe = 'AVAILABLE' | 'IMMINENT_FULL' | 'FULL' | null
 export const JoinStatusFe2Be = (status: JoinStatusFe | ''): JoinStatusBe => {

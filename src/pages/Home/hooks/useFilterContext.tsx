@@ -3,6 +3,8 @@ import {
   ClibingFe,
   ConstraintsFe,
   JoinStatusFe,
+  PartyDisplayOptionFe,
+  PartyDisplayOptionFe2Be,
   clibingFe2Be,
   constraintsFe2Be,
 } from '@/services/adaptor'
@@ -14,7 +16,7 @@ export type FilterContextType = {
   addressList: (AddressOption | '')[]
   clibing: ClibingFe | ''
   constraints: ConstraintsFe | ''
-  status: JoinStatusFe | ''
+  partyDisplayOption: PartyDisplayOptionFe | ''
   skillLevel: SkillLevel | ''
 }
 
@@ -22,7 +24,7 @@ export const defaultFilter: FilterContextType = {
   addressList: ['모든 지역'],
   clibing: '볼더링',
   constraints: '남녀 모두',
-  status: '전체',
+  partyDisplayOption: '전체',
   skillLevel: '',
 }
 
@@ -30,7 +32,7 @@ export const initialFilter: FilterContextType = {
   addressList: [],
   clibing: '',
   constraints: '',
-  status: '',
+  partyDisplayOption: '',
   skillLevel: '',
 }
 
@@ -49,9 +51,9 @@ export function useFilter () {
     'constraints',
     initialFilter.constraints,
   )
-  const [status, setStatus] = useLocalStorage<FilterContextType['status']>(
-    'status',
-    initialFilter.status,
+  const [partyDisplayOption, setPartyDisplayOption] = useLocalStorage<FilterContextType['partyDisplayOption']>(
+    'partyDisplayOption',
+    initialFilter.partyDisplayOption,
   )
   const [skillLevel, setSkillLevel] = useLocalStorage<FilterContextType['skillLevel']>(
     'skillLevel',
@@ -72,7 +74,7 @@ export function useFilter () {
     addressList,
     clibing,
     constraints,
-    status,
+    partyDisplayOption,
     skillLevel,
   }
 
@@ -89,9 +91,12 @@ export function useFilter () {
       toggle: setconstraints,
       init: () => setconstraints(initialFilter.constraints),
     },
-    status: {
-      toggle: setStatus,
-      init: () => setStatus(initialFilter.status),
+    partyDisplayOption: {
+      toggle: (newStatus: PartyDisplayOptionFe) => {
+        console.log({ newStatus })
+        setPartyDisplayOption(newStatus)
+      },
+      init: () => setPartyDisplayOption(initialFilter.partyDisplayOption),
     },
     skillLevel: {
       toggle: setSkillLevel,
@@ -101,14 +106,14 @@ export function useFilter () {
       setAddressList(filters.addressList)
       setClibing(filters.clibing)
       setconstraints(filters.constraints)
-      setStatus(filters.status)
+      setPartyDisplayOption(filters.partyDisplayOption)
       setSkillLevel(filters.skillLevel)
     },
     init: () => {
       setAddressList(initialFilter.addressList)
       setClibing(initialFilter.clibing)
       setconstraints(initialFilter.constraints)
-      setStatus(initialFilter.status)
+      setPartyDisplayOption(initialFilter.partyDisplayOption)
       setSkillLevel(initialFilter.skillLevel)
     },
   }
@@ -129,8 +134,8 @@ const ActionsContext = createContext<{
     toggle: (option: ConstraintsFe) => void
     init: () => void
   }
-  status: {
-    toggle: (option: JoinStatusFe) => void
+  partyDisplayOption: {
+    toggle: (option: PartyDisplayOptionFe) => void
     init: () => void
   }
   skillLevel: {
@@ -152,7 +157,7 @@ const ActionsContext = createContext<{
           toggle: () => {},
           init: () => {},
         },
-        status: {
+        partyDisplayOption: {
           toggle: () => {},
           init: () => {},
         },
@@ -267,12 +272,18 @@ export class PartyListParams {
     return this.value.skillLevel as SkillLevel
   }
 
+  get partyDisplayOption (): GetPartyListParams['partyDisplayOption'] {
+    return PartyDisplayOptionFe2Be(this.value.partyDisplayOption)
+  }
+
   adapt (): GetPartyListParams {
     return {
+      ...this.value,
       constraints: this.constraints,
       climbingType: this.climbingType,
       address1List: this.address1List,
       skillLevel: this.skillLevel,
+      partyDisplayOption: this.partyDisplayOption,
     }
   }
 }

@@ -30,6 +30,7 @@ export type GetPartyListParams = {
   appointmentDate?: string
   address1List?: string[]
   locationIds?: string
+  partyDisplayOption?: 'SHOW_ALL' | 'REMOVE_FINISHED_PARTIES'
 }
 
 export const get_party_list = async (params?: GetPartyListParams) => {

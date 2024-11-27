@@ -247,7 +247,7 @@ export const skillLevelOptions: SkillLevel[] = [
   'V5',
   'V6',
   'V7',
-  'V8+',
+  'V8',
 ]
 export class PartyListParams {
   private value: FilterContextType

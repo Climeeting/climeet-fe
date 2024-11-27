@@ -59,10 +59,9 @@ export const usePartyList = (params?: GetPartyListParams) => {
       if (lastPage.last) return null
       return lastPage.totalPages <= lastPage.pageable.pageNumber ? null : lastPage.pageable.pageNumber + 1
     },
-    // 마운트시에 요청 보내지 않음
-    retryOnMount: false,
-    // 윈도우 포커스시에 새로고침하지 않음
-    refetchOnWindowFocus: false,
+    refetchOnWindowFocus: true, // 포커스 시 새로고침
+    refetchOnMount: true, // 마운트 시 새로고침
+    gcTime: 0,
   })
 }
 

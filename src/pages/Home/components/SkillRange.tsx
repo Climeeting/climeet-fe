@@ -24,4 +24,4 @@ export function SkillRange (props: SliderUiProps) {
   )
 }
 
-const skills = Array.from({ length: 11 }, (_, i) => `V${i}`)
+const skills = Array.from({ length: 9 }, (_, i) => i === 8 ? `V${i}+` : `V${i}`)

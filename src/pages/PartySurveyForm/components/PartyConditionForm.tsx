@@ -31,7 +31,7 @@ export function PartyConditionForm ({ onNext, formData, updateFormData }: PartyC
     setCondition(prev => ({ ...prev, [key]: value }))
   }
 
-  const isAllSkillLevel = condition.minSkillLevel === 0 && condition.maxSkillLevel === 10
+  const isAllSkillLevel = condition.minSkillLevel === 0 && condition.maxSkillLevel === 8
 
   return (
     <div className={styles.container}>
@@ -99,7 +99,7 @@ export function PartyConditionForm ({ onNext, formData, updateFormData }: PartyC
                   defaultValue={[condition.minSkillLevel, condition.maxSkillLevel]}
                   value={[condition.minSkillLevel, condition.maxSkillLevel]}
                   min={0}
-                  max={10}
+                  max={8}
                   step={1}
                   onValueChange={(value) => {
                     updateConditionData('minSkillLevel', value[0])
@@ -110,7 +110,7 @@ export function PartyConditionForm ({ onNext, formData, updateFormData }: PartyC
                   className={styles.checkboxWrapper}
                   onClick={() => {
                     updateConditionData('minSkillLevel', 0)
-                    updateConditionData('maxSkillLevel', 10)
+                    updateConditionData('maxSkillLevel', 8)
                   }}
                 >
                   {isAllSkillLevel

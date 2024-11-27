@@ -3,18 +3,25 @@ import styles from './SelectSkill.module.scss'
 import BottomSheet from '@/components/BottomSheet'
 import { skillLevelOptions } from '@/services/user'
 import Icon from '@/components/Icon/Icon'
+import { useState } from 'react'
 
 type Props = {
   skillLevel?: SkillLevel | ''
   setSkillLevel: (skill: SkillLevel) => void
 }
 
+const getLevel = (skillLevel?: SkillLevel) => {
+  if (skillLevel === 'V8') return 'V8+'
+  return skillLevel
+}
+
 export default function SelectSkill ({ skillLevel, setSkillLevel }: Props) {
+  const [open, setOpen] = useState(false)
   return (
-    <BottomSheet>
+    <BottomSheet open={open} onOpenChange={setOpen}>
       <BottomSheet.Trigger asChild>
         <button className={styles.Trigger} data-active={Boolean(skillLevel)}>
-          {skillLevel === '' ? '실력을 선택해 주세요.' : `${skillLevel} 클라이머`}
+          {skillLevel === '' ? '실력을 선택해 주세요.' : `${getLevel(skillLevel)} 클라이머`}
           <Icon className={styles.Icon} icon='ArrowDown' size='12' />
         </button>
       </BottomSheet.Trigger>
@@ -31,10 +38,13 @@ export default function SelectSkill ({ skillLevel, setSkillLevel }: Props) {
               <li key={skillLevelOption}>
                 <button
                   className={styles.SkillLevelOptionButton}
-                  onClick={() => setSkillLevel(skillLevelOption)}
+                  onClick={() => {
+                    setSkillLevel(skillLevelOption)
+                    setOpen(false)
+                  }}
                   data-selected={skillLevelOption === skillLevel}
                 >
-                  {skillLevelOption} 클라이머
+                  {getLevel(skillLevelOption)} 클라이머
                   {skillLevelOption === skillLevel && (
                     <Icon className={styles.Icon} icon='Check' size='20' />
                   )}

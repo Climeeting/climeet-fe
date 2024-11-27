@@ -59,7 +59,7 @@ export const usePartySurveyForm = () => {
     partyDate: dayjs().add(3, 'day'),
     partyTime: '18:00',
     minSkillLevel: 0,
-    maxSkillLevel: 10,
+    maxSkillLevel: 8,
     isNatural: false,
     approachDescription: '',
     partyImageUrl: '',

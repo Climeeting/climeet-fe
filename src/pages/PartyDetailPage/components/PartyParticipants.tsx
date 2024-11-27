@@ -8,6 +8,8 @@ export function PartyParticipants ({
   skillDistributions,
   currentParticipants,
 }: PartyDetailType) {
+  const getLevel = (level: number) => level === 8 ? `V${level}+` : `V${level}`
+
   return (
     <>
       <h2 className={styles.Title}>참가자 실력 분포</h2>
@@ -17,7 +19,7 @@ export function PartyParticipants ({
         <span className={styles.Colon}>:</span>
         <span
           className={styles.NotiDescription}
-        >{` V${minimumSkillLevel}부터 V${maximumSkillLevel}까지`}
+        >{` ${getLevel(minimumSkillLevel)}부터 ${getLevel(maximumSkillLevel)}까지`}
         </span>
       </div>
 

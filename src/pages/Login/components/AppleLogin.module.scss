@@ -1,0 +1,18 @@
+.Button {
+  background-color: #000;
+  color: #fff;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  border-radius: rem(12px);
+  padding: rem(14px);
+  font-size: rem(16px);
+
+  .Icon {
+    position: absolute;
+    left: rem(14px);
+  }
+}

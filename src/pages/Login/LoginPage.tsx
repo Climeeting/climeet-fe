@@ -4,6 +4,7 @@ import styles from './LoginPage.module.scss'
 import Logo from '@/assets/logo_text.png'
 import TopBar from '@/components/NavBar/TopBar'
 import { useEffect } from 'react'
+import AppleLogin from './components/AppleLogin'
 
 export default function LoginPage () {
   const location = useLocation()
@@ -23,6 +24,7 @@ export default function LoginPage () {
       <div>
         <img src={Logo} width={114} alt='logo' />
         <div className={styles.Bottom}>
+          <AppleLogin />
           <KakaoLogin />
         </div>
       </div>

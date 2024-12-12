@@ -4,51 +4,59 @@ import classNames from 'classnames'
 import { Link, useLocation } from 'react-router-dom'
 
 export default function BottomBar () {
+  const { pathname } = useLocation()
+
   return (
     <div className={styles.container}>
-      <NavLink icon='HomeFilled' title='홈' to='/' />
-      <NavLink icon='LocationLine' title='탐색' to='/location' />
-      <NavLink icon='Plus' title='만들기' to='/party-suervey' />
-      <NavLink icon='ChatLine' title='채팅' to='/chat' />
-      <MyPageLink />
+      <NavLink
+        icon={['HomeFilled', 'Home']}
+        title='홈'
+        to='/'
+        isActive={pathname === '/'}
+      />
+      <NavLink
+        icon={['LocationFill', 'LocationLine']}
+        title='탐색'
+        to='/location'
+        isActive={pathname === '/location'}
+      />
+      <NavLink
+        icon={['Plus', 'Plus']}
+        title='만들기'
+        to='/party-suervey'
+        isActive={pathname === '/party-suervey'}
+      />
+      <NavLink
+        icon={['ChatFilled', 'ChatLine']}
+        title='채팅'
+        to='/chat'
+        isActive={pathname.includes('/chat')}
+      />
+      <NavLink
+        icon={['MyPage', 'MyPageInactive']}
+        title='My'
+        to='/user/my'
+        isActive={pathname.includes('/user/')}
+      />
     </div>
   )
 }
 
-function NavLink ({ icon, title, to }: { icon: string, title: string, to: string }) {
-  const { pathname } = useLocation()
-
+function NavLink ({ icon, title, to, isActive }: {
+  icon: [IconType, IconType] // [active, notActive]
+  title: string
+  isActive: boolean
+  to: string
+}) {
   return (
     <Link
       to={to}
       className={classNames(styles.item, {
-        [styles.active]: pathname === to,
-      })}
-    >
-      <Icon icon={icon as IconType} size={24} />
-      <span>{title}</span>
-    </Link>
-  )
-}
-
-function MyPageLink () {
-  const { pathname } = useLocation()
-  const isActive = pathname.includes('/user/')
-
-  return (
-    <Link
-      to='/user/my'
-      className={classNames(styles.item, styles.MyPage, {
         [styles.active]: isActive,
       })}
     >
-      <Icon
-        icon={
-          isActive ? 'MyPage' : 'MyPageInactive'
-        }
-        size={24}
-      />
-      <span>My</span>
+      <Icon icon={isActive ? icon[0] : icon[1]} size={24} />
+      <span>{title}</span>
     </Link>
   )
 }

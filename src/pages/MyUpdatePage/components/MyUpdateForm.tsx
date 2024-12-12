@@ -63,6 +63,7 @@ export function MyUpdateForm ({ checkValid }: MyUpdateFormProps) {
         </div>
         <div className={styles.RadioSexContainer}>
           <RadioSex sex={sex} setSex={setSex} />
+          <p className={styles.Info}>성별은 자주 바꾸기 어려워요.</p>
         </div>
       </fieldset>
 

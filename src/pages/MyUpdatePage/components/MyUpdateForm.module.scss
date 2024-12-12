@@ -37,6 +37,11 @@
   color: red;
 }
 
+.Info {
+  font-size: rem(12px);
+  color: $gray-600;
+}
+
 .Input {
   padding: 16px 0 8px;
   border-bottom: 1px solid $gray-200;

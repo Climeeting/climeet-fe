@@ -26,3 +26,16 @@
 .RadioGroupIndicator {
   display: hidden;
 }
+
+.RadioGroupItem:disabled {
+  color: $gray-500;
+  border: 1px solid $gray-200;
+  cursor: not-allowed;
+}
+
+.RadioGroupItem:disabled[data-state='checked'] {
+  color: $gray-500;
+  border: 1px solid $gray-200;
+  background-color: $gray-100;
+  cursor: not-allowed;
+}

@@ -16,14 +16,14 @@ export default function RadioSex ({ sex, setSex }: Props) {
       className={styles.RadioGroupRoot}
       aria-label='성별을 선택하세요'
     >
-      <RadioGroup.Item className={styles.RadioGroupItem} value='남자' id='MALE'>
+      <RadioGroup.Item disabled className={styles.RadioGroupItem} value='남자' id='MALE'>
         <RadioGroup.Indicator />
         <label className={styles.Label} htmlFor='r1'>
           남자
         </label>
       </RadioGroup.Item>
 
-      <RadioGroup.Item className={styles.RadioGroupItem} value='여자' id='FEMALE'>
+      <RadioGroup.Item disabled className={styles.RadioGroupItem} value='여자' id='FEMALE'>
         <RadioGroup.Indicator />
         <label className={styles.Label} htmlFor='r2'>
           여자

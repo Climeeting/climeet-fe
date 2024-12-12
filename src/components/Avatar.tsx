@@ -5,7 +5,7 @@ import classNames from 'classnames'
 type Props = {
   src: string
   alt: string
-  size?: 'small' | 'middle' | 'large' | 'xl'
+  size?: 'xs' | 'small' | 'middle' | 'large' | 'xl'
   className?: string
 }
 

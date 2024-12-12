@@ -7,6 +7,12 @@
   user-select: none;
   border-radius: 100%;
 
+  &.xs {
+    width: 24px;
+    height: 24px;
+    font-size: 10px;
+  }
+
   &.small {
     width: 32px;
     height: 32px;

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import styles from './EmptyChat.module.scss'
 import emptyChat from '@/assets/empty_chat.png'
 
@@ -10,7 +11,7 @@ export default function EmptyChat () {
         <br />
         파티에 참가하고 파티원과 대화를 나눠보세요!
       </div>
-      <button className={styles.Button}>파티 목록 보기</button>
+      <Link to='/' className={styles.Button}>파티 목록 보기</Link>
     </div>
   )
 }

@@ -8,7 +8,7 @@ import Skeleton from 'react-loading-skeleton'
 
 export function PartyMainInfo ({
   partyName,
-  appointmentTime,
+  appointmentTimeFormatted,
   climbingType,
   constraints,
   maxParticipants,
@@ -24,7 +24,7 @@ export function PartyMainInfo ({
 
       <ul className={styles.Ul}>
         <li className={styles.Li}>
-          <InfoItem icon='CalendarLine' title='파티 일정' content={appointmentTime} />
+          <InfoItem icon='CalendarLine' title='파티 일정' content={appointmentTimeFormatted} />
         </li>
         <li className={styles.Li}>
           <InfoItem icon='TypeLine' title='파티 종목' content={climbingType} />

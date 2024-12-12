@@ -5,6 +5,7 @@ import LoginDialog from '@/components/Dialog/LoginDialog'
 import { PartyDetailQuery, post_party_$partyId_participate, usePartyDetail } from '@/services/party'
 import { useCheckAdditionalInfo, useIsLogin } from '@/services/user'
 import useToast from '@/utils/useToast'
+import dayjs from 'dayjs'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
@@ -17,6 +18,17 @@ export default function PartyBottomButton ({ id }: { id?: string }) {
   const [openAlertAdditionalInfo, onOpenAlertAdditionalInfo] = useState(false)
 
   const toast = useToast()
+  const isClosed = dayjs(partyData?.appointmentTime).isBefore(dayjs())
+
+  if (!partyData) return null
+
+  if (isClosed) {
+    return (
+      <Chip className={styles.Button} variable='default' asChild>
+        <button disabled>종료된 파티입니다.</button>
+      </Chip>
+    )
+  }
 
   return (
     <>

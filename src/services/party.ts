@@ -341,7 +341,7 @@ export class PartyDetailAdapter {
     return this.value.location
   }
 
-  get appointmentTime () {
+  get appointmentTimeFormatted () {
     return dayjs(this.value.appointmentTime).format('M월 DD일 (dd) A h:mm')
   }
 
@@ -356,7 +356,7 @@ export class PartyDetailAdapter {
   adapt () {
     return {
       ...this.value,
-      appointmentTime: this.appointmentTime,
+      appointmentTimeFormatted: this.appointmentTimeFormatted,
       climbingType: this.climbingType,
       constraints: this.constraints,
       location: this.value.location,

@@ -69,3 +69,10 @@ export const useChatRoomMembers = (room: number) => {
     queryFn: () => get_chat_$room_members(room),
   })
 }
+
+/**
+ * POST /v1/chat/leave/{roomId}
+ */
+export const post_chat_leave_$roomId = async (roomId: number) => {
+  return await api.post(`/v1/chat/leave/${roomId}`)
+}

@@ -1,9 +1,10 @@
 $footer-height: calc(52px + env(safe-area-inset-bottom));
 $banner-height: calc(68px + 26px + 24px);
 $bottom-height: calc($footer-height + $banner-height);
+$width: 80vw;
 
 .Container {
-  width: 80vw;
+  width: $width;
   height: 100svh;
   background-color: #ffffff;
   position: relative;
@@ -100,6 +101,13 @@ $bottom-height: calc($footer-height + $banner-height);
   height: $footer-height;
   padding: 0 16px;
   padding-bottom: env(safe-area-inset-bottom);
+
+  .Button {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
   .ExitText {
     font-size: 14px;

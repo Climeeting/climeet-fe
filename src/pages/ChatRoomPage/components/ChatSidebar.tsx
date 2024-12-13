@@ -2,17 +2,20 @@ import SideSheet from '@/components/SideSheet.tsx'
 import styles from './ChatSidebar.module.scss'
 import Icon from '@/components/Icon/Icon.tsx'
 import Avatar from '@/components/Avatar.tsx'
-import { Member } from '@/services/chat'
+import { Member, post_chat_leave_$roomId } from '@/services/chat'
 import { PartyDetailType } from '@/services/party'
-import { useMyProfile } from '@/services/user'
-import { Link } from 'react-router-dom'
+import { UserChatRoomsQuery, useMyProfile } from '@/services/user'
+import { Link, useNavigate } from 'react-router-dom'
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden'
+import useToast from '@/utils/useToast'
 
 export default function ChatSidebar ({ partyId, party, members }: { partyId: number, party: PartyDetailType, members: Member[] }) {
   const { data: my } = useMyProfile()
 
   const myInfo = members.find(member => member.userId === my?.userId)
   const memberList = myInfo ? [myInfo, ...members.filter(member => member.userId !== my?.userId)] : members
+  const toast = useToast()
+  const navigate = useNavigate()
 
   return (
     <SideSheet.Content>
@@ -39,8 +42,30 @@ export default function ChatSidebar ({ partyId, party, members }: { partyId: num
           <PartyBanner partyId={partyId} party={party} />
         </div>
         <div className={styles.Footer}>
-          <div className={styles.ExitText}>채팅방 나가기</div>
-          <button>
+          <button
+            className={styles.Button}
+            onClick={async () => {
+              try {
+                await post_chat_leave_$roomId(partyId)
+                toast.add({
+                  message: '채팅방을 나갔습니다.',
+                })
+                navigate('/chat', { replace: true })
+                UserChatRoomsQuery.refetch()
+              } catch (e) {
+                if (e instanceof Error) {
+                  toast.add({
+                    message: e.message,
+                  })
+                } else {
+                  toast.add({
+                    message: '채팅방 나가기에 실패하였습니다.',
+                  })
+                }
+              }
+            }}
+          >
+            <div className={styles.ExitText}>채팅방 나가기</div>
             <Icon icon='Exit' size={20} />
           </button>
         </div>

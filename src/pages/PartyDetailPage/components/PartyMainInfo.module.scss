@@ -55,6 +55,11 @@
   span {
     color: $gray-800;
     font-weight: 700;
+    // 줄바꿈 말줄임처리
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
   }
 }
 

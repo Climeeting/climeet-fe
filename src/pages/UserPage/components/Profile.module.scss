@@ -14,6 +14,7 @@
 
 .Avatar {
   margin-right: 16px;
+  flex-shrink: 0;
 }
 
 .ProfileInfo {
@@ -22,6 +23,7 @@
   justify-content: center;
   color: $gray-600;
   font-size: rem(14px);
+  margin-right: 20px;
 
   .Name {
     font-size: rem(18px);

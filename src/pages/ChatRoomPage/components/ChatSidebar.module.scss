@@ -1,5 +1,6 @@
-$footer-height: 52px + env(safe-area-inset-bottom);
-$banner-height: (68px + 26px + 24px);
+$footer-height: calc(52px + env(safe-area-inset-bottom));
+$banner-height: calc(68px + 26px + 24px);
+$bottom-height: calc($footer-height + $banner-height);
 
 .Container {
   width: 80vw;
@@ -10,7 +11,7 @@ $banner-height: (68px + 26px + 24px);
 
 .Top {
   overflow-y: auto;
-  height: calc(100% - $footer-height - $banner-height);
+  height: calc(100vh - $bottom-height);
 }
 
 .Title {
@@ -73,6 +74,10 @@ $banner-height: (68px + 26px + 24px);
     font-weight: 400;
     color: $gray-800;
     margin-right: 4px;
+    max-width: 50%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .Chip {
